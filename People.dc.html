@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
+<script src="_ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+:root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
+body{margin:0;background:var(--color-bg);text-wrap:pretty}
+a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
+nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
+a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
+
+/* responsive+scale v2 */
+body{zoom:0.88}
+@media (max-width:840px){
+  body{zoom:1}
+  nav.nav{flex-wrap:wrap;gap:6px 18px;padding:12px 20px !important}
+  [style*="padding:0 64px"],[style*="padding: 0px 64px"]{padding-left:20px !important;padding-right:20px !important}
+  [style*="40px 64px"]{padding-left:20px !important;padding-right:20px !important}
+  [style*="grid-template-columns"]{grid-template-columns:1fr !important}
+  [style*="40px 1fr"]{grid-template-columns:36px 1fr !important}
+  [style*="92px 1fr"]{grid-template-columns:76px 1fr !important}
+  [style*="64px 1fr"]{grid-template-columns:44px 1fr !important}
+  [style*="170px 1fr"]{grid-template-columns:110px 1fr !important;gap:0 14px !important}
+  [style*="width:170px"],[style*="width: 170px"]{width:110px !important;height:130px !important}
+  h1{font-size:34px !important;line-height:40px !important;flex-wrap:wrap;gap:8px !important}
+  h1 span{font-size:19px !important;line-height:26px !important}
+  [style*="font-size:64px"],[style*="font-size: 64px"]{font-size:34px !important;line-height:40px !important}
+  [style*="font-size:56px"],[style*="font-size: 56px"]{font-size:32px !important;line-height:38px !important}
+  [style*="font-size:40px"],[style*="font-size: 40px"]{font-size:28px !important;line-height:34px !important}
+  [style*="font-size:28px"],[style*="font-size: 28px"]{font-size:19px !important;line-height:25px !important}
+  [style*="border-left"]{border-left:0 !important;padding-left:0 !important}
+  [style*="padding-right:32px"],[style*="padding-right: 32px"]{padding-right:0 !important}
+  [style*="padding:0 32px"],[style*="padding: 0px 32px"]{padding-left:0 !important;padding-right:0 !important}
+  [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
+  img,image-slot,figure{max-width:100%}
+  figure{height:auto !important;min-height:180px}
+}
+[id]{scroll-margin-top:80px}
+</style>
+</helmet>
+
+<div data-screen-label="People">
+  <div style="height:4px;background:var(--color-accent)"></div>
+  <nav class="nav" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
+    <a class="nav-brand" href="MTAP Landing.dc.html" style="display:inline-flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit"><span style="font-size:24px">Chung Research Group</span><span style="color:var(--color-accent);font-size:24px;font-family:var(--font-heading);font-weight:800">@ PNU</span></a>
+    <a href="News.dc.html">News</a>
+    <a href="People.dc.html" style="color:var(--color-accent)">People</a>
+    <a href="Research.dc.html">Research</a>
+    <a href="Software %26 Data.dc.html">Software &amp; Data</a>
+    <a href="Publications.dc.html">Publications</a>
+    <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
+  </nav>
+
+  <div style="padding:0 64px">
+    <header style="padding:48px 0 32px">
+      <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">People. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">구성원</span></h1>
+    </header>
+
+    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
+
+    <section style="padding:40px 0" data-screen-label="Professor">
+      <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);margin:0 0 26px">Professor · 교수</span>
+      <div id="p-chung" style="display:grid;grid-template-columns:210px 1fr;gap:24px 52px;align-items:start">
+        <div>
+          <img src="images/prof-chung.png" alt="Prof. Yongchul G. Chung" style="display:block;width:100%;height:250px;object-fit:cover">
+          <div style="display:flex;gap:14px;justify-content:center;margin-top:12px">
+            <a href="mailto:drygchung@gmail.com" title="Email" class="icn" style="display:grid;place-items:center;width:44px;height:44px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="1"></rect><path d="M3 7l9 6 9-6"></path></svg></a>
+            <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" class="icn" style="display:grid;place-items:center;width:44px;height:44px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M12 2.5L0 11l4.8 3.06A7.2 7.2 0 0 1 12 9.6c3.2 0 5.93 2.09 6.87 4.98l.33-.21V11.9L24 11 12 2.5z"></path><path d="M12 11a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"></path></svg></a>
+            <a href="https://github.com/Chung-Research-Group" title="GitHub" class="icn" style="display:grid;place-items:center;width:44px;height:44px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.9-.38 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg></a>
+            <a href="uploads/CV_CHUNG-June2026.pdf" title="Curriculum Vitae (PDF)" class="icn" style="display:grid;place-items:center;width:44px;height:44px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M9 13h6M9 17h6"></path></svg></a>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-family:var(--font-heading);font-weight:800;font-size:38px;line-height:44px;letter-spacing:-0.015em;margin:0">Chung, Yongchul G. <span style="font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">정용철</span></h2>
+          <div style="font-size:20px;line-height:33px;margin:18px 0 0">
+            <p style="font-weight:700;margin:0">Professor<span style="display:block">School of Chemical Engineering (BK21 FOUR)</span><span style="display:block">Pusan National University</span></p>
+            <p style="margin:14px 0 0;color:var(--color-text)">Secondary appointments:</p>
+            <ul style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
+              <li>College of Engineering, Department of Chemical &amp; Biomolecular Engineering</li>
+              <li>Graduate School of Data Science</li>
+              <li>University College, School of Transdisciplinary Engineering, AI Convergence Computational Science Major</li>
+            </ul>
+          </div>
+          <div style="display:grid;grid-template-columns:128px 1fr;gap:34px 16px;margin-top:32px;padding-top:20px;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent);font-size:19.5px;line-height:32px">
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:17px;line-height:32px;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-accent-700)">Interests</span>
+            <ul style="margin:0;padding-left:16px"><li>AI for materials &amp; chemical discovery</li><li>Digital reticular chemistry and engineering</li><li>Quantum</li></ul>
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:17px;line-height:32px;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-accent-700)">Education</span>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span>Postdoc, <span style="white-space:nowrap">Northwestern University</span> (2013–2016)</span></span>
+              <span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span>Ph.D. Chemical Engineering, <span style="white-space:nowrap">Case Western Reserve University</span> (2013)</span></span>
+              <span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span>B.S. Chemical Engineering, <span style="white-space:nowrap">Texas Tech University</span> (2007)</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
+
+    <section style="padding:40px 0" data-screen-label="Members">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 26px">
+        <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700)">Members · 연구원 <span style="font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ memberTotal }}</span></span>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <sc-for list="{{ interestTotals }}" as="it" hint-placeholder-count="3"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:16px;line-height:21px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+        </div>
+      </div>
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:20px 72px;padding:32px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
+          <h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:27px;margin:0">{{ g.title }} <span style="font-size:15.5px;font-weight:800;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ g.count }}</span><span style="display:block;font-size:15.5px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent);margin-top:3px">{{ g.kr }}</span></h3>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ g.people }}" as="m" hint-placeholder-count="2">
+              <div id="{{ m.slot }}" style="display:grid;grid-template-columns:170px 1fr;gap:0 36px;align-items:start;padding:30px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 14%, transparent)">
+                <div style="width:170px;height:200px"><image-slot id="{{ m.photo }}" src="{{ m.photoSrc }}" shape="rect" placeholder="{{ m.name }}"></image-slot></div>
+                <div>
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+                    <h4 style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:32px;margin:0">{{ m.name }}<span style="display:block;font-size:18px;line-height:26px;margin-top:2px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ m.kr }}</span></h4>
+                    <sc-if value="{{ m.hasLinks }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;gap:8px;flex:none">
+                        <sc-if value="{{ m.scholar }}" hint-placeholder-val="{{ false }}"><a href="{{ m.scholar }}" title="Google Scholar" class="icn" style="display:grid;place-items:center;width:38px;height:38px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 2.5L0 11l4.8 3.06A7.2 7.2 0 0 1 12 9.6c3.2 0 5.93 2.09 6.87 4.98l.33-.21V11.9L24 11 12 2.5z"></path><path d="M12 11a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"></path></svg></a></sc-if>
+                        <sc-if value="{{ m.github }}" hint-placeholder-val="{{ false }}"><a href="{{ m.github }}" title="GitHub" class="icn" style="display:grid;place-items:center;width:38px;height:38px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.9-.38 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg></a></sc-if>
+                        <sc-if value="{{ m.linkedin }}" hint-placeholder-val="{{ false }}"><a href="{{ m.linkedin }}" title="LinkedIn" class="icn" style="display:grid;place-items:center;width:38px;height:38px;transition:color .12s ease"><svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"></path></svg></a></sc-if>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0">
+                    <sc-for list="{{ m.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:16px;line-height:21px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin:12px 0 0"><sc-for list="{{ m.eduLines }}" as="line" hint-placeholder-count="2"><p style="display:flex;align-items:baseline;gap:7px;font-size:18px;line-height:27px;margin:0;color:var(--color-text)"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none;align-self:center"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span>{{ line }}</span></p></sc-for></div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:18px;line-height:26px;margin:0;padding:14px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);color:var(--color-text)">Currently none — 현재 없음</p>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
+
+    <section style="padding:40px 0 56px" data-screen-label="Alumni">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 26px">
+        <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700)">Alumni · 졸업생 <span style="font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ alumniTotal }}</span></span>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <sc-for list="{{ sectorTotals }}" as="st" hint-placeholder-count="2"><span onClick="{{ st.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:16px;line-height:21px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ st.c }};color:{{ st.fg }};background:{{ st.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ st.b }}"></span>{{ st.t }}<span style="font-feature-settings:'tnum' 1"> × {{ st.n }}</span></span></sc-for>
+        </div>
+      </div>
+      <sc-for list="{{ alumni }}" as="a" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:20px 72px;padding:28px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
+          <h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:27px;margin:0"><span style="white-space:nowrap">{{ a.title }}</span> <span style="font-size:15.5px;font-weight:800;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ a.count }}</span><span style="display:block;font-size:15.5px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent);margin-top:3px">{{ a.kr }}</span></h3>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ a.people }}" as="p" hint-placeholder-count="4">
+              <div id="{{ p.id }}" style="display:flex;align-items:baseline;gap:10px 14px;flex-wrap:wrap">
+                <p style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:18px;line-height:26px;margin:0"><sc-if value="{{ p.sector }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:5px;align-self:center;font-size:16px;line-height:21px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;padding:1px 7px;border:1px solid {{ p.scolor }};color:{{ p.scolor }}"><span style="width:7px;height:7px;background:{{ p.sqcolor }}"></span>{{ p.sector }}</span></sc-if><strong style="font-family:var(--font-heading);font-weight:800;white-space:nowrap">{{ p.name }}</strong> <span style="font-size:18px;color:var(--color-text)">· {{ p.detail }}</span></p>
+                <p style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:18px;line-height:26px;margin:0;font-weight:700;color:var(--color-text)">— {{ p.now }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:grid;grid-template-columns:280px 1fr;gap:20px 72px;padding:28px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
+        <h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:27px;margin:0"><span style="white-space:nowrap">Undergraduate Researchers <span style="font-size:15.5px;font-weight:800;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ undergradTotal }}</span></span><span style="display:block;font-size:15.5px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent);margin-top:3px">학부연구생</span></h3>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ undergrads }}" as="u" hint-placeholder-count="2">
+            <p style="font-size:18px;line-height:26px;margin:0"><strong style="font-family:var(--font-heading);font-weight:800;font-feature-settings:'tnum' 1">{{ u.year }}</strong> — {{ u.names }}</p>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <a href="#" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
+    <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
+    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { filterTag: null, filterSector: null };
+  renderVals() {
+    const groups = [
+        { title: 'Postdoctoral Researchers', kr: '박사후연구원', people: [
+          { slot: 'm-yoon', photo: 'ph-yoon', name: 'Yoon, Sunghyun', kr: '윤성현', interests: 'Atoms/Electrons · AI & Data · Modeling & Optimization', edu: 'Ph.D. Chemical Engineering, Pusan National University (2026) · B.S. Chemical Engineering, Pusan National University (2019)', scholar: 'https://scholar.google.com/citations?user=wedJB5EAAAAJ', github: 'https://github.com/yoonseonghyun', linkedin: 'https://www.linkedin.com/in/sunghyun-yoon-0790b8417/' }
+        ]},
+        { title: 'Ph.D. Students', kr: '박사과정', people: [
+          { slot: 'm-chen', photo: 'ph-chen', name: 'Chen, Yu', kr: '첸 유, 陈豫', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=2z24SzAAAAAJ', github: 'https://github.com/DrakeChan', linkedin: 'https://www.linkedin.com/in/yu-chen-913344248', edu: 'B.S. New Energy Science & Technology, Huazhong University of Science and Technology (2020)' },
+          { slot: 'm-hassan', photo: 'ph-hassan', name: 'Hassan, Muhammad', kr: '하산 무하마드, حسان محمد', interests: 'Atoms/Electrons · Modeling & Optimization', scholar: 'https://scholar.google.com/citations?user=6MNpPQsAAAAJ', github: 'https://github.com/hassan-azizi', linkedin: 'https://www.linkedin.com/in/mhassanazizi', edu: 'M.S. Chemical Engineering, Pusan National University (2024) · B.S. Chemical Engineering, NED University of Engineering and Technology (2022)' }
+        ]},
+        { title: "Master's Students", kr: '석사과정', people: [
+          { slot: 'm-shin', photo: 'ph-shin', name: 'Shin, Changdon', kr: '신창돈', interests: 'AI & Data · Modeling & Optimization · Experiment', scholar: 'https://scholar.google.com/citations?user=vGr2oSYAAAAJ', github: 'https://github.com/ChangdonShin', linkedin: 'https://www.linkedin.com/in/changdon-shin-055637422/', edu: 'B.S. Chemical Engineering, Pusan National University (2025)' },
+          { slot: 'm-zhao', photo: 'ph-zhao', name: 'Zhao, Pengyu', kr: '자오 펑위, 赵鹏宇', interests: 'Atoms/Electrons', scholar: 'https://scholar.google.com/citations?user=vW42Ip0AAAAJ', github: 'https://github.com/Finn-Zz', linkedin: 'https://www.linkedin.com/in/pengyu-zhao-93b98436a/', edu: 'B.S. New Energy Science & Technology, Huazhong University of Science and Technology (2024)' },
+          { slot: 'm-thong', photo: 'ph-thong', name: 'Siah, Thong', kr: '시아 통, 谢彤', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=hWhz0HIAAAAJ', github: 'https://github.com/siahthong', linkedin: 'https://www.linkedin.com/in/siah-thong/', edu: 'B.E. Chemical Engineering, Curtin University Malaysia (2023)' },
+          { slot: 'm-lee', photo: 'ph-lee', name: 'Lee, Taekgi', kr: '이택기', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=6blqnjsAAAAJ', edu: 'B.S. Chemical Engineering, Pusan National University (2025)' },
+          { slot: 'm-baek', photo: 'ph-baek', name: 'Baek, Mingyu', kr: '백민규', interests: 'Atoms/Electrons · AI & Data', github: 'https://github.com/100mingyu-rgb', linkedin: 'https://www.linkedin.com/in/mingyu-baek', edu: 'Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원 · B.S. Chemical Engineering, Kyungpook University (2025)' }
+        ]},
+        { title: 'Researchers', kr: '연구원', people: [] },
+        { title: 'Visitors', kr: '방문연구원', people: [] }
+      ];
+    const alumni = [
+        { title: 'Graduate Students', kr: '대학원생', people: [
+          { id: 'a-sunghyun', name: 'Sunghyun Yoon (윤성현)', detail: 'Ph.D. Chemical Engineering (2019–2026)', now: 'Postdoctoral Researcher, Pusan National University' },
+          { id: 'a-haewon', name: 'Haewon Kim (김해원)', detail: 'M.S. Chemical Engineering (2024–2026)', now: 'Engineer, SK hynix' },
+          { id: 'a-guobin', name: 'Guobin Zhao (구오빈 자오)', detail: 'Ph.D. Chemical Engineering (2020–2025)', now: 'Postdoctoral Researcher, National University of Singapore' },
+          { id: 'a-seulchan', name: 'Seulchan Lee (이슬찬)', detail: 'B.S./M.S. Chemical Engineering (2018–2020)', now: 'SK Innovation' },
+          { id: 'a-soomyung', name: 'Soo Myung Nam (남수명)', detail: 'M.S. Chemical Engineering (2017–2019)', now: '한국제지연구소' }
+        ]},
+        { title: 'Postdoctoral Researchers', kr: '박사후연구원', people: [
+          { id: 'a-yang', name: '양창원', detail: '(2022–2023)', now: '부장, Korea Quantum Computing Corp. 한국퀀텀컴퓨팅(주)' },
+          { id: 'a-gu', name: '구윤장', detail: '(2021–2022)', now: '남해화학' },
+          { id: 'a-ka', name: '가성빈', detail: '(2020–2022)', now: '울산대학교 화학공학과' },
+          { id: 'a-anjali', name: 'Anjali Bai', detail: '(2021–2022)', now: 'Postdoctoral Researcher, National University of Singapore' }
+        ]},
+        { title: 'Researchers & Visitors', kr: '연구원·방문연구원', people: [
+          { id: 'a-youri', name: 'Youri Ran', detail: '(2026) Visiting Ph.D. student', now: 'Universiteit van Amsterdam' }
+        ]}
+      ];
+    alumni.forEach(a => a.people.forEach(p => {
+      if (/Researchers & Visitors/i.test(a.title)) { p.sector = false; return; }
+      if (!p.sector) {
+        const ind = /SK hynix|SK Innovation|남해화학|한국제지|Quantum Computing/i.test(p.now);
+        const acad = /University|Universiteit|대학교|Postdoctoral/i.test(p.now);
+        p.sector = ind ? 'Industry' : (acad ? 'Academia' : false);
+        p.scolor = ind ? '#a86700' : '#1c4fa1';
+        p.sqcolor = ind ? '#ffa500' : '#005baa';
+      }
+    }));
+    const undergrads = [
+      { year: '2025', names: '김현지 · 이나현 · 강다희 · 홍성은' },
+      { year: '2024', names: '이재훈 · 박채영 · 양윤서' },
+      { year: '2023', names: '김해원 · 이예지' },
+      { year: '2021', names: '김나영 · 박채원' },
+      { year: '2020', names: '김혜지' },
+      { year: '2019', names: '성병관' },
+      { year: '2018', names: '한승윤 · 김주용 · 윤성현 · 김건종 · 정충식' },
+      { year: '2017', names: '서나영' },
+      { year: '2016', names: '황진욱 · 이혜지 · 이슬찬' }
+    ];
+    let undergradTotal = 0;
+    undergrads.forEach(u => { undergradTotal += u.names.split(' · ').length; });
+    // 4 categories: Atoms/Electrons (blue) · AI & Data (orange) · Modeling & Optimization (green) · Experiment (red)
+    const tagColor = (t) => {
+      if (/ai & data/i.test(t)) return { c: '#a86700', b: '#ffa500' };
+      if (/modeling & optimization/i.test(t)) return { c: '#00794a', b: '#00a651' };
+      if (/experiment/i.test(t)) return { c: '#a52a1d', b: '#c0392b' };
+      return { c: '#1c4fa1', b: '#005baa' };
+    };
+    groups.forEach(g => {
+      g.count = g.people.length;
+      g.empty = g.people.length === 0;
+      g.people.forEach(m => {
+        m.photoSrc = 'images/slot-' + m.photo + '.webp';
+        m.eduLines = (m.edu || '').split(' · ');
+        m.tags = (m.interests || '').split(' · ').map(t => Object.assign({ t }, tagColor(t)));
+        m.hasLinks = !!(m.scholar || m.github || m.linkedin);
+      });
+    });
+    const ft = this.state.filterTag, fs = this.state.filterSector;
+    const tally = {};
+    groups.forEach(g => g.people.forEach(m => (m.tags || []).forEach(tg => {
+      if (!tally[tg.t]) tally[tg.t] = { t: tg.t, c: tg.c, b: tg.b, n: 0 };
+      tally[tg.t].n++;
+    })));
+    const interestTotals = Object.values(tally).sort((a, b) => b.n - a.n).map(it => {
+      const active = ft === it.t;
+      return Object.assign({}, it, {
+        fg: active ? '#f3f2f2' : it.c,
+        bg: active ? it.c : 'transparent',
+        click: () => this.setState({ filterTag: active ? null : it.t })
+      });
+    });
+    let showGroups = groups;
+    if (ft) {
+      showGroups = groups
+        .map(g => Object.assign({}, g, { people: g.people.filter(m => (m.tags || []).some(tg => tg.t === ft)) }))
+        .map(g => Object.assign(g, { count: g.people.length, empty: false }))
+        .filter(g => g.people.length > 0);
+    }
+    const stally = {};
+    alumni.forEach(a => a.people.forEach(p => {
+      if (!p.sector) return;
+      if (!stally[p.sector]) stally[p.sector] = { t: p.sector, c: p.scolor, b: p.sqcolor, n: 0 };
+      stally[p.sector].n++;
+    }));
+    const sectorTotals = Object.values(stally).sort((a, b) => b.n - a.n).map(it => {
+      const active = fs === it.t;
+      return Object.assign({}, it, {
+        fg: active ? '#f3f2f2' : it.c,
+        bg: active ? it.c : 'transparent',
+        click: () => this.setState({ filterSector: active ? null : it.t })
+      });
+    });
+    let showAlumni = alumni;
+    if (fs) {
+      showAlumni = alumni
+        .map(a => Object.assign({}, a, { people: a.people.filter(p => p.sector === fs) }))
+        .filter(a => a.people.length > 0);
+    }
+    showAlumni.forEach(a => { a.count = a.people.length; });
+    let memberTotal = 0;
+    groups.forEach(g => { memberTotal += g.people.length; });
+    let alumniTotal = 0;
+    alumni.forEach(a => { alumniTotal += a.people.length; });
+    return { groups: showGroups, alumni: showAlumni, undergrads, undergradTotal, interestTotals, sectorTotals, memberTotal, alumniTotal };
+  }
+}
+</script>
+</body>
+</html>
