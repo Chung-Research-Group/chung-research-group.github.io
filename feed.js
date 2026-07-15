@@ -2,6 +2,7 @@
 // News.dc.html, Publications.dc.html, and MTAP Landing.dc.html.
 // Edit here once; every page stays in sync.
 
+if (!window.MTAP_FEED) { (function(){
 const JU = {
   ijc: 'https://onlinelibrary.wiley.com/journal/18695868',
   jcp: 'https://pubs.aip.org/aip/jcp',
@@ -188,3 +189,4 @@ const PUBS = [
 ];
 
 window.MTAP_FEED = { JU: JU, NEWS: NEWS, PUBS: PUBS };
+})(); }
