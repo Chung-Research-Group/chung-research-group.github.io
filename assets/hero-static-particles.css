@@ -1,0 +1,97 @@
+/* Chung Research Group: static MOF background + pointer-reactive particles */
+.hero-mof-interactive {
+  --hero-image-x: 0px;
+  --hero-image-y: 0px;
+  --hero-image-rx: 0deg;
+  --hero-image-ry: 0deg;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f5f4f2;
+}
+
+.hero-mof-interactive__image {
+  position: absolute;
+  inset: -7%;
+  z-index: 0;
+
+  display: block;
+  width: 114%;
+  height: 114%;
+  object-fit: cover;
+  object-position: 66% center;
+
+  transform:
+    perspective(1400px)
+    translate3d(var(--hero-image-x), var(--hero-image-y), 0)
+    rotateX(var(--hero-image-rx))
+    rotateY(var(--hero-image-ry))
+    scale(1.025);
+  transform-origin: 66% 50%;
+
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+/* Preserve contrast behind the headline and body copy. */
+.hero-mof-interactive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(246, 245, 243, 0.998) 0%,
+    rgba(246, 245, 243, 0.985) 28%,
+    rgba(246, 245, 243, 0.89) 45%,
+    rgba(246, 245, 243, 0.48) 64%,
+    rgba(246, 245, 243, 0.12) 83%,
+    rgba(246, 245, 243, 0.03) 100%
+  );
+}
+
+.hero-mof-interactive__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-mof-interactive > :not(.hero-mof-interactive__image):not(.hero-mof-interactive__particles) {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-mof-interactive .hero-secondary {
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+@media (max-width: 840px) {
+  .hero-mof-interactive__image {
+    object-position: 76% center;
+    opacity: 0.48;
+    transform: none;
+  }
+
+  .hero-mof-interactive::before {
+    background: rgba(246, 245, 243, 0.90);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mof-interactive__image {
+    transform: none;
+  }
+
+  .hero-mof-interactive__particles {
+    display: none;
+  }
+}
