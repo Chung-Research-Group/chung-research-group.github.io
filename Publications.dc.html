@@ -151,7 +151,10 @@ class Component extends DCLogic {
       A.forEach(w => { if (B.has(w)) inter++; });
       return inter / (A.size + B.size - inter);
     };
-    const papers = this._papers || [];
+    let papers = this._papers || [];
+    if (!papers.length && this._feed && this._feed.PUBS) {
+      papers = this._feed.PUBS.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
+    }
     const dois = {}, cites = {};
     let dirty = false, since = 0;
     const push = () => this.setState(s => ({ dois: Object.assign({}, s.dois, dois), cites: Object.assign({}, s.cites, cites) }));
