@@ -137,7 +137,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}, &quot;crossrefCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4200, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
 class Component extends DCLogic {
   state = { q: '', dois: {}, cites: {} };
   async resolveDois() {
@@ -228,15 +228,26 @@ class Component extends DCLogic {
     });
     groups.forEach(g => { g.count = g.items.length; });
     const citeMap = this.state.cites || {};
-    let totalCites = 0;
-    Object.values(citeMap).forEach(c => { totalCites += (c || 0); });
+    filtered.forEach(p => {
+      const c = citeMap[p.no] || 0;
+      p.citeN = c;
+      p.citeText = c ? ('Cited by ' + c.toLocaleString('en-US') + ' · Crossref') : '';
+    });
+    let liveCites = 0;
+    Object.values(citeMap).forEach(c => { liveCites += (c || 0); });
+    const crossrefProp = this.props.crossrefCitations ?? 0;
+    const resolvedCount = Object.keys(citeMap).length;
+    // Use the live Crossref sum once most papers have resolved; otherwise fall
+    // back to the editable floor so the stat is never blank.
+    const useLive = resolvedCount >= Math.max(1, full.length - 4);
+    const totalCites = useLive ? liveCites : Math.max(liveCites, crossrefProp);
     const scholarCites = this.props.scholarCitations ?? 0;
     return {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
       totalPubs: full.length,
       totalCites: totalCites,
-      totalCitesText: totalCites.toLocaleString('en-US') + '+',
+      totalCitesText: totalCites.toLocaleString('en-US') + (useLive ? '' : '+'),
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
       empty: filtered.length === 0,
