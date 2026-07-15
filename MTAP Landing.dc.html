@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +8,8 @@
 <body>
 <x-dc>
 <helmet>
+<title>Chung Research Group @ PNU</title>
+<meta name="description" content="AI-driven materials and chemical discovery through atomistic simulation, statistical mechanics, and artificial intelligence.">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="feed.js"></script>
@@ -35,7 +37,7 @@ body{zoom:0.88}
   [style*="170px 1fr"]{grid-template-columns:110px 1fr !important;gap:0 14px !important}
   [style*="width:170px"],[style*="width: 170px"]{width:110px !important;height:130px !important}
   h1{font-size:34px !important;line-height:40px !important;flex-wrap:wrap;gap:8px !important}
-  h1 span{font-size:19px !important;line-height:26px !important}
+  h1 span{font-size:inherit !important;line-height:inherit !important}
   [style*="font-size:64px"],[style*="font-size: 64px"]{font-size:34px !important;line-height:40px !important}
   [style*="font-size:56px"],[style*="font-size: 56px"]{font-size:32px !important;line-height:38px !important}
   [style*="font-size:40px"],[style*="font-size: 40px"]{font-size:28px !important;line-height:34px !important}
@@ -47,12 +49,133 @@ body{zoom:0.88}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
 }
+
+/* Interactive hero: static MOF image + pointer-reactive particles */
+.hero-interactive {
+  --mof-x: 0px;
+  --mof-y: 0px;
+  --mof-rx: 0deg;
+  --mof-ry: 0deg;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  perspective: 1200px;
+  background: #f6f5f3;
+}
+
+.hero-interactive__image {
+  position: absolute;
+  inset: -5%;
+  z-index: 0;
+  display: block;
+  width: 110%;
+  height: 110%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 68% center;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 72% 50%;
+  transform:
+    translate3d(var(--mof-x), var(--mof-y), 0)
+    scale(1.035)
+    rotateX(var(--mof-rx))
+    rotateY(var(--mof-ry));
+  transition: transform 180ms cubic-bezier(.2,.75,.2,1);
+  will-change: transform;
+}
+
+/* Preserve text contrast while leaving the framework visible on the right. */
+.hero-interactive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(246,245,243,.995) 0%,
+    rgba(246,245,243,.975) 30%,
+    rgba(246,245,243,.83) 49%,
+    rgba(246,245,243,.44) 69%,
+    rgba(246,245,243,.10) 100%
+  );
+}
+
+.hero-interactive__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-interactive > :not(.hero-interactive__image):not(.hero-interactive__particles) {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-interactive .hero-secondary {
+  background: rgba(255,255,255,.86);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width:840px) {
+  /* Override the older global h1 span rule for this hero explicitly. */
+  .hero-interactive h1 span {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  .hero-interactive__image {
+    inset: -2%;
+    width: 104%;
+    height: 104%;
+    max-width: none !important;
+    object-position: 74% center;
+    opacity: .50;
+    transform: none;
+  }
+
+  .hero-interactive::before {
+    background: rgba(246,245,243,.88);
+  }
+
+  .hero-interactive__particles {
+    opacity: .62;
+  }
+
+  footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* The permanently fixed button overlaps the second hero CTA on small screens. */
+  .back-to-top {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-interactive__image {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-interactive__particles {
+    display: none;
+  }
+}
+
 </style>
 </helmet>
 
-<div data-screen-label="MTAP Landing">
+<div id="top" data-screen-label="MTAP Landing">
   <div style="height:4px;background:var(--color-accent)"></div>
-  <nav class="nav" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
+  <nav class="nav" aria-label="Primary navigation" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
     <a class="nav-brand" href="MTAP Landing.dc.html" style="display:inline-flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit"><span style="font-size:24px">Chung Research Group</span><span style="color:var(--color-accent);font-size:24px;font-family:var(--font-heading);font-weight:800">@ PNU</span></a>
     <a href="News.dc.html">News</a>
     <a href="People.dc.html">People</a>
@@ -63,7 +186,9 @@ body{zoom:0.88}
   </nav>
 
   <div style="padding:0 64px">
-    <section style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:24px 56px;align-items:center;padding:52px 0 48px" data-screen-label="Hero">
+    <section class="hero-interactive" data-hero-interactive style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:24px 56px;align-items:center;padding:52px 0 48px" data-screen-label="Hero">
+      <img class="hero-interactive__image" src="images/hero-mof.webp" alt="" aria-hidden="true" draggable="false">
+      <canvas class="hero-interactive__particles" aria-hidden="true"></canvas>
       <div>
         <h1 style="font-family:var(--font-heading);font-weight:800;font-size:64px;line-height:68px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">
           <span style="display:block">AI-driven materials</span>
@@ -71,7 +196,7 @@ body{zoom:0.88}
         </h1>
         <p style="font-size:19px;line-height:30px;max-width:62ch;margin:24px 0 0">We combine state-of-the-art <b>atomistic simulations</b>,&nbsp;<b>statistical mechanics</b>, and <b>artificial intelligence</b> to link atomistic phenomena to macroscopic performance in energy, environment, and industrial applications.</p>
         <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}">
-        <p style="font-size:19px;line-height:30px;max-width:62ch;margin:12px 0 0;color:var(--color-text)">원자/양자 시뮬레이션, 통계열역학, 인공지능으로 나노스케일의 물리/화학 현상과 거시계의 성능을 연결합니다.</p>
+        <p lang="ko" style="font-size:19px;line-height:30px;max-width:62ch;margin:12px 0 0;color:var(--color-text)">원자/양자 시뮬레이션, 통계열역학, 인공지능으로 나노스케일의 물리/화학 현상과 거시계의 성능을 연결합니다.</p>
         </sc-if>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px;justify-content:center">
@@ -80,7 +205,7 @@ body{zoom:0.88}
           <span style="flex:1;min-width:0">Join our group<span style="display:block;font-family:var(--font-body);font-weight:400;font-size:15px;line-height:21px;margin-top:2px;opacity:.85">2027학년도 대학원생 모집 중</span></span>
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
         </a>
-        <a href="Software %26 Data.dc.html" style="display:flex;align-items:center;gap:14px;padding:22px 30px;border:2px solid var(--color-accent);color:var(--color-accent-700);text-decoration:none;font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:26px" style-hover="background:var(--color-accent-100)">
+        <a class="hero-secondary" href="Software %26 Data.dc.html" style="display:flex;align-items:center;gap:14px;padding:22px 30px;border:2px solid var(--color-accent);color:var(--color-accent-700);text-decoration:none;font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:26px" style-hover="background:var(--color-accent-100)">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"></path><path d="M13 4l-2 16"></path></svg>
           <span style="flex:1;min-width:0">Our software &amp; data<span style="display:block;font-family:var(--font-body);font-weight:400;font-size:15px;line-height:21px;margin-top:2px;opacity:.85">Open tools &amp; databases</span></span>
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
@@ -159,7 +284,7 @@ body{zoom:0.88}
     </section>
   </div>
 
-  <a href="#" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <a class="back-to-top" href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:15px;line-height:24px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
@@ -176,7 +301,21 @@ class Component extends DCLogic {
       try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
     }, 400);
   }
-  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); } else { setTimeout(t, 50); } }; t(); }
+  componentDidMount() {
+    let attempts = 0;
+    const t = () => {
+      if (window.MTAP_FEED) {
+        this._feed = window.MTAP_FEED;
+        this.forceUpdate();
+        this.refreshBadges();
+      } else if (attempts++ < 200) {
+        setTimeout(t, 50);
+      } else {
+        console.warn("MTAP_FEED was not loaded within 10 seconds.");
+      }
+    };
+    t();
+  }
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const kr = this.props.showKorean ?? true;
@@ -204,5 +343,299 @@ class Component extends DCLogic {
   }
 }
 </script>
+
+<script>
+(() => {
+  "use strict";
+
+  const selector = "[data-hero-interactive]";
+  const instances = new WeakMap();
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+  const coarsePointer = window.matchMedia?.("(pointer: coarse)");
+  const palette = [
+    [0, 91, 170],
+    [45, 167, 224],
+    [0, 166, 81],
+    [225, 138, 0]
+  ];
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const smoothstep = (value) => {
+    const t = clamp(value, 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+
+  function initHero(hero) {
+    if (!(hero instanceof HTMLElement) || instances.has(hero)) return;
+
+    const canvas = hero.querySelector(".hero-interactive__particles");
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    let width = 1;
+    let height = 1;
+    let dpr = 1;
+    let particles = [];
+    let rafId = 0;
+    let lastTime = performance.now();
+    let visible = true;
+    let destroyed = false;
+    const pointer = { x: 0, y: 0, active: false };
+
+    function desiredCount() {
+      const areaCount = Math.round((width * height) / 14500);
+      return clamp(areaCount, width < 760 ? 22 : 30, width < 760 ? 34 : 48);
+    }
+
+    function makeParticle() {
+      const rightWeighted = Math.random() < 0.82;
+      const x = rightWeighted
+        ? width * (0.34 + 0.66 * Math.pow(Math.random(), 0.68))
+        : Math.random() * width;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.025 + Math.random() * 0.075;
+      const pick = Math.random();
+      const color = palette[pick < 0.60 ? 0 : pick < 0.82 ? 1 : pick < 0.92 ? 2 : 3];
+      return {
+        x,
+        y: Math.random() * height,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        radius: 1.15 + Math.random() * 1.85,
+        alpha: 0.30 + Math.random() * 0.34,
+        phase: Math.random() * Math.PI * 2,
+        color
+      };
+    }
+
+    function resize() {
+      if (destroyed || !hero.isConnected) return;
+      const rect = hero.getBoundingClientRect();
+      width = Math.max(1, rect.width);
+      height = Math.max(1, rect.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      /* Do not assign canvas.style.width/height here. The page uses body{zoom},
+         and getBoundingClientRect already returns visual dimensions. */
+      canvas.width = Math.max(1, Math.round(width * dpr));
+      canvas.height = Math.max(1, Math.round(height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = desiredCount();
+      if (particles.length > count) particles.length = count;
+      while (particles.length < count) particles.push(makeParticle());
+    }
+
+    function setPointer(event) {
+      if (coarsePointer?.matches || reduceMotion?.matches) return;
+      const rect = hero.getBoundingClientRect();
+      width = Math.max(1, rect.width);
+      height = Math.max(1, rect.height);
+      pointer.x = event.clientX - rect.left;
+      pointer.y = event.clientY - rect.top;
+      pointer.active = true;
+
+      const nx = clamp(pointer.x / width * 2 - 1, -1, 1);
+      const ny = clamp(pointer.y / height * 2 - 1, -1, 1);
+      hero.style.setProperty("--mof-x", `${(-nx * 7).toFixed(2)}px`);
+      hero.style.setProperty("--mof-y", `${(-ny * 4).toFixed(2)}px`);
+      hero.style.setProperty("--mof-rx", `${(-ny * 1.05).toFixed(3)}deg`);
+      hero.style.setProperty("--mof-ry", `${(nx * 1.35).toFixed(3)}deg`);
+    }
+
+    function clearPointer() {
+      pointer.active = false;
+      hero.style.setProperty("--mof-x", "0px");
+      hero.style.setProperty("--mof-y", "0px");
+      hero.style.setProperty("--mof-rx", "0deg");
+      hero.style.setProperty("--mof-ry", "0deg");
+    }
+
+    function updateParticle(particle, step, now) {
+      const flow = now * 0.00018 + particle.phase;
+      particle.vx += Math.cos(flow) * 0.00115 * step;
+      particle.vy += Math.sin(flow * 1.17) * 0.00100 * step;
+
+      if (pointer.active) {
+        const dx = particle.x - pointer.x;
+        const dy = particle.y - pointer.y;
+        const radius = clamp(width * 0.115, 110, 170);
+        const distanceSquared = dx * dx + dy * dy;
+        if (distanceSquared > 0.01 && distanceSquared < radius * radius) {
+          const distance = Math.sqrt(distanceSquared);
+          const q = 1 - distance / radius;
+          const force = q * q * 0.62 * step;
+          particle.vx += dx / distance * force;
+          particle.vy += dy / distance * force;
+        }
+      }
+
+      const damping = Math.pow(0.984, step);
+      particle.vx *= damping;
+      particle.vy *= damping;
+      particle.x += particle.vx * step;
+      particle.y += particle.vy * step;
+
+      const margin = 18;
+      if (particle.x < -margin) particle.x = width + margin;
+      if (particle.x > width + margin) particle.x = -margin;
+      if (particle.y < -margin) particle.y = height + margin;
+      if (particle.y > height + margin) particle.y = -margin;
+    }
+
+    function leftToRightVisibility(x) {
+      return 0.16 + 0.84 * smoothstep((x / width - 0.18) / 0.58);
+    }
+
+    function drawLinks() {
+      const maxDistance = clamp(width * 0.078, 82, 122);
+      const maxDistanceSquared = maxDistance * maxDistance;
+      ctx.lineWidth = 0.75;
+
+      for (let i = 0; i < particles.length; i += 1) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distanceSquared = dx * dx + dy * dy;
+          if (distanceSquared >= maxDistanceSquared) continue;
+
+          const proximity = 1 - Math.sqrt(distanceSquared) / maxDistance;
+          const sideFade = Math.min(leftToRightVisibility(a.x), leftToRightVisibility(b.x));
+          const alpha = proximity * sideFade * 0.11;
+          ctx.strokeStyle = `rgba(0,91,170,${alpha.toFixed(4)})`;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawParticles() {
+      for (const particle of particles) {
+        const [r, g, b] = particle.color;
+        const alpha = particle.alpha * leftToRightVisibility(particle.x);
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(4)})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function draw(now) {
+      rafId = 0;
+      if (destroyed) return;
+      if (!hero.isConnected) {
+        destroy();
+        return;
+      }
+      if (!visible || document.hidden || reduceMotion?.matches) return;
+
+      const step = clamp((now - lastTime) / 16.667, 0.35, 2);
+      lastTime = now;
+      ctx.clearRect(0, 0, width, height);
+      for (const particle of particles) updateParticle(particle, step, now);
+      drawLinks();
+      drawParticles();
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function start() {
+      if (destroyed || rafId || !visible || document.hidden || reduceMotion?.matches) return;
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      if (!rafId) return;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function onMotionPreferenceChange() {
+      if (reduceMotion?.matches) {
+        stop();
+        ctx.clearRect(0, 0, width, height);
+        clearPointer();
+      } else {
+        resize();
+        start();
+      }
+    }
+
+    const resizeObserver = "ResizeObserver" in window
+      ? new ResizeObserver(() => resize())
+      : null;
+    resizeObserver?.observe(hero);
+
+    const intersectionObserver = "IntersectionObserver" in window
+      ? new IntersectionObserver(([entry]) => {
+          visible = Boolean(entry?.isIntersecting);
+          if (visible) start(); else stop();
+        }, { threshold: 0.02 })
+      : null;
+    intersectionObserver?.observe(hero);
+
+    function onVisibilityChange() {
+      if (document.hidden) stop(); else start();
+    }
+
+    function destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      stop();
+      resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
+      hero.removeEventListener("pointermove", setPointer);
+      hero.removeEventListener("pointerleave", clearPointer);
+      hero.removeEventListener("pointercancel", clearPointer);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      reduceMotion?.removeEventListener?.("change", onMotionPreferenceChange);
+      instances.delete(hero);
+    }
+
+    hero.addEventListener("pointermove", setPointer, { passive: true });
+    hero.addEventListener("pointerleave", clearPointer, { passive: true });
+    hero.addEventListener("pointercancel", clearPointer, { passive: true });
+    window.addEventListener("resize", resize, { passive: true });
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    reduceMotion?.addEventListener?.("change", onMotionPreferenceChange);
+
+    instances.set(hero, { destroy });
+    hero.dataset.heroInteractiveReady = "true";
+    resize();
+    start();
+  }
+
+  function initAll(root = document) {
+    if (root instanceof Element && root.matches(selector)) initHero(root);
+    root.querySelectorAll?.(selector).forEach(initHero);
+  }
+
+  function boot() {
+    initAll(document);
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node instanceof Element) initAll(node);
+        }
+      }
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
+  }
+})();
+</script>
+
 </body>
 </html>
