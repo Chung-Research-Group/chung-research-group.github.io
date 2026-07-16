@@ -126,7 +126,7 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
-const publicationThemes = ["DFT", "GCMC", "MD", "Process & Systems", "Materials Data", "Machine Learning", "LLM", "Infrastructure", "Adsorption", "Transport", "Reaction", "Statistical Mechanics", "Electrochemistry", "Techno-economic analysis", "Pressure-swing adsorption", "Device", "2D", "reticular materials", "oxides", "polymers", "carbons", "zeolites", "molecules", "electrolytes", "perovskites", "membranes", "Review"];
+const publicationThemes = ["DFT", "GCMC", "MD", "Process & Systems", "Data", "Machine Learning", "LLM", "Infrastructure", "Characterization", "Adsorption", "Transport", "Reaction", "Statistical Mechanics", "Electrochemistry", "Techno-economic analysis", "Swing Adsorption", "Device", "2D", "reticular materials", "oxides", "polymers", "carbons", "zeolites", "molecules", "electrolytes", "perovskites", "membranes", "Review"];
 for (const theme of publicationThemes) {
   if (!publicationsHtml.includes(`'${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
 }
