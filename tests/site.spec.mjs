@@ -87,4 +87,5 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
   await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('MOFs', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('carbons', { exact: true })).toBeVisible();
 });
