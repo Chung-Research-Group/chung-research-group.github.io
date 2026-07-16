@@ -68,3 +68,23 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
   await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
 });
+
+
+test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
+  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
+  await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
+
+  await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
+  const baek = page.locator('#m-baek');
+  await expect(baek.getByText('AI & Data', { exact: true })).toBeVisible();
+  await expect(baek.getByText('Atoms/Electrons', { exact: true })).toHaveCount(0);
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('[data-publication-no="19"]')).toHaveCount(0);
+  await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
+  const jpcc = page.getByText(/Surface area determination of porous materials/).locator('..');
+  await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
+  await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('MOFs', { exact: true })).toBeVisible();
+});
