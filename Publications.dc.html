@@ -238,7 +238,7 @@ class Component extends DCLogic {
     const themeDefs = [
       { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Process & Systems', 'Materials Data', 'Machine Learning', 'LLM', 'Infrastructure'] },
       { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Transport', 'Reaction', 'Thermodynamics'] },
-      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'MOFs', 'COFs', 'PAFs', 'oxides', 'polymers', 'carbons'] },
+      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'MOFs', 'COFs', 'PAFs', 'oxides', 'polymers', 'carbons', 'zeolites', 'molecules', 'electrolytes', 'perovskites'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
     const themes = themeDefs.flatMap(group => group.labels.map(t => ({ t, c: group.c, b: group.b, group: group.title })));
