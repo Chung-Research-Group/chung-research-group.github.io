@@ -191,27 +191,27 @@ const PUBS = [
 // Editorial topic assignments. These are intentionally explicit rather than
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
-  '72': ['Materials Data', 'Tools'], '71': ['AI', 'Materials Data', 'Transport'], '70': ['Process & Systems', 'Adsorption', 'Reaction'],
-  '69': ['Adsorption'], '68': ['Tools', 'Adsorption', 'Thermodynamics'], '67': ['Process & Systems', 'Adsorption'],
-  '66': ['Adsorption'], '65': ['Adsorption'], '64': ['Process & Systems', 'Adsorption'], '63': ['AI', 'Materials Data', 'Adsorption'],
-  '62': ['GCMC', 'AI', 'Adsorption'], '61': ['Transport'], '60': ['Materials Data', 'Process & Systems', 'Adsorption'],
-  '59': ['Process & Systems', 'Adsorption', 'Transport'], '58': ['Transport'], '57': ['Reaction', 'Transport'],
-  '56': ['AI', 'Adsorption'], '55': ['Process & Systems', 'Adsorption'], '54': ['Tools'], '53': ['Reaction'],
-  '52': ['GCMC', 'Adsorption'], '51': ['Adsorption'], '50': ['AI'], '49': ['Materials Data', 'Transport'],
-  '48': ['Adsorption'], '47': ['Reaction'], '46': ['GCMC', 'Adsorption'], '45': ['DFT', 'Materials Data'],
-  '44': ['Reaction', 'Transport'], '43': ['Tools', 'Adsorption'], '42': ['AI', 'Materials Data', 'Adsorption'],
-  '41': ['Adsorption', 'Reaction'], '40': ['GCMC', 'Adsorption'], '39': ['Adsorption'], '38': ['Adsorption'],
-  '37': ['Tools', 'Adsorption'], '36': ['Adsorption', 'Reaction'], '35': ['AI'], '34': ['DFT', 'Materials Data'],
-  '33': ['Materials Data', 'Process & Systems', 'Adsorption'], '32': ['GCMC', 'Adsorption'],
-  '31': ['Adsorption', 'Transport'], '30': ['Adsorption'], '29': ['DFT', 'Reaction'], '28': ['AI'],
-  '27': ['Process & Systems', 'Reaction'], '26': ['AI', 'Adsorption'], '25': ['AI'], '24': ['Transport', 'Thermodynamics'],
-  '23': ['Adsorption', 'Reaction'], '22': ['Materials Data', 'Adsorption'], '21': ['Adsorption'],
-  '20': ['DFT', 'Adsorption'], '19': ['Adsorption'], '18': ['Adsorption'], '17': ['Adsorption', 'Thermodynamics'],
-  '16': ['Adsorption', 'Reaction'], '15': ['Adsorption', 'Reaction'], '14': ['GCMC', 'Adsorption'],
-  '13': ['GCMC', 'Adsorption'], '12': ['GCMC', 'Adsorption'], '11': ['DFT'], '10': ['Reaction'],
-  '09': ['AI', 'Adsorption'], '08': ['GCMC', 'Adsorption'], '07': ['Adsorption', 'Reaction'],
-  '06': ['GCMC', 'Materials Data', 'Adsorption'], '05': ['Materials Data'], '04': ['Transport'],
-  '03': ['Transport'], '02': ['Transport'], '01': ['MD', 'Materials Data']
+  '72': ['Review'], '71': ['Machine Learning', 'LLM', 'Materials Data', 'Transport'], '70': ['Review'],
+  '69': ['Process & Systems', 'Adsorption', 'MOFs'], '68': ['Infrastructure', 'Adsorption', 'Thermodynamics'], '67': ['Process & Systems', 'Adsorption', 'MOFs'],
+  '66': ['Process & Systems', 'Adsorption'], '65': ['Adsorption', 'MOFs'], '64': ['Process & Systems', 'Adsorption', 'carbons'], '63': ['Machine Learning', 'Materials Data', 'MOFs'],
+  '62': ['GCMC', 'Machine Learning', 'Adsorption', 'MOFs'], '61': ['Transport', 'polymers'], '60': ['Materials Data', 'Machine Learning', 'Process & Systems', 'Adsorption', 'MOFs'],
+  '59': ['Process & Systems', 'Adsorption', 'Transport', 'MOFs'], '58': ['Transport', 'MOFs'], '57': ['Reaction', 'Transport', 'oxides'],
+  '56': ['Machine Learning', 'Adsorption', 'COFs'], '55': ['Process & Systems', 'Adsorption'], '54': ['Machine Learning', 'Infrastructure'], '53': ['Reaction', 'MOFs'],
+  '52': ['GCMC', 'Machine Learning', 'Adsorption', 'MOFs', 'COFs'], '51': ['Adsorption', 'PAFs'], '50': ['Machine Learning'], '49': ['Materials Data', 'Transport', 'oxides'],
+  '48': ['Review'], '47': ['Reaction', 'MOFs'], '46': ['GCMC', 'Machine Learning', 'Adsorption', 'MOFs'], '45': ['DFT', 'Materials Data', 'MOFs'],
+  '44': ['Reaction', 'Transport', 'oxides', 'polymers'], '43': ['Infrastructure', 'Adsorption'], '42': ['Machine Learning', 'Materials Data', 'Adsorption', 'MOFs'],
+  '41': ['Adsorption', 'Reaction', '2D'], '40': ['GCMC', 'Adsorption', 'MOFs', 'carbons'], '39': ['Adsorption'], '38': ['Adsorption'],
+  '37': ['Review'], '36': ['Adsorption', 'Reaction', 'MOFs'], '35': ['Machine Learning', 'Adsorption', 'MOFs'], '34': ['DFT', 'Materials Data', '2D', 'carbons'],
+  '33': ['Materials Data', 'Process & Systems', 'Adsorption', 'MOFs'], '32': ['GCMC', 'Adsorption'],
+  '31': ['Adsorption', 'Transport', 'carbons'], '30': ['Adsorption', 'MOFs'], '29': ['DFT', 'Reaction', '2D', 'carbons'], '28': ['Machine Learning', 'Process & Systems'],
+  '27': ['Process & Systems', 'Reaction'], '26': ['Machine Learning', 'Adsorption'], '25': ['Machine Learning', 'Process & Systems'], '24': ['Transport', 'Thermodynamics'],
+  '23': ['Adsorption', 'Reaction', 'carbons'], '22': ['Materials Data', 'Adsorption', 'MOFs'], '21': ['Review'],
+  '20': ['DFT', 'Adsorption', 'MOFs'], '19': ['Review'], '18': ['Process & Systems', 'Adsorption'], '17': ['Review'],
+  '16': ['Adsorption', 'Reaction', '2D', 'MOFs'], '15': ['Adsorption', 'Reaction', 'MOFs'], '14': ['GCMC', 'Adsorption', 'MOFs'],
+  '13': ['GCMC', 'Adsorption'], '12': ['GCMC', 'Adsorption', 'MOFs'], '11': ['DFT', 'Materials Data', 'MOFs'], '10': ['Reaction', 'MOFs'],
+  '09': ['Machine Learning', 'Adsorption', 'MOFs'], '08': ['GCMC', 'Adsorption', 'MOFs'], '07': ['Adsorption', 'Reaction', 'MOFs'],
+  '06': ['GCMC', 'Materials Data', 'Adsorption', 'MOFs'], '05': ['Materials Data', 'Infrastructure', 'MOFs'], '04': ['MD', 'Transport', 'polymers'],
+  '03': ['MD', 'Transport', 'polymers'], '02': ['MD', 'Transport', 'polymers'], '01': ['MD', 'Materials Data', 'polymers']
 };
 PUBS.forEach(p => { p.topics = PUB_TOPICS[p.no].slice(); });
 

@@ -100,8 +100,13 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
         <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
-        <div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:980px">
-          <sc-for list="{{ themeTotals }}" as="it" hint-placeholder-count="11"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;max-width:1040px;margin-left:auto">
+          <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px">
+              <span style="min-width:94px;text-align:right;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:0.08em;text-transform:uppercase;font-weight:800;color:{{ group.c }}">{{ group.title }}</span>
+              <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+            </div>
+          </sc-for>
         </div>
       </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
@@ -230,15 +235,14 @@ class Component extends DCLogic {
   renderVals() {
     const FEED = this._feed;
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
-    const themes = [
-      { t: 'DFT', c: '#1c4fa1', b: '#005baa' }, { t: 'GCMC', c: '#007b83', b: '#00a0aa' },
-      { t: 'MD', c: '#00794a', b: '#00a651' }, { t: 'Adsorption', c: '#a86700', b: '#ffa500' },
-      { t: 'Reaction', c: '#a52a1d', b: '#c0392b' }, { t: 'Transport', c: '#6b4f9e', b: '#8e6ac8' },
-      { t: 'Materials Data', c: '#1b6b7a', b: '#2d9bb0' }, { t: 'AI', c: '#8b3f75', b: '#c05a9f' },
-      { t: 'Tools', c: '#4f6470', b: '#738894' }, { t: 'Process & Systems', c: '#8a5a2b', b: '#b77b3e' },
-      { t: 'Thermodynamics', c: '#6f6b22', b: '#9b9632' }
+    const themeDefs = [
+      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Process & Systems', 'Materials Data', 'Machine Learning', 'LLM', 'Infrastructure'] },
+      { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Transport', 'Reaction', 'Thermodynamics'] },
+      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'MOFs', 'COFs', 'PAFs', 'oxides', 'polymers', 'carbons'] },
+      { title: 'Review', c: '#8b5cf6', b: '#c4b5fd', labels: ['Review'] }
     ];
-    const priority = ['DFT', 'GCMC', 'MD', 'AI', 'Materials Data', 'Tools', 'Process & Systems', 'Adsorption', 'Reaction', 'Transport', 'Thermodynamics'];
+    const themes = themeDefs.flatMap(group => group.labels.map(t => ({ t, c: group.c, b: group.b, group: group.title })));
+    const priority = themeDefs.flatMap(group => group.labels);
     const byName = Object.fromEntries(themes.map(t => [t.t, t]));
     full.forEach(p => {
       p.tags = p.topics.slice().sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).map(name => byName[name]);
@@ -294,6 +298,11 @@ class Component extends DCLogic {
       bg: activeTheme === t.t ? t.c : 'transparent',
       click: () => this.setState({ theme: activeTheme === t.t ? null : t.t })
     }));
+    const themeGroups = themeDefs.map(group => ({
+      title: group.title,
+      c: group.c,
+      items: themeTotals.filter(t => t.group === group.title)
+    }));
     return {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
@@ -305,7 +314,7 @@ class Component extends DCLogic {
       empty: filtered.length === 0,
       searching: !!q || !!activeTheme,
       resultCount: filtered.length,
-      themeTotals,
+      themeGroups,
       groups,
     };
   }

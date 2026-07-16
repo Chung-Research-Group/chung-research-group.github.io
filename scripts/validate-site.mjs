@@ -126,16 +126,18 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
-const publicationThemes = ["DFT", "GCMC", "MD", "Adsorption", "Reaction", "Transport", "Materials Data", "AI", "Tools", "Process & Systems", "Thermodynamics"];
+const publicationThemes = ["DFT", "GCMC", "MD", "Process & Systems", "Materials Data", "Machine Learning", "LLM", "Infrastructure", "Adsorption", "Transport", "Reaction", "Thermodynamics", "2D", "MOFs", "COFs", "PAFs", "oxides", "polymers", "carbons", "Review"];
 for (const theme of publicationThemes) {
-  if (!publicationsHtml.includes(`t: '${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
+  if (!publicationsHtml.includes(`'${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
 }
-if (!publicationsHtml.includes("themeTotals") || !publicationsHtml.includes("p.tags")) {
+if (!publicationsHtml.includes("themeGroups") || !publicationsHtml.includes("p.tags")) {
   errors.push("Publication label rendering or filtering is missing.");
 }
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
 if (topicAssignments.length !== 72) errors.push(`Expected 72 explicit publication topic assignments, found ${topicAssignments.length}.`);
+const reviewAssignments = [...topicBlock.matchAll(/'(\\d{2})':\\s*\\[([^\\]]*'Review'[^\\]]*)\\]/g)];
+if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
