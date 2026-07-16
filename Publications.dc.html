@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications | Chung Research Group</title>
+<meta name="description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
+<link rel="canonical" href="https://chung-research-group.github.io/Publications.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Publications | Chung Research Group">
+<meta property="og:description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
+<meta property="og:url" content="https://chung-research-group.github.io/Publications.dc.html">
 <script src="./support.js"></script>
 </head>
-<body>
+<body id="top">
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
@@ -137,7 +144,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
     </section>
   </div>
 
-  <a href="#" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
@@ -222,33 +229,19 @@ class Component extends DCLogic {
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const FEED = this._feed;
-    const JU = (FEED && FEED.JU) || {};
-    const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
-    const S = (title, jk, journal, meta) => ({ title, journal, jurl: JU[jk], meta });
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
     const themes = [
-      { t: 'DFT', c: '#1c4fa1', b: '#005baa', rx: /\b(dft|density functional|first[- ]principles?|ab initio|quantum chemical)\b/i },
-      { t: 'GCMC', c: '#007b83', b: '#00a0aa', rx: /\b(gcmc|grand canonical monte carlo)\b/i },
-      { t: 'MD', c: '#00794a', b: '#00a651', rx: /\b(molecular dynamics|atomistic dynamics|md simulation)\b/i },
-      { t: 'Adsorption', c: '#a86700', b: '#ffa500', rx: /\b(adsorp|isotherm|porous|pore|gas storage|capture|separation|mof|zeolite|surface area|breakthrough)\w*/i },
-      { t: 'Reaction', c: '#a52a1d', b: '#c0392b', rx: /\b(reaction|reactivity|cataly|cycloaddition|kinetic|transition state|conversion)\w*/i },
-      { t: 'Transport', c: '#6b4f9e', b: '#8e6ac8', rx: /\b(transport|diffusion|diffusiv|permeab|conductiv|mobility|membrane)\w*/i },
-      { t: 'Materials Data', c: '#1b6b7a', b: '#2d9bb0', rx: /\b(database|dataset|data[- ]driven|computation[- ]ready|core mof|curat|materials data|informatics)\w*/i },
-      { t: 'AI', c: '#8b3f75', b: '#c05a9f', rx: /\b(machine learning|deep learning|artificial intelligence|neural network|language model|llm|genetic algorithm|classifier|ai)\b/i },
-      { t: 'Tools', c: '#4f6470', b: '#738894', rx: /\b(software|workflow|program|toolkit|web server|graphical user interface|gui|pacman|aim:)\w*/i },
-      { t: 'Process & Systems', c: '#8a5a2b', b: '#b77b3e', rx: /\b(process|systems? engineering|techno[- ]economic|pvsa|psa|tsa|process simulation|optimization|scale[- ]up)\w*/i },
-      { t: 'Thermodynamics', c: '#6f6b22', b: '#9b9632', rx: /\b(thermodynamic|free energy|enthalp|entropy|isosteric heat|phase equilibr|equation of state|chemical potential)\w*/i }
+      { t: 'DFT', c: '#1c4fa1', b: '#005baa' }, { t: 'GCMC', c: '#007b83', b: '#00a0aa' },
+      { t: 'MD', c: '#00794a', b: '#00a651' }, { t: 'Adsorption', c: '#a86700', b: '#ffa500' },
+      { t: 'Reaction', c: '#a52a1d', b: '#c0392b' }, { t: 'Transport', c: '#6b4f9e', b: '#8e6ac8' },
+      { t: 'Materials Data', c: '#1b6b7a', b: '#2d9bb0' }, { t: 'AI', c: '#8b3f75', b: '#c05a9f' },
+      { t: 'Tools', c: '#4f6470', b: '#738894' }, { t: 'Process & Systems', c: '#8a5a2b', b: '#b77b3e' },
+      { t: 'Thermodynamics', c: '#6f6b22', b: '#9b9632' }
     ];
     const priority = ['DFT', 'GCMC', 'MD', 'AI', 'Materials Data', 'Tools', 'Process & Systems', 'Adsorption', 'Reaction', 'Transport', 'Thermodynamics'];
     const byName = Object.fromEntries(themes.map(t => [t.t, t]));
     full.forEach(p => {
-      const text = [p.title, p.authors, p.journal, p.meta, p.note].filter(Boolean).join(' ');
-      const names = themes.filter(t => t.rx.test(text)).map(t => t.t);
-      const simulation = /\b(molecular simulation|monte carlo|computational screening|high[- ]throughput screening)\b/i.test(text);
-      if (!names.includes('GCMC') && simulation && byName.Adsorption.rx.test(text)) names.push('GCMC');
-      if (!names.includes('MD') && /\b(molecular|atomistic) simulation\b/i.test(text) && byName.Transport.rx.test(text)) names.push('MD');
-      if (!names.length) names.push('Materials Data');
-      p.tags = [...new Set(names)].sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).slice(0, 3).map(name => byName[name]);
+      p.tags = p.topics.slice().sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).map(name => byName[name]);
     });
     const HCP = ['60', '48', '22', '19'];
     const p72 = full.find(p => p.no === '72');
@@ -314,29 +307,6 @@ class Component extends DCLogic {
       resultCount: filtered.length,
       themeTotals,
       groups,
-      selected: [
-        { title: 'Digital materials intelligence', items: [
-          S('AIM: A user-friendly GUI workflow program for isotherm fitting, mixture prediction, isosteric heat estimation, and breakthrough simulation', 'cpc', 'Computer Physics Communications', '(2026)'),
-          S('Multiscale, techno-economic evaluation of isoreticular CALF-20 for biogas upgrading using a PVSA process', 'msde', 'Molecular Systems Design & Engineering', '(2026)'),
-          S('Progress toward the computational discovery of new MOF adsorbents for energy applications', 'ne', 'Nature Energy', '(2024) · review'),
-          S('Discovery of high-performing MOFs for on-board methane storage and delivery via LNG–ANG coupling', 'advsci', 'Advanced Science', '(2022)'),
-          S('In silico discovery of MOFs for precombustion CO₂ capture using a genetic algorithm', 'sciadv', 'Science Advances', '(2016)')
-        ]},
-        { title: 'Data & AI for materials and chemicals', items: [
-          S('Data-driven prediction of ionic conductivity in solid-state electrolytes with ML and LLMs', 'jcp', 'Journal of Chemical Physics', '(2026)'),
-          S('MOFClassifier: a machine learning approach for validating computation-ready MOFs', 'jacs', 'Journal of the American Chemical Society', '(2025)'),
-          S('CoRE MOF DB: a curated experimental MOF database with machine-learned properties', 'matter', 'Matter', '(2025)'),
-          S('PACMAN: a robust partial atomic charge predictor for nanoporous materials', 'jctc', 'Journal of Chemical Theory and Computation', '(2024)'),
-          S('Computation-ready, experimental metal-organic frameworks (CoRE MOF)', 'cm', 'Chemistry of Materials', '(2014)')
-        ]},
-        { title: 'Adsorption, diffusion & reaction', items: [
-          S('A master isotherm model approach to quantify defects in UiO-66 from nitrogen adsorption isotherms', 'lang', 'Langmuir', '(2025)'),
-          S('High hydrogen storage in trigonal prismatic monomer-based highly porous aromatic frameworks', 'am', 'Advanced Materials', '(2024)'),
-          S('Defect-engineered MOF-801 for cycloaddition of CO₂ with epoxides', 'jmca', 'Journal of Materials Chemistry A', '(2022)'),
-          S('Brunauer–Emmett–Teller areas from nitrogen and argon isotherms are similar', 'lang', 'Langmuir', '(2022)'),
-          S('Surface area determination of porous materials using the BET method: limitations and improvements', 'jpcc', 'Journal of Physical Chemistry C', '(2019)')
-        ]}
-      ]
     };
   }
 }

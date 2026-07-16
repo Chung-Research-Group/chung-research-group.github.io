@@ -19,7 +19,11 @@ The checked-in HTML, CSS, images, fonts, animations, and browser JavaScript are 
 npm run check
 ```
 
-The command requires Node.js 20 or newer and has no package dependencies.
+The command requires Node.js 20 or newer. Run `npm ci` once before the full test suite.
+
+Publication topics live beside publication records in `feed.js`. Member and alumni records live in `people-data.js`; page templates only render those sources.
+
+`npm test` also runs Playwright against the built site, checking all published routes, metadata, publication filtering/search, and graduate-program normalization. Install Chromium once for local browser testing with `npx playwright install chromium`.
 
 ## Deployment
 

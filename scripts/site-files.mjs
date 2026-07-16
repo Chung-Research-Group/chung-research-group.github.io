@@ -5,7 +5,8 @@ export const staticDirectories = [
   "assets",
   "ds",
   "images",
-  "uploads"
+  "uploads",
+  "vendor"
 ];
 
 export const requiredPages = [
@@ -27,6 +28,7 @@ export const requiredPages = [
 export const requiredRuntimeFiles = [
   "support.js",
   "feed.js",
+  "people-data.js",
   "image-slot.js",
   "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css",
   "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"

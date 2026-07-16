@@ -35,6 +35,7 @@ async function listFiles(root, relative = "") {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
+    if (!relative && root === repositoryRoot && [".git", "dist", "node_modules", "test-results"].includes(entry.name)) continue;
     const child = path.join(relative, entry.name);
     if (entry.isDirectory()) files.push(...await listFiles(root, child));
     else if (entry.isFile()) files.push(child.split(path.sep).join("/"));
@@ -79,8 +80,15 @@ for (const file of htmlFiles) {
   if (!html.includes("support.js")) errors.push(`${label}: missing local runtime.`);
   if (!html.includes("_ds_bundle.js")) errors.push(`${label}: missing design-system bundle.`);
   if (!html.includes("styles.css")) errors.push(`${label}: missing design-system stylesheet.`);
+  if (!/<html\b[^>]*\blang=["']en["']/i.test(html)) errors.push(`${label}: missing English document language.`);
+  if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${label}: missing page title.`);
+  if (!/<meta\b[^>]*name=["']description["']/i.test(html)) errors.push(`${label}: missing meta description.`);
+  if (!/<link\b[^>]*rel=["']canonical["']/i.test(html)) errors.push(`${label}: missing canonical URL.`);
+  if (!/<meta\b[^>]*property=["']og:title["']/i.test(html)) errors.push(`${label}: missing Open Graph metadata.`);
 
-  for (const match of html.matchAll(/<script\b[^>]*data-dc-script[^>]*>([\s\S]*?)<\/script>/gi)) {
+  const inlineDataScripts = [...html.matchAll(/<script\b[^>]*data-dc-script[^>]*>([\s\S]*?)<\/script>/gi)];
+  if (html.includes("data-dc-script") && inlineDataScripts.length === 0) errors.push(`${label}: unclosed page data script.`);
+  for (const match of inlineDataScripts) {
     const result = spawnSync(process.execPath, ["--check", "-"], { input: match[1], encoding: "utf8" });
     if (result.status !== 0) errors.push(`${label}: inline data script syntax error\n${result.stderr.trim()}`);
   }
@@ -116,12 +124,20 @@ for (const file of jsFiles) {
 
 const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
+const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
+const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
 const publicationThemes = ["DFT", "GCMC", "MD", "Adsorption", "Reaction", "Transport", "Materials Data", "AI", "Tools", "Process & Systems", "Thermodynamics"];
 for (const theme of publicationThemes) {
   if (!publicationsHtml.includes(`t: '${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
 }
 if (!publicationsHtml.includes("themeTotals") || !publicationsHtml.includes("p.tags")) {
   errors.push("Publication label rendering or filtering is missing.");
+}
+const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
+const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
+if (topicAssignments.length !== 72) errors.push(`Expected 72 explicit publication topic assignments, found ${topicAssignments.length}.`);
+if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
+  errors.push("Graduate program and education data are not normalized.");
 }
 const designCss = await readFile(
   path.join(siteRoot, "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css"),
@@ -135,6 +151,10 @@ if (!indexHtml.includes("data-hero-interactive") || !indexHtml.includes("request
 }
 if (!indexHtml.includes("prefers-reduced-motion")) {
   errors.push("Homepage motion accessibility fallback is missing.");
+}
+const supportJs = await readFile(path.join(siteRoot, "support.js"), "utf8");
+for (const runtime of ["vendor/react.production.min.js", "vendor/react-dom.production.min.js"]) {
+  if (!supportJs.includes(`./${runtime}`) || !await exists(path.join(siteRoot, runtime))) errors.push(`Local browser runtime is missing: ${runtime}`);
 }
 
 if (compareRoot) {
