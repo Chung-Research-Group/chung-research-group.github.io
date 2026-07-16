@@ -236,9 +236,9 @@ class Component extends DCLogic {
     const FEED = this._feed;
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
     const themeDefs = [
-      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Process & Systems', 'Materials Data', 'Machine Learning', 'LLM', 'Infrastructure'] },
+      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Materials Data', 'Machine Learning', 'LLM', 'Infrastructure'] },
       { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Transport', 'Reaction', 'Thermodynamics', 'Electrochemistry'] },
-      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'reticular materials', 'oxides', 'polymers', 'carbons', 'zeolites', 'molecules', 'electrolytes', 'perovskites', 'membranes'] },
+      { title: 'Systems', c: '#a86700', b: '#ffa500', labels: ['Techno-economic analysis', 'Pressure-swing adsorption', 'Device', '2D', 'reticular materials', 'oxides', 'polymers', 'carbons', 'zeolites', 'molecules', 'electrolytes', 'perovskites', 'membranes'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
     const themes = themeDefs.flatMap(group => group.labels.map(t => ({ t, c: group.c, b: group.b, group: group.title })));
