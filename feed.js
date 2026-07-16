@@ -192,8 +192,8 @@ const PUBS = [
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
   '72': ['Review'], '71': ['Machine Learning', 'LLM', 'Materials Data', 'Transport', 'Electrochemistry', 'electrolytes'], '70': ['Review'],
-  '69': ['Adsorption', 'Transport', 'Device', 'reticular materials'], '68': ['Infrastructure', 'Adsorption', 'Thermodynamics'], '67': ['GCMC', 'Adsorption', 'Techno-economic analysis', 'Pressure-swing adsorption', 'reticular materials'],
-  '66': ['GCMC', 'Adsorption', 'Thermodynamics'], '65': ['GCMC', 'Adsorption', 'reticular materials'], '64': ['Adsorption', 'Techno-economic analysis', 'Pressure-swing adsorption', 'carbons'], '63': ['Machine Learning', 'Materials Data', 'reticular materials'],
+  '69': ['Adsorption', 'Transport', 'Device', 'reticular materials'], '68': ['Infrastructure', 'Adsorption', 'Statistical Mechanics'], '67': ['GCMC', 'Adsorption', 'Techno-economic analysis', 'Pressure-swing adsorption', 'reticular materials'],
+  '66': ['GCMC', 'Adsorption', 'Statistical Mechanics'], '65': ['GCMC', 'Adsorption', 'reticular materials'], '64': ['Adsorption', 'Techno-economic analysis', 'Pressure-swing adsorption', 'carbons'], '63': ['Machine Learning', 'Materials Data', 'reticular materials'],
   '62': ['GCMC', 'Machine Learning', 'Adsorption', 'Device', 'reticular materials'], '61': ['Transport', 'polymers', 'membranes'], '60': ['GCMC', 'Infrastructure', 'Materials Data', 'Machine Learning', 'Adsorption', 'reticular materials'],
   '59': ['GCMC', 'Adsorption', 'Transport', 'Techno-economic analysis', 'reticular materials'], '58': ['DFT', 'Transport', 'Reaction', 'Electrochemistry', 'Device', 'reticular materials'], '57': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'oxides', 'polymers'],
   '56': ['GCMC', 'Machine Learning', 'Adsorption', 'reticular materials'], '55': ['GCMC', 'Adsorption', 'Techno-economic analysis', 'Pressure-swing adsorption', 'zeolites'], '54': ['GCMC', 'Machine Learning', 'Infrastructure', 'Materials Data', 'Adsorption', 'reticular materials'], '53': ['Reaction', 'reticular materials'],
@@ -204,7 +204,7 @@ const PUB_TOPICS = {
   '37': ['Review'], '36': ['Adsorption', 'Reaction', 'reticular materials'], '35': ['GCMC', 'MD', 'Machine Learning', 'Materials Data', 'Adsorption', 'reticular materials'], '34': ['DFT', '2D', 'carbons'],
   '33': ['GCMC', 'Materials Data', 'Adsorption', 'reticular materials'], '32': ['GCMC', 'Adsorption'],
   '31': ['Transport', 'carbons', 'membranes'], '30': ['DFT', 'GCMC', 'MD', 'Materials Data', 'Adsorption', 'reticular materials'], '29': ['DFT', '2D', 'carbons'], '28': ['Machine Learning'],
-  '27': ['Reaction'], '26': ['Machine Learning', 'Materials Data', 'Adsorption', 'reticular materials'], '25': ['Machine Learning'], '24': ['Transport', 'Reaction', 'Thermodynamics', 'molecules'],
+  '27': ['Reaction'], '26': ['Machine Learning', 'Materials Data', 'Adsorption', 'reticular materials'], '25': ['Machine Learning'], '24': ['Transport', 'Reaction', 'Statistical Mechanics', 'molecules'],
   '23': ['DFT', 'Adsorption', 'Reaction', 'carbons'], '22': ['Infrastructure', 'Materials Data', 'reticular materials'], '21': ['Review'],
   '20': ['DFT', 'Adsorption', 'reticular materials'], '19': ['GCMC', 'Adsorption', 'reticular materials', 'carbons'], '18': ['GCMC', 'Adsorption', 'reticular materials'], '17': ['Review'],
   '16': ['Adsorption', 'Reaction', '2D', 'reticular materials'], '15': ['Adsorption', 'Reaction', 'reticular materials'], '14': ['GCMC', 'Adsorption', 'reticular materials'],
