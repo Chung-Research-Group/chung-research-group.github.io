@@ -91,7 +91,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
     <section style="padding:40px 0 56px" data-screen-label="Full list">
 
-      <input placeholder="Search publications (제목·저자·저널 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0 0 26px;outline-color:var(--color-accent)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
+        <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+        <div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:980px">
+          <sc-for list="{{ themeTotals }}" as="it" hint-placeholder-count="11"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+        </div>
+      </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
         <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found · 검색 결과 {{ resultCount }}편</p>
       </sc-if>
@@ -107,6 +112,9 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                 <p style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:30px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent-700)">{{ p.dispNo }}</p>
                 <div>
                   <p style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:29px;margin:0"><a href="{{ p.html }}" style="color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0">
+                    <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
+                  </div>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)"><span style="font-weight:700">{{ p.journal }}</span><span>{{ p.meta }}</span></p>
                   <sc-if value="{{ p.note }}" hint-placeholder-val="{{ false }}"><p style="font-size:18px;line-height:25px;margin:6px 0 0;font-weight:700;color:var(--color-accent-800)">{{ p.note }}</p></sc-if>
@@ -139,7 +147,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}, &quot;crossrefCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4200, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
 class Component extends DCLogic {
-  state = { q: '', dois: {}, cites: {} };
+  state = { q: '', theme: null, dois: {}, cites: {} };
   async resolveDois() {
     const cacheKey = 'mtap-doi-cache-v2';
     let cache = {};
@@ -218,6 +226,30 @@ class Component extends DCLogic {
     const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
     const S = (title, jk, journal, meta) => ({ title, journal, jurl: JU[jk], meta });
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
+    const themes = [
+      { t: 'DFT', c: '#1c4fa1', b: '#005baa', rx: /\b(dft|density functional|first[- ]principles?|ab initio|quantum chemical)\b/i },
+      { t: 'GCMC', c: '#007b83', b: '#00a0aa', rx: /\b(gcmc|grand canonical monte carlo)\b/i },
+      { t: 'MD', c: '#00794a', b: '#00a651', rx: /\b(molecular dynamics|atomistic dynamics|md simulation)\b/i },
+      { t: 'Adsorption', c: '#a86700', b: '#ffa500', rx: /\b(adsorp|isotherm|porous|pore|gas storage|capture|separation|mof|zeolite|surface area|breakthrough)\w*/i },
+      { t: 'Reaction', c: '#a52a1d', b: '#c0392b', rx: /\b(reaction|reactivity|cataly|cycloaddition|kinetic|transition state|conversion)\w*/i },
+      { t: 'Transport', c: '#6b4f9e', b: '#8e6ac8', rx: /\b(transport|diffusion|diffusiv|permeab|conductiv|mobility|membrane)\w*/i },
+      { t: 'Materials Data', c: '#1b6b7a', b: '#2d9bb0', rx: /\b(database|dataset|data[- ]driven|computation[- ]ready|core mof|curat|materials data|informatics)\w*/i },
+      { t: 'AI', c: '#8b3f75', b: '#c05a9f', rx: /\b(machine learning|deep learning|artificial intelligence|neural network|language model|llm|genetic algorithm|classifier|ai)\b/i },
+      { t: 'Tools', c: '#4f6470', b: '#738894', rx: /\b(software|workflow|program|toolkit|web server|graphical user interface|gui|pacman|aim:)\w*/i },
+      { t: 'Process & Systems', c: '#8a5a2b', b: '#b77b3e', rx: /\b(process|systems? engineering|techno[- ]economic|pvsa|psa|tsa|process simulation|optimization|scale[- ]up)\w*/i },
+      { t: 'Thermodynamics', c: '#6f6b22', b: '#9b9632', rx: /\b(thermodynamic|free energy|enthalp|entropy|isosteric heat|phase equilibr|equation of state|chemical potential)\w*/i }
+    ];
+    const priority = ['DFT', 'GCMC', 'MD', 'AI', 'Materials Data', 'Tools', 'Process & Systems', 'Adsorption', 'Reaction', 'Transport', 'Thermodynamics'];
+    const byName = Object.fromEntries(themes.map(t => [t.t, t]));
+    full.forEach(p => {
+      const text = [p.title, p.authors, p.journal, p.meta, p.note].filter(Boolean).join(' ');
+      const names = themes.filter(t => t.rx.test(text)).map(t => t.t);
+      const simulation = /\b(molecular simulation|monte carlo|computational screening|high[- ]throughput screening)\b/i.test(text);
+      if (!names.includes('GCMC') && simulation && byName.Adsorption.rx.test(text)) names.push('GCMC');
+      if (!names.includes('MD') && /\b(molecular|atomistic) simulation\b/i.test(text) && byName.Transport.rx.test(text)) names.push('MD');
+      if (!names.length) names.push('Materials Data');
+      p.tags = [...new Set(names)].sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).slice(0, 3).map(name => byName[name]);
+    });
     const HCP = ['60', '48', '22', '19'];
     const p72 = full.find(p => p.no === '72');
     if (p72) p72.note = 'Invited contribution to the special collection \u201cReticular Chemistry and New Materials\u201d dedicated to Prof. Omar Yaghi\u2019s 2025 Nobel Prize in Chemistry.';
@@ -226,10 +258,11 @@ class Component extends DCLogic {
     full.forEach(p => { if (!p.doi && dois[p.no]) p.doi = dois[p.no]; });
     this._papers = full.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
     const q = this.state.q.trim().toLowerCase();
-    const match = (p) => !q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta).toLowerCase().includes(q);
+    const activeTheme = this.state.theme;
+    const match = (p) => (!activeTheme || p.tags.some(t => t.t === activeTheme)) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ')).toLowerCase().includes(q));
     const filtered = full.filter(match);
     filtered.sort((a, b) => parseInt(b.no, 10) - parseInt(a.no, 10));
-    if (q) {
+    if (q || activeTheme) {
       let n = filtered.length;
       filtered.forEach(p2 => { p2.dispNo = String(n--).padStart(2, '0'); });
     } else {
@@ -259,6 +292,15 @@ class Component extends DCLogic {
     const useLive = resolvedCount >= Math.max(1, Math.floor(full.length * 0.8));
     const totalCites = useLive ? liveCites : Math.max(liveCites, crossrefProp);
     const scholarCites = this.props.scholarCitations ?? 0;
+    const themeTally = Object.fromEntries(themes.map(t => [t.t, 0]));
+    full.forEach(p => p.tags.forEach(t => { themeTally[t.t]++; }));
+    const themeTotals = themes.map(t => ({
+      ...t,
+      n: themeTally[t.t],
+      fg: activeTheme === t.t ? '#ffffff' : t.c,
+      bg: activeTheme === t.t ? t.c : 'transparent',
+      click: () => this.setState({ theme: activeTheme === t.t ? null : t.t })
+    }));
     return {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
@@ -268,8 +310,9 @@ class Component extends DCLogic {
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
       empty: filtered.length === 0,
-      searching: !!q,
+      searching: !!q || !!activeTheme,
       resultCount: filtered.length,
+      themeTotals,
       groups,
       selected: [
         { title: 'Digital materials intelligence', items: [

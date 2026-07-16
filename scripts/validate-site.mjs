@@ -80,6 +80,11 @@ for (const file of htmlFiles) {
   if (!html.includes("_ds_bundle.js")) errors.push(`${label}: missing design-system bundle.`);
   if (!html.includes("styles.css")) errors.push(`${label}: missing design-system stylesheet.`);
 
+  for (const match of html.matchAll(/<script\b[^>]*data-dc-script[^>]*>([\s\S]*?)<\/script>/gi)) {
+    const result = spawnSync(process.execPath, ["--check", "-"], { input: match[1], encoding: "utf8" });
+    if (result.status !== 0) errors.push(`${label}: inline data script syntax error\n${result.stderr.trim()}`);
+  }
+
   const referencePattern = /\b(?:href|src)\s*=\s*["']([^"']+)["']/gi;
   for (const match of html.matchAll(referencePattern)) {
     const reference = localReference(match[1]);
@@ -110,6 +115,14 @@ for (const file of jsFiles) {
 }
 
 const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
+const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
+const publicationThemes = ["DFT", "GCMC", "MD", "Adsorption", "Reaction", "Transport", "Materials Data", "AI", "Tools", "Process & Systems", "Thermodynamics"];
+for (const theme of publicationThemes) {
+  if (!publicationsHtml.includes(`t: '${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
+}
+if (!publicationsHtml.includes("themeTotals") || !publicationsHtml.includes("p.tags")) {
+  errors.push("Publication label rendering or filtering is missing.");
+}
 const designCss = await readFile(
   path.join(siteRoot, "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css"),
   "utf8"
