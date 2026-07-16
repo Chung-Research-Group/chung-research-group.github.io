@@ -241,7 +241,13 @@ class Component extends DCLogic {
       { title: 'Systems', c: '#a86700', b: '#ffa500', labels: ['Device', '2D', 'reticular materials', 'oxides', 'polymers', 'carbons', 'zeolites', 'molecules', 'electrolytes', 'perovskites', 'membranes'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
-    const themes = themeDefs.flatMap(group => group.labels.map(t => ({ t, c: group.c, b: group.b, group: group.title })));
+    const themeColors = {
+      Infrastructure: { c: '#5B6770', b: '#8A959E' }
+    };
+    const themes = themeDefs.flatMap(group => group.labels.map(t => {
+      const color = themeColors[t] || group;
+      return { t, c: color.c, b: color.b, group: group.title };
+    }));
     const priority = themeDefs.flatMap(group => group.labels);
     const byName = Object.fromEntries(themes.map(t => [t.t, t]));
     full.forEach(p => {
