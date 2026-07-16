@@ -51,7 +51,7 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(profile.locator('h4').getByText('김현지', { exact: true })).toBeVisible();
   await expect(profile.locator('a[href="https://github.com/Kimhyunji4"]')).toBeVisible();
   await expect(profile.locator('a[href="https://www.linkedin.com/in/hyunji-kim-051743359"]')).toBeVisible();
-  await expect(profile.locator('img[src="images/slot-ph-kim-hyunji.webp"]')).toBeVisible();
+  await expect(profile.locator('img[src="images/slot-ph-kim-hyunji.webp"]').first()).toBeVisible();
 
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'domcontentloaded' });
   const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
