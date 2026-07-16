@@ -136,7 +136,7 @@ if (!publicationsHtml.includes("themeGroups") || !publicationsHtml.includes("p.t
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
 if (topicAssignments.length !== 72) errors.push(`Expected 72 explicit publication topic assignments, found ${topicAssignments.length}.`);
-const reviewAssignments = [...topicBlock.matchAll(/'(\\d{2})':\\s*\\[([^\\]]*'Review'[^\\]]*)\\]/g)];
+const reviewAssignments = [...topicBlock.matchAll(/'(\d{2})':\s*\[([^\]]*'Review'[^\]]*)\]/g)];
 if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");

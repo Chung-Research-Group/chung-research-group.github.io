@@ -31,9 +31,9 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText('Computation', { exact: true })).toBeVisible();
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Materials', { exact: true })).toBeVisible();
-  await expect(page.getByText(/^Machine Learning\\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^MOFs\\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^Review\\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^MOFs\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const dft = page.getByText(/^DFT\s*×/).first();
   await expect(dft).toBeVisible();
   await dft.click();
