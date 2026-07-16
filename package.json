@@ -1,0 +1,21 @@
+{
+  "name": "chung-research-group-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Byte-preserving build and validation for the Chung Research Group GitHub Pages site.",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "check": "node scripts/validate-site.mjs --root . && node scripts/build-site.mjs && node scripts/validate-site.mjs --root dist --compare-source .",
+    "test": "npm run check && npm run test:browser",
+    "test:browser": "playwright test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

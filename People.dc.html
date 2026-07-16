@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>People | Chung Research Group</title>
+<meta name="description" content="Professor, researchers, graduate students, undergraduate researchers, visitors, and alumni of the Chung Research Group.">
+<link rel="canonical" href="https://chung-research-group.github.io/People.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="People | Chung Research Group">
+<meta property="og:description" content="Professor, researchers, graduate students, undergraduate researchers, visitors, and alumni of the Chung Research Group.">
+<meta property="og:url" content="https://chung-research-group.github.io/People.dc.html">
 <script src="./support.js"></script>
 </head>
-<body>
+<body id="top">
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="image-slot.js"></script>
+<script src="people-data.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
 body{margin:0;background:var(--color-bg);text-wrap:pretty}
@@ -132,6 +140,7 @@ body{zoom:0.88}
                 </div>
                 <div>
                   <h4 style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:32px;margin:0">{{ m.name }}<span style="display:block;font-size:18px;line-height:26px;margin-top:2px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ m.kr }}</span></h4>
+                  <sc-if value="{{ m.program }}" hint-placeholder-val="{{ false }}"><p style="font-size:17px;line-height:24px;margin:7px 0 0;font-weight:800;color:var(--color-text)">{{ m.program }}</p></sc-if>
                   <div style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0">
                     <sc-for list="{{ m.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:16px;line-height:21px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
                   </div>
@@ -180,7 +189,7 @@ body{zoom:0.88}
     </section>
   </div>
 
-  <a href="#" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
@@ -192,63 +201,7 @@ body{zoom:0.88}
 class Component extends DCLogic {
   state = { filterTag: null, filterSector: null };
   renderVals() {
-    const groups = [
-        { title: 'Postdoctoral Researchers', kr: '박사후연구원', people: [
-          { slot: 'm-yoon', photo: 'ph-yoon', name: 'Yoon, Sunghyun', kr: '윤성현', interests: 'Atoms/Electrons · AI & Data · Modeling & Optimization', edu: 'Ph.D. Chemical Engineering, Pusan National University (2026) · B.S. Chemical Engineering, Pusan National University (2019)', scholar: 'https://scholar.google.com/citations?user=wedJB5EAAAAJ', github: 'https://github.com/yoonseonghyun', linkedin: 'https://www.linkedin.com/in/sunghyun-yoon-0790b8417/' }
-        ]},
-        { title: 'Ph.D. Students', kr: '박사과정', people: [
-          { slot: 'm-chen', photo: 'ph-chen', name: 'Chen, Yu', kr: '첸 유, 陈豫', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=2z24SzAAAAAJ', github: 'https://github.com/DrakeChan', linkedin: 'https://www.linkedin.com/in/yu-chen-913344248', edu: 'B.S. New Energy Science & Technology, Huazhong University of Science and Technology (2020)' },
-          { slot: 'm-hassan', photo: 'ph-hassan', name: 'Hassan, Muhammad', kr: '하산 무하마드, حسان محمد', interests: 'Atoms/Electrons · Modeling & Optimization', scholar: 'https://scholar.google.com/citations?user=6MNpPQsAAAAJ', github: 'https://github.com/hassan-azizi', linkedin: 'https://www.linkedin.com/in/mhassanazizi', edu: 'M.S. Chemical Engineering, Pusan National University (2024) · B.S. Chemical Engineering, NED University of Engineering and Technology (2022)' }
-        ]},
-        { title: "Master's Students", kr: '석사과정', people: [
-          { slot: 'm-shin', photo: 'ph-shin', name: 'Shin, Changdon', kr: '신창돈', interests: 'AI & Data · Modeling & Optimization · Experiment', scholar: 'https://scholar.google.com/citations?user=vGr2oSYAAAAJ', github: 'https://github.com/ChangdonShin', linkedin: 'https://www.linkedin.com/in/changdon-shin-055637422/', edu: 'B.S. Chemical Engineering, Pusan National University (2025)' },
-          { slot: 'm-zhao', photo: 'ph-zhao', name: 'Zhao, Pengyu', kr: '자오 펑위, 赵鹏宇', interests: 'Atoms/Electrons', scholar: 'https://scholar.google.com/citations?user=vW42Ip0AAAAJ', github: 'https://github.com/Finn-Zz', linkedin: 'https://www.linkedin.com/in/pengyu-zhao-93b98436a/', edu: 'B.S. New Energy Science & Technology, Huazhong University of Science and Technology (2024)' },
-          { slot: 'm-thong', photo: 'ph-thong', name: 'Siah, Thong', kr: '시아 통, 谢彤', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=hWhz0HIAAAAJ', github: 'https://github.com/siahthong', linkedin: 'https://www.linkedin.com/in/siah-thong/', edu: 'B.E. Chemical Engineering, Curtin University Malaysia (2023)' },
-          { slot: 'm-lee', photo: 'ph-lee', name: 'Lee, Taekgi', kr: '이택기', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=6blqnjsAAAAJ', edu: 'B.S. Chemical Engineering, Pusan National University (2025)' },
-          { slot: 'm-baek', photo: 'ph-baek', name: 'Baek, Mingyu', kr: '백민규', interests: 'Atoms/Electrons · AI & Data', github: 'https://github.com/100mingyu-rgb', linkedin: 'https://www.linkedin.com/in/mingyu-baek', edu: 'Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원 · B.S. Chemical Engineering, Kyungpook University (2025)' }
-        ]},
-        { title: 'Researchers', kr: '연구원', people: [] },
-        { title: 'Visitors', kr: '방문연구원', people: [] }
-      ];
-    const alumni = [
-        { title: 'Graduate Students', kr: '대학원생', people: [
-          { id: 'a-sunghyun', name: 'Sunghyun Yoon (윤성현)', detail: 'Ph.D. Chemical Engineering (2019–2026)', now: 'Postdoctoral Researcher, Pusan National University' },
-          { id: 'a-haewon', name: 'Haewon Kim (김해원)', detail: 'M.S. Chemical Engineering (2024–2026)', now: 'Engineer, SK hynix' },
-          { id: 'a-guobin', name: 'Guobin Zhao (구오빈 자오)', detail: 'Ph.D. Chemical Engineering (2020–2025)', now: 'Postdoctoral Researcher, National University of Singapore' },
-          { id: 'a-seulchan', name: 'Seulchan Lee (이슬찬)', detail: 'B.S./M.S. Chemical Engineering (2018–2020)', now: 'SK Innovation' },
-          { id: 'a-soomyung', name: 'Soo Myung Nam (남수명)', detail: 'M.S. Chemical Engineering (2017–2019)', now: '한국제지연구소' }
-        ]},
-        { title: 'Postdoctoral Researchers', kr: '박사후연구원', people: [
-          { id: 'a-yang', name: '양창원', detail: '(2022–2023)', now: '부장, Korea Quantum Computing Corp. 한국퀀텀컴퓨팅(주)' },
-          { id: 'a-gu', name: '구윤장', detail: '(2021–2022)', now: '남해화학' },
-          { id: 'a-ka', name: '가성빈', detail: '(2020–2022)', now: '울산대학교 화학공학과' },
-          { id: 'a-anjali', name: 'Anjali Bai', detail: '(2021–2022)', now: 'Postdoctoral Researcher, National University of Singapore' }
-        ]},
-        { title: 'Researchers & Visitors', kr: '연구원·방문연구원', people: [
-          { id: 'a-youri', name: 'Youri Ran', detail: '(2026) Visiting Ph.D. student', now: 'Universiteit van Amsterdam' }
-        ]}
-      ];
-    alumni.forEach(a => a.people.forEach(p => {
-      if (/Researchers & Visitors/i.test(a.title)) { p.sector = false; return; }
-      if (!p.sector) {
-        const ind = /SK hynix|SK Innovation|남해화학|한국제지|Quantum Computing/i.test(p.now);
-        const acad = /University|Universiteit|대학교|Postdoctoral/i.test(p.now);
-        p.sector = ind ? 'Industry' : (acad ? 'Academia' : false);
-        p.scolor = ind ? '#a86700' : '#1c4fa1';
-        p.sqcolor = ind ? '#ffa500' : '#005baa';
-      }
-    }));
-    const undergrads = [
-      { year: '2025', names: '김현지 · 이나현 · 강다희 · 홍성은' },
-      { year: '2024', names: '이재훈 · 박채영 · 양윤서' },
-      { year: '2023', names: '김해원 · 이예지' },
-      { year: '2021', names: '김나영 · 박채원' },
-      { year: '2020', names: '김혜지' },
-      { year: '2019', names: '성병관' },
-      { year: '2018', names: '한승윤 · 김주용 · 윤성현 · 김건종 · 정충식' },
-      { year: '2017', names: '서나영' },
-      { year: '2016', names: '황진욱 · 이혜지 · 이슬찬' }
-    ];
+    const { groups, alumni, undergrads } = window.MTAP_PEOPLE();
     let undergradTotal = 0;
     undergrads.forEach(u => { undergradTotal += u.names.split(' · ').length; });
     // 4 categories: Atoms/Electrons (blue) · AI & Data (orange) · Modeling & Optimization (green) · Experiment (red)

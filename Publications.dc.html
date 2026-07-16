@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications | Chung Research Group</title>
+<meta name="description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
+<link rel="canonical" href="https://chung-research-group.github.io/Publications.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Publications | Chung Research Group">
+<meta property="og:description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
+<meta property="og:url" content="https://chung-research-group.github.io/Publications.dc.html">
 <script src="./support.js"></script>
 </head>
-<body>
+<body id="top">
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
@@ -91,7 +98,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
     <section style="padding:40px 0 56px" data-screen-label="Full list">
 
-      <input placeholder="Search publications (제목·저자·저널 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0 0 26px;outline-color:var(--color-accent)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
+        <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+        <div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:980px">
+          <sc-for list="{{ themeTotals }}" as="it" hint-placeholder-count="11"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+        </div>
+      </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
         <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found · 검색 결과 {{ resultCount }}편</p>
       </sc-if>
@@ -107,6 +119,9 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                 <p style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:30px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent-700)">{{ p.dispNo }}</p>
                 <div>
                   <p style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:29px;margin:0"><a href="{{ p.html }}" style="color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0">
+                    <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
+                  </div>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)"><span style="font-weight:700">{{ p.journal }}</span><span>{{ p.meta }}</span></p>
                   <sc-if value="{{ p.note }}" hint-placeholder-val="{{ false }}"><p style="font-size:18px;line-height:25px;margin:6px 0 0;font-weight:700;color:var(--color-accent-800)">{{ p.note }}</p></sc-if>
@@ -129,7 +144,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
     </section>
   </div>
 
-  <a href="#" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
@@ -139,7 +154,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}, &quot;crossrefCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4200, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
 class Component extends DCLogic {
-  state = { q: '', dois: {}, cites: {} };
+  state = { q: '', theme: null, dois: {}, cites: {} };
   async resolveDois() {
     const cacheKey = 'mtap-doi-cache-v2';
     let cache = {};
@@ -214,10 +229,20 @@ class Component extends DCLogic {
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const FEED = this._feed;
-    const JU = (FEED && FEED.JU) || {};
-    const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
-    const S = (title, jk, journal, meta) => ({ title, journal, jurl: JU[jk], meta });
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
+    const themes = [
+      { t: 'DFT', c: '#1c4fa1', b: '#005baa' }, { t: 'GCMC', c: '#007b83', b: '#00a0aa' },
+      { t: 'MD', c: '#00794a', b: '#00a651' }, { t: 'Adsorption', c: '#a86700', b: '#ffa500' },
+      { t: 'Reaction', c: '#a52a1d', b: '#c0392b' }, { t: 'Transport', c: '#6b4f9e', b: '#8e6ac8' },
+      { t: 'Materials Data', c: '#1b6b7a', b: '#2d9bb0' }, { t: 'AI', c: '#8b3f75', b: '#c05a9f' },
+      { t: 'Tools', c: '#4f6470', b: '#738894' }, { t: 'Process & Systems', c: '#8a5a2b', b: '#b77b3e' },
+      { t: 'Thermodynamics', c: '#6f6b22', b: '#9b9632' }
+    ];
+    const priority = ['DFT', 'GCMC', 'MD', 'AI', 'Materials Data', 'Tools', 'Process & Systems', 'Adsorption', 'Reaction', 'Transport', 'Thermodynamics'];
+    const byName = Object.fromEntries(themes.map(t => [t.t, t]));
+    full.forEach(p => {
+      p.tags = p.topics.slice().sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).map(name => byName[name]);
+    });
     const HCP = ['60', '48', '22', '19'];
     const p72 = full.find(p => p.no === '72');
     if (p72) p72.note = 'Invited contribution to the special collection \u201cReticular Chemistry and New Materials\u201d dedicated to Prof. Omar Yaghi\u2019s 2025 Nobel Prize in Chemistry.';
@@ -226,10 +251,11 @@ class Component extends DCLogic {
     full.forEach(p => { if (!p.doi && dois[p.no]) p.doi = dois[p.no]; });
     this._papers = full.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
     const q = this.state.q.trim().toLowerCase();
-    const match = (p) => !q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta).toLowerCase().includes(q);
+    const activeTheme = this.state.theme;
+    const match = (p) => (!activeTheme || p.tags.some(t => t.t === activeTheme)) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ')).toLowerCase().includes(q));
     const filtered = full.filter(match);
     filtered.sort((a, b) => parseInt(b.no, 10) - parseInt(a.no, 10));
-    if (q) {
+    if (q || activeTheme) {
       let n = filtered.length;
       filtered.forEach(p2 => { p2.dispNo = String(n--).padStart(2, '0'); });
     } else {
@@ -259,6 +285,15 @@ class Component extends DCLogic {
     const useLive = resolvedCount >= Math.max(1, Math.floor(full.length * 0.8));
     const totalCites = useLive ? liveCites : Math.max(liveCites, crossrefProp);
     const scholarCites = this.props.scholarCitations ?? 0;
+    const themeTally = Object.fromEntries(themes.map(t => [t.t, 0]));
+    full.forEach(p => p.tags.forEach(t => { themeTally[t.t]++; }));
+    const themeTotals = themes.map(t => ({
+      ...t,
+      n: themeTally[t.t],
+      fg: activeTheme === t.t ? '#ffffff' : t.c,
+      bg: activeTheme === t.t ? t.c : 'transparent',
+      click: () => this.setState({ theme: activeTheme === t.t ? null : t.t })
+    }));
     return {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
@@ -268,32 +303,10 @@ class Component extends DCLogic {
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
       empty: filtered.length === 0,
-      searching: !!q,
+      searching: !!q || !!activeTheme,
       resultCount: filtered.length,
+      themeTotals,
       groups,
-      selected: [
-        { title: 'Digital materials intelligence', items: [
-          S('AIM: A user-friendly GUI workflow program for isotherm fitting, mixture prediction, isosteric heat estimation, and breakthrough simulation', 'cpc', 'Computer Physics Communications', '(2026)'),
-          S('Multiscale, techno-economic evaluation of isoreticular CALF-20 for biogas upgrading using a PVSA process', 'msde', 'Molecular Systems Design & Engineering', '(2026)'),
-          S('Progress toward the computational discovery of new MOF adsorbents for energy applications', 'ne', 'Nature Energy', '(2024) · review'),
-          S('Discovery of high-performing MOFs for on-board methane storage and delivery via LNG–ANG coupling', 'advsci', 'Advanced Science', '(2022)'),
-          S('In silico discovery of MOFs for precombustion CO₂ capture using a genetic algorithm', 'sciadv', 'Science Advances', '(2016)')
-        ]},
-        { title: 'Data & AI for materials and chemicals', items: [
-          S('Data-driven prediction of ionic conductivity in solid-state electrolytes with ML and LLMs', 'jcp', 'Journal of Chemical Physics', '(2026)'),
-          S('MOFClassifier: a machine learning approach for validating computation-ready MOFs', 'jacs', 'Journal of the American Chemical Society', '(2025)'),
-          S('CoRE MOF DB: a curated experimental MOF database with machine-learned properties', 'matter', 'Matter', '(2025)'),
-          S('PACMAN: a robust partial atomic charge predictor for nanoporous materials', 'jctc', 'Journal of Chemical Theory and Computation', '(2024)'),
-          S('Computation-ready, experimental metal-organic frameworks (CoRE MOF)', 'cm', 'Chemistry of Materials', '(2014)')
-        ]},
-        { title: 'Adsorption, diffusion & reaction', items: [
-          S('A master isotherm model approach to quantify defects in UiO-66 from nitrogen adsorption isotherms', 'lang', 'Langmuir', '(2025)'),
-          S('High hydrogen storage in trigonal prismatic monomer-based highly porous aromatic frameworks', 'am', 'Advanced Materials', '(2024)'),
-          S('Defect-engineered MOF-801 for cycloaddition of CO₂ with epoxides', 'jmca', 'Journal of Materials Chemistry A', '(2022)'),
-          S('Brunauer–Emmett–Teller areas from nitrogen and argon isotherms are similar', 'lang', 'Langmuir', '(2022)'),
-          S('Surface area determination of porous materials using the BET method: limitations and improvements', 'jpcc', 'Journal of Physical Chemistry C', '(2019)')
-        ]}
-      ]
     };
   }
 }
