@@ -13,7 +13,9 @@ window.MTAP_PEOPLE = () => ({
       { slot: 'm-lee', photo: 'ph-lee', name: 'Lee, Taekgi', kr: '이택기', program: 'B.S./M.S. Program', interests: 'Atoms/Electrons · AI & Data', scholar: 'https://scholar.google.com/citations?user=6blqnjsAAAAJ', edu: 'B.S. Chemical Engineering, Pusan National University (2025)' },
       { slot: 'm-baek', photo: 'ph-baek', name: 'Baek, Mingyu', kr: '백민규', program: "Master's Program, Graduate School of Data Science", interests: 'Atoms/Electrons · AI & Data', github: 'https://github.com/100mingyu-rgb', linkedin: 'https://www.linkedin.com/in/mingyu-baek', edu: 'B.S. Chemical Engineering, Kyungpook University (2025)' }
     ]},
-    { title: 'Undergraduate Researchers', kr: '학부연구생', people: [] },
+    { title: 'Undergraduate Researchers', kr: '학부연구생', people: [
+      { slot: 'm-kim-hyunji', photo: 'ph-kim-hyunji', name: 'Kim, Hyunji', kr: '김현지', linkedin: 'https://www.linkedin.com/in/hyunji-kim-051743359', github: 'https://github.com/Kimhyunji4' }
+    ]},
     { title: 'Visitors', kr: '방문연구원', people: [] }
   ],
   alumni: [
@@ -35,7 +37,7 @@ window.MTAP_PEOPLE = () => ({
     ]}
   ],
   undergrads: [
-    { year: '2025', names: '김현지 · 이나현 · 강다희 · 홍성은' }, { year: '2024', names: '이재훈 · 박채영 · 양윤서' },
+    { year: '2025', names: '이나현 · 강다희 · 홍성은' }, { year: '2024', names: '이재훈 · 박채영 · 양윤서' },
     { year: '2023', names: '김해원 · 이예지' }, { year: '2021', names: '김나영 · 박채원' },
     { year: '2020', names: '김혜지' }, { year: '2019', names: '성병관' },
     { year: '2018', names: '한승윤 · 김주용 · 윤성현 · 김건종 · 정충식' }, { year: '2017', names: '서나영' },
