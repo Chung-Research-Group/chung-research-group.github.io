@@ -206,11 +206,11 @@ const PUB_TOPICS = {
   '31': ['Transport', 'carbons'], '30': ['DFT', 'GCMC', 'MD', 'Materials Data', 'Process & Systems', 'Adsorption', 'MOFs'], '29': ['DFT', '2D', 'carbons'], '28': ['Machine Learning', 'Process & Systems'],
   '27': ['Process & Systems', 'Reaction'], '26': ['Machine Learning', 'Materials Data', 'Adsorption', 'MOFs'], '25': ['Machine Learning', 'Process & Systems'], '24': ['Transport', 'Reaction', 'Thermodynamics'],
   '23': ['DFT', 'Adsorption', 'Reaction', 'carbons'], '22': ['Infrastructure', 'Materials Data', 'MOFs'], '21': ['Review'],
-  '20': ['DFT', 'Adsorption', 'MOFs'], '19': ['GCMC', 'Adsorption', 'MOFs'], '18': ['Process & Systems', 'Adsorption'], '17': ['Review'],
+  '20': ['DFT', 'Adsorption', 'MOFs'], '19': ['GCMC', 'Adsorption', 'MOFs'], '18': ['GCMC', 'Process & Systems', 'Adsorption', 'MOFs'], '17': ['Review'],
   '16': ['Adsorption', 'Reaction', '2D', 'MOFs'], '15': ['Adsorption', 'Reaction', 'MOFs'], '14': ['GCMC', 'Adsorption', 'MOFs'],
-  '13': ['GCMC', 'Adsorption'], '12': ['GCMC', 'Adsorption', 'MOFs'], '11': ['DFT', 'Materials Data', 'MOFs'], '10': ['Reaction', 'MOFs'],
-  '09': ['Machine Learning', 'Adsorption', 'MOFs'], '08': ['GCMC', 'Adsorption', 'MOFs'], '07': ['Adsorption', 'Reaction', 'MOFs'],
-  '06': ['GCMC', 'Materials Data', 'Adsorption', 'MOFs'], '05': ['Materials Data', 'Infrastructure', 'MOFs'], '04': ['MD', 'Transport', 'polymers'],
+  '13': ['GCMC', 'Process & Systems', 'Adsorption', 'MOFs'], '12': ['GCMC', 'Adsorption', 'MOFs'], '11': ['DFT', 'Materials Data', 'MOFs'], '10': ['Reaction', 'MOFs'],
+  '09': ['GCMC', 'Materials Data', 'Adsorption', 'MOFs'], '08': ['DFT', 'GCMC', 'Adsorption', 'MOFs'], '07': ['Adsorption', 'Reaction', 'MOFs'],
+  '06': ['GCMC', 'Materials Data', 'Adsorption', 'MOFs'], '05': ['GCMC', 'Materials Data', 'Infrastructure', 'Adsorption', 'MOFs'], '04': ['MD', 'Transport', 'polymers'],
   '03': ['MD', 'Transport', 'polymers'], '02': ['MD', 'Transport', 'polymers'], '01': ['MD', 'Transport', 'polymers']
 };
 PUBS.forEach(p => { p.topics = PUB_TOPICS[p.no].slice(); });
