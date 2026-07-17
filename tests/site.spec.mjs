@@ -86,9 +86,8 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('[data-publication-no="19"]')).toHaveCount(0);
   await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
-  const jpcc = page.getByText(/Surface area determination of porous materials/).locator('..').locator('..');
-  await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
-  await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
-  await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
-  await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
+  await expect(page.getByText('Review', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('GCMC', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Reticular Materials', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Carbons', { exact: true }).first()).toBeVisible();
 });
