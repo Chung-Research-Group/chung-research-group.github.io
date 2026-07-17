@@ -35,7 +35,6 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.locator('.publication-filter-title').filter({ hasText: 'Computation' })).toBeVisible();
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const computationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Computation', { exact: true }) }).first();
   await expect(computationGroup.locator('.publication-filter-section')).toHaveCount(0);
   const computationLabels = computationGroup.locator('.publication-filter-items > span');
@@ -43,7 +42,7 @@ test('publication topic filters and search work', async ({ page }) => {
   const applicationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Applications', { exact: true }) }).first();
   await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['Separation', 'Catalysis', 'Energy Storage', 'Other']);
   const reviewGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Review', { exact: true }) }).first();
-  await expect(reviewGroup.getByText(/^Review\s*×\s*6$/)).toBeVisible();
+  await expect(reviewGroup.getByText(/^Review\s*×/)).toHaveCount(0);
   await expect(reviewGroup.locator('.publication-filter-section-items').getByText(/^Applications\s*×\s*2$/)).toBeVisible();
   const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
