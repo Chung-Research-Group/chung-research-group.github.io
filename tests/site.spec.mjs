@@ -59,7 +59,8 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(profile.locator('a[href="https://www.linkedin.com/in/hyunji-kim-051743359"]')).toBeVisible();
   await expect(profile.locator('img[src="images/slot-ph-kim-hyunji.webp"]').first()).toBeVisible();
   await expect(profile.getByText('Modeling & Optimization', { exact: true })).toBeVisible();
-  await expect(profile.getByText('B.S. Chemical & Biomolecular Engineering, Pusan National University (2027)', { exact: true })).toBeVisible();
+  await expect(profile.getByText('Chemical & Biomolecular Engineering, Pusan National University', { exact: true })).toBeVisible();
+  await expect(profile.getByText(/B\.S\.|2027/)).toHaveCount(0);
 
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'domcontentloaded' });
   const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
@@ -77,6 +78,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
   }
   await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
+  await expect(page.getByText(/에너지·환경·산업 분야의 응용/)).toBeVisible();
 
   await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
   const baek = page.locator('#m-baek');
