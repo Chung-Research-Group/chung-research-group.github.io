@@ -41,6 +41,10 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo × 27');
   const applicationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Applications', { exact: true }) }).first();
   await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['Separation', 'Catalysis', 'Energy Storage', 'Other']);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
+  await expect(applicationGroup.getByText(/^Hydrogen\s*×\s*4$/)).toBeVisible();
+  await expect(applicationGroup.getByText(/^Catalysis\s*×/)).toHaveCount(0);
+  await expect(applicationGroup.getByText(/^All\s*×\s*8$/)).toBeVisible();
   const reviewGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Review', { exact: true }) }).first();
   await expect(reviewGroup.getByText(/^Review\s*×/)).toHaveCount(0);
   await expect(reviewGroup.locator('.publication-filter-section-items').getByText(/^Applications\s*×\s*2$/)).toBeVisible();
