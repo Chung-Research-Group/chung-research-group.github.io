@@ -53,7 +53,14 @@ test('suggests specific application labels instead of generic umbrellas', () => 
   );
   assert.deepEqual(
     suggestTopics('Solid-state electrolyte with high lithium-ion conductivity'),
-    ['Transport', 'Electrochemistry', 'Electrolytes', 'Secondary Battery']
+    ['Diffusion', 'Electrochemistry', 'Electrolytes', 'Secondary Battery']
+  );
+});
+
+test('classifies enhanced sampling as a computation method', () => {
+  assert.deepEqual(
+    suggestTopics('Flat-histogram Monte Carlo with macrostate probability distributions'),
+    ['GCMC', 'Enhanced Sampling']
   );
 });
 
