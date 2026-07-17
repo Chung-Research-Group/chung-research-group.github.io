@@ -21,11 +21,11 @@ separate lines.
 
 Available labels are grouped as follows:
 
-- Computation: `DFT`, `GCMC`, `MD`, `Data Curation`, `Machine Learning`, `LLM`, `Infrastructure`, `Characterization`
+- Computation: `DFT`, `GCMC`, `MD`, `Data Curation`, `Machine Learning`, `LLM`, `Infrastructure`, `Characterization`, `Techno-Economic Analysis`
 - Physics: `Adsorption`, `Transport`, `Reaction`, `Statistical Mechanics`, `Electrochemistry`
 - Materials: `2D`, `Reticular Materials`, `Oxides`, `Polymers`, `Carbons`, `Zeolites`, `Molecules`, `Electrolytes`, `Perovskites`, `Membranes`
-- Systems: `Device`, `Cyclic Swing Adsorber`, `Techno-Economic Analysis`
-- Applications: `Carbon Capture`, `Hydrogen Storage`, `Biogas Upgrading`, `Gas Separation`, `Methane Storage`, `Adsorption Cooling`, `Energy Storage`, `Membrane Separation`, `CO2 Conversion`, `Catalysis`, `Sensing`, `Air Pollution Control`, `Distillation`
+- Systems: `Chiller`, `Cyclic Swing Adsorber`
+- Applications: `Carbon Capture`, `Hydrogen Storage`, `Biogas Upgrading`, `Carbon Monoxide Separation`, `Natural Gas Sweetening`, `Noble Gas Separation`, `SF6/N2 Separation`, `Olefin/Paraffin Separation`, `Xylene Separation`, `Alkane Isomer Separation`, `Methane Storage`, `Adsorption Cooling`, `Secondary Battery`, `Supercapacitor`, `Organic Solvent Nanofiltration`, `Organic Liquid Separation`, `CO2 Conversion`, `Catalysis`, `Sensing`, `Air Pollution Control`, `Distillation`
 - Special: `Review` (exclusive)
 
 Only users listed in `PUBLICATION_APPROVER_USER_IDS` are considered. After
