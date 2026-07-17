@@ -39,9 +39,13 @@ replies there. It does not need workspace-wide message search.
 Configure these settings in GitHub:
 
 1. Secret `PUBLICATION_SLACK_BOT_TOKEN`: the Slack bot token (`xoxb-...`).
-2. Variable `PUBLICATION_APPROVER_USER_IDS`: comma-separated Slack member IDs
+2. Secret `PUBLICATION_GITHUB_TOKEN`: a fine-grained token limited to this
+   repository with Contents and Pull requests read/write plus Actions read.
+   A separate token is required because PRs created with the workflow's default
+   token do not trigger the validation workflow.
+3. Variable `PUBLICATION_APPROVER_USER_IDS`: comma-separated Slack member IDs
    allowed to edit and approve candidates.
-3. Variable `CROSSREF_MAILTO`: contact email for the Crossref polite pool.
+4. Variable `CROSSREF_MAILTO`: contact email for the Crossref polite pool.
 
 Run **Monitor publications and process Slack approvals** manually once after
 configuration. Scheduled checks run every 30 minutes.
