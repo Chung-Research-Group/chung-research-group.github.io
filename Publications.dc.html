@@ -378,7 +378,7 @@ class Component extends DCLogic {
       const base = {
         title: group.title, c: group.c, n: groupCount, open: groupOpen, marker: groupOpen ? '−' : '+',
         toggleLabel: (groupOpen ? 'Collapse ' : 'Expand ') + group.title,
-        toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: [] }),
+        toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: groupOpen ? [] : (group.title === 'Applications' ? applicationSections.map(section => section.title) : []) }),
         totalFg: activeTheme === groupKey ? '#ffffff' : group.c,
         totalBg: activeTheme === groupKey ? group.c : 'transparent',
         select: () => this.setState({ theme: activeTheme === groupKey ? null : groupKey })
