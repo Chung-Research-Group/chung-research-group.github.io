@@ -167,6 +167,9 @@ if (![joinUsHtml, peopleHtml].every(html => html.includes("drygchung AT gmail DO
 if (`${joinUsHtml}\n${peopleHtml}`.includes("drygchung@gmail.com")) {
   errors.push("Raw professor email remains exposed in published HTML.");
 }
+if ((joinUsHtml.match(/<a\s+data-prof-email\b/g) || []).length !== 2 || (joinUsHtml.match(/href="mailto:&#100;&#114;&#121;/g) || []).length !== 2) {
+  errors.push("Join Us email links must be clickable without exposing the raw address in HTML.");
+}
 const designCss = await readFile(
   path.join(siteRoot, "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css"),
   "utf8"
