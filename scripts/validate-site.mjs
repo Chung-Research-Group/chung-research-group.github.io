@@ -135,7 +135,11 @@ if (!publicationsHtml.includes("themeGroups") || !publicationsHtml.includes("p.t
 }
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
-if (topicAssignments.length !== 72) errors.push(`Expected 72 explicit publication topic assignments, found ${topicAssignments.length}.`);
+const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
+const publicationEntries = [...publicationBlock.matchAll(/\bF\('\d{2}'/g)];
+if (topicAssignments.length !== publicationEntries.length) {
+  errors.push(`Expected one explicit topic assignment per publication; found ${topicAssignments.length} assignments for ${publicationEntries.length} publications.`);
+}
 if (topicBlock.includes("'Process & Systems'")) errors.push("Deprecated Process & Systems publication label remains.");
 const reviewAssignments = [...topicBlock.matchAll(/'(\d{2})':\s*\[([^\]]*'Review'[^\]]*)\]/g)];
 if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
