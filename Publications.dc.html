@@ -236,10 +236,10 @@ class Component extends DCLogic {
     const FEED = this._feed;
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
     const themeDefs = [
-      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Data Curation', 'Machine Learning', 'LLM', 'Infrastructure', 'Characterization', 'Techno-Economic Analysis'] },
-      { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Transport', 'Reaction', 'Statistical Mechanics', 'Electrochemistry'] },
-      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites', 'Membranes'] },
-      { title: 'Systems', c: '#006b73', b: '#00a0a8', labels: ['Chiller', 'Cyclic Swing Adsorber'] },
+      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Enhanced Sampling', 'Data Curation', 'Machine Learning', 'LLM', 'Infrastructure', 'Characterization', 'Techno-Economic Analysis'] },
+      { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Diffusion', 'Reaction', 'Electrochemistry'] },
+      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Graphene Oxide', 'Graphene Quantum Dots', 'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites'] },
+      { title: 'Systems', c: '#006b73', b: '#00a0a8', labels: ['Membranes', 'Chiller', 'Cyclic Swing Adsorber'] },
       { title: 'Applications', c: '#9b2948', b: '#d94f70', labels: ['Carbon Capture', 'Hydrogen Storage', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Methane Storage', 'Adsorption Cooling', 'Secondary Battery', 'Supercapacitor', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'CO2 Conversion', 'Catalysis', 'Sensing', 'Air Pollution Control', 'Distillation'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
