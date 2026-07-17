@@ -100,7 +100,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Crossref)</p>
           </div>
         </sc-if>
-        <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
+        <div style="display:flex;align-items:center;gap:16px;flex:1 1 420px;min-width:280px">
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
+          <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;min-width:0;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+        </div>
       </div>
     </header>
 
@@ -108,8 +111,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
     <section style="padding:40px 0 56px" data-screen-label="Full list">
 
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
-        <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+      <div style="display:flex;align-items:flex-start;justify-content:flex-end;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
         <div class="publication-filter-panel">
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
             <div class="publication-filter-group">
