@@ -266,9 +266,9 @@ class Component extends DCLogic {
       { title: 'Review', c: '#4E2A84', b: '#836EAA', labels: ['Review'] }
     ];
     const applicationSections = [
-      { title: 'Separation', c: '#B4235A', b: '#E25587', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'] },
-      { title: 'Catalysis', c: '#A43E55', b: '#D66C82', labels: ['Catalysis', 'CO2 Conversion'] },
-      { title: 'Energy Storage', c: '#873E6E', b: '#BB719F', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'] },
+      { title: 'Separation', c: '#B4235A', b: '#E25587', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'], names: { 'Carbon Monoxide Separation': 'Carbon Monoxide', 'Noble Gas Separation': 'Noble Gases', 'SF6/N2 Separation': 'SF6/N2', 'Olefin/Paraffin Separation': 'Olefin/Paraffin', 'Xylene Separation': 'Xylene Isomer', 'Alkane Isomer Separation': 'Alkane Isomer', 'Organic Liquid Separation': 'Organic Liquids' } },
+      { title: 'Catalysis', c: '#A43E55', b: '#D66C82', labels: ['Catalysis', 'CO2 Conversion'], names: { 'Catalysis': 'All' } },
+      { title: 'Energy Storage', c: '#873E6E', b: '#BB719F', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'], names: { 'Hydrogen Storage': 'Hydrogen', 'Methane Storage': 'Methane' } },
       { title: 'Other', c: '#6F4A58', b: '#A17C8A', labels: ['Adsorption Cooling', 'Sensing', 'Air Pollution Control'] }
     ];
     const themeColors = {
@@ -359,7 +359,7 @@ class Component extends DCLogic {
         return { title: group.title, c: group.c, items: [], hasSections: true, sections: applicationSections.map(section => ({
           title: section.title,
           c: section.c,
-          items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount).map(t => ({ ...t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
+          items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount).map(t => ({ ...t, t: (section.names && section.names[t.t]) || t.t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
         })) };
       }
       if (group.title === 'Review') {
