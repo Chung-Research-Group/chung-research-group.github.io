@@ -31,6 +31,8 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText('Computation', { exact: true })).toBeVisible();
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Systems', { exact: true })).toBeVisible();
+  await expect(page.locator('.publication-filter-group')).toHaveCount(6);
+  await expect(page.locator('.publication-filter-title').filter({ hasText: 'Computation' })).toBeVisible();
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
