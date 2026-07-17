@@ -1,0 +1,39 @@
+name: Monitor publications and process Slack approvals
+
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+concurrency:
+  group: publication-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Monitor Crossref and Slack
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLICATION_ORCID: '0000-0002-7756-0589'
+          SLACK_CHANNEL_ID: 'C0BJ2607NGL'
+          SLACK_BOT_TOKEN: ${{ secrets.PUBLICATION_SLACK_BOT_TOKEN }}
+          PUBLICATION_APPROVER_USER_IDS: ${{ vars.PUBLICATION_APPROVER_USER_IDS }}
+          CROSSREF_MAILTO: ${{ vars.CROSSREF_MAILTO }}
+        run: node scripts/publication-bot.mjs
