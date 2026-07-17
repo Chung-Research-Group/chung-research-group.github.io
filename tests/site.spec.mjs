@@ -110,7 +110,9 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
   await expect(page.getByText('학생 오피스 · 제7공학관 302호', { exact: true })).toBeVisible();
-  await expect(page.getByText('교수 오피스 · 부속연구동 201호', { exact: true })).toBeVisible();
+  const professorOfficeAddress = page.getByText('교수 오피스 · 제7공학관 부속연구동 201호', { exact: true });
+  await expect(professorOfficeAddress).toBeVisible();
+  await expect(professorOfficeAddress.locator('xpath=ancestor::a')).toHaveCount(0);
   await expect(page.getByText('교수 오피스 · +82 51 510 3757', { exact: true })).toBeVisible();
   await expect(page.getByText('학생 오피스 · +82 51 510 3082', { exact: true })).toBeVisible();
   await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
