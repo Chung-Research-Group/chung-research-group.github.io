@@ -44,9 +44,8 @@ test('publication topic filters and search work', async ({ page }) => {
   await physicsGroup.getByRole('button', { name: 'Expand Physics' }).click();
   await expect(page.getByText(/^Machine Learning\s*×/)).toHaveCount(0);
   await expect(page.getByText(/^Adsorption\s*×\s*41$/)).toBeVisible();
-  await physicsGroup.locator('.publication-filter-total').click();
   await expect(page.getByText(/publications found/)).toBeVisible();
-  await physicsGroup.locator('.publication-filter-total').click();
+  await physicsGroup.getByRole('button', { name: 'Collapse Physics' }).click();
 
   // A major category opens all of its middle and detailed categories at once.
   await applicationGroup.getByRole('button', { name: 'Expand Applications' }).click();
@@ -59,9 +58,8 @@ test('publication topic filters and search work', async ({ page }) => {
   await separationSection.getByRole('button', { name: 'Expand Separation' }).click();
   await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
   await expect(applicationGroup.getByText(/^Catalysis\s*×/)).toHaveCount(0);
-  await separationSection.locator('.publication-filter-total').click({ force: true });
   await expect(page.getByText(/publications found/)).toBeVisible();
-  await separationSection.locator('.publication-filter-total').click({ force: true });
+  await separationSection.getByRole('button', { name: 'Collapse Separation' }).click();
 
   // Review has no redundant Review × 6 label; its topic filters appear on expand.
   await expect(reviewGroup.getByText(/^Review\s*×/)).toHaveCount(0);
