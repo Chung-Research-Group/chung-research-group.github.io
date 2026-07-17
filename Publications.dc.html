@@ -28,13 +28,16 @@ nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transfor
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
 .publication-filter-panel{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;margin:0}
-.publication-filter-group{display:grid;grid-template-columns:156px minmax(0,1fr);gap:14px;align-items:start;padding:8px 0 10px;border-top:1px solid color-mix(in srgb,var(--color-text) 13%,transparent)}
+.publication-filter-group{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:start;padding:8px 0 10px;border-top:1px solid color-mix(in srgb,var(--color-text) 13%,transparent)}
 .publication-filter-group:first-child{border-top:0;padding-top:0}
-.publication-filter-title{display:flex;align-items:center;justify-content:flex-start;min-height:24px;padding:5px 10px 5px 14px;border-left:5px solid currentColor;text-align:left;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.publication-filter-heading,.publication-filter-section-heading{display:flex;align-items:center;gap:6px;min-width:0}
+.publication-filter-title{display:flex;align-items:center;justify-content:flex-start;gap:7px;min-height:30px;padding:5px 10px 5px 14px;border:0;border-left:5px solid currentColor;text-align:left;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;cursor:pointer}
+.publication-filter-chevron{width:12px;text-align:center;font-size:13px;line-height:1}
+.publication-filter-total{display:inline-flex;align-items:center;min-height:28px;padding:3px 7px;border:1px solid currentColor;background:transparent;font:700 13px/18px var(--font-body);white-space:nowrap;cursor:pointer}
 .publication-filter-items{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:6px;padding-top:3px}
 .publication-filter-sections{display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%}
 .publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
-.publication-filter-section-title{padding-top:3px;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color)}
+.publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 0;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
 
 /* responsive+scale v2 */
@@ -121,12 +124,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
       <div style="display:flex;align-items:flex-start;justify-content:flex-start;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
         <div class="publication-filter-panel">
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
-            <div class="publication-filter-group">
-              <span class="publication-filter-title" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)">{{ group.title }}</span>
-              <div class="publication-filter-items">
+            <div class="publication-filter-group" data-filter-group="{{ group.title }}">
+              <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button><button type="button" class="publication-filter-total" onClick="{{ group.select }}" style="color:{{ group.totalFg }};background:{{ group.totalBg }};border-color:{{ group.c }}">All × {{ group.n }}</button></div>
+              <sc-if value="{{ group.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-items">
                 <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
-                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" style="--section-color:{{ section.c }}"><span class="publication-filter-section-title">{{ section.title }}</span><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></div></sc-for></div></sc-if>
-              </div>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button><button type="button" class="publication-filter-total" onClick="{{ section.select }}" style="color:{{ section.totalFg }};background:{{ section.totalBg }};border-color:{{ section.c }}">All × {{ section.n }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
+              </div></sc-if>
             </div>
           </sc-for>
         </div>
@@ -181,7 +184,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}, &quot;crossrefCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4200, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
 class Component extends DCLogic {
-  state = { q: '', theme: null, dois: {}, cites: {} };
+  state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], dois: {}, cites: {} };
   async resolveDois() {
     const cacheKey = 'mtap-doi-cache-v2';
     let cache = {};
@@ -267,7 +270,7 @@ class Component extends DCLogic {
     ];
     const applicationSections = [
       { title: 'Separation', c: '#B4235A', b: '#E25587', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'], names: { 'Carbon Monoxide Separation': 'Carbon Monoxide', 'Noble Gas Separation': 'Noble Gases', 'SF6/N2 Separation': 'SF6/N2', 'Olefin/Paraffin Separation': 'Olefin/Paraffin', 'Xylene Separation': 'Xylene Isomer', 'Alkane Isomer Separation': 'Alkane Isomer', 'Organic Liquid Separation': 'Organic Liquids' } },
-      { title: 'Catalysis', c: '#A43E55', b: '#D66C82', labels: ['Catalysis', 'CO2 Conversion'], names: { 'Catalysis': 'All' } },
+      { title: 'Catalysis', c: '#A43E55', b: '#D66C82', labels: ['Catalysis', 'CO2 Conversion'] },
       { title: 'Energy Storage', c: '#873E6E', b: '#BB719F', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'], names: { 'Hydrogen Storage': 'Hydrogen', 'Methane Storage': 'Methane' } },
       { title: 'Other', c: '#6F4A58', b: '#A17C8A', labels: ['Adsorption Cooling', 'Sensing', 'Air Pollution Control'] }
     ];
@@ -299,7 +302,19 @@ class Component extends DCLogic {
     this._papers = full.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
     const q = this.state.q.trim().toLowerCase();
     const activeTheme = this.state.theme;
-    const matchesTheme = (p) => !activeTheme || (activeTheme.startsWith('Review::') ? p.reviewClass === activeTheme.slice(8) : p.tags.some(t => t.t === activeTheme));
+    const matchesTheme = (p) => {
+      if (!activeTheme) return true;
+      if (activeTheme.startsWith('Group::')) {
+        const group = themeDefs.find(g => g.title === activeTheme.slice(7));
+        return !!group && (p.topics || []).some(t => group.labels.includes(t));
+      }
+      if (activeTheme.startsWith('Section::')) {
+        const section = applicationSections.find(s => s.title === activeTheme.split('::')[2]);
+        return !!section && (p.topics || []).some(t => section.labels.includes(t));
+      }
+      if (activeTheme.startsWith('Review::')) return p.reviewClass === activeTheme.slice(8);
+      return p.tags.some(t => t.t === activeTheme);
+    };
     const match = (p) => matchesTheme(p) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ') + ' ' + p.reviewClass).toLowerCase().includes(q));
     const filtered = full.filter(match);
     filtered.sort((a, b) => parseInt(b.no, 10) - parseInt(a.no, 10));
@@ -353,19 +368,41 @@ class Component extends DCLogic {
         click: () => this.setState({ theme: activeTheme === key ? null : key })
       };
     }).sort(sortByCount);
+    const openGroups = Array.isArray(this.state.openGroups) ? this.state.openGroups : ['Computation'];
+    const openSections = Array.isArray(this.state.openSections) ? this.state.openSections : [];
     const themeGroups = themeDefs.map(group => {
       const allItems = themeTotals.filter(t => t.group === group.title).sort(sortByCount);
+      const groupKey = 'Group::' + group.title;
+      const groupOpen = openGroups.includes(group.title);
+      const groupCount = full.filter(p => (p.topics || []).some(t => group.labels.includes(t))).length;
+      const base = {
+        title: group.title, c: group.c, n: groupCount, open: groupOpen, marker: groupOpen ? '−' : '+',
+        toggleLabel: (groupOpen ? 'Collapse ' : 'Expand ') + group.title,
+        toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: [] }),
+        totalFg: activeTheme === groupKey ? '#ffffff' : group.c,
+        totalBg: activeTheme === groupKey ? group.c : 'transparent',
+        select: () => this.setState({ theme: activeTheme === groupKey ? null : groupKey })
+      };
       if (group.title === 'Applications') {
-        return { title: group.title, c: group.c, items: [], hasSections: true, sections: applicationSections.map(section => ({
-          title: section.title,
-          c: section.c,
-          items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount).map(t => ({ ...t, t: (section.names && section.names[t.t]) || t.t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
-        })) };
+        return { ...base, items: [], hasSections: true, sections: applicationSections.map(section => {
+          const sectionKey = 'Section::Applications::' + section.title;
+          const sectionOpen = openSections.includes(section.title);
+          return {
+            title: section.title, c: section.c, open: sectionOpen, marker: sectionOpen ? '−' : '+',
+            n: full.filter(p => (p.topics || []).some(t => section.labels.includes(t))).length,
+            toggleLabel: (sectionOpen ? 'Collapse ' : 'Expand ') + section.title,
+            toggle: () => this.setState({ openSections: sectionOpen ? [] : [section.title] }),
+            totalFg: activeTheme === sectionKey ? '#ffffff' : section.c,
+            totalBg: activeTheme === sectionKey ? section.c : 'transparent',
+            select: () => this.setState({ theme: activeTheme === sectionKey ? null : sectionKey }),
+            items: allItems.filter(t => section.labels.includes(t.t) && t.t !== section.title).sort(sortByCount).map(t => ({ ...t, t: (section.names && section.names[t.t]) || t.t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
+          };
+        }) };
       }
       if (group.title === 'Review') {
-        return { title: group.title, c: group.c, items: [], hasSections: true, sections: [{ title: 'Topic', c: group.c, items: reviewItems }] };
+        return { ...base, items: reviewItems, hasSections: false, sections: [] };
       }
-      return { title: group.title, c: group.c, items: allItems, hasSections: false, sections: [] };
+      return { ...base, items: allItems, hasSections: false, sections: [] };
     });
     return {
       scholarCites: scholarCites,
