@@ -135,8 +135,8 @@ if (!publicationsHtml.includes("themeGroups") || !publicationsHtml.includes("p.t
 }
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
-const publicationBlock = (feedHtml.match(/const PUBS = \\[([\\s\\S]*?)\\n\\];/) || [])[1] || "";
-const publicationEntries = [...publicationBlock.matchAll(/\\bF\\('\\d{2}'/g)];
+const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
+const publicationEntries = [...publicationBlock.matchAll(/\bF\('\d{2}'/g)];
 if (topicAssignments.length !== publicationEntries.length) {
   errors.push(`Expected one explicit topic assignment per publication; found ${topicAssignments.length} assignments for ${publicationEntries.length} publications.`);
 }
