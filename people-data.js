@@ -14,7 +14,7 @@ window.MTAP_PEOPLE = () => ({
       { slot: 'm-baek', photo: 'ph-baek', name: 'Baek, Mingyu', kr: '백민규', program: "Master's Program, Graduate School of Data Science", interests: 'AI & Data', github: 'https://github.com/100mingyu-rgb', linkedin: 'https://www.linkedin.com/in/mingyu-baek', edu: 'B.S. Chemical Engineering, Kyungpook University (2025)' }
     ]},
     { title: 'Undergraduates', kr: '학부연구생', people: [
-      { slot: 'm-kim-hyunji', photo: 'ph-kim-hyunji', name: 'Kim, Hyunji', kr: '김현지', interests: 'Modeling & Optimization', edu: 'B.S. Chemical & Biomolecular Engineering, Pusan National University (2027)', linkedin: 'https://www.linkedin.com/in/hyunji-kim-051743359', github: 'https://github.com/Kimhyunji4' }
+      { slot: 'm-kim-hyunji', photo: 'ph-kim-hyunji', name: 'Kim, Hyunji', kr: '김현지', interests: 'Modeling & Optimization', edu: 'Chemical & Biomolecular Engineering, Pusan National University', linkedin: 'https://www.linkedin.com/in/hyunji-kim-051743359', github: 'https://github.com/Kimhyunji4' }
     ]},
     { title: 'Visitors', kr: '방문연구원', people: [] }
   ],
