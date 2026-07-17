@@ -34,7 +34,7 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
-  const dft = page.getByText(/^DFT\s*×/).first();
+  const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
   await dft.click();
   await expect(page.getByText(/publications found/)).toBeVisible();
@@ -68,6 +68,8 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
   await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
+  await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
+  await expect(page.locator('a[href^="mailto:drygchung"]')).toHaveCount(0);
 });
 
 
@@ -90,7 +92,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   const jpcc = page.locator('[data-publication-no="19"]');
   await expect(jpcc).toBeVisible();
   await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
-  await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Grand Canonical Monte Carlo', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });
