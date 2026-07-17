@@ -32,6 +32,10 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-group:first-child{border-top:0;padding-top:0}
 .publication-filter-title{display:flex;align-items:center;justify-content:flex-end;min-height:24px;padding:5px 10px 5px 14px;border-left:5px solid currentColor;text-align:right;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
 .publication-filter-items{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;padding-top:3px}
+.publication-filter-sections{display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%}
+.publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start}
+.publication-filter-section-title{padding-top:5px;text-align:right;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:color-mix(in srgb,currentColor 82%,var(--color-text))}
+.publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -62,6 +66,9 @@ body{zoom:0.88}
   .publication-filter-group{grid-template-columns:1fr;gap:7px;padding:12px 0}
   .publication-filter-title{justify-content:flex-start;width:fit-content;text-align:left}
   .publication-filter-items{justify-content:flex-start;padding-top:0}
+  .publication-filter-section{grid-template-columns:1fr;gap:3px}
+  .publication-filter-section-title{text-align:left}
+  .publication-filter-section-items{justify-content:flex-start}
 }
 a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
@@ -116,7 +123,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
             <div class="publication-filter-group">
               <span class="publication-filter-title" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)">{{ group.title }}</span>
-              <div class="publication-filter-items"><sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div>
+              <div class="publication-filter-items">
+                <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section"><span class="publication-filter-section-title" style="color:{{ group.c }}">{{ section.title }}</span><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></div></sc-for></div></sc-if>
+              </div>
             </div>
           </sc-for>
         </div>
@@ -255,6 +265,12 @@ class Component extends DCLogic {
       { title: 'Applications', c: '#9b2948', b: '#d94f70', labels: ['Carbon Capture', 'Hydrogen Storage', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Methane Storage', 'Adsorption Cooling', 'Secondary Battery', 'Supercapacitor', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'CO2 Conversion', 'Catalysis', 'Sensing', 'Air Pollution Control', 'Distillation'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
+    const applicationSections = [
+      { title: 'Separation', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'] },
+      { title: 'Catalysis', labels: ['Catalysis', 'CO2 Conversion'] },
+      { title: 'Energy Storage', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'] },
+      { title: 'Other', labels: ['Adsorption Cooling', 'Sensing', 'Air Pollution Control'] }
+    ];
     const themeColors = {
       Infrastructure: { c: '#5B6770', b: '#8A959E' }
     };
@@ -272,6 +288,7 @@ class Component extends DCLogic {
         .sort((a, b) => priority.indexOf(a) - priority.indexOf(b))
         .map(name => byName[name])
         .filter(Boolean);
+      p.reviewClass = p.reviewTopic || '';
     });
     const HCP = ['60', '48', '22', '19'];
     const p72 = full.find(p => p.no === '72');
@@ -282,7 +299,8 @@ class Component extends DCLogic {
     this._papers = full.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
     const q = this.state.q.trim().toLowerCase();
     const activeTheme = this.state.theme;
-    const match = (p) => (!activeTheme || p.tags.some(t => t.t === activeTheme)) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ')).toLowerCase().includes(q));
+    const matchesTheme = (p) => !activeTheme || (activeTheme.startsWith('Review::') ? p.reviewClass === activeTheme.slice(8) : p.tags.some(t => t.t === activeTheme));
+    const match = (p) => matchesTheme(p) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ') + ' ' + p.reviewClass).toLowerCase().includes(q));
     const filtered = full.filter(match);
     filtered.sort((a, b) => parseInt(b.no, 10) - parseInt(a.no, 10));
     if (q || activeTheme) {
@@ -324,11 +342,27 @@ class Component extends DCLogic {
       bg: activeTheme === t.t ? t.c : 'transparent',
       click: () => this.setState({ theme: activeTheme === t.t ? null : t.t })
     }));
-    const themeGroups = themeDefs.map(group => ({
-      title: group.title,
-      c: group.c,
-      items: themeTotals.filter(t => t.group === group.title)
-    }));
+    const sortByCount = (a, b) => b.n - a.n || a.t.localeCompare(b.t);
+    const reviewItems = ['Computation', 'Materials', 'Applications'].map(t => {
+      const key = 'Review::' + t;
+      return {
+        t, key, c: '#836EAA', b: '#B6ACD1',
+        n: full.filter(p => p.reviewClass === t).length,
+        fg: activeTheme === key ? '#ffffff' : '#836EAA',
+        bg: activeTheme === key ? '#836EAA' : 'transparent',
+        click: () => this.setState({ theme: activeTheme === key ? null : key })
+      };
+    }).sort(sortByCount);
+    const themeGroups = themeDefs.map(group => {
+      const allItems = themeTotals.filter(t => t.group === group.title).sort(sortByCount);
+      if (group.title === 'Applications') {
+        return { title: group.title, c: group.c, items: [], hasSections: true, sections: applicationSections.map(section => ({ title: section.title, items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount) })) };
+      }
+      if (group.title === 'Review') {
+        return { title: group.title, c: group.c, items: allItems, hasSections: true, sections: [{ title: 'Topic', items: reviewItems }] };
+      }
+      return { title: group.title, c: group.c, items: allItems, hasSections: false, sections: [] };
+    });
     return {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
