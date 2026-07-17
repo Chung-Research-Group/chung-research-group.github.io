@@ -133,6 +133,16 @@ body{zoom:0.88}
   backdrop-filter: blur(4px);
 }
 
+/* Use more of the quiet center area without letting copy reach the MOF artwork. */
+.hero-interactive__copy {
+  width: min(960px, 72vw);
+  max-width: 100%;
+}
+
+.hero-interactive__copy p {
+  max-width: 90ch !important;
+}
+
 @media (max-width:840px) {
   /* Override the older global h1 span rule for this hero explicitly. */
   .hero-interactive h1 span {
@@ -157,6 +167,10 @@ body{zoom:0.88}
 
   .hero-interactive__particles {
     opacity: .56;
+  }
+
+  .hero-interactive__copy {
+    width: 100%;
   }
 
   footer {
@@ -200,7 +214,7 @@ body{zoom:0.88}
     <section class="hero-interactive" data-hero-interactive="" style="display:block;padding:52px 0 48px" data-screen-label="Hero">
       <div class="hero-interactive__image" aria-hidden="true"></div>
       <canvas class="hero-interactive__particles" aria-hidden="true"></canvas>
-      <div style="max-width:74ch">
+      <div class="hero-interactive__copy">
         <h1 style="font-family:var(--font-heading);font-weight:800;font-size:64px;line-height:68px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">
           <span style="display:block">AI-driven materials</span>
           <span style="display:block;white-space:nowrap">&amp;&nbsp;chemical&nbsp;discovery.</span>
