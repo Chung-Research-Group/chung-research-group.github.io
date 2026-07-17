@@ -25,6 +25,29 @@ a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
+.research-architecture{padding:44px 0 52px}
+.research-section-label{font-family:var(--font-heading);font-size:14px;line-height:18px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;color:var(--color-accent-700)}
+.research-section-copy{font-size:18px;line-height:28px;max-width:76ch;margin:8px 0 0;color:var(--color-text)}
+.research-core{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
+.research-enablers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:14px}
+.research-card{min-width:0;padding:24px 24px 26px;border-top:5px solid var(--area-color);background:color-mix(in srgb,var(--area-color) 6%,transparent)}
+.research-card-number{font-family:var(--font-heading);font-size:14px;line-height:14px;font-weight:800;color:var(--area-color)}
+.research-card h2{font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:34px;letter-spacing:-.015em;margin:12px 0 0}
+.research-card-ko{font-size:17px;line-height:25px;font-weight:700;margin:5px 0 0;color:var(--area-color)}
+.research-card-copy{font-size:18px;line-height:28px;margin:16px 0 0;color:var(--color-text)}
+.research-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.research-tags span{display:inline-flex;padding:3px 7px;border:1px solid color-mix(in srgb,var(--area-color) 60%,transparent);font-size:13px;line-height:18px;font-weight:700;color:var(--area-color);background:var(--color-bg)}
+.research-layer-heading{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-top:34px;padding-top:24px;border-top:2px solid var(--color-divider)}
+.research-layer-heading h2{font-family:var(--font-heading);font-size:24px;line-height:30px;font-weight:800;margin:0}
+.research-layer-heading p{font-size:16px;line-height:24px;margin:0;color:color-mix(in srgb,var(--color-text) 70%,transparent)}
+.research-crosscut{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 48px;margin-top:34px;padding:26px 0;border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)}
+.research-crosscut h3{font-family:var(--font-heading);font-size:19px;line-height:25px;font-weight:800;margin:0;color:var(--color-accent-700)}
+.research-crosscut p{font-size:17px;line-height:27px;margin:8px 0 0;color:var(--color-text)}
+
+@media (max-width:1100px) and (min-width:841px){
+  .research-core,.research-enablers{grid-template-columns:1fr}
+}
+
 /* responsive+scale v2 */
 body{zoom:0.88}
 @media (max-width:840px){
@@ -50,6 +73,8 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
+  .research-core,.research-enablers,.research-crosscut{grid-template-columns:1fr}
+  .research-layer-heading{align-items:flex-start;flex-direction:column}
 }
 </style>
 </helmet>
@@ -75,38 +100,63 @@ body{zoom:0.88}
 
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
 
-    <section style="display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:24px 56px;align-items:center;padding:44px 0" data-screen-label="Area 01">
-      <div>
-        <p style="font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:14px;margin:0;color:var(--color-accent-2-600)">01</p>
-        <h2 style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:36px;letter-spacing:-0.015em;margin:12px 0 0">Digital materials intelligence</h2>
-        <p style="font-size:17.5px;line-height:25px;margin:6px 0 0;color:var(--color-text)">디지털 소재 인텔리전스</p>
-        <p style="font-size:19px;line-height:30px;max-width:54ch;margin:14px 0 0">We build and deploy high-throughput digital workflows (<a href="Software %26 Data.dc.html">CoRE MOF Tools</a>, <a href="Software %26 Data.dc.html">AIM</a>) to curate, screen and evaluate thousands of nanoporous materials, creating digital twins for accurate and rapid performance prediction.</p>
+    <section class="research-architecture" data-screen-label="Research architecture">
+      <span class="research-section-label">Research architecture · 연구 체계</span>
+      <p class="research-section-copy">Our core research connects molecular-scale information to adsorption behavior and cyclic separation performance. Data-driven discovery and AI scientist systems operate across this entire workflow.</p>
+
+      <div class="research-core">
+        <article class="research-card" style="--area-color:#1c4fa1">
+          <span class="research-card-number">01</span>
+          <h2>Quantum &amp; Atomistic Modeling</h2>
+          <p class="research-card-ko">양자·원자 수준 모델링</p>
+          <p class="research-card-copy">We use quantum calculations, molecular simulations, and enhanced sampling to investigate structure, energetics, diffusion, reaction, and electrochemical behavior at molecular scales.</p>
+          <div class="research-tags"><span>Density Functional Theory</span><span>Molecular Dynamics</span><span>Enhanced Sampling</span></div>
+        </article>
+
+        <article class="research-card" style="--area-color:#00794a">
+          <span class="research-card-number">02</span>
+          <h2>Adsorption &amp; Statistical Mechanics</h2>
+          <p class="research-card-ko">흡착과 통계역학</p>
+          <p class="research-card-copy">We develop statistical-mechanical theories and molecular simulations for multicomponent adsorption and confined diffusion, connecting molecular interactions to material-level performance.</p>
+          <div class="research-tags"><span>Grand Canonical Monte Carlo</span><span>Multicomponent Adsorption</span><span>Confined Diffusion</span></div>
+        </article>
+
+        <article class="research-card" style="--area-color:#006b73">
+          <span class="research-card-number">03</span>
+          <h2>Cyclic Swing Adsorption</h2>
+          <p class="research-card-ko">순환식 스윙 흡착</p>
+          <p class="research-card-copy">We develop end-to-end models for pressure-, vacuum-, and temperature-swing adsorption that connect mixture adsorption and transport to cycle dynamics, process optimization, energy use, purity, recovery, productivity, and techno-economic performance.</p>
+          <div class="research-tags"><span>Pressure Swing Adsorption</span><span>Vacuum Swing Adsorption</span><span>Temperature Swing Adsorption</span><span>Process Optimization</span><span>Techno-Economic Analysis</span></div>
+        </article>
       </div>
-      <figure style="margin:0;width:100%;aspect-ratio:1200/483"><image-slot id="r-area1" src="images/slot-r-area1.webp" shape="rect" placeholder="Digital workflows image"></image-slot></figure>
-    </section>
 
-    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
-
-    <section style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:24px 56px;align-items:center;padding:44px 0" data-screen-label="Area 02">
-      <figure style="margin:0;width:100%;aspect-ratio:1200/317;order:0"><image-slot id="r-area2" src="images/slot-r-area2.webp" shape="rect" placeholder="Data & AI platforms image"></image-slot></figure>
-      <div>
-        <p style="font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:14px;margin:0;color:var(--color-accent-2-600)">02</p>
-        <h2 style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:36px;letter-spacing:-0.015em;margin:12px 0 0">Data &amp; AI for materials and chemicals</h2>
-        <p style="font-size:17.5px;line-height:25px;margin:6px 0 0;color:var(--color-text)">소재·화학을 위한 데이터와 AI</p>
-        <p style="font-size:19px;line-height:30px;max-width:54ch;margin:14px 0 0">We build foundational platforms (<a href="Software %26 Data.dc.html">CoRE MOF DB</a>, <a href="Software %26 Data.dc.html">PACMAN</a>, <a href="Software %26 Data.dc.html">MOFClassifier</a>, GWP-estimator) to enable autonomous discovery of next-generation materials and chemical systems.</p>
+      <div class="research-layer-heading">
+        <h2>Cross-cutting discovery layers · 전 연구과정을 연결하는 발견 계층</h2>
+        <p>Data, predictive models, orchestration, and verification</p>
       </div>
-    </section>
 
-    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
+      <div class="research-enablers">
+        <article class="research-card" style="--area-color:#a86700">
+          <span class="research-card-number">04</span>
+          <h2>Data-driven &amp; Autonomous Discovery</h2>
+          <p class="research-card-ko">데이터 기반 자율 발견</p>
+          <p class="research-card-copy">We curate reproducible materials data and develop machine-learning models and high-throughput screening systems that identify, validate, and prioritize materials for targeted applications. These data and models provide the foundation for autonomous discovery.</p>
+          <div class="research-tags"><span>Data Curation</span><span>Machine Learning</span><span>High-Throughput Screening</span><span>Materials Databases</span></div>
+        </article>
 
-    <section style="display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:24px 56px;align-items:center;padding:44px 0" data-screen-label="Area 03">
-      <div>
-        <p style="font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:14px;margin:0;color:var(--color-accent-2-600)">03</p>
-        <h2 style="font-family:var(--font-heading);font-weight:800;font-size:30px;line-height:36px;letter-spacing:-0.015em;margin:12px 0 0">Diffusion, adsorption &amp; reaction at the nanoscale</h2>
-        <p style="font-size:17.5px;line-height:25px;margin:6px 0 0;color:var(--color-text)">나노스케일의 확산·흡착·반응</p>
-        <p style="font-size:19px;line-height:30px;max-width:54ch;margin:14px 0 0">We investigate the fundamentals of adsorption (e.g., <a href="Software %26 Data.dc.html">BET analysis</a>), diffusion, and reaction mechanisms to design and understand materials and chemicals for carbon capture, conversion, and energy storage.</p>
+        <article class="research-card" style="--area-color:#4e2a84">
+          <span class="research-card-number">05 · Emerging direction</span>
+          <h2>AI Scientists &amp; Computational Research Automation</h2>
+          <p class="research-card-ko">AI 과학자와 계산 연구 자동화</p>
+          <p class="research-card-copy">We are developing AI scientist systems that orchestrate large language models, domain models, simulation codes, databases, and verification tools to plan, execute, inspect, and refine computational research workflows. The goal is reproducible, traceable, and human-verifiable research automation.</p>
+          <div class="research-tags"><span>LLM Orchestration</span><span>Tool-Using Agents</span><span>Workflow Automation</span><span>Verification</span><span>Human-in-the-Loop</span></div>
+        </article>
       </div>
-      <figure style="margin:0;width:100%;aspect-ratio:1200/434"><image-slot id="r-area3" src="images/slot-r-area3.webp" shape="rect" placeholder="Nanoscale mechanisms image"></image-slot></figure>
+
+      <div class="research-crosscut">
+        <div><h3>Material platforms · 소재 플랫폼</h3><p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p></div>
+        <div><h3>Application domains · 응용 분야</h3><p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p></div>
+      </div>
     </section>
   </div>
 
