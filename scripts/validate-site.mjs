@@ -126,7 +126,7 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
-const publicationThemes = ["DFT", "GCMC", "MD", "Data Curation", "Machine Learning", "LLM", "Infrastructure", "Characterization", "Adsorption", "Transport", "Reaction", "Statistical Mechanics", "Electrochemistry", "Techno-Economic Analysis", "Swing Adsorption", "Device", "2D", "Reticular Materials", "Oxides", "Polymers", "Carbons", "Zeolites", "Molecules", "Electrolytes", "Perovskites", "Membranes", "Review"];
+const publicationThemes = ["DFT", "GCMC", "MD", "Data Curation", "Machine Learning", "LLM", "Infrastructure", "Characterization", "Adsorption", "Transport", "Reaction", "Statistical Mechanics", "Electrochemistry", "2D", "Reticular Materials", "Oxides", "Polymers", "Carbons", "Zeolites", "Molecules", "Electrolytes", "Perovskites", "Membranes", "Device", "Cyclic Swing Adsorber", "Techno-Economic Analysis", "Carbon Capture", "Hydrogen Storage", "Biogas Upgrading", "Gas Separation", "Methane Storage", "Adsorption Cooling", "Energy Storage", "Membrane Separation", "CO2 Conversion", "Catalysis", "Sensing", "Air Pollution Control", "Distillation", "Review"];
 for (const theme of publicationThemes) {
   if (!publicationsHtml.includes(`'${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
 }
@@ -141,6 +141,7 @@ if (topicAssignments.length !== publicationEntries.length) {
   errors.push(`Expected one explicit topic assignment per publication; found ${topicAssignments.length} assignments for ${publicationEntries.length} publications.`);
 }
 if (topicBlock.includes("'Process & Systems'")) errors.push("Deprecated Process & Systems publication label remains.");
+if (topicBlock.includes("'Swing Adsorption'")) errors.push("Deprecated Swing Adsorption publication label remains.");
 const reviewAssignments = [...topicBlock.matchAll(/'(\d{2})':\s*\[([^\]]*'Review'[^\]]*)\]/g)];
 if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
