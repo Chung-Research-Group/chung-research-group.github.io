@@ -78,9 +78,14 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(undergraduateOpening.getByText('Open', { exact: true })).toBeVisible();
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
-  await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
+  await expect(page.getByText('학생 오피스 · 제7공학관 302호', { exact: true })).toBeVisible();
+  await expect(page.getByText('교수 오피스 · 부속연구동 201호', { exact: true })).toBeVisible();
+  await expect(page.getByText('교수 오피스 · +82 51 510 3757', { exact: true })).toBeVisible();
+  await expect(page.getByText('학생 오피스 · +82 51 510 3082', { exact: true })).toBeVisible();
   await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
-  await expect(page.locator('a[href^="mailto:drygchung"]')).toHaveCount(0);
+  await expect(page.getByText('Email Prof. Chung', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-prof-email]')).toHaveCount(2);
+  await expect(page.locator('[data-prof-email]').first()).toHaveAttribute('href', /^mailto:/);
 });
 
 
