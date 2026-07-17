@@ -104,7 +104,7 @@ const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponen
 const REVIEW = { '72': 'Invited review', '70': 'Review', '48': 'Review', '37': 'Review', '21': 'Review', '17': 'Review' };
 const kindOf = (no, title) => REVIEW[no] || (/\breview\b/i.test(title) ? 'Review' : 'Article');
 const F = (no, title, authors, jk, journal, meta, code, doi) => ({
-  no, title, authors, journal, jurl: JU[jk], meta,
+  no, title, authors, journal, jurl: doi ? 'https://doi.org/' + doi : JU[jk], meta,
   code: code || false, doi: doi || false,
   html: doi ? 'https://doi.org/' + doi : SC(title),
   cite: SC(title), pdf: false,
