@@ -159,8 +159,14 @@ if (!feedHtml.includes("const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applica
 if (!publicationsHtml.includes("sortByCount") || !publicationsHtml.includes("applicationSections")) {
   errors.push("Publication filters must sort by usage count and expose application subcategories.");
 }
-for (const color of ["#B4235A", "#B65F00", "#6F42A8", "#5B6770"]) {
+if (!publicationsHtml.includes("openGroups: ['Computation']") || !publicationsHtml.includes("applicationSections.map(section => section.title)") || !publicationsHtml.includes("Group::") || !publicationsHtml.includes("Section::Applications::") || !publicationsHtml.includes("publication-filter-total")) {
+  errors.push("Publication filters must support collapsed major and middle categories with aggregate selection.");
+}
+for (const color of ["#B4235A", "#A43E55", "#873E6E", "#6F4A58", "#4E2A84"]) {
   if (!publicationsHtml.includes(color)) errors.push(`Application filter subcategory color is missing: ${color}`);
+}
+for (const displayName of ["Xylene Isomer", "Alkane Isomer", "Noble Gases", "Organic Liquids", "Hydrogen", "Methane"]) {
+  if (!publicationsHtml.includes(`'${displayName}'`)) errors.push(`Concise application filter name is missing: ${displayName}`);
 }
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
