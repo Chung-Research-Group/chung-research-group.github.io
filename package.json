@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node scripts/build-site.mjs",
     "check": "node scripts/validate-site.mjs --root . && node scripts/build-site.mjs && node scripts/validate-site.mjs --root dist --compare-source .",
-    "test": "npm run check && npm run test:automation && npm run test:browser",\n    "test:automation": "node --test tests/publication-bot.test.mjs",
+    "test": "npm run check && npm run test:automation && npm run test:browser",
+    "test:automation": "node --test tests/publication-bot.test.mjs",
     "test:browser": "playwright test"
   },
   "engines": {
