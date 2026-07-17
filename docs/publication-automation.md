@@ -10,7 +10,7 @@ approves the candidate.
 Reply in the candidate's Slack thread. Multiple commands can be placed on
 separate lines.
 
-- `라벨 추가: GCMC, Adsorption`
+- `라벨 추가: Grand Canonical Monte Carlo, Adsorption`
 - `라벨 제거: Review`
 - `제목: Corrected title`
 - `저널: Corrected journal`
@@ -21,7 +21,7 @@ separate lines.
 
 Available labels are grouped as follows:
 
-- Computation: `DFT`, `GCMC`, `MD`, `Enhanced Sampling`, `Data Curation`, `Machine Learning`, `LLM`, `Infrastructure`, `Characterization`, `Techno-Economic Analysis`
+- Computation: `Density Functional Theory`, `Grand Canonical Monte Carlo`, `Molecular Dynamics`, `Enhanced Sampling`, `Data Curation`, `Machine Learning`, `Large Language Models`, `Infrastructure`, `Material Characterization`, `Techno-Economic Analysis`
 - Physics: `Adsorption`, `Diffusion`, `Reaction`, `Electrochemistry`
 - Materials: `Reticular Materials`, `Oxides`, `Polymers`, `Carbons`, `Graphene Oxide`, `Graphene Quantum Dots`, `Zeolites`, `Molecules`, `Electrolytes`, `Perovskites`
 - Systems: `Membranes`, `Chiller`, `Cyclic Swing Adsorber`
