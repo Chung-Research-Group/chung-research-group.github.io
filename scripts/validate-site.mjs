@@ -133,6 +133,12 @@ for (const theme of publicationThemes) {
 if (!publicationsHtml.includes("themeGroups") || !publicationsHtml.includes("p.tags")) {
   errors.push("Publication label rendering or filtering is missing.");
 }
+if (!/feed\.js\?v=[^"']+/.test(publicationsHtml)) {
+  errors.push("Publication feed must use a cache-busting version query.");
+}
+if (!publicationsHtml.includes(".filter(Boolean)")) {
+  errors.push("Publication rendering must tolerate stale or unknown cached labels.");
+}
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
 const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
