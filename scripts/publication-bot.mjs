@@ -2,10 +2,15 @@ import { pathToFileURL } from 'node:url';
 
 export const TOPICS = [
   'DFT', 'GCMC', 'MD', 'Data Curation', 'Machine Learning', 'LLM',
-  'Infrastructure', 'Characterization', 'Techno-Economic Analysis', 'Swing Adsorption',
+  'Infrastructure', 'Characterization',
   'Adsorption', 'Transport', 'Reaction', 'Statistical Mechanics', 'Electrochemistry',
-  'Device', '2D', 'Reticular Materials', 'Oxides', 'Polymers', 'Carbons',
-  'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites', 'Membranes', 'Review'
+  '2D', 'Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Zeolites',
+  'Molecules', 'Electrolytes', 'Perovskites', 'Membranes',
+  'Device', 'Cyclic Swing Adsorber', 'Techno-Economic Analysis',
+  'Carbon Capture', 'Hydrogen Storage', 'Biogas Upgrading', 'Gas Separation',
+  'Methane Storage', 'Adsorption Cooling', 'Energy Storage', 'Membrane Separation',
+  'CO2 Conversion', 'Catalysis', 'Sensing', 'Air Pollution Control', 'Distillation',
+  'Review'
 ];
 
 const TOPIC_LOOKUP = new Map(TOPICS.map(topic => [topic.toLowerCase(), topic]));
@@ -70,14 +75,11 @@ export function suggestTopics(text) {
     ['LLM', /large language model|\bllm\b/],
     ['Infrastructure', /software|workflow|platform|toolkit|graphical user interface/],
     ['Characterization', /characterization|spectroscop|diffraction|\bbet\b/],
-    ['Techno-Economic Analysis', /techno.economic|economic analysis/],
-    ['Swing Adsorption', /swing adsorption|\bpsa\b|\bvsa\b|\btsa\b|\bpvsa\b/],
     ['Adsorption', /adsorp|sorbent|isotherm/],
     ['Transport', /transport|diffusion|permeab|conductiv/],
     ['Reaction', /reaction|cataly|conversion/],
     ['Statistical Mechanics', /statistical mechanic|thermodynamic|free energy/],
     ['Electrochemistry', /electrochem|battery|capacitor|electrolyte|electrode/],
-    ['Device', /device|chiller|membrane|capacitor|battery/],
     ['2D', /two.dimensional|\b2d\b|graphene/],
     ['Reticular Materials', /metal.organic framework|\bmofs?\b|covalent organic framework|\bcofs?\b|porous aromatic framework|\bpafs?\b|\bzifs?\b/],
     ['Oxides', /\boxides?\b|perovskite/],
@@ -88,6 +90,22 @@ export function suggestTopics(text) {
     ['Electrolytes', /electrolyte|ionic liquid/],
     ['Perovskites', /perovskite/],
     ['Membranes', /membrane|nanofiltration/],
+    ['Device', /device|chiller|membrane|capacitor|battery/],
+    ['Cyclic Swing Adsorber', /swing adsorption|pressure swing|temperature swing|vacuum swing|\bpsa\b|\bvsa\b|\btsa\b|\bpvsa\b/],
+    ['Techno-Economic Analysis', /techno.economic|economic analysis/],
+    ['Carbon Capture', /carbon capture|co2 capture|direct air capture|post.combustion|precombustion/],
+    ['Hydrogen Storage', /hydrogen storage|h2 storage/],
+    ['Biogas Upgrading', /biogas upgrading|biomethane/],
+    ['Gas Separation', /gas separation|separation of (?:binary|ternary|gas)|xe\/kr|ethane\/ethylene|sf6\/n2/],
+    ['Methane Storage', /methane storage|natural gas storage|lng.ang/],
+    ['Adsorption Cooling', /adsorption (?:cooling|chiller)|water adsorption chiller/],
+    ['Energy Storage', /energy storage|battery|capacitor|metal anode|solid.state electrolyte|ionic conductivity/],
+    ['Membrane Separation', /membrane separation|nanofiltration|liquid separation/],
+    ['CO2 Conversion', /co2 conversion|co2 fixation|cycloaddition|cyclic carbonate/],
+    ['Catalysis', /cataly|catalytic/],
+    ['Sensing', /sensor|sensing|detection/],
+    ['Air Pollution Control', /removal of no|removal of so2|air pollution/],
+    ['Distillation', /distillation/],
     ['Review', /\breview\b|perspective|progress in/]
   ];
   const topics = rules.filter(([, pattern]) => pattern.test(value)).map(([topic]) => topic);
