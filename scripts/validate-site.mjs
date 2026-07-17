@@ -126,7 +126,7 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
-const publicationThemes = ["DFT", "GCMC", "MD", "Data Curation", "Machine Learning", "LLM", "Infrastructure", "Characterization", "Techno-Economic Analysis", "Adsorption", "Transport", "Reaction", "Statistical Mechanics", "Electrochemistry", "2D", "Reticular Materials", "Oxides", "Polymers", "Carbons", "Zeolites", "Molecules", "Electrolytes", "Perovskites", "Membranes", "Chiller", "Cyclic Swing Adsorber", "Carbon Capture", "Hydrogen Storage", "Biogas Upgrading", "Carbon Monoxide Separation", "Natural Gas Sweetening", "Noble Gas Separation", "SF6/N2 Separation", "Olefin/Paraffin Separation", "Xylene Separation", "Alkane Isomer Separation", "Methane Storage", "Adsorption Cooling", "Secondary Battery", "Supercapacitor", "Organic Solvent Nanofiltration", "Organic Liquid Separation", "CO2 Conversion", "Catalysis", "Sensing", "Air Pollution Control", "Distillation", "Review"];
+const publicationThemes = ["DFT", "GCMC", "MD", "Enhanced Sampling", "Data Curation", "Machine Learning", "LLM", "Infrastructure", "Characterization", "Techno-Economic Analysis", "Adsorption", "Diffusion", "Reaction", "Electrochemistry", "Reticular Materials", "Oxides", "Polymers", "Carbons", "Graphene Oxide", "Graphene Quantum Dots", "Zeolites", "Molecules", "Electrolytes", "Perovskites", "Membranes", "Chiller", "Cyclic Swing Adsorber", "Carbon Capture", "Hydrogen Storage", "Biogas Upgrading", "Carbon Monoxide Separation", "Natural Gas Sweetening", "Noble Gas Separation", "SF6/N2 Separation", "Olefin/Paraffin Separation", "Xylene Separation", "Alkane Isomer Separation", "Methane Storage", "Adsorption Cooling", "Secondary Battery", "Supercapacitor", "Organic Solvent Nanofiltration", "Organic Liquid Separation", "CO2 Conversion", "Catalysis", "Sensing", "Air Pollution Control", "Distillation", "Review"];
 for (const theme of publicationThemes) {
   if (!publicationsHtml.includes(`'${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);
 }
@@ -142,13 +142,16 @@ if (topicAssignments.length !== publicationEntries.length) {
 }
 if (topicBlock.includes("'Process & Systems'")) errors.push("Deprecated Process & Systems publication label remains.");
 if (topicBlock.includes("'Swing Adsorption'")) errors.push("Deprecated Swing Adsorption publication label remains.");
-for (const deprecated of ["Device", "Gas Separation", "Energy Storage", "Membrane Separation"]) {
+for (const deprecated of ["Device", "Gas Separation", "Energy Storage", "Membrane Separation", "Transport", "Statistical Mechanics", "2D"]) {
   if (topicBlock.includes(`'${deprecated}'`)) errors.push(`Deprecated generic publication label remains: ${deprecated}`);
 }
 const reviewAssignments = [...topicBlock.matchAll(/'(\d{2})':\s*\[([^\]]*'Review'[^\]]*)\]/g)];
 if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
+}
+if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAJ")) {
+  errors.push("Chen Yu's Google Scholar profile is missing or incorrect.");
 }
 const designCss = await readFile(
   path.join(siteRoot, "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css"),
