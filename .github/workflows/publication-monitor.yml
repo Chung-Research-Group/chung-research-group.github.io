@@ -30,7 +30,7 @@ jobs:
 
       - name: Monitor Crossref and Slack
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.PUBLICATION_GITHUB_TOKEN }}
           PUBLICATION_ORCID: '0000-0002-7756-0589'
           SLACK_CHANNEL_ID: 'C0BJ2607NGL'
           SLACK_BOT_TOKEN: ${{ secrets.PUBLICATION_SLACK_BOT_TOKEN }}
