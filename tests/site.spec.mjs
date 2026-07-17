@@ -43,6 +43,12 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
 });
 
+test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
+  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('Latest publications · 최신 논문', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-home-publication]')).toHaveCount(6);
+});
+
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
   await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('B.S./M.S. Program', { exact: true })).toBeVisible();
