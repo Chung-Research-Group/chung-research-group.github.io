@@ -40,10 +40,21 @@ test('suggests labels from title and abstract keywords', () => {
 test('suggests system and application labels for cyclic separation processes', () => {
   const topics = suggestTopics('Techno-economic evaluation of a PVSA process for biogas upgrading');
   assert.deepEqual(topics, [
-    'Cyclic Swing Adsorber',
     'Techno-Economic Analysis',
+    'Cyclic Swing Adsorber',
     'Biogas Upgrading'
   ]);
+});
+
+test('suggests specific application labels instead of generic umbrellas', () => {
+  assert.deepEqual(
+    suggestTopics('Discovery of an adsorbent for ethane/ethylene separation'),
+    ['Adsorption', 'Olefin/Paraffin Separation']
+  );
+  assert.deepEqual(
+    suggestTopics('Solid-state electrolyte with high lithium-ion conductivity'),
+    ['Transport', 'Electrochemistry', 'Electrolytes', 'Secondary Battery']
+  );
 });
 
 test('inserts an approved candidate without changing existing entries', () => {
