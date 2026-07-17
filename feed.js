@@ -191,27 +191,27 @@ const PUBS = [
 // Editorial topic assignments. These are intentionally explicit rather than
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
-  '72': ['Review'], '71': ['Machine Learning', 'LLM', 'Data', 'Transport', 'Electrochemistry', 'electrolytes'], '70': ['Review'],
-  '69': ['Adsorption', 'Transport', 'Device', 'reticular materials'], '68': ['Infrastructure', 'Adsorption', 'Statistical Mechanics'], '67': ['GCMC', 'Adsorption', 'Techno-economic analysis', 'Swing Adsorption', 'reticular materials'],
-  '66': ['GCMC', 'Adsorption', 'Statistical Mechanics', 'Swing Adsorption'], '65': ['GCMC', 'Characterization', 'Adsorption', 'reticular materials'], '64': ['Adsorption', 'Techno-economic analysis', 'Swing Adsorption', 'carbons'], '63': ['Machine Learning', 'Data', 'Characterization', 'reticular materials'],
-  '62': ['GCMC', 'Machine Learning', 'Adsorption', 'Device', 'reticular materials'], '61': ['Transport', 'polymers', 'membranes'], '60': ['GCMC', 'Infrastructure', 'Data', 'Machine Learning', 'Adsorption', 'reticular materials'],
-  '59': ['GCMC', 'Adsorption', 'Transport', 'Techno-economic analysis', 'reticular materials'], '58': ['DFT', 'Transport', 'Reaction', 'Electrochemistry', 'Device', 'reticular materials'], '57': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'oxides', 'polymers'],
-  '56': ['GCMC', 'Machine Learning', 'Adsorption', 'reticular materials'], '55': ['GCMC', 'Adsorption', 'Techno-economic analysis', 'Swing Adsorption', 'zeolites'], '54': ['GCMC', 'Machine Learning', 'Infrastructure', 'Data', 'Adsorption', 'reticular materials'], '53': ['Reaction', 'reticular materials'],
-  '52': ['GCMC', 'Machine Learning', 'Adsorption', 'reticular materials'], '51': ['GCMC', 'Adsorption', 'reticular materials'], '50': ['DFT', 'Machine Learning', 'Data', 'molecules'], '49': ['Transport', 'Reaction', 'Electrochemistry', 'Device', 'oxides', 'carbons', 'perovskites'],
-  '48': ['Review'], '47': ['Reaction', 'reticular materials'], '46': ['GCMC', 'Machine Learning', 'Data', 'Adsorption', 'reticular materials'], '45': ['Reaction', 'reticular materials'],
-  '44': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'oxides', 'polymers'], '43': ['Infrastructure', 'Characterization', 'Adsorption'], '42': ['Machine Learning', 'Data', 'Adsorption', 'reticular materials'],
-  '41': ['Adsorption', 'Reaction', '2D', 'zeolites'], '40': ['GCMC', 'Adsorption', 'reticular materials', 'carbons'], '39': ['DFT', 'Adsorption', 'Reaction', 'molecules'], '38': ['GCMC', 'Characterization', 'Adsorption', 'reticular materials'],
-  '37': ['Review'], '36': ['Adsorption', 'Reaction', 'reticular materials'], '35': ['GCMC', 'MD', 'Machine Learning', 'Data', 'Adsorption', 'reticular materials'], '34': ['DFT', '2D', 'carbons'],
-  '33': ['GCMC', 'Data', 'Adsorption', 'reticular materials'], '32': ['GCMC', 'Adsorption'],
-  '31': ['Transport', 'carbons', 'membranes'], '30': ['DFT', 'GCMC', 'MD', 'Data', 'Adsorption', 'reticular materials'], '29': ['DFT', '2D', 'carbons'], '28': ['Machine Learning'],
-  '27': ['Reaction'], '26': ['Machine Learning', 'Data', 'Characterization', 'Adsorption', 'reticular materials'], '25': ['Machine Learning'], '24': ['Transport', 'Reaction', 'Statistical Mechanics', 'molecules'],
-  '23': ['DFT', 'Adsorption', 'Reaction', 'carbons'], '22': ['Infrastructure', 'Data', 'reticular materials'], '21': ['Review'],
-  '20': ['DFT', 'Adsorption', 'reticular materials'], '19': ['GCMC', 'Characterization', 'Adsorption', 'reticular materials', 'carbons'], '18': ['GCMC', 'Adsorption', 'Swing Adsorption', 'reticular materials'], '17': ['Review'],
-  '16': ['Adsorption', 'Reaction', '2D', 'reticular materials'], '15': ['Adsorption', 'Reaction', 'reticular materials'], '14': ['GCMC', 'Adsorption', 'reticular materials'],
-  '13': ['GCMC', 'Adsorption', 'reticular materials', 'zeolites'], '12': ['GCMC', 'Adsorption', 'reticular materials'], '11': ['DFT', 'Data', 'reticular materials'], '10': ['Reaction', 'reticular materials'],
-  '09': ['GCMC', 'Data', 'Adsorption', 'reticular materials'], '08': ['DFT', 'GCMC', 'Adsorption', 'reticular materials'], '07': ['Adsorption', 'Reaction', 'reticular materials'],
-  '06': ['GCMC', 'Data', 'Adsorption', 'reticular materials'], '05': ['GCMC', 'Data', 'Infrastructure', 'Adsorption', 'reticular materials'], '04': ['MD', 'Transport', 'polymers'],
-  '03': ['MD', 'Transport', 'polymers'], '02': ['MD', 'Transport', 'polymers'], '01': ['MD', 'Transport', 'polymers']
+  '72': ['Review'], '71': ['Machine Learning', 'LLM', 'Data', 'Transport', 'Electrochemistry', 'Electrolytes'], '70': ['Review'],
+  '69': ['Adsorption', 'Transport', 'Device', 'Reticular Materials'], '68': ['Infrastructure', 'Adsorption', 'Statistical Mechanics'], '67': ['GCMC', 'Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Reticular Materials'],
+  '66': ['GCMC', 'Adsorption', 'Statistical Mechanics', 'Swing Adsorption'], '65': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials'], '64': ['Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Carbons'], '63': ['Machine Learning', 'Data', 'Characterization', 'Reticular Materials'],
+  '62': ['GCMC', 'Machine Learning', 'Adsorption', 'Device', 'Reticular Materials'], '61': ['Transport', 'Polymers', 'Membranes'], '60': ['GCMC', 'Infrastructure', 'Data', 'Machine Learning', 'Adsorption', 'Reticular Materials'],
+  '59': ['GCMC', 'Adsorption', 'Transport', 'Techno-Economic Analysis', 'Reticular Materials'], '58': ['DFT', 'Transport', 'Reaction', 'Electrochemistry', 'Device', 'Reticular Materials'], '57': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'Oxides', 'Polymers'],
+  '56': ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials'], '55': ['GCMC', 'Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Zeolites'], '54': ['GCMC', 'Machine Learning', 'Infrastructure', 'Data', 'Adsorption', 'Reticular Materials'], '53': ['Reaction', 'Reticular Materials'],
+  '52': ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials'], '51': ['GCMC', 'Adsorption', 'Reticular Materials'], '50': ['DFT', 'Machine Learning', 'Data', 'Molecules'], '49': ['Transport', 'Reaction', 'Electrochemistry', 'Device', 'Oxides', 'Carbons', 'Perovskites'],
+  '48': ['Review'], '47': ['Reaction', 'Reticular Materials'], '46': ['GCMC', 'Machine Learning', 'Data', 'Adsorption', 'Reticular Materials'], '45': ['Reaction', 'Reticular Materials'],
+  '44': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'Oxides', 'Polymers'], '43': ['Infrastructure', 'Characterization', 'Adsorption'], '42': ['Machine Learning', 'Data', 'Adsorption', 'Reticular Materials'],
+  '41': ['Adsorption', 'Reaction', '2D', 'Zeolites'], '40': ['GCMC', 'Adsorption', 'Reticular Materials', 'Carbons'], '39': ['DFT', 'Adsorption', 'Reaction', 'Molecules'], '38': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials'],
+  '37': ['Review'], '36': ['Adsorption', 'Reaction', 'Reticular Materials'], '35': ['GCMC', 'MD', 'Machine Learning', 'Data', 'Adsorption', 'Reticular Materials'], '34': ['DFT', '2D', 'Carbons'],
+  '33': ['GCMC', 'Data', 'Adsorption', 'Reticular Materials'], '32': ['GCMC', 'Adsorption'],
+  '31': ['Transport', 'Carbons', 'Membranes'], '30': ['DFT', 'GCMC', 'MD', 'Data', 'Adsorption', 'Reticular Materials'], '29': ['DFT', '2D', 'Carbons'], '28': ['Machine Learning'],
+  '27': ['Reaction'], '26': ['Machine Learning', 'Data', 'Characterization', 'Adsorption', 'Reticular Materials'], '25': ['Machine Learning'], '24': ['Transport', 'Reaction', 'Statistical Mechanics', 'Molecules'],
+  '23': ['DFT', 'Adsorption', 'Reaction', 'Carbons'], '22': ['Infrastructure', 'Data', 'Reticular Materials'], '21': ['Review'],
+  '20': ['DFT', 'Adsorption', 'Reticular Materials'], '19': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials', 'Carbons'], '18': ['GCMC', 'Adsorption', 'Swing Adsorption', 'Reticular Materials'], '17': ['Review'],
+  '16': ['Adsorption', 'Reaction', '2D', 'Reticular Materials'], '15': ['Adsorption', 'Reaction', 'Reticular Materials'], '14': ['GCMC', 'Adsorption', 'Reticular Materials'],
+  '13': ['GCMC', 'Adsorption', 'Reticular Materials', 'Zeolites'], '12': ['GCMC', 'Adsorption', 'Reticular Materials'], '11': ['DFT', 'Data', 'Reticular Materials'], '10': ['Reaction', 'Reticular Materials'],
+  '09': ['GCMC', 'Data', 'Adsorption', 'Reticular Materials'], '08': ['DFT', 'GCMC', 'Adsorption', 'Reticular Materials'], '07': ['Adsorption', 'Reaction', 'Reticular Materials'],
+  '06': ['GCMC', 'Data', 'Adsorption', 'Reticular Materials'], '05': ['GCMC', 'Data', 'Infrastructure', 'Adsorption', 'Reticular Materials'], '04': ['MD', 'Transport', 'Polymers'],
+  '03': ['MD', 'Transport', 'Polymers'], '02': ['MD', 'Transport', 'Polymers'], '01': ['MD', 'Transport', 'Polymers']
 };
 PUBS.forEach(p => { p.topics = PUB_TOPICS[p.no].slice(); });
 
