@@ -28,7 +28,7 @@ test('every published page has metadata and renders its heading', async ({ page 
 
 test('publication topic filters and search work', async ({ page }) => {
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('Computation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Computation', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Systems', { exact: true })).toBeVisible();
   await expect(page.locator('.publication-filter-group')).toHaveCount(6);
