@@ -37,6 +37,33 @@ test('suggests labels from title and abstract keywords', () => {
   assert.deepEqual(topics, ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials']);
 });
 
+test('suggests system and application labels for cyclic separation processes', () => {
+  const topics = suggestTopics('Techno-economic evaluation of a PVSA process for biogas upgrading');
+  assert.deepEqual(topics, [
+    'Techno-Economic Analysis',
+    'Cyclic Swing Adsorber',
+    'Biogas Upgrading'
+  ]);
+});
+
+test('suggests specific application labels instead of generic umbrellas', () => {
+  assert.deepEqual(
+    suggestTopics('Discovery of an adsorbent for ethane/ethylene separation'),
+    ['Adsorption', 'Olefin/Paraffin Separation']
+  );
+  assert.deepEqual(
+    suggestTopics('Solid-state electrolyte with high lithium-ion conductivity'),
+    ['Diffusion', 'Electrochemistry', 'Electrolytes', 'Secondary Battery']
+  );
+});
+
+test('classifies enhanced sampling as a computation method', () => {
+  assert.deepEqual(
+    suggestTopics('Flat-histogram Monte Carlo with macrostate probability distributions'),
+    ['GCMC', 'Enhanced Sampling']
+  );
+});
+
 test('inserts an approved candidate without changing existing entries', () => {
   const feed = "const PUBS = [\n  F('72', 'Old', 'A', 'j', 'J', ' (2026)', null, '10.1/old')\n];\nconst PUB_TOPICS = {\n  '72': ['Review']\n};";
   const candidate = {

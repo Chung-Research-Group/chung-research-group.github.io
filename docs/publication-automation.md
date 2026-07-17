@@ -19,6 +19,15 @@ separate lines.
 - `제외`
 - `승인`
 
+Available labels are grouped as follows:
+
+- Computation: `DFT`, `GCMC`, `MD`, `Enhanced Sampling`, `Data Curation`, `Machine Learning`, `LLM`, `Infrastructure`, `Characterization`, `Techno-Economic Analysis`
+- Physics: `Adsorption`, `Diffusion`, `Reaction`, `Electrochemistry`
+- Materials: `Reticular Materials`, `Oxides`, `Polymers`, `Carbons`, `Graphene Oxide`, `Graphene Quantum Dots`, `Zeolites`, `Molecules`, `Electrolytes`, `Perovskites`
+- Systems: `Membranes`, `Chiller`, `Cyclic Swing Adsorber`
+- Applications: `Carbon Capture`, `Hydrogen Storage`, `Biogas Upgrading`, `Carbon Monoxide Separation`, `Natural Gas Sweetening`, `Noble Gas Separation`, `SF6/N2 Separation`, `Olefin/Paraffin Separation`, `Xylene Separation`, `Alkane Isomer Separation`, `Methane Storage`, `Adsorption Cooling`, `Secondary Battery`, `Supercapacitor`, `Organic Solvent Nanofiltration`, `Organic Liquid Separation`, `CO2 Conversion`, `Catalysis`, `Sensing`, `Air Pollution Control`, `Distillation`
+- Special: `Review` (exclusive)
+
 Only users listed in `PUBLICATION_APPROVER_USER_IDS` are considered. After
 approval, the bot creates or updates a publication PR. It merges the PR only
 after the `Validate and deploy website` workflow succeeds.
