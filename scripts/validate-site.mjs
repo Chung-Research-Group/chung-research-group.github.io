@@ -159,6 +159,9 @@ if (!feedHtml.includes("const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applica
 if (!publicationsHtml.includes("sortByCount") || !publicationsHtml.includes("applicationSections")) {
   errors.push("Publication filters must sort by usage count and expose application subcategories.");
 }
+for (const color of ["#B4235A", "#B65F00", "#6F42A8", "#5B6770"]) {
+  if (!publicationsHtml.includes(color)) errors.push(`Application filter subcategory color is missing: ${color}`);
+}
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
