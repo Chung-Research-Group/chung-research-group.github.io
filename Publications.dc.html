@@ -236,9 +236,11 @@ class Component extends DCLogic {
     const FEED = this._feed;
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
     const themeDefs = [
-      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Data Curation', 'Machine Learning', 'LLM', 'Infrastructure', 'Characterization', 'Techno-Economic Analysis', 'Swing Adsorption'] },
+      { title: 'Computation', c: '#1c4fa1', b: '#005baa', labels: ['DFT', 'GCMC', 'MD', 'Data Curation', 'Machine Learning', 'LLM', 'Infrastructure', 'Characterization'] },
       { title: 'Physics', c: '#00794a', b: '#00a651', labels: ['Adsorption', 'Transport', 'Reaction', 'Statistical Mechanics', 'Electrochemistry'] },
-      { title: 'Systems', c: '#a86700', b: '#ffa500', labels: ['Device', '2D', 'Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites', 'Membranes'] },
+      { title: 'Materials', c: '#a86700', b: '#ffa500', labels: ['2D', 'Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites', 'Membranes'] },
+      { title: 'Systems', c: '#006b73', b: '#00a0a8', labels: ['Device', 'Cyclic Swing Adsorber', 'Techno-Economic Analysis'] },
+      { title: 'Applications', c: '#9b2948', b: '#d94f70', labels: ['Carbon Capture', 'Hydrogen Storage', 'Biogas Upgrading', 'Gas Separation', 'Methane Storage', 'Adsorption Cooling', 'Energy Storage', 'Membrane Separation', 'CO2 Conversion', 'Catalysis', 'Sensing', 'Air Pollution Control', 'Distillation'] },
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
     const themeColors = {
