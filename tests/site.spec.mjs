@@ -34,13 +34,19 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
-  const dft = page.getByText(/^DFT\s*×/).first();
+  const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
   await dft.click();
   await expect(page.getByText(/publications found/)).toBeVisible();
   await dft.click();
   await page.getByPlaceholder(/Search publications/).fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
+});
+
+test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
+  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('Latest publications · 최신 논문', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-home-publication]')).toHaveCount(6);
 });
 
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
@@ -59,7 +65,8 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(profile.locator('a[href="https://www.linkedin.com/in/hyunji-kim-051743359"]')).toBeVisible();
   await expect(profile.locator('img[src="images/slot-ph-kim-hyunji.webp"]').first()).toBeVisible();
   await expect(profile.getByText('Modeling & Optimization', { exact: true })).toBeVisible();
-  await expect(profile.getByText('B.S. Chemical & Biomolecular Engineering, Pusan National University (2027)', { exact: true })).toBeVisible();
+  await expect(profile.getByText('Chemical & Biomolecular Engineering, Pusan National University', { exact: true })).toBeVisible();
+  await expect(profile.getByText(/B\.S\.|2027/)).toHaveCount(0);
 
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'domcontentloaded' });
   const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
@@ -67,6 +74,8 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
   await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
+  await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
+  await expect(page.locator('a[href^="mailto:drygchung"]')).toHaveCount(0);
 });
 
 
@@ -77,6 +86,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
   }
   await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
+  await expect(page.getByText(/에너지·환경·산업 분야의 응용/)).toBeVisible();
 
   await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
   const baek = page.locator('#m-baek');
@@ -88,7 +98,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   const jpcc = page.locator('[data-publication-no="19"]');
   await expect(jpcc).toBeVisible();
   await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
-  await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Grand Canonical Monte Carlo', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });

@@ -19,7 +19,7 @@
 <link rel="preload" as="image" href="images/hero-mof-mobile.webp" media="(max-width:840px)">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="feed.js"></script>
+<script src="feed.js?v=20260717-2"></script>
 <script src="image-slot.js"></script>
 <script async="" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async="" src="https://badge.dimensions.ai/badge.js"></script>
@@ -205,9 +205,9 @@ body{zoom:0.88}
           <span style="display:block">AI-driven materials</span>
           <span style="display:block;white-space:nowrap">&amp;&nbsp;chemical&nbsp;discovery.</span>
         </h1>
-        <p style="font-size:19px;line-height:30px;max-width:74ch;margin:24px 0 0">We develop end-to-end computational frameworks that integrate <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong>. These frameworks connect quantum and atomistic information to material properties, process performance, and system-level outcomes.</p>
+        <p style="font-size:19px;line-height:30px;max-width:74ch;margin:24px 0 0">We develop end-to-end computational frameworks that integrate <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong>. These frameworks connect quantum and atomistic information to material properties, process performance, and system-level outcomes for the energy, environment, and industrial applications.</p>
         <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}">
-        <p lang="ko" style="font-size:19px;line-height:30px;max-width:74ch;margin:12px 0 0;color:var(--color-text)">양자·원자 시뮬레이션, 통계열역학, 소재 데이터와 인공지능을 통합하는 end-to-end 계산 프레임워크를 개발합니다. 이를 통해 양자와 원자 수준의 정보를 소재 물성, 공정 성능과 시스템 수준의 성과로 연결합니다.</p>
+        <p lang="ko" style="font-size:19px;line-height:30px;max-width:74ch;margin:12px 0 0;color:var(--color-text)">양자·원자 시뮬레이션, 통계역학, 정제된 데이터와 인공지능을 통합하는 end-to-end 계산 프레임워크를 개발합니다. 이 프레임워크는 양자·원자 수준의 정보를 소재 물성, 공정 성능 및 시스템 수준의 성과로 연결하여 에너지·환경·산업 분야의 응용에 활용합니다.</p>
         </sc-if>
       </div>
     </section>
@@ -264,8 +264,8 @@ body{zoom:0.88}
         <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">Latest publications · 최신 논문</span>
         <sc-for list="{{ pubGroups }}" as="pg" hint-placeholder-count="1">
           <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ pg.year }}</p>
-          <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="3">
-            <div style="padding:9px 0 12px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
+          <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="6">
+            <div data-home-publication style="padding:9px 0 12px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
               <h3 style="font-weight:700;font-size:17.5px;line-height:26px;margin:0"><a href="{{ p.jurl }}" style="color:#00794a;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></h3>
               <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 0">
                 <span style="display:inline-flex;align-items:center;gap:5px;font-size:13px;line-height:17px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ p.kc }};color:{{ p.kc }}"><span style="width:7px;height:7px;background:{{ p.kb }}"></span>{{ p.kind }}</span>
@@ -321,7 +321,7 @@ class Component extends DCLogic {
     const count = this.props.newsCount ?? 6;
     const FEED = this._feed;
     const allNews = FEED ? FEED.NEWS.map(i => Object.assign({}, i)) : [];
-    const pubs = FEED ? FEED.PUBS.slice(0, 5).map(p => {
+    const pubs = FEED ? FEED.PUBS.slice(0, 6).map(p => {
       const isReview = /review/i.test(p.kind);
       return { title: p.title, kind: p.kind, journal: p.journal, jurl: p.html, doi: p.doi || false, year: p.year, kc: isReview ? '#a86700' : '#1c4fa1', kb: isReview ? '#ffa500' : '#005baa' };
     }) : [];

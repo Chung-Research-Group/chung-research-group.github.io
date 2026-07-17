@@ -1,8 +1,9 @@
 import { pathToFileURL } from 'node:url';
 
 export const TOPICS = [
-  'DFT', 'GCMC', 'MD', 'Enhanced Sampling', 'Data Curation', 'Machine Learning', 'LLM',
-  'Infrastructure', 'Characterization', 'Techno-Economic Analysis',
+  'Density Functional Theory', 'Grand Canonical Monte Carlo', 'Molecular Dynamics',
+  'Enhanced Sampling', 'Data Curation', 'Machine Learning', 'Large Language Models',
+  'Infrastructure', 'Material Characterization', 'Techno-Economic Analysis',
   'Adsorption', 'Diffusion', 'Reaction', 'Electrochemistry',
   'Reticular Materials', 'Oxides', 'Polymers', 'Carbons', 'Graphene Oxide',
   'Graphene Quantum Dots', 'Zeolites', 'Molecules', 'Electrolytes', 'Perovskites',
@@ -18,6 +19,13 @@ export const TOPICS = [
 ];
 
 const TOPIC_LOOKUP = new Map(TOPICS.map(topic => [topic.toLowerCase(), topic]));
+for (const [alias, topic] of Object.entries({
+  dft: 'Density Functional Theory',
+  gcmc: 'Grand Canonical Monte Carlo',
+  md: 'Molecular Dynamics',
+  llm: 'Large Language Models',
+  characterization: 'Material Characterization'
+})) TOPIC_LOOKUP.set(alias, topic);
 
 function required(name) {
   const value = process.env[name]?.trim();
@@ -71,15 +79,15 @@ export function candidateFromCrossref(work) {
 export function suggestTopics(text) {
   const value = text.toLowerCase();
   const rules = [
-    ['DFT', /density functional|\bdft\b|first.principles/],
-    ['GCMC', /grand canonical|\bgcmc\b|monte carlo/],
-    ['MD', /molecular dynamics|\bmd simulation/],
+    ['Density Functional Theory', /density functional|\bdft\b|first.principles/],
+    ['Grand Canonical Monte Carlo', /grand canonical|\bgcmc\b|monte carlo/],
+    ['Molecular Dynamics', /molecular dynamics|\bmd simulation/],
     ['Enhanced Sampling', /enhanced sampling|flat.histogram|wang.landau|umbrella sampling|metadynamics|replica exchange|macrostate probability/],
     ['Data Curation', /database|dataset|data curation|curated data/],
     ['Machine Learning', /machine learning|neural network|graph network|deep learning/],
-    ['LLM', /large language model|\bllm\b/],
+    ['Large Language Models', /large language model|\bllm\b/],
     ['Infrastructure', /software|workflow|platform|toolkit|graphical user interface/],
-    ['Characterization', /characterization|spectroscop|diffraction|\bbet\b/],
+    ['Material Characterization', /characterization|spectroscop|diffraction|\bbet\b/],
     ['Techno-Economic Analysis', /techno.economic|economic analysis/],
     ['Adsorption', /adsorp|sorbent|isotherm/],
     ['Diffusion', /transport|diffusion|permeab|conductiv/],
@@ -241,7 +249,7 @@ function candidateMessage(candidate) {
     `추천 라벨: ${labels}`,
     '',
     '이 스레드에 수정 지시를 남겨주세요.',
-    '`라벨 추가: GCMC, Adsorption` · `라벨 제거: Review`',
+    '`라벨 추가: Grand Canonical Monte Carlo, Adsorption` · `라벨 제거: Review`',
     '`제목: ...` · `저널: ...` · `저자: ...` · `서지: ...`',
     '반영하지 않으려면 `제외`, 확정하려면 `승인`'
   ].join('\n');

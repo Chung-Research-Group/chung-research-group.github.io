@@ -23,7 +23,7 @@ test('applies Korean review instructions deterministically', () => {
     '승인'
   ]);
   assert.equal(result.candidate.title, 'Revised title');
-  assert.deepEqual(result.candidate.topics, ['GCMC', 'Reticular Materials']);
+  assert.deepEqual(result.candidate.topics, ['Grand Canonical Monte Carlo', 'Reticular Materials']);
   assert.equal(result.approved, true);
 });
 
@@ -34,7 +34,7 @@ test('review remains a single exclusive label', () => {
 
 test('suggests labels from title and abstract keywords', () => {
   const topics = suggestTopics('Machine learning and GCMC screening of MOFs for adsorption');
-  assert.deepEqual(topics, ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials']);
+  assert.deepEqual(topics, ['Grand Canonical Monte Carlo', 'Machine Learning', 'Adsorption', 'Reticular Materials']);
 });
 
 test('suggests system and application labels for cyclic separation processes', () => {
@@ -60,7 +60,7 @@ test('suggests specific application labels instead of generic umbrellas', () => 
 test('classifies enhanced sampling as a computation method', () => {
   assert.deepEqual(
     suggestTopics('Flat-histogram Monte Carlo with macrostate probability distributions'),
-    ['GCMC', 'Enhanced Sampling']
+    ['Grand Canonical Monte Carlo', 'Enhanced Sampling']
   );
 });
 
@@ -68,11 +68,11 @@ test('inserts an approved candidate without changing existing entries', () => {
   const feed = "const PUBS = [\n  F('72', 'Old', 'A', 'j', 'J', ' (2026)', null, '10.1/old')\n];\nconst PUB_TOPICS = {\n  '72': ['Review']\n};";
   const candidate = {
     title: 'New paper', authors: 'Chung, Yongchul G.', journal: 'New Journal',
-    meta: ', 1, 1–10 (2026)', doi: '10.2/new', topics: ['GCMC', 'Adsorption']
+    meta: ', 1, 1–10 (2026)', doi: '10.2/new', topics: ['Grand Canonical Monte Carlo', 'Adsorption']
   };
   const updated = addCandidateToFeed(feed, candidate);
   assert.match(updated, /F\('73', 'New paper'/);
-  assert.match(updated, /'73': \['GCMC', 'Adsorption'\]/);
+  assert.match(updated, /'73': \['Grand Canonical Monte Carlo', 'Adsorption'\]/);
   assert.match(updated, /F\('72', 'Old'/);
   assert.equal(addCandidateToFeed(updated, candidate), updated);
 });
