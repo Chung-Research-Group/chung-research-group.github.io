@@ -73,7 +73,7 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
 test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
-  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'materials data', 'artificial intelligence']) {
+  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
   }
   await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
