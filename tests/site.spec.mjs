@@ -38,10 +38,13 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
+  const scholarLink = page.getByTitle('Google Scholar');
+  const publicationSearch = page.getByPlaceholder(/Search publications/);
+  await expect(scholarLink.locator('xpath=following-sibling::input')).toHaveCount(1);
   await dft.click();
   await expect(page.getByText(/publications found/)).toBeVisible();
   await dft.click();
-  await page.getByPlaceholder(/Search publications/).fill('PACMAN');
+  await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
 });
 
@@ -75,14 +78,9 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(undergraduateOpening.getByText('Open', { exact: true })).toBeVisible();
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
-  await expect(page.getByText('학생 오피스 · 제7공학관 302호', { exact: true })).toBeVisible();
-  await expect(page.getByText('교수 오피스 · 부속연구동 201호', { exact: true })).toBeVisible();
-  await expect(page.getByText('교수 오피스 · +82 51 510 3757', { exact: true })).toBeVisible();
-  await expect(page.getByText('학생 오피스 · +82 51 510 3082', { exact: true })).toBeVisible();
+  await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
   await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
-  await expect(page.getByText('Email Prof. Chung', { exact: true })).toBeVisible();
-  await expect(page.locator('[data-prof-email]')).toHaveCount(2);
-  await expect(page.locator('[data-prof-email]').first()).toHaveAttribute('href', /^mailto:/);
+  await expect(page.locator('a[href^="mailto:drygchung"]')).toHaveCount(0);
 });
 
 
