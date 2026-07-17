@@ -17,7 +17,7 @@
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="feed.js"></script>
+<script src="feed.js?v=20260717-1"></script>
 <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async src="https://badge.dimensions.ai/badge.js"></script>
 <style>
@@ -253,7 +253,13 @@ class Component extends DCLogic {
     const priority = themeDefs.flatMap(group => group.labels);
     const byName = Object.fromEntries(themes.map(t => [t.t, t]));
     full.forEach(p => {
-      p.tags = p.topics.slice().sort((a, b) => priority.indexOf(a) - priority.indexOf(b)).map(name => byName[name]);
+      // A visitor can briefly have an older feed.js cached while this page has
+      // the newer taxonomy. Ignore unknown legacy labels instead of failing the
+      // entire publication render during that mixed-version window.
+      p.tags = (p.topics || []).slice()
+        .sort((a, b) => priority.indexOf(a) - priority.indexOf(b))
+        .map(name => byName[name])
+        .filter(Boolean);
     });
     const HCP = ['60', '48', '22', '19'];
     const p72 = full.find(p => p.no === '72');
