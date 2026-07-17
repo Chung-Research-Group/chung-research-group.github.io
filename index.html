@@ -19,7 +19,7 @@
 <link rel="preload" as="image" href="images/hero-mof-mobile.webp" media="(max-width:840px)">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="feed.js"></script>
+<script src="feed.js?v=20260717-2"></script>
 <script src="image-slot.js"></script>
 <script async="" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async="" src="https://badge.dimensions.ai/badge.js"></script>
@@ -264,8 +264,8 @@ body{zoom:0.88}
         <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">Latest publications · 최신 논문</span>
         <sc-for list="{{ pubGroups }}" as="pg" hint-placeholder-count="1">
           <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ pg.year }}</p>
-          <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="3">
-            <div style="padding:9px 0 12px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
+          <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="6">
+            <div data-home-publication style="padding:9px 0 12px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
               <h3 style="font-weight:700;font-size:17.5px;line-height:26px;margin:0"><a href="{{ p.jurl }}" style="color:#00794a;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></h3>
               <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 0">
                 <span style="display:inline-flex;align-items:center;gap:5px;font-size:13px;line-height:17px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ p.kc }};color:{{ p.kc }}"><span style="width:7px;height:7px;background:{{ p.kb }}"></span>{{ p.kind }}</span>
@@ -321,7 +321,7 @@ class Component extends DCLogic {
     const count = this.props.newsCount ?? 6;
     const FEED = this._feed;
     const allNews = FEED ? FEED.NEWS.map(i => Object.assign({}, i)) : [];
-    const pubs = FEED ? FEED.PUBS.slice(0, 5).map(p => {
+    const pubs = FEED ? FEED.PUBS.slice(0, 6).map(p => {
       const isReview = /review/i.test(p.kind);
       return { title: p.title, kind: p.kind, journal: p.journal, jurl: p.html, doi: p.doi || false, year: p.year, kc: isReview ? '#a86700' : '#1c4fa1', kb: isReview ? '#ffa500' : '#005baa' };
     }) : [];
