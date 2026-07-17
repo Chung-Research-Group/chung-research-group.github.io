@@ -86,6 +86,6 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   const jpcc = page.getByText(/Surface area determination of porous materials/).locator('..');
   await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
   await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
-  await expect(jpcc.getByText('reticular materials', { exact: true })).toBeVisible();
-  await expect(jpcc.getByText('carbons', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });
