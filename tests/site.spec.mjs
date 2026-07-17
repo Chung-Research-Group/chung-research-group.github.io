@@ -32,7 +32,7 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Systems', { exact: true })).toBeVisible();
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^MOFs\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const dft = page.getByText(/^DFT\s*×/).first();
   await expect(dft).toBeVisible();
@@ -84,9 +84,9 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await expect(baek.getByText('Atoms/Electrons', { exact: true })).toHaveCount(0);
 
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('[data-publication-no="19"]')).toHaveCount(0);
   await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
-  const jpcc = page.getByText(/Surface area determination of porous materials/).locator('..');
+  const jpcc = page.locator('[data-publication-no="19"]');
+  await expect(jpcc).toBeVisible();
   await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
   await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
