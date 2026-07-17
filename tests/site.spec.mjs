@@ -48,11 +48,14 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/publications found/)).toBeVisible();
   await physicsGroup.locator('.publication-filter-total').click();
 
-  // Applications opens to middle categories; their labels remain collapsed.
+  // A major category opens all of its middle and detailed categories at once.
   await applicationGroup.getByRole('button', { name: 'Expand Applications' }).click();
-  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['+Separation', '+Catalysis', '+Energy Storage', '+Other']);
-  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×/)).toHaveCount(0);
+  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['−Separation', '−Catalysis', '−Energy Storage', '−Other']);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
+  await expect(applicationGroup.getByText(/^Hydrogen\s*×\s*4$/)).toBeVisible();
   const separationSection = applicationGroup.locator('[data-filter-section="Separation"]');
+  await separationSection.getByRole('button', { name: 'Collapse Separation' }).click();
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×/)).toHaveCount(0);
   await separationSection.getByRole('button', { name: 'Expand Separation' }).click();
   await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
   await expect(applicationGroup.getByText(/^Catalysis\s*×/)).toHaveCount(0);
