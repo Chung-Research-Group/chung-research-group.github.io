@@ -32,7 +32,7 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Systems', { exact: true })).toBeVisible();
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^MOFs\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const dft = page.getByText(/^DFT\s*×/).first();
   await expect(dft).toBeVisible();
