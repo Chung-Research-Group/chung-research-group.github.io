@@ -191,27 +191,27 @@ const PUBS = [
 // Editorial topic assignments. These are intentionally explicit rather than
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
-  '72': ['Materials Data', 'Tools'], '71': ['AI', 'Materials Data', 'Transport'], '70': ['Process & Systems', 'Adsorption', 'Reaction'],
-  '69': ['Adsorption'], '68': ['Tools', 'Adsorption', 'Thermodynamics'], '67': ['Process & Systems', 'Adsorption'],
-  '66': ['Adsorption'], '65': ['Adsorption'], '64': ['Process & Systems', 'Adsorption'], '63': ['AI', 'Materials Data', 'Adsorption'],
-  '62': ['GCMC', 'AI', 'Adsorption'], '61': ['Transport'], '60': ['Materials Data', 'Process & Systems', 'Adsorption'],
-  '59': ['Process & Systems', 'Adsorption', 'Transport'], '58': ['Transport'], '57': ['Reaction', 'Transport'],
-  '56': ['AI', 'Adsorption'], '55': ['Process & Systems', 'Adsorption'], '54': ['Tools'], '53': ['Reaction'],
-  '52': ['GCMC', 'Adsorption'], '51': ['Adsorption'], '50': ['AI'], '49': ['Materials Data', 'Transport'],
-  '48': ['Adsorption'], '47': ['Reaction'], '46': ['GCMC', 'Adsorption'], '45': ['DFT', 'Materials Data'],
-  '44': ['Reaction', 'Transport'], '43': ['Tools', 'Adsorption'], '42': ['AI', 'Materials Data', 'Adsorption'],
-  '41': ['Adsorption', 'Reaction'], '40': ['GCMC', 'Adsorption'], '39': ['Adsorption'], '38': ['Adsorption'],
-  '37': ['Tools', 'Adsorption'], '36': ['Adsorption', 'Reaction'], '35': ['AI'], '34': ['DFT', 'Materials Data'],
-  '33': ['Materials Data', 'Process & Systems', 'Adsorption'], '32': ['GCMC', 'Adsorption'],
-  '31': ['Adsorption', 'Transport'], '30': ['Adsorption'], '29': ['DFT', 'Reaction'], '28': ['AI'],
-  '27': ['Process & Systems', 'Reaction'], '26': ['AI', 'Adsorption'], '25': ['AI'], '24': ['Transport', 'Thermodynamics'],
-  '23': ['Adsorption', 'Reaction'], '22': ['Materials Data', 'Adsorption'], '21': ['Adsorption'],
-  '20': ['DFT', 'Adsorption'], '19': ['Adsorption'], '18': ['Adsorption'], '17': ['Adsorption', 'Thermodynamics'],
-  '16': ['Adsorption', 'Reaction'], '15': ['Adsorption', 'Reaction'], '14': ['GCMC', 'Adsorption'],
-  '13': ['GCMC', 'Adsorption'], '12': ['GCMC', 'Adsorption'], '11': ['DFT'], '10': ['Reaction'],
-  '09': ['AI', 'Adsorption'], '08': ['GCMC', 'Adsorption'], '07': ['Adsorption', 'Reaction'],
-  '06': ['GCMC', 'Materials Data', 'Adsorption'], '05': ['Materials Data'], '04': ['Transport'],
-  '03': ['Transport'], '02': ['Transport'], '01': ['MD', 'Materials Data']
+  '72': ['Review'], '71': ['Machine Learning', 'LLM', 'Data Curation', 'Transport', 'Electrochemistry', 'Electrolytes'], '70': ['Review'],
+  '69': ['Adsorption', 'Transport', 'Device', 'Reticular Materials'], '68': ['Infrastructure', 'Adsorption', 'Statistical Mechanics'], '67': ['GCMC', 'Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Reticular Materials'],
+  '66': ['GCMC', 'Adsorption', 'Statistical Mechanics', 'Swing Adsorption'], '65': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials'], '64': ['Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Carbons'], '63': ['Machine Learning', 'Data Curation', 'Characterization', 'Reticular Materials'],
+  '62': ['GCMC', 'Machine Learning', 'Adsorption', 'Device', 'Reticular Materials'], '61': ['Transport', 'Polymers', 'Membranes'], '60': ['GCMC', 'Infrastructure', 'Data Curation', 'Machine Learning', 'Adsorption', 'Reticular Materials'],
+  '59': ['GCMC', 'Adsorption', 'Transport', 'Techno-Economic Analysis', 'Reticular Materials'], '58': ['DFT', 'Transport', 'Reaction', 'Electrochemistry', 'Device', 'Reticular Materials'], '57': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'Oxides', 'Polymers'],
+  '56': ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials'], '55': ['GCMC', 'Adsorption', 'Techno-Economic Analysis', 'Swing Adsorption', 'Zeolites'], '54': ['GCMC', 'Machine Learning', 'Infrastructure', 'Data Curation', 'Adsorption', 'Reticular Materials'], '53': ['Reaction', 'Reticular Materials'],
+  '52': ['GCMC', 'Machine Learning', 'Adsorption', 'Reticular Materials'], '51': ['GCMC', 'Adsorption', 'Reticular Materials'], '50': ['DFT', 'Machine Learning', 'Data Curation', 'Molecules'], '49': ['Transport', 'Reaction', 'Electrochemistry', 'Device', 'Oxides', 'Carbons', 'Perovskites'],
+  '48': ['Review'], '47': ['Reaction', 'Reticular Materials'], '46': ['GCMC', 'Machine Learning', 'Data Curation', 'Adsorption', 'Reticular Materials'], '45': ['Reaction', 'Reticular Materials'],
+  '44': ['Reaction', 'Transport', 'Electrochemistry', 'Device', 'Oxides', 'Polymers'], '43': ['Infrastructure', 'Characterization', 'Adsorption'], '42': ['Machine Learning', 'Data Curation', 'Adsorption', 'Reticular Materials'],
+  '41': ['Adsorption', 'Reaction', '2D', 'Zeolites'], '40': ['GCMC', 'Adsorption', 'Reticular Materials', 'Carbons'], '39': ['DFT', 'Adsorption', 'Reaction', 'Molecules'], '38': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials'],
+  '37': ['Review'], '36': ['Adsorption', 'Reaction', 'Reticular Materials'], '35': ['GCMC', 'MD', 'Machine Learning', 'Data Curation', 'Adsorption', 'Reticular Materials'], '34': ['DFT', '2D', 'Carbons'],
+  '33': ['GCMC', 'Data Curation', 'Adsorption', 'Reticular Materials'], '32': ['GCMC', 'Adsorption'],
+  '31': ['Transport', 'Carbons', 'Membranes'], '30': ['DFT', 'GCMC', 'MD', 'Data Curation', 'Adsorption', 'Reticular Materials'], '29': ['DFT', '2D', 'Carbons'], '28': ['Machine Learning'],
+  '27': ['Reaction'], '26': ['Machine Learning', 'Data Curation', 'Characterization', 'Adsorption', 'Reticular Materials'], '25': ['Machine Learning'], '24': ['Transport', 'Reaction', 'Statistical Mechanics', 'Molecules'],
+  '23': ['DFT', 'Adsorption', 'Reaction', 'Carbons'], '22': ['Infrastructure', 'Data Curation', 'Reticular Materials'], '21': ['Review'],
+  '20': ['DFT', 'Adsorption', 'Reticular Materials'], '19': ['GCMC', 'Characterization', 'Adsorption', 'Reticular Materials', 'Carbons'], '18': ['GCMC', 'Adsorption', 'Swing Adsorption', 'Reticular Materials'], '17': ['Review'],
+  '16': ['Adsorption', 'Reaction', '2D', 'Reticular Materials'], '15': ['Adsorption', 'Reaction', 'Reticular Materials'], '14': ['GCMC', 'Adsorption', 'Reticular Materials'],
+  '13': ['GCMC', 'Adsorption', 'Reticular Materials', 'Zeolites'], '12': ['GCMC', 'Adsorption', 'Reticular Materials'], '11': ['DFT', 'Data Curation', 'Reticular Materials'], '10': ['Reaction', 'Reticular Materials'],
+  '09': ['GCMC', 'Data Curation', 'Adsorption', 'Reticular Materials'], '08': ['DFT', 'GCMC', 'Adsorption', 'Reticular Materials'], '07': ['Adsorption', 'Reaction', 'Reticular Materials'],
+  '06': ['GCMC', 'Data Curation', 'Adsorption', 'Reticular Materials'], '05': ['GCMC', 'Data Curation', 'Infrastructure', 'Adsorption', 'Reticular Materials'], '04': ['MD', 'Transport', 'Polymers'],
+  '03': ['MD', 'Transport', 'Polymers'], '02': ['MD', 'Transport', 'Polymers'], '01': ['MD', 'Transport', 'Polymers']
 };
 PUBS.forEach(p => { p.topics = PUB_TOPICS[p.no].slice(); });
 
