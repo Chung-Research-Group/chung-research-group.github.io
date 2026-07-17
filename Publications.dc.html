@@ -30,14 +30,13 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-panel{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;margin:0}
 .publication-filter-group{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:start;padding:8px 0 10px;border-top:1px solid color-mix(in srgb,var(--color-text) 13%,transparent)}
 .publication-filter-group:first-child{border-top:0;padding-top:0}
-.publication-filter-heading,.publication-filter-section-heading{display:flex;align-items:center;gap:6px;min-width:0}
+.publication-filter-heading,.publication-filter-section-heading{display:flex;align-items:center;min-width:0}
 .publication-filter-title{display:flex;align-items:center;justify-content:flex-start;gap:7px;min-height:30px;padding:5px 10px 5px 14px;border:0;border-left:5px solid currentColor;text-align:left;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;cursor:pointer}
 .publication-filter-chevron{width:12px;text-align:center;font-size:13px;line-height:1}
-.publication-filter-total{display:inline-flex;align-items:center;min-height:28px;padding:3px 7px;border:1px solid currentColor;background:transparent;font:700 13px/18px var(--font-body);white-space:nowrap;cursor:pointer}
 .publication-filter-items{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:6px;padding-top:3px}
 .publication-filter-sections{display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%}
 .publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
-.publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 0;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
+.publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 6px;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
 
 /* responsive+scale v2 */
@@ -125,10 +124,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         <div class="publication-filter-panel">
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
             <div class="publication-filter-group" data-filter-group="{{ group.title }}">
-              <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button><button type="button" class="publication-filter-total" onClick="{{ group.select }}" style="color:{{ group.totalFg }};background:{{ group.totalBg }};border-color:{{ group.c }}">All × {{ group.n }}</button></div>
+              <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" style="color:{{ group.titleFg }};background:{{ group.titleBg }}"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button></div>
               <sc-if value="{{ group.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-items">
                 <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
-                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button><button type="button" class="publication-filter-total" onClick="{{ section.select }}" style="color:{{ section.totalFg }};background:{{ section.totalBg }};border-color:{{ section.c }}">All × {{ section.n }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}" style="color:{{ section.titleFg }};background:{{ section.titleBg }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
               </div></sc-if>
             </div>
           </sc-for>
@@ -378,10 +377,9 @@ class Component extends DCLogic {
       const base = {
         title: group.title, c: group.c, n: groupCount, open: groupOpen, marker: groupOpen ? '−' : '+',
         toggleLabel: (groupOpen ? 'Collapse ' : 'Expand ') + group.title,
-        toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: groupOpen ? [] : (group.title === 'Applications' ? applicationSections.map(section => section.title) : []) }),
-        totalFg: activeTheme === groupKey ? '#ffffff' : group.c,
-        totalBg: activeTheme === groupKey ? group.c : 'transparent',
-        select: () => this.setState({ theme: activeTheme === groupKey ? null : groupKey })
+        toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: groupOpen ? [] : (group.title === 'Applications' ? applicationSections.map(section => section.title) : []), theme: groupOpen ? null : groupKey }),
+        titleFg: activeTheme === groupKey ? '#ffffff' : group.c,
+        titleBg: activeTheme === groupKey ? group.c : `color-mix(in srgb, ${group.c} 9%, transparent)`
       };
       if (group.title === 'Applications') {
         return { ...base, items: [], hasSections: true, sections: applicationSections.map(section => {
@@ -391,10 +389,9 @@ class Component extends DCLogic {
             title: section.title, c: section.c, open: sectionOpen, marker: sectionOpen ? '−' : '+',
             n: full.filter(p => (p.topics || []).some(t => section.labels.includes(t))).length,
             toggleLabel: (sectionOpen ? 'Collapse ' : 'Expand ') + section.title,
-            toggle: () => this.setState({ openSections: sectionOpen ? [] : [section.title] }),
-            totalFg: activeTheme === sectionKey ? '#ffffff' : section.c,
-            totalBg: activeTheme === sectionKey ? section.c : 'transparent',
-            select: () => this.setState({ theme: activeTheme === sectionKey ? null : sectionKey }),
+            toggle: () => this.setState({ openSections: sectionOpen ? openSections.filter(title => title !== section.title) : [...openSections, section.title], theme: sectionOpen ? null : sectionKey }),
+            titleFg: activeTheme === sectionKey ? '#ffffff' : section.c,
+            titleBg: activeTheme === sectionKey ? section.c : 'transparent',
             items: allItems.filter(t => section.labels.includes(t.t) && t.t !== section.title).sort(sortByCount).map(t => ({ ...t, t: (section.names && section.names[t.t]) || t.t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
           };
         }) };
