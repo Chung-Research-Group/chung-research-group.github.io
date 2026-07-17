@@ -28,6 +28,12 @@ test('every published page has metadata and renders its heading', async ({ page 
 
 test('publication topic filters and search work', async ({ page }) => {
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('Computation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Physics', { exact: true })).toBeVisible();
+  await expect(page.getByText('Systems', { exact: true })).toBeVisible();
+  await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^MOFs\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
   const dft = page.getByText(/^DFT\s*×/).first();
   await expect(dft).toBeVisible();
   await dft.click();
@@ -61,4 +67,28 @@ test('Hyunji Kim is listed as a current undergraduate researcher and recruiting 
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
   await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
   await expect(page.getByText(/제7공학관 302호 \(학생연구실\) · 부속연구동 201호 \(교수연구실\)/)).toBeVisible();
+});
+
+
+test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
+  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
+  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
+    await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
+  }
+  await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
+
+  await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
+  const baek = page.locator('#m-baek');
+  await expect(baek.getByText('AI & Data', { exact: true })).toBeVisible();
+  await expect(baek.getByText('Atoms/Electrons', { exact: true })).toHaveCount(0);
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('[data-publication-no="19"]')).toHaveCount(0);
+  await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
+  const jpcc = page.getByText(/Surface area determination of porous materials/).locator('..');
+  await expect(jpcc.getByText('Review', { exact: true })).toHaveCount(0);
+  await expect(jpcc.getByText('GCMC', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
+  await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });
