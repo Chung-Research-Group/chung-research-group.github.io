@@ -50,7 +50,7 @@ test('publication topic filters and search work', async ({ page }) => {
 
   // Applications opens to middle categories; their labels remain collapsed.
   await applicationGroup.getByRole('button', { name: 'Expand Applications' }).click();
-  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['Separation', 'Catalysis', 'Energy Storage', 'Other']);
+  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['+Separation', '+Catalysis', '+Energy Storage', '+Other']);
   await expect(applicationGroup.getByText(/^Xylene Isomer\s*×/)).toHaveCount(0);
   const separationSection = applicationGroup.locator('[data-filter-section="Separation"]');
   await separationSection.getByRole('button', { name: 'Expand Separation' }).click();
