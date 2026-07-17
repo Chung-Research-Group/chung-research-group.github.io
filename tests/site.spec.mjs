@@ -28,7 +28,7 @@ test('every published page has metadata and renders its heading', async ({ page 
 
 test('publication topic filters and search work', async ({ page }) => {
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('Computation', { exact: true })).toBeVisible();
+  await expect(page.getByText('Computation', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Physics', { exact: true })).toBeVisible();
   await expect(page.getByText('Systems', { exact: true })).toBeVisible();
   await expect(page.locator('.publication-filter-group')).toHaveCount(6);
@@ -36,12 +36,24 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Review\s*×/).first()).toBeVisible();
+  const computationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Computation', { exact: true }) }).first();
+  await expect(computationGroup.locator('.publication-filter-section')).toHaveCount(0);
+  const computationLabels = computationGroup.locator('.publication-filter-items > span');
+  await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo × 27');
+  const applicationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Applications', { exact: true }) }).first();
+  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['Separation', 'Catalysis', 'Energy Storage', 'Other']);
+  const reviewGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Review', { exact: true }) }).first();
+  await expect(reviewGroup.getByText(/^Review\s*×\s*6$/)).toBeVisible();
+  await expect(reviewGroup.locator('.publication-filter-section-items').getByText(/^Applications\s*×\s*2$/)).toBeVisible();
   const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
+  const scholarLink = page.getByTitle('Google Scholar');
+  const publicationSearch = page.getByPlaceholder(/Search publications/);
+  await expect(scholarLink.locator('xpath=following-sibling::input')).toHaveCount(1);
   await dft.click();
   await expect(page.getByText(/publications found/)).toBeVisible();
   await dft.click();
-  await page.getByPlaceholder(/Search publications/).fill('PACMAN');
+  await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
 });
 

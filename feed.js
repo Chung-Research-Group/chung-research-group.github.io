@@ -102,6 +102,7 @@ const NEWS = NEWS_RAW.map(i => ({ year: i.y, date: MN[i.m] || i.m, month: MN[i.m
 
 const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
 const REVIEW = { '72': 'Invited review', '70': 'Review', '48': 'Review', '37': 'Review', '21': 'Review', '17': 'Review' };
+const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applications', '48': 'Computation', '37': 'Computation', '21': 'Applications', '17': 'Materials' };
 const kindOf = (no, title) => REVIEW[no] || (/\breview\b/i.test(title) ? 'Review' : 'Article');
 const F = (no, title, authors, jk, journal, meta, code, doi) => ({
   no, title, authors, journal, jurl: doi ? 'https://doi.org/' + doi : JU[jk], meta,
@@ -109,6 +110,7 @@ const F = (no, title, authors, jk, journal, meta, code, doi) => ({
   html: doi ? 'https://doi.org/' + doi : SC(title),
   cite: SC(title), pdf: false,
   kind: kindOf(no, title),
+  reviewTopic: REVIEW_TOPIC[no] || false,
   year: (meta.match(/\((\d{4})\)/) || [])[1] || ''
 });
 

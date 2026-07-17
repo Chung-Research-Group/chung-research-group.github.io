@@ -153,6 +153,15 @@ for (const deprecated of ["Device", "Gas Separation", "Energy Storage", "Membran
 }
 const reviewAssignments = [...topicBlock.matchAll(/'(\d{2})':\s*\[([^\]]*'Review'[^\]]*)\]/g)];
 if (!reviewAssignments.length || reviewAssignments.some(match => match[2].trim() !== "'Review'")) errors.push("Review publications must carry only the Review label.");
+if (!feedHtml.includes("const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applications', '48': 'Computation', '37': 'Computation', '21': 'Applications', '17': 'Materials' }")) {
+  errors.push("Review publications must have explicit Computation, Materials, or Applications subcategories.");
+}
+if (!publicationsHtml.includes("sortByCount") || !publicationsHtml.includes("applicationSections")) {
+  errors.push("Publication filters must sort by usage count and expose application subcategories.");
+}
+for (const color of ["#B4235A", "#B65F00", "#6F42A8", "#5B6770"]) {
+  if (!publicationsHtml.includes(color)) errors.push(`Application filter subcategory color is missing: ${color}`);
+}
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
