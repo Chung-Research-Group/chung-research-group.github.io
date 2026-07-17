@@ -162,6 +162,9 @@ if (!publicationsHtml.includes("sortByCount") || !publicationsHtml.includes("app
 for (const color of ["#B4235A", "#A43E55", "#873E6E", "#6F4A58", "#4E2A84"]) {
   if (!publicationsHtml.includes(color)) errors.push(`Application filter subcategory color is missing: ${color}`);
 }
+for (const displayName of ["Xylene Isomer", "Alkane Isomer", "Noble Gases", "Organic Liquids", "Hydrogen", "Methane"]) {
+  if (!publicationsHtml.includes(`'${displayName}'`)) errors.push(`Concise application filter name is missing: ${displayName}`);
+}
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
