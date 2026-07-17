@@ -33,8 +33,8 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-title{display:flex;align-items:center;justify-content:flex-end;min-height:24px;padding:5px 10px 5px 14px;border-left:5px solid currentColor;text-align:right;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
 .publication-filter-items{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;padding-top:3px}
 .publication-filter-sections{display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%}
-.publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start}
-.publication-filter-section-title{padding-top:5px;text-align:right;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:color-mix(in srgb,currentColor 82%,var(--color-text))}
+.publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
+.publication-filter-section-title{padding-top:3px;text-align:right;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color)}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
 
 /* responsive+scale v2 */
@@ -125,7 +125,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
               <span class="publication-filter-title" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)">{{ group.title }}</span>
               <div class="publication-filter-items">
                 <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
-                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section"><span class="publication-filter-section-title" style="color:{{ group.c }}">{{ section.title }}</span><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></div></sc-for></div></sc-if>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" style="--section-color:{{ section.c }}"><span class="publication-filter-section-title">{{ section.title }}</span><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></div></sc-for></div></sc-if>
               </div>
             </div>
           </sc-for>
@@ -266,10 +266,10 @@ class Component extends DCLogic {
       { title: 'Review', c: '#836EAA', b: '#B6ACD1', labels: ['Review'] }
     ];
     const applicationSections = [
-      { title: 'Separation', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'] },
-      { title: 'Catalysis', labels: ['Catalysis', 'CO2 Conversion'] },
-      { title: 'Energy Storage', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'] },
-      { title: 'Other', labels: ['Adsorption Cooling', 'Sensing', 'Air Pollution Control'] }
+      { title: 'Separation', c: '#B4235A', b: '#E25587', labels: ['Carbon Capture', 'Biogas Upgrading', 'Carbon Monoxide Separation', 'Natural Gas Sweetening', 'Noble Gas Separation', 'SF6/N2 Separation', 'Olefin/Paraffin Separation', 'Xylene Separation', 'Alkane Isomer Separation', 'Organic Solvent Nanofiltration', 'Organic Liquid Separation', 'Distillation'] },
+      { title: 'Catalysis', c: '#B65F00', b: '#E68A2E', labels: ['Catalysis', 'CO2 Conversion'] },
+      { title: 'Energy Storage', c: '#6F42A8', b: '#9A6ACD', labels: ['Hydrogen Storage', 'Methane Storage', 'Secondary Battery', 'Supercapacitor'] },
+      { title: 'Other', c: '#5B6770', b: '#8A959E', labels: ['Adsorption Cooling', 'Sensing', 'Air Pollution Control'] }
     ];
     const themeColors = {
       Infrastructure: { c: '#5B6770', b: '#8A959E' }
@@ -356,10 +356,14 @@ class Component extends DCLogic {
     const themeGroups = themeDefs.map(group => {
       const allItems = themeTotals.filter(t => t.group === group.title).sort(sortByCount);
       if (group.title === 'Applications') {
-        return { title: group.title, c: group.c, items: [], hasSections: true, sections: applicationSections.map(section => ({ title: section.title, items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount) })) };
+        return { title: group.title, c: group.c, items: [], hasSections: true, sections: applicationSections.map(section => ({
+          title: section.title,
+          c: section.c,
+          items: allItems.filter(t => section.labels.includes(t.t)).sort(sortByCount).map(t => ({ ...t, c: section.c, b: section.b, fg: activeTheme === t.t ? '#ffffff' : section.c, bg: activeTheme === t.t ? section.c : 'transparent' }))
+        })) };
       }
       if (group.title === 'Review') {
-        return { title: group.title, c: group.c, items: allItems, hasSections: true, sections: [{ title: 'Topic', items: reviewItems }] };
+        return { title: group.title, c: group.c, items: allItems, hasSections: true, sections: [{ title: 'Topic', c: group.c, items: reviewItems }] };
       }
       return { title: group.title, c: group.c, items: allItems, hasSections: false, sections: [] };
     });
