@@ -28,26 +28,44 @@ test('every published page has metadata and renders its heading', async ({ page 
 
 test('publication topic filters and search work', async ({ page }) => {
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('Computation', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('Physics', { exact: true })).toBeVisible();
-  await expect(page.getByText('Systems', { exact: true })).toBeVisible();
   await expect(page.locator('.publication-filter-group')).toHaveCount(6);
-  await expect(page.locator('.publication-filter-title').filter({ hasText: 'Computation' })).toBeVisible();
+  const computationGroup = page.locator('[data-filter-group="Computation"]');
+  const physicsGroup = page.locator('[data-filter-group="Physics"]');
+  const applicationGroup = page.locator('[data-filter-group="Applications"]');
+  const reviewGroup = page.locator('[data-filter-group="Review"]');
+
+  // Only the first major category is expanded initially.
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
-  await expect(page.getByText(/^Reticular Materials\s*×/).first()).toBeVisible();
-  const computationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Computation', { exact: true }) }).first();
-  await expect(computationGroup.locator('.publication-filter-section')).toHaveCount(0);
+  await expect(page.getByText(/^Reticular Materials\s*×/)).toHaveCount(0);
   const computationLabels = computationGroup.locator('.publication-filter-items > span');
   await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo × 27');
-  const applicationGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Applications', { exact: true }) }).first();
+
+  // Major categories can be expanded and selected as aggregate filters.
+  await physicsGroup.getByRole('button', { name: 'Expand Physics' }).click();
+  await expect(page.getByText(/^Machine Learning\s*×/)).toHaveCount(0);
+  await expect(page.getByText(/^Adsorption\s*×\s*41$/)).toBeVisible();
+  await physicsGroup.locator('.publication-filter-total').click();
+  await expect(page.getByText(/publications found/)).toBeVisible();
+  await physicsGroup.locator('.publication-filter-total').click();
+
+  // Applications opens to middle categories; their labels remain collapsed.
+  await applicationGroup.getByRole('button', { name: 'Expand Applications' }).click();
   await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['Separation', 'Catalysis', 'Energy Storage', 'Other']);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×/)).toHaveCount(0);
+  const separationSection = applicationGroup.locator('[data-filter-section="Separation"]');
+  await separationSection.getByRole('button', { name: 'Expand Separation' }).click();
   await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
-  await expect(applicationGroup.getByText(/^Hydrogen\s*×\s*4$/)).toBeVisible();
   await expect(applicationGroup.getByText(/^Catalysis\s*×/)).toHaveCount(0);
-  await expect(applicationGroup.getByText(/^All\s*×\s*8$/)).toBeVisible();
-  const reviewGroup = page.locator('.publication-filter-group').filter({ has: page.getByText('Review', { exact: true }) }).first();
+  await separationSection.locator('.publication-filter-total').click();
+  await expect(page.getByText(/publications found/)).toBeVisible();
+  await separationSection.locator('.publication-filter-total').click();
+
+  // Review has no redundant Review × 6 label; its topic filters appear on expand.
   await expect(reviewGroup.getByText(/^Review\s*×/)).toHaveCount(0);
-  await expect(reviewGroup.locator('.publication-filter-section-items').getByText(/^Applications\s*×\s*2$/)).toBeVisible();
+  await reviewGroup.getByRole('button', { name: 'Expand Review' }).click();
+  await expect(reviewGroup.getByText(/^Applications\s*×\s*2$/)).toBeVisible();
+
+  await computationGroup.getByRole('button', { name: 'Expand Computation' }).click();
   const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
   const scholarLink = page.getByTitle('Google Scholar');
