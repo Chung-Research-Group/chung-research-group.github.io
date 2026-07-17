@@ -27,6 +27,12 @@ a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
+.publication-filter-panel{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:min(100%,1100px);margin-left:auto}
+.publication-filter-group{display:grid;grid-template-columns:156px minmax(0,1fr);gap:14px;align-items:start;padding:8px 0 10px;border-top:1px solid color-mix(in srgb,var(--color-text) 13%,transparent)}
+.publication-filter-group:first-child{border-top:0;padding-top:0}
+.publication-filter-title{display:flex;align-items:center;justify-content:flex-end;min-height:24px;padding:5px 10px 5px 14px;border-left:5px solid currentColor;text-align:right;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.publication-filter-items{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;padding-top:3px}
+
 /* responsive+scale v2 */
 body{zoom:0.88}
 @media (max-width:840px){
@@ -52,6 +58,10 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
+  .publication-filter-panel{width:100%;margin-left:0}
+  .publication-filter-group{grid-template-columns:1fr;gap:7px;padding:12px 0}
+  .publication-filter-title{justify-content:flex-start;width:fit-content;text-align:left}
+  .publication-filter-items{justify-content:flex-start;padding-top:0}
 }
 a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
@@ -100,11 +110,11 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px 28px;flex-wrap:wrap;margin:0 0 26px">
         <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;max-width:1040px;margin-left:auto">
+        <div class="publication-filter-panel">
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
-            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px">
-              <span style="min-width:94px;text-align:right;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:0.08em;text-transform:uppercase;font-weight:800;color:{{ group.c }}">{{ group.title }}</span>
-              <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
+            <div class="publication-filter-group">
+              <span class="publication-filter-title" style="color:{{ group.c }};background:color-mix(in srgb, {{ group.c }} 9%, transparent)">{{ group.title }}</span>
+              <div class="publication-filter-items"><sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div>
             </div>
           </sc-for>
         </div>
