@@ -159,6 +159,9 @@ if (!feedHtml.includes("const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applica
 if (!publicationsHtml.includes("sortByCount") || !publicationsHtml.includes("applicationSections")) {
   errors.push("Publication filters must sort by usage count and expose application subcategories.");
 }
+if (!publicationsHtml.includes("openGroups: ['Computation']") || !publicationsHtml.includes("Group::") || !publicationsHtml.includes("Section::Applications::") || !publicationsHtml.includes("publication-filter-total")) {
+  errors.push("Publication filters must support collapsed major and middle categories with aggregate selection.");
+}
 for (const color of ["#B4235A", "#A43E55", "#873E6E", "#6F4A58", "#4E2A84"]) {
   if (!publicationsHtml.includes(color)) errors.push(`Application filter subcategory color is missing: ${color}`);
 }
