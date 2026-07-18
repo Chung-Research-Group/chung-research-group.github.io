@@ -38,6 +38,13 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .home-research-card h2 a:hover{color:var(--area-color)}
 .home-research-ko{font-size:17px;line-height:24px;font-weight:700;margin:5px 0 0;color:color-mix(in srgb,var(--color-text) 74%,transparent)}
 .home-research-copy{font-size:18px;line-height:28px;margin:12px 0 0;color:var(--color-text)}
+.home-research-context{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr);gap:18px;margin:0 0 26px}
+.home-research-context-card{--context-color:var(--color-accent);min-width:0;padding:24px 26px 26px;border-top:5px solid var(--context-color);background:color-mix(in srgb,var(--context-color) 6%,transparent)}
+.home-research-context-card h2{font-family:var(--font-heading);font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.015em;margin:0;color:var(--context-color)}
+.home-research-context-intro{font-size:18px;line-height:27px;margin:8px 0 0;color:var(--color-text)}
+.home-research-context-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.home-research-context-list span{display:inline-flex;align-items:center;padding:7px 10px;border:1px solid color-mix(in srgb,var(--context-color) 55%,transparent);background:var(--color-bg);font-size:15px;line-height:20px;font-weight:750;color:var(--context-color)}
+.home-research-context-card--applications .home-research-context-list span{font-size:16px;line-height:21px;padding:8px 11px}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -64,7 +71,7 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
-  .home-research-core,.home-research-enablers{grid-template-columns:1fr}
+  .home-research-core,.home-research-enablers,.home-research-context{grid-template-columns:1fr}
 }
 
 @media (min-width:841px) and (max-width:1100px){
@@ -218,7 +225,6 @@ body{zoom:0.88}
     <a class="nav-brand" href="index.html" style="display:inline-flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit"><span style="font-size:24px">Chung Research Group</span><span style="color:var(--color-accent);font-size:24px;font-family:var(--font-heading);font-weight:800">@ PNU</span></a>
     <a href="News.dc.html">News</a>
     <a href="People.dc.html">People</a>
-    <a href="Research.dc.html">Research</a>
     <a href="Software %26 Data.dc.html">Software &amp; Data</a>
     <a href="Publications.dc.html">Publications</a>
     <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
@@ -243,26 +249,52 @@ body{zoom:0.88}
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
 
     <section style="padding:44px 0" data-screen-label="Research">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin:0 0 28px">
+      <div style="margin:0 0 28px">
         <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Research · 연구 분야</span>
-        <a href="Research.dc.html" style="font-size:14px;line-height:15px;font-weight:700;color:var(--color-accent-700);text-decoration:none">Learn more →</a>
+      </div>
+      <div class="home-research-context">
+        <article class="home-research-context-card home-research-context-card--applications" style="--context-color:#1c4fa1">
+          <h2>Engineering application domains · 공학 응용 분야</h2>
+          <p class="home-research-context-intro">Our modeling, data, and AI methods are developed around concrete engineering problems.</p>
+          <div class="home-research-context-list">
+            <span>Carbon Capture &amp; Gas Separations</span>
+            <span>Rare-Earth Metal Separation</span>
+            <span>Organometallic Precursor Screening for Semiconductor Deposition</span>
+            <span>Hydrogen &amp; Methane Storage</span>
+            <span>Electrochemical Energy Storage</span>
+            <span>Catalysis &amp; Conversion</span>
+            <span>Adsorption Cooling</span>
+          </div>
+        </article>
+        <article class="home-research-context-card" style="--context-color:#a86700">
+          <h2>Material platforms · 소재 플랫폼</h2>
+          <p class="home-research-context-intro">Materials classes that connect our fundamental and application-driven research.</p>
+          <div class="home-research-context-list">
+            <span>Reticular Materials</span>
+            <span>Polymers</span>
+            <span>Carbons</span>
+            <span>Oxides</span>
+            <span>Electrolytes</span>
+            <span>Organometallic Precursors</span>
+          </div>
+        </article>
       </div>
       <div class="home-research-core">
         <article class="home-research-card" style="--area-color:#1c4fa1">
           <span class="home-research-number">01</span>
-          <h2><a href="Research.dc.html">Quantum &amp; Atomistic Modeling</a></h2>
+          <h2>Quantum &amp; Atomistic Modeling</h2>
           <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">양자·원자 수준 모델링</p></sc-if>
           <p class="home-research-copy">Quantum calculations, Monte Carlo methods, molecular dynamics, and enhanced sampling for molecular-scale structure, energetics, diffusion, reaction, and electrochemical behavior.</p>
         </article>
         <article class="home-research-card" style="--area-color:#00794a">
           <span class="home-research-number">02</span>
-          <h2><a href="Research.dc.html">Fundamentals of Adsorption, Diffusion &amp; Reaction</a></h2>
+          <h2>Fundamentals of Adsorption, Diffusion &amp; Reaction</h2>
           <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">흡착·확산·반응의 기초</p></sc-if>
           <p class="home-research-copy">Molecular-level theories and simulations of adsorption thermodynamics, molecular diffusion, and reaction mechanisms in porous and condensed materials.</p>
         </article>
         <article class="home-research-card" style="--area-color:#006b73">
           <span class="home-research-number">03</span>
-          <h2><a href="Research.dc.html">Cyclic Swing Adsorption</a></h2>
+          <h2>Cyclic Swing Adsorption</h2>
           <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">순환식 스윙 흡착</p></sc-if>
           <p class="home-research-copy">End-to-end models connecting adsorption and transport to pressure-, vacuum-, and temperature-swing cycle performance and techno-economic outcomes.</p>
         </article>
@@ -270,13 +302,13 @@ body{zoom:0.88}
       <div class="home-research-enablers">
         <article class="home-research-card" style="--area-color:#a86700">
           <span class="home-research-number">04</span>
-          <h2><a href="Research.dc.html">Data-driven &amp; Autonomous Discovery</a></h2>
+          <h2>Data-driven &amp; Autonomous Discovery</h2>
           <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">데이터 기반 자율 발견</p></sc-if>
           <p class="home-research-copy">Curated materials data, machine-learning models, and high-throughput screening for reproducible materials discovery.</p>
         </article>
         <article class="home-research-card" style="--area-color:#4e2a84">
           <span class="home-research-number">05 · Emerging direction</span>
-          <h2><a href="Research.dc.html">AI Scientists &amp; Computational Research Automation</a></h2>
+          <h2>AI Scientists &amp; Computational Research Automation</h2>
           <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">AI 과학자와 계산 연구 자동화</p></sc-if>
           <p class="home-research-copy">LLM orchestration and tool-using agents that plan, execute, verify, and refine computational research workflows.</p>
         </article>
