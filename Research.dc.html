@@ -38,9 +38,13 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .research-layer-heading{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-top:34px;padding-top:24px;border-top:2px solid var(--color-divider)}
 .research-layer-heading h2{font-family:var(--font-heading);font-size:24px;line-height:30px;font-weight:800;margin:0}
 .research-layer-heading p{font-size:16px;line-height:24px;margin:0;color:color-mix(in srgb,var(--color-text) 70%,transparent)}
-.research-crosscut{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 48px;margin-top:34px;padding:26px 0;border-top:2px solid var(--color-divider);border-bottom:2px solid var(--color-divider)}
-.research-crosscut h3{font-family:var(--font-heading);font-size:19px;line-height:25px;font-weight:800;margin:0;color:var(--color-accent-700)}
-.research-crosscut p{font-size:17px;line-height:27px;margin:8px 0 0;color:var(--color-text)}
+.research-context{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr);gap:18px;margin:28px 0 8px}
+.research-context-card{min-width:0;padding:24px 26px 26px;border-top:5px solid var(--context-color);background:color-mix(in srgb,var(--context-color) 6%,transparent)}
+.research-context-card h2{font-family:var(--font-heading);font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.015em;margin:0;color:var(--context-color)}
+.research-context-intro{font-size:18px;line-height:27px;margin:8px 0 0;color:var(--color-text)}
+.research-context-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.research-context-list span{display:inline-flex;align-items:center;padding:7px 10px;border:1px solid color-mix(in srgb,var(--context-color) 55%,transparent);background:var(--color-bg);font-size:15px;line-height:20px;font-weight:750;color:var(--context-color)}
+.research-context-card--applications .research-context-list span{font-size:16px;line-height:21px;padding:8px 11px}
 
 @media (max-width:1100px) and (min-width:841px){
   .research-core,.research-enablers{grid-template-columns:1fr}
@@ -71,7 +75,7 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
-  .research-core,.research-enablers,.research-crosscut{grid-template-columns:1fr}
+  .research-core,.research-enablers,.research-context{grid-template-columns:1fr}
   .research-layer-heading{align-items:flex-start;flex-direction:column}
 }
 </style>
@@ -99,6 +103,34 @@ body{zoom:0.88}
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
 
     <section class="research-focuses" data-screen-label="Research focus areas">
+      <div class="research-context">
+        <article class="research-context-card research-context-card--applications" style="--context-color:#1c4fa1">
+          <h2>Engineering application domains · 공학 응용 분야</h2>
+          <p class="research-context-intro">Our modeling, data, and AI methods are developed around concrete engineering problems.</p>
+          <div class="research-context-list">
+            <span>Carbon Capture &amp; Gas Separations</span>
+            <span>Rare-Earth Metal Separation</span>
+            <span>Organometallic Precursor Screening for Semiconductor Deposition</span>
+            <span>Hydrogen &amp; Methane Storage</span>
+            <span>Electrochemical Energy Storage</span>
+            <span>Catalysis &amp; Conversion</span>
+            <span>Adsorption Cooling</span>
+          </div>
+        </article>
+        <article class="research-context-card" style="--context-color:#a86700">
+          <h2>Material platforms · 소재 플랫폼</h2>
+          <p class="research-context-intro">Materials classes that connect our fundamental and application-driven research.</p>
+          <div class="research-context-list">
+            <span>Reticular Materials</span>
+            <span>Polymers</span>
+            <span>Carbons</span>
+            <span>Oxides</span>
+            <span>Electrolytes</span>
+            <span>Organometallic Precursors</span>
+          </div>
+        </article>
+      </div>
+
       <div class="research-core">
         <article class="research-card" style="--area-color:#1c4fa1">
           <span class="research-card-number">01</span>
@@ -148,10 +180,6 @@ body{zoom:0.88}
         </article>
       </div>
 
-      <div class="research-crosscut">
-        <div><h3>Material platforms · 소재 플랫폼</h3><p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p></div>
-        <div><h3>Application domains · 응용 분야</h3><p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p></div>
-      </div>
     </section>
   </div>
 
