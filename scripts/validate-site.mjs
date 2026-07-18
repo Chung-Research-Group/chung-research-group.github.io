@@ -171,7 +171,7 @@ for (const displayName of ["Xylene Isomer", "Alkane Isomer", "Noble Gases", "Org
 if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
-if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAJ")) {
+if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAAJ&hl=en")) {
   errors.push("Chen Yu's Google Scholar profile is missing or incorrect.");
 }
 const joinUsHtml = await readFile(path.join(siteRoot, "Join Us.dc.html"), "utf8");
