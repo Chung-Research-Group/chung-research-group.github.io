@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const pages = [
-  'index.html', 'News.dc.html', 'People.dc.html', 'Research.dc.html',
+  'index.html', 'News.dc.html', 'People.dc.html',
   'Software%20%26%20Data.dc.html', 'Publications.dc.html', 'Join%20Us.dc.html',
   'AIM.dc.html', 'CoRE%20MOF%20Database.dc.html', 'GWP-estimator.dc.html',
   'MOFClassifier.dc.html', 'PACMAN.dc.html', 'SESAMI-APP.dc.html'

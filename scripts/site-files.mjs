@@ -13,7 +13,6 @@ export const requiredPages = [
   "index.html",
   "News.dc.html",
   "People.dc.html",
-  "Research.dc.html",
   "Software & Data.dc.html",
   "Publications.dc.html",
   "Join Us.dc.html",
