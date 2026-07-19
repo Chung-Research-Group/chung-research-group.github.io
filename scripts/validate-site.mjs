@@ -176,10 +176,13 @@ if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAAJ
 }
 const joinUsHtml = await readFile(path.join(siteRoot, "Join Us.dc.html"), "utf8");
 const peopleHtml = await readFile(path.join(siteRoot, "People.dc.html"), "utf8");
-if (![joinUsHtml, peopleHtml].every(html => html.includes("drygchung AT gmail DOT com"))) {
-  errors.push("Professor email obfuscation is missing.");
+if (!joinUsHtml.includes("drygchung AT gmail DOT com")) {
+  errors.push("Join Us professor email obfuscation is missing.");
 }
-if (`${joinUsHtml}\n${peopleHtml}`.includes("drygchung@gmail.com")) {
+if (!peopleHtml.includes("data-prof-pnu-email") || !peopleHtml.includes('href="mailto:&#100;&#114;&#121;&#103;&#99;&#104;&#117;&#110;&#103;&#64;&#112;&#117;&#115;&#97;&#110;&#46;&#97;&#99;&#46;&#107;&#114;"')) {
+  errors.push("People professor email link is missing or incorrect.");
+}
+if (`${joinUsHtml}\n${peopleHtml}`.includes("drygchung@gmail.com") || peopleHtml.includes("drygchung@pusan.ac.kr")) {
   errors.push("Raw professor email remains exposed in published HTML.");
 }
 if ((joinUsHtml.match(/<a\s+data-prof-email\b/g) || []).length !== 2 || (joinUsHtml.match(/href="mailto:&#100;&#114;&#121;/g) || []).length !== 2) {
