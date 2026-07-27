@@ -177,14 +177,6 @@ body{zoom:0.88}
           </div>
         </div>
       </sc-for>
-      <div style="display:grid;grid-template-columns:280px 1fr;gap:20px 72px;padding:28px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
-        <h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:27px;margin:0"><span style="white-space:nowrap">Undergraduates <span style="font-size:15.5px;font-weight:800;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ undergradTotal }}</span></span><span style="display:block;font-size:15.5px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent);margin-top:3px">학부연구생</span></h3>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <sc-for list="{{ undergrads }}" as="u" hint-placeholder-count="2">
-            <p style="font-size:18px;line-height:26px;margin:0"><strong style="font-family:var(--font-heading);font-weight:800;font-feature-settings:'tnum' 1">{{ u.year }}</strong> — {{ u.names }}</p>
-          </sc-for>
-        </div>
-      </div>
     </section>
   </div>
 
@@ -200,9 +192,7 @@ body{zoom:0.88}
 class Component extends DCLogic {
   state = { filterTag: null, filterSector: null };
   renderVals() {
-    const { groups, alumni, undergrads } = window.MTAP_PEOPLE();
-    let undergradTotal = 0;
-    undergrads.forEach(u => { undergradTotal += u.names.split(' · ').length; });
+    const { groups, alumni } = window.MTAP_PEOPLE();
     // 4 categories: Atoms/Electrons (blue) · AI & Data (orange) · Modeling & Optimization (green) · Experiment (red)
     const tagColor = (t) => {
       if (/ai & data/i.test(t)) return { c: '#a86700', b: '#ffa500' };
@@ -266,7 +256,7 @@ class Component extends DCLogic {
     groups.forEach(g => { memberTotal += g.people.length; });
     let alumniTotal = 0;
     alumni.forEach(a => { alumniTotal += a.people.length; });
-    return { groups: showGroups, alumni: showAlumni, undergrads, undergradTotal, interestTotals, sectorTotals, memberTotal, alumniTotal };
+    return { groups: showGroups, alumni: showAlumni, interestTotals, sectorTotals, memberTotal, alumniTotal };
   }
 }
 </script>
