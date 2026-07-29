@@ -271,10 +271,8 @@ function candidateMessage(candidate) {
     `추천 라벨: ${labels}`,
     '',
     '바로 처리: ✅ 승인 · 🚫 제외',
-    '세부 수정이 필요하면 이 스레드에 지시를 남겨주세요.',
-    '`라벨 추가: Grand Canonical Monte Carlo, Adsorption` · `라벨 제거: Review`',
-    '`제목: ...` · `저널: ...` · `저자: ...` · `서지: ...`',
-    '스레드의 `승인`·`제외` 명령도 계속 사용할 수 있습니다.'
+    '✅와 🚫을 동시에 누르면 처리하지 않습니다.',
+    '세부 라벨·서지 수정은 승인 후 생성되는 GitHub PR에서 할 수 있습니다.'
   ].join('\n');
 }
 
@@ -319,8 +317,8 @@ async function createOrUpdatePr(github, repository, candidate) {
   }
 
   const pulls = await github(`/pulls?state=open&head=${encodeURIComponent(`${owner}:${branch}`)}`);
-  if (pulls[0]) return pulls[0];
-  return github('/pulls', {
+  if (pulls[0]) return { pr: pulls[0], created: false };
+  const pr = await github('/pulls', {
     method: 'POST',
     body: JSON.stringify({
       title: `Add publication: ${candidate.title}`,
@@ -330,6 +328,7 @@ async function createOrUpdatePr(github, repository, candidate) {
       maintainer_can_modify: true
     })
   });
+  return { pr, created: true };
 }
 
 async function checksPassed(github, sha) {
@@ -382,7 +381,7 @@ async function run() {
   const botAuth = await slack('auth.test');
   const botUser = botAuth.user_id;
 
-  const history = await slack('conversations.history', { channel, limit: 200, include_all_metadata: true });
+  const history = await slack('conversations.history', { channel, limit: 15, include_all_metadata: true });
   const roots = history.messages || [];
   const feed = await getFeed(github, 'main');
   const known = existingDois(feed.content);
@@ -411,38 +410,14 @@ async function run() {
   for (const root of candidateRoots) {
     const doi = doiFromMessage(root.text);
     if (!doi || known.has(doi)) continue;
-    const thread = await slack('conversations.replies', { channel, ts: root.ts, limit: 200 });
-    const userReplies = (thread.messages || []).slice(1).filter(message => approvers.has(message.user));
-    const work = await crossrefByDoi(doi);
-    const state = applyInstructions(candidateFromCrossref(work), userReplies.map(message => message.text));
     const reactions = reactionDecision(authorizedReactions, channel, root.ts);
-    if (state.errors.length) {
-      await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `⚠️ 지시를 처리하지 못했습니다: ${state.errors.join('; ')}` });
-      continue;
-    }
-    const approved = state.approved || reactions.approved;
-    const excluded = state.excluded || reactions.excluded;
-    if (approved && excluded) {
-      if (!thread.messages.some(message => message.user === botUser && message.text?.includes('승인과 제외가 동시에 선택'))) {
-        await slack('chat.postMessage', {
-          channel,
-          thread_ts: root.ts,
-          text: '⚠️ 승인과 제외가 동시에 선택되어 처리하지 않았습니다. ✅ 또는 🚫 중 하나만 남겨주세요.'
-        });
-      }
-      continue;
-    }
-    if (excluded) {
-      if (!thread.messages.some(message => message.user === botUser && message.text?.includes('후보에서 제외했습니다'))) {
-        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: '🚫 이 논문을 자동 반영 후보에서 제외했습니다.' });
-      }
-      continue;
-    }
-    if (!approved) continue;
+    if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 
-    const pr = await createOrUpdatePr(github, repository, state.candidate);
+    const work = await crossrefByDoi(doi);
+    const candidate = candidateFromCrossref(work);
+    const { pr, created } = await createOrUpdatePr(github, repository, candidate);
     const marker = `PR #${pr.number}`;
-    if (!thread.messages.some(message => message.user === botUser && message.text?.includes(marker))) {
+    if (created) {
       await slack('chat.postMessage', {
         channel,
         thread_ts: root.ts,
@@ -457,7 +432,7 @@ async function run() {
         body: JSON.stringify({
           sha: fresh.head.sha,
           merge_method: 'squash',
-          commit_title: `Add publication: ${state.candidate.title}`
+          commit_title: `Add publication: ${candidate.title}`
         })
       });
       if (merged.merged) {
