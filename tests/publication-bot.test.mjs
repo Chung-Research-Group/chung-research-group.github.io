@@ -35,10 +35,11 @@ test('review remains a single exclusive label', () => {
 });
 
 test('recognizes current and legacy bot candidates without trusting user posts', () => {
-  const text = '📄 신규 논문 후보\nDOI: 10.1000/example';
-  assert.equal(isCandidateRoot({ user: 'U-BOT', text }, 'U-BOT'), true);
-  assert.equal(isCandidateRoot({ user: 'U-OLD-BOT', bot_id: 'B-OLD', text }, 'U-BOT'), true);
-  assert.equal(isCandidateRoot({ user: 'U-HUMAN', text }, 'U-BOT'), false);
+  const unicodeText = '📄 신규 논문 후보\nDOI: 10.1000/example';
+  const slackText = ':page_facing_up: 신규 논문 후보\nDOI: 10.1000/example';
+  assert.equal(isCandidateRoot({ user: 'U-BOT', text: unicodeText }, 'U-BOT'), true);
+  assert.equal(isCandidateRoot({ user: 'U-OLD-BOT', bot_id: 'B-OLD', text: slackText }, 'U-BOT'), true);
+  assert.equal(isCandidateRoot({ user: 'U-HUMAN', text: unicodeText }, 'U-BOT'), false);
 });
 
 test('maps authorized Slack reactions to approval and exclusion decisions', () => {
