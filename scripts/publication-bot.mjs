@@ -303,8 +303,8 @@ function candidateMessage(candidate) {
     `추천 라벨: ${labels}`,
     '',
     '바로 처리: ✅ 승인 · 🚫 제외',
-    '실수로 ✅와 🚫를 동시에 누르면 처리하지 않습니다.',
-    '메타데이터·라벨·표시 수정은 승인 뒤 생성되는 GitHub PR에서 확인할 수 있습니다.'
+    '✅와 🚫을 동시에 누르면 처리하지 않습니다.',
+    '세부 라벨·서지 수정은 승인 후 생성되는 GitHub PR에서 할 수 있습니다.'
   ].join('\n');
 }
 
@@ -456,7 +456,7 @@ async function run() {
       await slack('chat.postMessage', {
         channel,
         thread_ts: root.ts,
-        text: `✅ 승인 내용을 반영한 ${marker}를 생성했습니다: ${pr.html_url}\nCI 통과 시 자동 병합합니다.`
+        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
       });
     }
 
@@ -471,7 +471,7 @@ async function run() {
         })
       });
       if (merged.merged) {
-        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `✅ ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}` });
+        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}` });
       }
     }
   }
