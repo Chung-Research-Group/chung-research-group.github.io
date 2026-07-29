@@ -119,4 +119,3 @@ test('inserts an approved candidate without changing existing entries', () => {
   assert.match(updated, /F\('72', 'Old'/);
   assert.equal(addCandidateToFeed(updated, candidate), updated);
 });
-
