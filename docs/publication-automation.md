@@ -57,7 +57,9 @@ publication-review channel. Grant these bot token scopes:
 The workflow only reads the configured channel and posts messages and thread
 replies there. `reactions:read` is used to verify reactions from configured
 approvers, while `reactions:write` lets the bot add the ✅ and 🚫 controls. It
-does not need workspace-wide message search.
+does not need workspace-wide message search. Existing candidate messages from
+an earlier installation of the same review bot remain supported after the app
+is reinstalled.
 
 ## Repository configuration
 
