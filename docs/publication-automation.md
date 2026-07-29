@@ -86,4 +86,3 @@ configuration. Scheduled checks run every 30 minutes.
   approvers. Conflicting reactions never change GitHub.
 - Review papers always receive the single `Review` label.
 - The bot never writes directly to `main`; it uses a PR and waits for CI.
-
