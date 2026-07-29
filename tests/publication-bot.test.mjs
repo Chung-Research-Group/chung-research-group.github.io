@@ -5,9 +5,13 @@ import {
   addCandidateToFeed,
   applyInstructions,
   existingDois,
+  existingTitles,
+  isChemRxivDoi,
   isCandidateRoot,
   normalizeDoi,
+  normalizeTitle,
   reactionDecision,
+  shouldIgnoreCandidate,
   suggestTopics
 } from '../scripts/publication-bot.mjs';
 
@@ -15,6 +19,36 @@ test('normalizes and finds DOI values', () => {
   assert.equal(normalizeDoi('https://doi.org/10.1000/ABC'), '10.1000/abc');
   const feed = "F('72', 'Title', 'Authors', 'j', 'Journal', ' (2026)', null, '10.1000/ABC')";
   assert.deepEqual([...existingDois(feed)], ['10.1000/abc']);
+});
+
+test('normalizes title variants used by preprints and journal articles', () => {
+  assert.equal(
+    normalizeTitle('Screening of metal-organic frameworks (MOFs) & adsorption'),
+    'screening of mof mof and adsorption'
+  );
+  const feed = "F('60', 'Screening of MOFs for adsorption', 'Authors', 'j', 'Journal', ' (2025)', null, '10.1/final')";
+  assert.deepEqual([...existingTitles(feed)], ['screening of mof for adsorption']);
+});
+
+test('ignores ChemRxiv and title-equivalent publication candidates', () => {
+  const feed = [
+    "F('60', 'CoRE MOF DB: a curated experimental metal-organic framework database', 'Authors', 'j', 'Matter', ' (2025)', null, '10.1/final')",
+    "F('59', 'Modeling and screening of MOFs for boil-off gas capture', 'Authors', 'j', 'CEJ', ' (2025)', null, '10.2/final')"
+  ].join('\n');
+
+  assert.equal(isChemRxivDoi('10.26434/chemrxiv-2024-example-v2'), true);
+  assert.equal(shouldIgnoreCandidate(feed, {
+    doi: '10.26434/chemrxiv-2024-example',
+    title: 'Unpublished ChemRxiv record'
+  }), true);
+  assert.equal(shouldIgnoreCandidate(feed, {
+    doi: '10.3/alternate',
+    title: 'Modeling and screening of metal-organic frameworks for boil-off gas capture'
+  }), true);
+  assert.equal(shouldIgnoreCandidate(feed, {
+    doi: '10.3/new',
+    title: 'A genuinely new peer-reviewed publication'
+  }), false);
 });
 
 test('applies Korean review instructions deterministically', () => {
