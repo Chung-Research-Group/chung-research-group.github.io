@@ -178,6 +178,11 @@ export function applyInstructions(base, messages) {
 export const APPROVAL_REACTION = 'white_check_mark';
 export const EXCLUSION_REACTION = 'no_entry_sign';
 
+export function isCandidateRoot(message, botUser) {
+  return Boolean(message?.text?.startsWith('📄 신규 논문 후보')
+    && (message.user === botUser || message.bot_id));
+}
+
 export function reactionDecision(items, channel, timestamp) {
   const names = new Set(
     (items || [])
@@ -382,8 +387,7 @@ async function run() {
   const feed = await getFeed(github, 'main');
   const known = existingDois(feed.content);
   const announced = new Set(roots.map(message => doiFromMessage(message.text)).filter(Boolean));
-  const candidateRoots = roots.filter(message => message.user === botUser
-    && message.text?.startsWith('📄 신규 논문 후보'));
+  const candidateRoots = roots.filter(message => isCandidateRoot(message, botUser));
 
   for (const root of candidateRoots) {
     const doi = doiFromMessage(root.text);

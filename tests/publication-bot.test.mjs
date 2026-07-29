@@ -5,6 +5,7 @@ import {
   addCandidateToFeed,
   applyInstructions,
   existingDois,
+  isCandidateRoot,
   normalizeDoi,
   reactionDecision,
   suggestTopics
@@ -31,6 +32,13 @@ test('applies Korean review instructions deterministically', () => {
 test('review remains a single exclusive label', () => {
   const result = applyInstructions({ topics: ['Adsorption'] }, ['라벨 추가: Review, GCMC']);
   assert.deepEqual(result.candidate.topics, ['Review']);
+});
+
+test('recognizes current and legacy bot candidates without trusting user posts', () => {
+  const text = '📄 신규 논문 후보\nDOI: 10.1000/example';
+  assert.equal(isCandidateRoot({ user: 'U-BOT', text }, 'U-BOT'), true);
+  assert.equal(isCandidateRoot({ user: 'U-OLD-BOT', bot_id: 'B-OLD', text }, 'U-BOT'), true);
+  assert.equal(isCandidateRoot({ user: 'U-HUMAN', text }, 'U-BOT'), false);
 });
 
 test('maps authorized Slack reactions to approval and exclusion decisions', () => {
