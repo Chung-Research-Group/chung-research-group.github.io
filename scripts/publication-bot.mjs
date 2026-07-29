@@ -49,6 +49,38 @@ function cleanText(value = '') {
   return String(value).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+export function normalizeTitle(value = '') {
+  return cleanText(value)
+    .toLowerCase()
+    .replace(/\bmetal[-\s]?organic frameworks?\b/g, 'mof')
+    .replace(/\bmofs\b/g, 'mof')
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function existingTitles(feed) {
+  return new Set(
+    [...feed.matchAll(/F\('[^']*',\s*'((?:\\'|[^'])*)'/g)]
+      .map(match => normalizeTitle(match[1].replace(/\\'/g, "'")))
+      .filter(Boolean)
+  );
+}
+
+export function isChemRxivDoi(value = '') {
+  return /^10\.26434\/chemrxiv-/i.test(normalizeDoi(value));
+}
+
+export function shouldIgnoreCandidate(feed, candidate) {
+  const doi = normalizeDoi(candidate?.doi);
+  const title = normalizeTitle(candidate?.title);
+  return !doi
+    || existingDois(feed).has(doi)
+    || isChemRxivDoi(doi)
+    || (title && existingTitles(feed).has(title));
+}
+
 function crossrefDate(work) {
   const parts = work['published-print']?.['date-parts']?.[0]
     || work['published-online']?.['date-parts']?.[0]
@@ -390,12 +422,14 @@ async function run() {
 
   for (const root of candidateRoots) {
     const doi = doiFromMessage(root.text);
-    if (doi && !known.has(doi)) await ensureControlReactions(slack, channel, root, botUser);
+    if (doi && !known.has(doi) && !isChemRxivDoi(doi)) {
+      await ensureControlReactions(slack, channel, root, botUser);
+    }
   }
 
   for (const work of await crossrefWorks(orcid, process.env.CROSSREF_MAILTO)) {
     const candidate = candidateFromCrossref(work);
-    if (!candidate.doi || known.has(candidate.doi) || announced.has(candidate.doi)) continue;
+    if (shouldIgnoreCandidate(feed.content, candidate) || announced.has(candidate.doi)) continue;
     const posted = await slack('chat.postMessage', {
       channel,
       text: candidateMessage(candidate),
@@ -415,6 +449,7 @@ async function run() {
 
     const work = await crossrefByDoi(doi);
     const candidate = candidateFromCrossref(work);
+    if (shouldIgnoreCandidate(feed.content, candidate)) continue;
     const { pr, created } = await createOrUpdatePr(github, repository, candidate);
     const marker = `PR #${pr.number}`;
     if (created) {
