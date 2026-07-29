@@ -179,7 +179,7 @@ export const APPROVAL_REACTION = 'white_check_mark';
 export const EXCLUSION_REACTION = 'no_entry_sign';
 
 export function isCandidateRoot(message, botUser) {
-  return Boolean(message?.text?.startsWith('📄 신규 논문 후보')
+  return Boolean(/^(?:📄|:page_facing_up:)\s*신규 논문 후보/.test(message?.text || '')
     && (message.user === botUser || message.bot_id));
 }
 
