@@ -13,23 +13,9 @@ The bot adds two reactions to every candidate:
 - 🚫 (`no_entry_sign`): exclude the candidate
 
 Only reactions from users listed in `PUBLICATION_APPROVER_USER_IDS` are
-accepted. If both reactions are selected, the bot does nothing and posts a
-warning in the candidate thread.
-
-## Slack thread commands
-
-Reply in the candidate's Slack thread. Multiple commands can be placed on
-separate lines. Thread commands remain available for metadata and label edits,
-and as a fallback for approval or exclusion.
-
-- `라벨 추가: Grand Canonical Monte Carlo, Adsorption`
-- `라벨 제거: Review`
-- `제목: Corrected title`
-- `저널: Corrected journal`
-- `저자: Corrected author list`
-- `서지: , 12, 100–110 (2026)`
-- `제외`
-- `승인`
+accepted. If both reactions are selected, the bot does nothing. After approval,
+the bot creates a GitHub PR; make any metadata or label corrections in that PR
+before its next scheduled merge check.
 
 Available labels are grouped as follows:
 
@@ -54,13 +40,14 @@ publication-review channel. Grant these bot token scopes:
 - `reactions:read`
 - `reactions:write`
 
-The workflow only reads the configured channel and posts messages and thread
-replies there. `reactions:read` is used to verify reactions from configured
-approvers, while `reactions:write` lets the bot add the ✅ and 🚫 controls. It
-does not need workspace-wide message search. Existing candidate messages from
-an earlier installation of the same review bot remain supported after the app
-is reinstalled. Slack's API-normalized `:page_facing_up:` candidate prefix is
-treated the same as the visible 📄 emoji.
+The workflow only reads the configured channel, verifies reactions, and posts
+candidate and PR-status messages. `reactions:read` is used to verify reactions
+from configured approvers, while `reactions:write` lets the bot add the ✅ and
+🚫 controls. It does not need workspace-wide message search or access to thread
+replies. Existing candidate messages from an earlier installation of the same
+review bot remain supported after the app is reinstalled. Slack's
+API-normalized `:page_facing_up:` candidate prefix is treated the same as the
+visible 📄 emoji.
 
 ## Repository configuration
 
