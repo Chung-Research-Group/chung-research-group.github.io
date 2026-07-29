@@ -6,6 +6,7 @@ import {
   applyInstructions,
   existingDois,
   normalizeDoi,
+  reactionDecision,
   suggestTopics
 } from '../scripts/publication-bot.mjs';
 
@@ -30,6 +31,48 @@ test('applies Korean review instructions deterministically', () => {
 test('review remains a single exclusive label', () => {
   const result = applyInstructions({ topics: ['Adsorption'] }, ['라벨 추가: Review, GCMC']);
   assert.deepEqual(result.candidate.topics, ['Review']);
+});
+
+test('maps authorized Slack reactions to approval and exclusion decisions', () => {
+  const channel = 'C123';
+  const timestamp = '123.456';
+  const item = name => ({
+    type: 'message',
+    channel,
+    message: { ts: timestamp, reactions: [{ name }] }
+  });
+
+  assert.deepEqual(
+    reactionDecision([item('white_check_mark')], channel, timestamp),
+    { approved: true, excluded: false, conflict: false }
+  );
+  assert.deepEqual(
+    reactionDecision([item('no_entry_sign')], channel, timestamp),
+    { approved: false, excluded: true, conflict: false }
+  );
+  assert.deepEqual(
+    reactionDecision([item('white_check_mark'), item('no_entry_sign')], channel, timestamp),
+    { approved: true, excluded: true, conflict: true }
+  );
+});
+
+test('ignores reactions from other messages and unsupported emoji', () => {
+  const items = [
+    {
+      type: 'message',
+      channel: 'C123',
+      message: { ts: 'other', reactions: [{ name: 'white_check_mark' }] }
+    },
+    {
+      type: 'message',
+      channel: 'C123',
+      message: { ts: '123.456', reactions: [{ name: 'thumbsup' }] }
+    }
+  ];
+  assert.deepEqual(
+    reactionDecision(items, 'C123', '123.456'),
+    { approved: false, excluded: false, conflict: false }
+  );
 });
 
 test('suggests labels from title and abstract keywords', () => {

@@ -5,10 +5,22 @@ The publication monitor checks Crossref for works linked to ORCID
 `C0BJ2607NGL`. Nothing is added to the website until an authorized Slack user
 approves the candidate.
 
-## Slack commands
+## Slack review controls
+
+The bot adds two reactions to every candidate:
+
+- ✅ (`white_check_mark`): approve the candidate
+- 🚫 (`no_entry_sign`): exclude the candidate
+
+Only reactions from users listed in `PUBLICATION_APPROVER_USER_IDS` are
+accepted. If both reactions are selected, the bot does nothing and posts a
+warning in the candidate thread.
+
+## Slack thread commands
 
 Reply in the candidate's Slack thread. Multiple commands can be placed on
-separate lines.
+separate lines. Thread commands remain available for metadata and label edits,
+and as a fallback for approval or exclusion.
 
 - `라벨 추가: Grand Canonical Monte Carlo, Adsorption`
 - `라벨 제거: Review`
@@ -39,9 +51,13 @@ publication-review channel. Grant these bot token scopes:
 
 - `channels:history` for a public channel, or `groups:history` for a private channel
 - `chat:write`
+- `reactions:read`
+- `reactions:write`
 
 The workflow only reads the configured channel and posts messages and thread
-replies there. It does not need workspace-wide message search.
+replies there. `reactions:read` is used to verify reactions from configured
+approvers, while `reactions:write` lets the bot add the ✅ and 🚫 controls. It
+does not need workspace-wide message search.
 
 ## Repository configuration
 
@@ -66,5 +82,7 @@ configuration. Scheduled checks run every 30 minutes.
   ORCID in its metadata. Google Scholar alerts remain useful as a fallback.
 - Label suggestions are deterministic keyword suggestions. The Slack review is
   the authoritative classification step.
+- Approval and exclusion reactions are accepted only from configured Slack
+  approvers. Conflicting reactions never change GitHub.
 - Review papers always receive the single `Review` label.
 - The bot never writes directly to `main`; it uses a PR and waits for CI.
