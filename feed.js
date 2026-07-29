@@ -116,6 +116,7 @@ const F = (no, title, authors, jk, journal, meta, code, doi) => ({
 
 // Full publication list, newest first.
 const PUBS = [
+  F('73', 'CoRE MOF DB: a curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening', 'Zhao, Guobin, Brabson, Logan, Chheda, Saumil, Huang, Ju, Kim, Haewon, Liu, Kunhuan, Mochida, Kenji, Pham, Thang, Prerna, Prerna, Terrones, Gianmarco, Yoon, Sunghyun, Zoubritzky, Lionel, Coudert, François-Xavier, Haranczyk, Maciej, Kulik, Heather, Moosavi, Mohamad, Sholl, David, Siepmann, Ilja, Snurr, Randall, Chung, Yongchul', 'auto', 'Journal article', ' (2025)', null, '10.26434/chemrxiv-2024-nvmnr-v2'),
   F('72', 'Hunting Structural Demons in Digital Reticular Chemistry: Lessons from Metal-Organic Frameworks', 'Chung, Y.G.*, Lah, M.S.', 'ijc', 'Israel Journal of Chemistry', ', 66, e70028 (2026)', null, '10.1002/ijch.70028'),
   F('71', 'Data-driven Prediction of Ionic Conductivity in Solid-State Electrolytes with Machine Learning and Large Language Models', 'Kim, H.#, Lee, T.#, Hong, S., Kim, K.H., Chung, Y.G.*', 'jcp', 'Journal of Chemical Physics', ', 164, 114502 (2026)', null, '10.1063/5.0307954'),
   F('70', 'Direct Air Capture with Solid-Sorbents: Adsorbent Design, Process Engineering, and CO2 Conversion', 'Hassan, M., Shin, C., Lee, T., Lee, S., Chowdhury, S., Kwon, H-.T., Kang, S.G.*, Ahn, S.*, Chung, Y.G.*', 'cej', 'Chemical Engineering Journal', ', 534, 175117 (2026)', null, '10.1016/j.cej.2026.175117'),
@@ -193,6 +194,7 @@ const PUBS = [
 // Editorial topic assignments. These are intentionally explicit rather than
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
+  '73': ['Grand Canonical Monte Carlo', 'Data Curation', 'Machine Learning', 'Infrastructure', 'Adsorption', 'Reticular Materials', 'Cyclic Swing Adsorber', 'Carbon Capture'],
   '72': ['Review'], '71': ['Machine Learning', 'Large Language Models', 'Data Curation', 'Diffusion', 'Electrochemistry', 'Electrolytes', 'Secondary Battery'], '70': ['Review'],
   '69': ['Adsorption', 'Diffusion', 'Chiller', 'Reticular Materials', 'Adsorption Cooling'], '68': ['Infrastructure', 'Adsorption'], '67': ['Grand Canonical Monte Carlo', 'Adsorption', 'Techno-Economic Analysis', 'Cyclic Swing Adsorber', 'Reticular Materials', 'Biogas Upgrading'],
   '66': ['Grand Canonical Monte Carlo', 'Enhanced Sampling', 'Adsorption', 'Cyclic Swing Adsorber', 'Carbon Capture'], '65': ['Grand Canonical Monte Carlo', 'Material Characterization', 'Adsorption', 'Reticular Materials'], '64': ['Adsorption', 'Techno-Economic Analysis', 'Cyclic Swing Adsorber', 'Carbons', 'Carbon Monoxide Separation'], '63': ['Machine Learning', 'Data Curation', 'Material Characterization', 'Reticular Materials'],
