@@ -68,6 +68,12 @@ configuration. Scheduled checks run every 30 minutes.
 ## Safety and limitations
 
 - DOI values already present in `feed.js` are ignored.
+- ChemRxiv DOI records are not announced or added. When a preprint has a
+  peer-reviewed version, the journal DOI in `feed.js` remains the canonical
+  website record.
+- Normalized publication titles are also checked before announcing a candidate.
+  This prevents duplicate cards when Crossref supplies a different DOI or uses
+  `metal-organic framework(s)` instead of `MOF(s)`.
 - Crossref only returns ORCID-linked records when the publisher deposited the
   ORCID in its metadata. Google Scholar alerts remain useful as a fallback.
 - Label suggestions are deterministic keyword suggestions. The Slack review is
