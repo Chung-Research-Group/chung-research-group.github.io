@@ -365,7 +365,7 @@ async function llmJsonRequest(url, request, options) {
       }
       if (!response.ok) {
         const code = data?.error?.code || data?.error?.status || `http_${response.status}`;
-        const exhausted = /credit|spend|usage.?limit/i.test(String(code));
+        const exhausted = /credit|spend|usage.?limit|rate.?limit|quota/i.test(String(code));
         const retryable = !exhausted
           && response.status !== 429
           && (response.status === 408 || response.status >= 500);

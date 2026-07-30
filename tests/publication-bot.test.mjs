@@ -624,7 +624,7 @@ test('publication monitor gives the built-in job token only read and model permi
     'utf8'
   );
   assert.match(workflow, /permissions:\s*\n\s+contents: read\s*\n\s+models: read/);
-  assert.doesNotMatch(workflow, /pull-requests:\s*write|contents:\s*write/);
+  assert.doesNotMatch(workflow, /pull-requests:\s*write|contents:\s*write|actions:\s*read/);
   assert.match(workflow, /GITHUB_MODELS_TOKEN:\s*\$\{\{\s*github\.token\s*\}\}/);
   assert.match(workflow, /PUBLICATION_LLM_PROVIDER:.*\|\|\s*'github'/);
   assert.match(workflow, /PUBLICATION_LLM_MODEL:\s*\$\{\{\s*vars\.PUBLICATION_LLM_MODEL\s*\}\}/);
@@ -714,6 +714,27 @@ test('does not retry a provider rate limit and opens the run-level LLM circuit',
     fetchImpl: async () => {
       calls += 1;
       return jsonResponse({ error: { code: 'rate_limit_exceeded' } }, 429);
+    }
+  });
+
+  assert.equal(calls, 1);
+  assert.equal(result.method, 'deterministic');
+  assert.equal(result.warning, 'provider quota or rate limit');
+  assert.equal(result.disableProviderForRun, true);
+});
+
+test('does not retry a quota response delivered with a transient HTTP status', async () => {
+  let calls = 0;
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'github',
+    apiKey: 'job-token',
+    model: '',
+    timeoutMs: 1000,
+    retryDelays: [0, 0],
+    sleep: async () => {},
+    fetchImpl: async () => {
+      calls += 1;
+      return jsonResponse({ error: { code: 'quota_exceeded' } }, 503);
     }
   });
 

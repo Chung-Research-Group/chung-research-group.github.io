@@ -33,9 +33,12 @@ abstract of a new candidate. GitHub Actions supplies a short-lived token with
 only `contents: read` and `models: read`; no separate model API secret is
 required for this default. An owner of the `Chung-Research-Group` organization
 must first enable GitHub Models under **Organization settings → Models →
-Development** and allow the selected publisher and model. GitHub Models
-repository integration is currently a public-preview feature; unavailable
-access always falls back to deterministic classification.
+Development** and allow the selected publisher and model. When organization
+policy delegates access at repository level, also enable Models under this
+repository's **Settings → Models**. An enterprise policy can override either
+setting and restrict model access. GitHub Models repository integration is
+currently a public-preview feature; unavailable access always falls back to
+deterministic classification.
 LLM classification is advisory: it may recommend only labels already listed in
 the allowlist above. If the model identifies a potentially useful new topic, the
 bot may show it in Slack as a topic candidate, but it never creates a taxonomy
