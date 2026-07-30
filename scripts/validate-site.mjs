@@ -59,6 +59,14 @@ function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
 }
 
+function normalizeDoi(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")
+    .replace(/^doi:\s*/i, "")
+    .toLowerCase();
+}
+
 for (const file of [...requiredPages, ...requiredRuntimeFiles]) {
   if (!await exists(path.join(siteRoot, file))) errors.push(`Missing required file: ${file}`);
 }
@@ -126,6 +134,112 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
+const publicationMetadataPath = path.join(siteRoot, "data/publication-metadata.json");
+if (await exists(publicationMetadataPath)) {
+  let metadata;
+  try {
+    metadata = JSON.parse(await readFile(publicationMetadataPath, "utf8"));
+  } catch (error) {
+    errors.push(`Publication metadata is not valid JSON: ${error.message}`);
+  }
+
+  if (metadata) {
+    if (metadata.schemaVersion !== 2) {
+      errors.push(`Publication metadata schemaVersion must be 2; found ${JSON.stringify(metadata.schemaVersion)}.`);
+    }
+    if (!Number.isFinite(Date.parse(metadata.snapshotUpdatedAt || ""))) {
+      errors.push("Publication metadata snapshotUpdatedAt must be an ISO timestamp.");
+    }
+    if (!metadata.publications || typeof metadata.publications !== "object" || Array.isArray(metadata.publications)) {
+      errors.push("Publication metadata must contain a publications object keyed by normalized DOI.");
+    } else {
+      const feedPublicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
+      const feedDois = new Set(
+        [...feedPublicationBlock.matchAll(/'(10\.[^']+)'/gi)]
+          .map((match) => normalizeDoi(match[1]))
+          .filter(Boolean)
+      );
+      for (const [key, record] of Object.entries(metadata.publications)) {
+        const normalizedKey = normalizeDoi(key);
+        if (!normalizedKey || key !== normalizedKey) {
+          errors.push(`Publication metadata DOI key is not normalized: ${key}`);
+        }
+        if (!feedDois.has(normalizedKey)) {
+          errors.push(`Publication metadata contains a DOI not present in feed.js: ${key}`);
+        }
+        if (!record || typeof record !== "object" || Array.isArray(record)) {
+          errors.push(`Publication metadata record must be an object: ${key}`);
+          continue;
+        }
+        if (normalizeDoi(record.doi) !== normalizedKey) {
+          errors.push(`Publication metadata record DOI does not match its key: ${key}`);
+        }
+        for (const source of ["semanticScholar", "openAlex"]) {
+          const citationCount = record[source]?.citationCount;
+          if (citationCount !== undefined && (
+            typeof citationCount !== "number"
+            || !Number.isFinite(citationCount)
+            || citationCount < 0
+          )) {
+            errors.push(`${key}: ${source}.citationCount must be a nonnegative finite number.`);
+          }
+        }
+        const influentialCitationCount = record.semanticScholar?.influentialCitationCount;
+        if (influentialCitationCount !== undefined && (
+          typeof influentialCitationCount !== "number"
+          || !Number.isFinite(influentialCitationCount)
+          || influentialCitationCount < 0
+        )) {
+          errors.push(`${key}: semanticScholar.influentialCitationCount must be a nonnegative finite number.`);
+        }
+        if (record.openAlex?.countsByYear !== undefined) {
+          if (!Array.isArray(record.openAlex.countsByYear)) {
+            errors.push(`${key}: openAlex.countsByYear must be an array.`);
+          } else {
+            for (const annual of record.openAlex.countsByYear) {
+              if (
+                typeof annual?.citationCount !== "number"
+                || !Number.isFinite(annual.citationCount)
+                || annual.citationCount < 0
+              ) {
+                errors.push(`${key}: OpenAlex annual citation counts must be nonnegative finite numbers.`);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    for (const totalName of ["publications", "semanticScholarCitations", "openAlexCitations"]) {
+      const value = metadata.totals?.[totalName];
+      if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+        errors.push(`Publication metadata totals.${totalName} must be a nonnegative finite number.`);
+      }
+    }
+  }
+}
+if (!publicationsHtml.includes("data/publication-metadata.json")) {
+  errors.push("Publications page must load the static publication metadata snapshot.");
+}
+if (!publicationsHtml.includes("data-publication-metadata-status")) {
+  errors.push("Publications page must expose citation sources and metadata freshness.");
+}
+if (!publicationsHtml.includes("snapshotUpdatedAt")) {
+  errors.push("Publications page must display freshness from metadata snapshotUpdatedAt.");
+}
+if (!publicationsHtml.includes("data-publication-enrichment")) {
+  errors.push("Publications page must render static metadata fields or keywords.");
+}
+for (const forbiddenRuntimeMetadata of [
+  "api.crossref.org",
+  "api.semanticscholar.org",
+  "api.openalex.org",
+  "resolveDois"
+]) {
+  if (publicationsHtml.includes(forbiddenRuntimeMetadata)) {
+    errors.push(`Publications page must not call metadata APIs at runtime: ${forbiddenRuntimeMetadata}`);
+  }
+}
 const publicationThemes = ["Density Functional Theory", "Grand Canonical Monte Carlo", "Molecular Dynamics", "Enhanced Sampling", "Data Curation", "Machine Learning", "Large Language Models", "Infrastructure", "Material Characterization", "Techno-Economic Analysis", "Adsorption", "Diffusion", "Reaction", "Electrochemistry", "Reticular Materials", "Oxides", "Polymers", "Carbons", "Graphene Oxide", "Graphene Quantum Dots", "Zeolites", "Molecules", "Electrolytes", "Perovskites", "Membranes", "Chiller", "Cyclic Swing Adsorber", "Carbon Capture", "Hydrogen Storage", "Biogas Upgrading", "Carbon Monoxide Separation", "Natural Gas Sweetening", "Noble Gas Separation", "SF6/N2 Separation", "Olefin/Paraffin Separation", "Xylene Separation", "Alkane Isomer Separation", "Methane Storage", "Adsorption Cooling", "Secondary Battery", "Supercapacitor", "Organic Solvent Nanofiltration", "Organic Liquid Separation", "CO2 Conversion", "Catalysis", "Sensing", "Air Pollution Control", "Distillation", "Review"];
 for (const theme of publicationThemes) {
   if (!publicationsHtml.includes(`'${theme}'`)) errors.push(`Publication taxonomy is missing: ${theme}`);

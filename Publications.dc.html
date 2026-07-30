@@ -102,17 +102,24 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
           </div>
         </sc-if>
-        <sc-if value="{{ totalCites }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ openAlexCites }}" hint-placeholder-val="{{ false }}">
           <div>
-            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ totalCitesText }}</p>
-            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Crossref)</p>
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ openAlexCitesText }}</p>
+            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (OpenAlex)</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ semanticScholarCites }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ semanticScholarCitesText }}</p>
+            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Semantic Scholar)</p>
           </div>
         </sc-if>
         <div style="display:flex;align-items:center;gap:16px;flex:1 1 420px;min-width:280px">
           <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
-          <input placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;min-width:0;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <input aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;min-width:0;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
         </div>
       </div>
+      <p data-publication-metadata-status style="font-size:14px;line-height:21px;margin:14px 0 0;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ metadataStatus }}</p>
     </header>
 
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
@@ -153,6 +160,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)"><span style="font-weight:700">{{ p.journal }}</span><span>{{ p.meta }}</span></p>
                   <sc-if value="{{ p.note }}" hint-placeholder-val="{{ false }}"><p style="font-size:18px;line-height:25px;margin:6px 0 0;font-weight:700;color:var(--color-accent-800)">{{ p.note }}</p></sc-if>
+                  <sc-if value="{{ p.hasEnrichment }}" hint-placeholder-val="{{ false }}">
+                    <div data-publication-enrichment style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin:8px 0 0">
+                      <sc-if value="{{ p.citeText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;line-height:20px;font-weight:700;color:color-mix(in srgb, var(--color-text) 74%, transparent)">{{ p.citeText }}</span></sc-if>
+                      <sc-for list="{{ p.discoveryTerms }}" as="term" hint-placeholder-count="2"><span data-metadata-term="{{ term }}" style="display:inline-flex;align-items:center;font-size:13px;line-height:18px;padding:1px 6px;border:1px solid color-mix(in srgb, var(--color-text) 22%, transparent);color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ term }}</span></sc-for>
+                    </div>
+                  </sc-if>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;align-items:center">
                     <sc-if value="{{ p.pdf }}" hint-placeholder-val="{{ false }}"><a href="{{ p.pdf }}" class="tag tag-neutral" style="text-decoration:none">PDF</a></sc-if>
                     <sc-if value="{{ p.doi }}" hint-placeholder-val="{{ false }}">
@@ -180,71 +193,22 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}, &quot;crossrefCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4200, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
 class Component extends DCLogic {
-  state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], dois: {}, cites: {} };
-  async resolveDois() {
-    const cacheKey = 'mtap-doi-cache-v2';
-    let cache = {};
-    try { cache = JSON.parse(localStorage.getItem(cacheKey) || '{}'); } catch (e) {}
-    const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-    const jaccard = (a, b) => {
-      const A = new Set(a.split(' ')), B = new Set(b.split(' '));
-      let inter = 0;
-      A.forEach(w => { if (B.has(w)) inter++; });
-      return inter / (A.size + B.size - inter);
-    };
-    let papers = this._papers || [];
-    if (!papers.length && this._feed && this._feed.PUBS) {
-      papers = this._feed.PUBS.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
+  state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], metadata: null, metadataError: false };
+  normalizeDoi(value) {
+    return String(value || '').trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').toLowerCase();
+  }
+  async loadPublicationMetadata() {
+    try {
+      const response = await fetch('data/publication-metadata.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Publication metadata unavailable');
+      const metadata = await response.json();
+      if (!metadata || metadata.schemaVersion !== 2 || !metadata.publications) throw new Error('Publication metadata invalid');
+      this.setState({ metadata, metadataError: false });
+    } catch (error) {
+      this.setState({ metadata: null, metadataError: true });
     }
-    const dois = {}, cites = {};
-    let dirty = false, since = 0;
-    const push = () => this.setState(s => ({ dois: Object.assign({}, s.dois, dois), cites: Object.assign({}, s.cites, cites) }));
-    const MAIL = '?mailto=chung-research-group@pusan.ac.kr';
-    const getJson = async (url) => {
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          const r = await fetch(url);
-          if (r.status === 429 || r.status >= 500) { await new Promise(res => setTimeout(res, 800 * (attempt + 1))); continue; }
-          if (!r.ok) return null;
-          return await r.json();
-        } catch (e) { await new Promise(res => setTimeout(res, 500 * (attempt + 1))); }
-      }
-      return null;
-    };
-    const lookup = async (p) => {
-      if (cache[p.no]) return cache[p.no];
-      let entry = null;
-      if (p.doi) {
-        const j = await getJson('https://api.crossref.org/works/' + encodeURIComponent(p.doi) + MAIL);
-        if (j) entry = { doi: p.doi, c: (j.message && j.message['is-referenced-by-count']) || 0 };
-      } else {
-        const j = await getJson('https://api.crossref.org/works' + MAIL + '&rows=3&select=DOI,title,is-referenced-by-count&query.bibliographic=' + encodeURIComponent(p.title));
-        const items = (j && j.message && j.message.items) || [];
-        const nt = norm(p.title);
-        const hit = items.find(it => {
-          const t = norm((it.title && it.title[0]) || '');
-          return t && (t === nt || t.includes(nt) || nt.includes(t) || jaccard(t, nt) > 0.85);
-        });
-        if (hit && hit.DOI) entry = { doi: hit.DOI, c: hit['is-referenced-by-count'] || 0 };
-      }
-      if (entry) { cache[p.no] = entry; dirty = true; }
-      return entry;
-    };
-    // Resolve in small parallel batches so a slow/failed lookup doesn't stall the rest.
-    const BATCH = 6;
-    for (let i = 0; i < papers.length; i += BATCH) {
-      const slice = papers.slice(i, i + BATCH);
-      const entries = await Promise.all(slice.map(lookup));
-      slice.forEach((p, k) => {
-        const entry = entries[k];
-        if (entry) { dois[p.no] = entry.doi; cites[p.no] = entry.c || 0; }
-      });
-      push();
-    }
-    if (dirty) { try { localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch (e) {} }
-    push();
   }
   refreshBadges() {
     clearTimeout(this._badgeTimer);
@@ -253,7 +217,7 @@ class Component extends DCLogic {
       try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
     }, 400);
   }
-  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.resolveDois(); } else { setTimeout(t, 50); } }; t(); }
+  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); } else { setTimeout(t, 50); } }; t(); }
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const FEED = this._feed;
@@ -295,9 +259,26 @@ class Component extends DCLogic {
     const p72 = full.find(p => p.no === '72');
     if (p72) p72.note = 'Invited contribution to the special collection \u201cReticular Chemistry and New Materials\u201d dedicated to Prof. Omar Yaghi\u2019s 2025 Nobel Prize in Chemistry.';
     full.forEach(p => { p.hcp = HCP.includes(p.no); });
-    const dois = this.state.dois || {};
-    full.forEach(p => { if (!p.doi && dois[p.no]) p.doi = dois[p.no]; });
-    this._papers = full.map(p => ({ no: p.no, title: p.title, doi: p.doi }));
+    const metadata = this.state.metadata;
+    const metadataPublications = metadata?.publications || {};
+    full.forEach(p => {
+      const enrichment = metadataPublications[this.normalizeDoi(p.doi)] || null;
+      p.enrichment = enrichment;
+      const openAlexCount = enrichment?.openAlex?.citationCount;
+      const semanticScholarCount = enrichment?.semanticScholar?.citationCount;
+      const hasOpenAlexCount = Number.isFinite(openAlexCount);
+      const hasSemanticScholarCount = Number.isFinite(semanticScholarCount);
+      const citationCount = hasOpenAlexCount ? openAlexCount : (hasSemanticScholarCount ? semanticScholarCount : null);
+      const citationSource = hasOpenAlexCount ? 'OpenAlex' : (hasSemanticScholarCount ? 'Semantic Scholar' : '');
+      p.citeText = Number.isFinite(citationCount)
+        ? ('Cited by ' + citationCount.toLocaleString('en-US') + ' \u00b7 ' + citationSource)
+        : '';
+      p.discoveryTerms = [...(enrichment?.fields || []), ...(enrichment?.keywords || [])]
+        .filter((term, index, values) => term && values.findIndex(value => value.toLowerCase() === term.toLowerCase()) === index)
+        .slice(0, 3);
+      p.metadataSearch = [...(enrichment?.fields || []), ...(enrichment?.keywords || [])].join(' ');
+      p.hasEnrichment = !!p.citeText || p.discoveryTerms.length > 0;
+    });
     const q = this.state.q.trim().toLowerCase();
     const activeTheme = this.state.theme;
     const matchesTheme = (p) => {
@@ -313,7 +294,7 @@ class Component extends DCLogic {
       if (activeTheme.startsWith('Review::')) return p.reviewClass === activeTheme.slice(8);
       return p.tags.some(t => t.t === activeTheme);
     };
-    const match = (p) => matchesTheme(p) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ') + ' ' + p.reviewClass).toLowerCase().includes(q));
+    const match = (p) => matchesTheme(p) && (!q || (p.title + ' ' + p.authors + ' ' + p.journal + ' ' + p.meta + ' ' + p.tags.map(t => t.t).join(' ') + ' ' + p.reviewClass + ' ' + p.metadataSearch).toLowerCase().includes(q));
     const filtered = full.filter(match);
     filtered.sort((a, b) => parseInt(b.no, 10) - parseInt(a.no, 10));
     if (q || activeTheme) {
@@ -331,21 +312,24 @@ class Component extends DCLogic {
       g.items.push(p);
     });
     groups.forEach(g => { g.count = g.items.length; });
-    const citeMap = this.state.cites || {};
-    filtered.forEach(p => {
-      const c = citeMap[p.no] || 0;
-      p.citeN = c;
-      p.citeText = c ? ('Cited by ' + c.toLocaleString('en-US') + ' · Crossref') : '';
-    });
-    let liveCites = 0;
-    Object.values(citeMap).forEach(c => { liveCites += (c || 0); });
-    const crossrefProp = this.props.crossrefCitations ?? 0;
-    const resolvedCount = Object.keys(citeMap).length;
-    // Use the live Crossref sum once most papers have resolved; otherwise fall
-    // back to the editable floor so the stat is never blank.
-    const useLive = resolvedCount >= Math.max(1, Math.floor(full.length * 0.8));
-    const totalCites = useLive ? liveCites : Math.max(liveCites, crossrefProp);
+    const openAlexCites = Number(metadata?.totals?.openAlexCitations || 0);
+    const semanticScholarCites = Number(metadata?.totals?.semanticScholarCitations || 0);
     const scholarCites = this.props.scholarCitations ?? 0;
+    let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
+    if (metadata?.snapshotUpdatedAt) {
+      const date = new Date(metadata.snapshotUpdatedAt);
+      const formatted = Number.isNaN(date.getTime())
+        ? metadata.snapshotUpdatedAt
+        : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      const sourceStates = [
+        metadata.sources?.openAlex?.status === 'stale' ? 'OpenAlex using last snapshot' : '',
+        metadata.sources?.semanticScholar?.status === 'stale' ? 'Semantic Scholar using last snapshot' : ''
+      ].filter(Boolean);
+      metadataStatus = 'Citation, field, and keyword metadata updated ' + formatted
+        + (sourceStates.length ? ' \u00b7 ' + sourceStates.join(' \u00b7 ') : '');
+    } else if (!this.state.metadataError) {
+      metadataStatus = 'Loading citation, field, and keyword metadata\u2026';
+    }
     const themeTally = Object.fromEntries(themes.map(t => [t.t, 0]));
     full.forEach(p => p.tags.forEach(t => { themeTally[t.t]++; }));
     const themeTotals = themes.map(t => ({
@@ -404,8 +388,11 @@ class Component extends DCLogic {
       scholarCites: scholarCites,
       scholarCitesText: scholarCites.toLocaleString('en-US'),
       totalPubs: full.length,
-      totalCites: totalCites,
-      totalCitesText: totalCites.toLocaleString('en-US') + (useLive ? '' : '+'),
+      openAlexCites,
+      openAlexCitesText: openAlexCites.toLocaleString('en-US'),
+      semanticScholarCites,
+      semanticScholarCitesText: semanticScholarCites.toLocaleString('en-US'),
+      metadataStatus,
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
       empty: filtered.length === 0,
