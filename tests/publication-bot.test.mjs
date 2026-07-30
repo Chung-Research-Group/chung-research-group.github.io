@@ -179,6 +179,18 @@ test('maps Crossref and DOI CSL works to one structured bibliography contract', 
   );
   assert.equal(malformedCrossrefFallback.title, 'CSL fallback after malformed Crossref metadata');
   assert.equal(malformedCrossrefFallback.bibliography.source.provider, 'doi-csl');
+
+  assert.throws(
+    () => candidateFromMetadataSources(
+      { DOI: '10.1000/ABC', title: ['Incomplete Crossref record'] },
+      {
+        DOI: '10.1000/ABC',
+        title: 'Incomplete CSL record',
+        author: [{ literal: 'MTAP Collaboration' }]
+      }
+    ),
+    /Publication metadata is incomplete for DOI 10\.1000\/abc/
+  );
 });
 
 test('skips one malformed Crossref work without blocking later candidates', () => {

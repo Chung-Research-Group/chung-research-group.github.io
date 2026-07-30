@@ -818,12 +818,20 @@ export function candidateFromMetadataSources(crossrefWork, cslWork = null) {
     if (crossrefError) throw crossrefError;
     return crossrefCandidate;
   }
+  let cslCandidate = null;
+  let cslError = null;
   try {
-    return candidateFromCrossref(cslWork, { provider: 'doi-csl' });
+    cslCandidate = candidateFromCrossref(cslWork, { provider: 'doi-csl' });
   } catch (error) {
-    if (crossrefCandidate) return crossrefCandidate;
-    throw crossrefError || error;
+    cslError = error;
   }
+  if (hasCompleteBibliography(cslCandidate)) return cslCandidate;
+  if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+  if (cslCandidate || crossrefCandidate) {
+    const doi = cslCandidate?.doi || crossrefCandidate?.doi || '(unknown DOI)';
+    throw new Error(`Publication metadata is incomplete for DOI ${doi}`);
+  }
+  throw crossrefError || cslError || new Error('Publication metadata is unavailable');
 }
 
 export function safeCandidateFromCrossref(work, onError = message => console.error(message)) {
@@ -854,7 +862,10 @@ async function candidateByDoi(doi) {
     });
     return candidateFromMetadataSources(crossrefWork, cslWork);
   } catch (error) {
-    if (crossrefWork) return candidateFromMetadataSources(crossrefWork);
+    if (crossrefWork) {
+      const crossrefCandidate = candidateFromMetadataSources(crossrefWork);
+      if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+    }
     throw crossrefError || error;
   }
 }
