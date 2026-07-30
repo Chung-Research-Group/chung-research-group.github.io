@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "snapshotUpdatedAt": "2026-07-30T03:44:56.492Z",
+  "snapshotUpdatedAt": "2026-07-30T04:39:40.956Z",
   "sources": {
     "semanticScholar": {
-      "status": "ok",
-      "reason": null,
+      "status": "stale",
+      "reason": "request-failed",
       "matched": 70,
       "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
     },
