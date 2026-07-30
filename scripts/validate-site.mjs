@@ -195,6 +195,9 @@ const publicationDois = [...publicationBlock.matchAll(/'(10\.[^']+)'\)/gi)]
   .map((match) => normalizeDoi(match[1]))
   .filter(Boolean);
 const publicationDoiSet = new Set(publicationDois);
+if (publicationDoiSet.size !== publicationDois.length) {
+  errors.push("feed.js contains duplicate publication DOIs.");
+}
 const publicationMetadataPath = path.join(siteRoot, "data/publication-metadata.json");
 if (await exists(publicationMetadataPath)) {
   let metadata;
@@ -324,9 +327,6 @@ if (await exists(publicationBibliographyPath)) {
       const bibliographyDois = Object.keys(bibliography.publications);
       const normalizedBibliographyDois = bibliographyDois.map(normalizeDoi);
       const bibliographyDoiSet = new Set(normalizedBibliographyDois);
-      if (publicationDoiSet.size !== publicationDois.length) {
-        errors.push("feed.js contains duplicate publication DOIs.");
-      }
       for (const doi of bibliographyDois) {
         if (!doi || doi !== normalizeDoi(doi)) {
           errors.push(`Publication bibliography DOI key is not normalized: ${doi}`);
@@ -411,8 +411,8 @@ for (const [file, label] of [
     errors.push(`Publications page must link to the generated ${label} export.`);
   }
 }
-if (!publicationsHtml.includes("Download all publications as a BibTeX file")
-    || !publicationsHtml.includes("Download all publications as a Citation File Format file")) {
+if (!publicationsHtml.includes("Download BibTeX file of all publications")
+    || !publicationsHtml.includes("Download CFF file of all publications")) {
   errors.push("Publication citation downloads must have descriptive accessible names.");
 }
 if (!publicationsHtml.includes("data-publication-metadata-status")) {

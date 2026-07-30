@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -55,6 +56,50 @@ test('committed bibliography has the exact 72-DOI feed set and complete structur
   }
 });
 
+test('site validation reports duplicate feed DOIs even when the bibliography snapshot is missing', async () => {
+  const temporaryParent = await mkdtemp(path.join(os.tmpdir(), 'publication-validator-'));
+  const temporaryRoot = path.join(temporaryParent, 'site');
+  try {
+    const excludedRoots = ['.git', 'dist', 'node_modules', 'test-results']
+      .map(name => path.join(REPOSITORY_ROOT, name));
+    await cp(REPOSITORY_ROOT, temporaryRoot, {
+      recursive: true,
+      filter: source => !excludedRoots.some(excluded =>
+        source === excluded || source.startsWith(`${excluded}${path.sep}`)
+      )
+    });
+
+    const feedPath = path.join(temporaryRoot, 'feed.js');
+    const feedSource = await readFile(feedPath, 'utf8');
+    const publicationStart = feedSource.indexOf('const PUBS = [');
+    const publicationEnd = feedSource.indexOf('\n];', publicationStart);
+    assert.ok(publicationStart >= 0 && publicationEnd > publicationStart);
+    const publicationSource = feedSource.slice(publicationStart, publicationEnd);
+    const doiMatches = [...publicationSource.matchAll(/'(10\.[^']+)'\)/gi)];
+    assert.ok(doiMatches.length > 1);
+    const secondMatch = doiMatches[1];
+    const duplicatedPublications = `${publicationSource.slice(0, secondMatch.index)}'${doiMatches[0][1]}')${publicationSource.slice(secondMatch.index + secondMatch[0].length)}`;
+    const duplicatedFeed = `${feedSource.slice(0, publicationStart)}${duplicatedPublications}${feedSource.slice(publicationEnd)}`;
+    await writeFile(feedPath, duplicatedFeed, 'utf8');
+    await rm(path.join(temporaryRoot, 'data', 'publication-bibliography.json'));
+
+    const result = spawnSync(process.execPath, [
+      path.join(REPOSITORY_ROOT, 'scripts', 'validate-site.mjs'),
+      '--root',
+      temporaryRoot
+    ], {
+      cwd: REPOSITORY_ROOT,
+      encoding: 'utf8'
+    });
+    const diagnostics = `${result.stdout}\n${result.stderr}`;
+    assert.notEqual(result.status, 0);
+    assert.match(diagnostics, /Missing required file: data\/publication-bibliography\.json/);
+    assert.match(diagnostics, /feed\.js contains duplicate publication DOIs\./);
+  } finally {
+    await rm(temporaryParent, { recursive: true, force: true });
+  }
+});
+
 test('BibTeX and CFF exports are deterministic, complete, ordered, and LF terminated', async () => {
   const { feedDois, snapshot } = await fixture();
   const firstBibtex = generateBibtex(snapshot, feedDois);
@@ -91,7 +136,7 @@ test('BibTeX and CFF exports are deterministic, complete, ordered, and LF termin
 test('normalization strips JATS/MathML, decodes entities, preserves Unicode mononyms, and escapes output', () => {
   const record = normalizeCanonicalRecord({
     DOI: 'https://doi.org/10.5555/EXAMPLE_1',
-    title: ['A <jats:italic>café</jats:italic> &amp; CO<sub>2</sub>_test {100%}'],
+    title: ['A <jats:italic>café</jats:italic> &amp; CO<sub>2</sub>_test &lt;110&gt; {100%}'],
     author: [
       { family: 'Prerna' },
       { given: 'Zoë', family: 'O’Neil', ORCID: '0000-0002-1825-0097' }
@@ -106,7 +151,7 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
     retrievedAt: '2024-06-01T00:00:00.000Z'
   });
   assert.equal(record.doi, '10.5555/example_1');
-  assert.equal(record.title, 'A café & CO2_test {100%}');
+  assert.equal(record.title, 'A café & CO2_test <110> {100%}');
   assert.deepEqual(record.authors[0], { literal: 'Prerna' });
   assert.deepEqual(record.authors[1], {
     given: 'Zoë',
@@ -121,10 +166,11 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
   };
   const bibtex = generateBibtex(snapshot, [record.doi]);
   const cff = generateCff(snapshot, [record.doi]);
-  assert.match(bibtex, /title = \{\{A café \\& CO2\\_test \\{100\\%\\}\}\}/);
+  assert.match(bibtex, /title = \{\{A café \\& CO2\\_test <110> \\{100\\%\\}\}\}/);
   assert.match(bibtex, /author = \{\{Prerna\} and O’Neil, Zoë\}/);
   assert.doesNotMatch(bibtex, /\\\{Prerna\\\}/);
   assert.match(cff, /- name: "Prerna"/);
+  assert.match(cff, /^    title: ".*<110>.*"$/m);
   assert.match(cff, /start: "e17"/);
   assert.match(cff, /orcid: "https:\/\/orcid\.org\/0000-0002-1825-0097"/);
 });

@@ -804,11 +804,37 @@ function hasCompleteBibliography(candidate) {
 }
 
 export function candidateFromMetadataSources(crossrefWork, cslWork = null) {
-  const crossrefCandidate = crossrefWork
-    ? candidateFromCrossref(crossrefWork, { provider: 'crossref' })
-    : null;
-  if (hasCompleteBibliography(crossrefCandidate) || !cslWork) return crossrefCandidate;
-  return candidateFromCrossref(cslWork, { provider: 'doi-csl' });
+  let crossrefCandidate = null;
+  let crossrefError = null;
+  if (crossrefWork) {
+    try {
+      crossrefCandidate = candidateFromCrossref(crossrefWork, { provider: 'crossref' });
+    } catch (error) {
+      crossrefError = error;
+    }
+  }
+  if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+  if (!cslWork) {
+    if (crossrefError) throw crossrefError;
+    return crossrefCandidate;
+  }
+  try {
+    return candidateFromCrossref(cslWork, { provider: 'doi-csl' });
+  } catch (error) {
+    if (crossrefCandidate) return crossrefCandidate;
+    throw crossrefError || error;
+  }
+}
+
+export function safeCandidateFromCrossref(work, onError = message => console.error(message)) {
+  try {
+    return candidateFromCrossref(work);
+  } catch (error) {
+    const doi = cleanText(work?.DOI || '(unknown DOI)').slice(0, 200);
+    const reason = cleanText(error?.message || String(error)).slice(0, 300);
+    onError(`Skipping unprocessable Crossref work ${doi}: ${reason}`);
+    return null;
+  }
 }
 
 async function candidateByDoi(doi) {
@@ -1131,7 +1157,8 @@ async function run() {
   }
 
   for (const work of await crossrefWorks(orcid, process.env.CROSSREF_MAILTO)) {
-    const candidate = candidateFromCrossref(work);
+    const candidate = safeCandidateFromCrossref(work);
+    if (!candidate) continue;
     if (shouldIgnoreCandidate(feed.content, candidate) || announced.has(candidate.doi)) continue;
     if (llmEnabled && llmAttempts >= MAX_LLM_CANDIDATES_PER_RUN) {
       candidate.classification = deterministicClassification(candidate, 'per-run LLM limit reached');

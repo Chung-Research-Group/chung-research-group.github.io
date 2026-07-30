@@ -49,14 +49,20 @@ function decodeEntities(value) {
   });
 }
 
-function cleanText(value) {
+function normalizePlainText(value) {
   if (value === undefined || value === null) return '';
-  return decodeEntities(String(value))
-    .replace(/<[^>]*>/g, '')
+  return String(value)
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
     .replace(/\s+/g, ' ')
     .trim()
     .normalize('NFC');
+}
+
+function cleanText(value) {
+  if (value === undefined || value === null) return '';
+  return normalizePlainText(
+    decodeEntities(String(value).replace(/<[^>]*>/g, ''))
+  );
 }
 
 function optionalText(value) {
@@ -472,7 +478,7 @@ function bibtexEscape(value) {
     '^': '\\^{}',
     '~': '\\~{}'
   };
-  return cleanText(value).split('').map(character => replacements[character] ?? character).join('');
+  return normalizePlainText(value).split('').map(character => replacements[character] ?? character).join('');
 }
 
 function bibtexAuthor(author) {
@@ -518,7 +524,7 @@ export function generateBibtex(snapshot, feedDois) {
 }
 
 function yamlString(value) {
-  return JSON.stringify(cleanText(value));
+  return JSON.stringify(normalizePlainText(value));
 }
 
 function yamlLine(lines, indent, key, value) {

@@ -28,6 +28,7 @@ import {
   normalizeTitle,
   parsePublicationBibliography,
   reactionDecision,
+  safeCandidateFromCrossref,
   sanitizeClassification,
   shouldIgnoreCandidate,
   synchronizePublicationFiles,
@@ -159,6 +160,49 @@ test('maps Crossref and DOI CSL works to one structured bibliography contract', 
   assert.equal(fallback.bibliography.source.provider, 'doi-csl');
   assert.deepEqual(fallback.bibliography.authors, [{ literal: 'MTAP Collaboration' }]);
   assert.equal(fallback.bibliography.articleNumber, 'e123');
+
+  const malformedCrossrefFallback = candidateFromMetadataSources(
+    {
+      DOI: '10.1000/ABC',
+      title: ['Malformed Crossref record'],
+      author: { given: 'Ada', family: 'Lovelace' }
+    },
+    {
+      DOI: '10.1000/ABC',
+      type: 'article-journal',
+      title: 'CSL fallback after malformed Crossref metadata',
+      author: [{ literal: 'MTAP Collaboration' }],
+      'container-title': 'CSL Journal',
+      issued: { 'date-parts': [[2026]] },
+      'article-number': 'e124'
+    }
+  );
+  assert.equal(malformedCrossrefFallback.title, 'CSL fallback after malformed Crossref metadata');
+  assert.equal(malformedCrossrefFallback.bibliography.source.provider, 'doi-csl');
+});
+
+test('skips one malformed Crossref work without blocking later candidates', () => {
+  const errors = [];
+  const candidates = [
+    safeCandidateFromCrossref({
+      DOI: '10.1000/bad',
+      title: ['Malformed author collection'],
+      author: { given: 'Ada', family: 'Lovelace' }
+    }, message => errors.push(message)),
+    safeCandidateFromCrossref({
+      DOI: '10.1000/good',
+      title: ['Valid later work'],
+      author: [{ given: 'Grace', family: 'Hopper' }],
+      'container-title': ['Journal of Tests'],
+      issued: { 'date-parts': [[2026]] }
+    }, message => errors.push(message))
+  ].filter(Boolean);
+
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].doi, '10.1000/good');
+  assert.equal(errors.length, 1);
+  assert.match(errors[0], /^Skipping unprocessable Crossref work 10\.1000\/bad:/);
+  assert.match(errors[0], /map is not a function$/);
 });
 
 test('normalizes title variants used by preprints and journal articles', () => {

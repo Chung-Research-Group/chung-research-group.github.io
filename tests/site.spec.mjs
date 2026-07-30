@@ -35,8 +35,8 @@ test('publications use the static metadata snapshot without external API fan-out
 
 test('publication citation exports are linked and served as complete files', async ({ page, request }) => {
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
-  await expect(page.getByRole('link', { name: 'Download all publications as a BibTeX file' })).toHaveAttribute('href', 'exports/publications/publications.bib');
-  await expect(page.getByRole('link', { name: 'Download all publications as a Citation File Format file' })).toHaveAttribute('href', 'exports/publications/CITATION.cff');
+  await expect(page.getByRole('link', { name: 'Download BibTeX file of all publications' })).toHaveAttribute('href', 'exports/publications/publications.bib');
+  await expect(page.getByRole('link', { name: 'Download CFF file of all publications' })).toHaveAttribute('href', 'exports/publications/CITATION.cff');
   const [bibtexResponse, cffResponse] = await Promise.all([
     request.get('/exports/publications/publications.bib'),
     request.get('/exports/publications/CITATION.cff')
