@@ -36,4 +36,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.PUBLICATION_SLACK_BOT_TOKEN }}
           PUBLICATION_APPROVER_USER_IDS: ${{ vars.PUBLICATION_APPROVER_USER_IDS }}
           CROSSREF_MAILTO: ${{ vars.CROSSREF_MAILTO }}
+          PUBLICATION_LLM_API_KEY: ${{ secrets.PUBLICATION_LLM_API_KEY }}
+          PUBLICATION_LLM_PROVIDER: ${{ vars.PUBLICATION_LLM_PROVIDER }}
+          PUBLICATION_LLM_MODEL: ${{ vars.PUBLICATION_LLM_MODEL }}
         run: node scripts/publication-bot.mjs

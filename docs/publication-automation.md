@@ -26,6 +26,24 @@ Available labels are grouped as follows:
 - Applications: `Carbon Capture`, `Hydrogen Storage`, `Biogas Upgrading`, `Carbon Monoxide Separation`, `Natural Gas Sweetening`, `Noble Gas Separation`, `SF6/N2 Separation`, `Olefin/Paraffin Separation`, `Xylene Separation`, `Alkane Isomer Separation`, `Methane Storage`, `Adsorption Cooling`, `Secondary Battery`, `Supercapacitor`, `Organic Solvent Nanofiltration`, `Organic Liquid Separation`, `CO2 Conversion`, `Catalysis`, `Sensing`, `Air Pollution Control`, `Distillation`
 - Special: `Review` (exclusive)
 
+## Optional LLM label review
+
+The monitor can use OpenAI or Gemini to review the title and abstract of a new
+candidate. LLM classification is advisory: it may recommend only labels already
+listed in the allowlist above. If the model identifies a potentially useful new
+topic, the bot may show it in Slack as a topic candidate, but it never creates a
+taxonomy label or changes the website automatically.
+
+If the provider or API key is missing, the provider is set to `none`, or the API
+request fails, the monitor falls back to the deterministic keyword classifier.
+This keeps publication monitoring available without an LLM service.
+
+Treat all Crossref and publisher metadata as untrusted input. Titles, abstracts,
+authors, DOI fields, and model-generated text are data to classify, not
+instructions to execute. Neither metadata nor an LLM response can approve or
+exclude a publication. An authorized Slack reaction is the only approval or
+exclusion signal.
+
 Only users listed in `PUBLICATION_APPROVER_USER_IDS` are considered. After
 approval, the bot creates or updates a publication PR. It merges the PR only
 after the `Validate and deploy website` workflow succeeds.
@@ -62,6 +80,26 @@ Configure these settings in GitHub:
    allowed to edit and approve candidates.
 4. Variable `CROSSREF_MAILTO`: contact email for the Crossref polite pool.
 
+Optional LLM setup:
+
+1. Create repository secret `PUBLICATION_LLM_API_KEY` with the API key for the
+   selected provider.
+2. Create repository variable `PUBLICATION_LLM_PROVIDER` with one of `openai`,
+   `gemini`, or `none`. Leave it unset or use `none` to disable LLM review.
+3. Optionally create repository variable `PUBLICATION_LLM_MODEL`. When omitted,
+   OpenAI uses `gpt-5.4-nano-2026-03-17` and Gemini uses
+   `gemini-3.5-flash-lite`.
+4. Run **Monitor publications and process Slack approvals** manually and confirm
+   that a candidate still requires an authorized reaction before a PR is
+   created.
+
+The workflow passes the API key only as a masked GitHub Actions secret. The bot
+must never print the key, request headers, or a full environment dump to logs.
+Provider API calls may incur charges even when a candidate is later excluded.
+Review the provider's current pricing and rate limits, configure a conservative
+spend cap, and keep the default low-cost model unless classification quality
+requires a more capable model.
+
 Run **Monitor publications and process Slack approvals** manually once after
 configuration. Scheduled checks run every 30 minutes.
 
@@ -76,9 +114,11 @@ configuration. Scheduled checks run every 30 minutes.
   `metal-organic framework(s)` instead of `MOF(s)`.
 - Crossref only returns ORCID-linked records when the publisher deposited the
   ORCID in its metadata. Google Scholar alerts remain useful as a fallback.
-- Label suggestions are deterministic keyword suggestions. The Slack review is
-  the authoritative classification step.
+- Label suggestions use the configured LLM when available and otherwise use the
+  deterministic keyword classifier. Both paths are advisory, restricted to the
+  existing allowlist, and subject to Slack review.
 - Approval and exclusion reactions are accepted only from configured Slack
-  approvers. Conflicting reactions never change GitHub.
+  approvers. Slack text, metadata, and LLM output never authorize a change;
+  conflicting reactions never change GitHub.
 - Review papers always receive the single `Review` label.
 - The bot never writes directly to `main`; it uses a PR and waits for CI.
