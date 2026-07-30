@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
-import { normalizeCanonicalRecord } from './publication-citations.mjs';
+import { doiResolverUrl, normalizeCanonicalRecord } from './publication-citations.mjs';
 
 export const TOPIC_GROUPS = Object.freeze({
   Computation: Object.freeze([
@@ -774,7 +774,16 @@ export function nextOpenPublicationPr(pulls, repository) {
       const doiLine = String(pr?.body || '').match(
         /^\s*-\s*\*\*DOI:\*\*\s+https?:\/\/(?:dx\.)?doi\.org\/(\S+)\s*$/im
       )?.[1];
-      const doi = normalizeDoi(doiLine);
+      const candidates = [normalizeDoi(doiLine)];
+      try {
+        const decoded = normalizeDoi(decodeURIComponent(doiLine || ''));
+        if (decoded && !candidates.includes(decoded)) candidates.push(decoded);
+      } catch {
+        // A raw legacy DOI may contain a literal percent sign rather than URL encoding.
+      }
+      const doi = candidates.find(candidate =>
+        pr?.head?.ref === `publication/${slugForDoi(candidate)}`
+      ) || candidates[0];
       return { pr, doi };
     })
     .filter(({ pr, doi }) => doi
@@ -863,7 +872,7 @@ async function candidateByDoi(doi) {
   }
 
   try {
-    const cslWork = await jsonRequest(`https://doi.org/${encodeURI(doi)}`, {
+    const cslWork = await jsonRequest(doiResolverUrl(doi), {
       headers: { accept: 'application/vnd.citationstyles.csl+json' }
     });
     return candidateFromMetadataSources(crossrefWork, cslWork);
@@ -891,7 +900,7 @@ function publicationPrBody(candidate) {
     '',
     `- **Title:** ${safeGithubText(candidate.title)}`,
     `- **Journal:** ${safeGithubText(candidate.journal)}`,
-    `- **DOI:** https://doi.org/${candidate.doi}`,
+    `- **DOI:** ${doiResolverUrl(candidate.doi)}`,
     `- **Labels:** ${candidate.topics.join(', ') || 'None'}`,
     `- **Classification:** ${classificationMethod}`,
     '',

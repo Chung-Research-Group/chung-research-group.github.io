@@ -59,7 +59,14 @@ const JU = {
 const MN = { '01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December' };
 
 const P = (t, a) => ({ t, person: true, href: 'People.dc.html#' + a });
-const J = (t, k, doi) => ({ t, journal: true, href: doi ? 'https://doi.org/' + doi : JU[k] });
+const DOI_URL = (doi) => {
+  const value = String(doi || '');
+  const separator = value.indexOf('/');
+  return separator < 0
+    ? 'https://doi.org/' + encodeURIComponent(value)
+    : 'https://doi.org/' + value.slice(0, separator + 1) + encodeURIComponent(value.slice(separator + 1));
+};
+const J = (t, k, doi) => ({ t, journal: true, href: doi ? DOI_URL(doi) : JU[k] });
 const B = (t) => ({ t, b: true });
 const norm = (parts) => parts.flatMap(s => {
   if (typeof s !== 'string') return [s];
@@ -110,9 +117,9 @@ const REVIEW = { '72': 'Invited review', '70': 'Review', '48': 'Review', '37': '
 const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applications', '48': 'Computation', '37': 'Computation', '21': 'Applications', '17': 'Materials' };
 const kindOf = (no, title) => REVIEW[no] || (/\breview\b/i.test(title) ? 'Review' : 'Article');
 const F = (no, title, authors, jk, journal, meta, code, doi) => ({
-  no, title, authors, journal, jurl: doi ? 'https://doi.org/' + doi : JU[jk], meta,
+  no, title, authors, journal, jurl: doi ? DOI_URL(doi) : JU[jk], meta,
   code: code || false, doi: doi || false,
-  html: doi ? 'https://doi.org/' + doi : SC(title),
+  html: doi ? DOI_URL(doi) : SC(title),
   cite: SC(title), pdf: false,
   kind: kindOf(no, title),
   reviewTopic: REVIEW_TOPIC[no] || false,

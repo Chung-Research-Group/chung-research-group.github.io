@@ -6,6 +6,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  doiResolverUrl,
   generateBibtex,
   generateCff,
   generatePublicationCitationFiles,
@@ -199,6 +200,46 @@ test('accepts legacy DOI suffix punctuation without truncating the identifier', 
       '10.1234/a+b%2fc'
     ]
   );
+});
+
+test('decodes feed string escapes and percent-encodes reserved DOI suffix characters in links', () => {
+  const escapedDoi = "10.1234/O'Reilly\\Path?#/Part%<End>";
+  const feedLiteral = escapedDoi.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const normalizedDoi = "10.1234/o'reilly\\path?#/part%<end>";
+  const resolverUrl = "https://doi.org/10.1234/o'reilly%5Cpath%3F%23%2Fpart%25%3Cend%3E";
+
+  assert.deepEqual(
+    parseFeedDois(
+      `const PUBS = [\n  F('01', 'Escaped', 'Authors', 'j', 'Journal', ' (1998)', null, '${feedLiteral}')\n];\n`
+    ),
+    [normalizedDoi]
+  );
+  assert.equal(doiResolverUrl(escapedDoi), resolverUrl);
+
+  const record = normalizeCanonicalRecord({
+    DOI: escapedDoi,
+    title: ['Reserved DOI characters'],
+    author: [{ literal: 'Test Collaboration' }],
+    'container-title': ['Journal of Tests'],
+    published: { 'date-parts': [[1998]] }
+  });
+  const snapshot = {
+    schemaVersion: 1,
+    snapshotUpdatedAt: '2024-06-01T00:00:00.000Z',
+    publications: { [record.doi]: record }
+  };
+  const bibtex = generateBibtex(snapshot, [record.doi]);
+  const cff = generateCff(snapshot, [record.doi]);
+
+  assert.match(
+    bibtex,
+    /url = \{https:\/\/doi\.org\/10\.1234\/o'reilly\\%5Cpath\\%3F\\%23\\%2Fpart\\%25\\%3Cend\\%3E\}/
+  );
+  assert.match(
+    cff,
+    /^    url: "https:\/\/doi\.org\/10\.1234\/o'reilly%5Cpath%3F%23%2Fpart%25%3Cend%3E"$/m
+  );
+  assert.doesNotMatch(cff, /https:\/\/doi\.org\/10\.1234\/o'reilly\\path\?#/);
 });
 
 test('refresh uses at most two requests concurrently, retries transient failures, and falls back for non-Crossref DOIs', async () => {

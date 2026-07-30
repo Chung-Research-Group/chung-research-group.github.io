@@ -86,6 +86,14 @@ function normalizeDoi(value) {
   return cleaned;
 }
 
+export function doiResolverUrl(value) {
+  const doi = normalizeDoi(value);
+  const separator = doi.indexOf('/');
+  const prefix = doi.slice(0, separator);
+  const suffix = doi.slice(separator + 1);
+  return `https://doi.org/${prefix}/${encodeURIComponent(suffix)}`;
+}
+
 function normalizeOrcid(value) {
   const text = optionalText(value);
   if (!text) return undefined;
@@ -163,8 +171,35 @@ export function parseFeedDois(feedSource) {
   if (end < 0) throw new Error('feed.js publication list is not terminated');
   const publicationSection = source.slice(start, end);
   const dois = [];
-  for (const match of publicationSection.matchAll(/['"](10\.\d{4,9}\/[^'"\s]+)['"]/giu)) {
-    dois.push(normalizeDoi(match[1]));
+  const lastArgumentPattern = /,\s*('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")\s*\)\s*,?/g;
+  for (const match of publicationSection.matchAll(lastArgumentPattern)) {
+    const literal = match[1];
+    const quote = literal[0];
+    let value = '';
+    for (let index = 1; index < literal.length - 1; index += 1) {
+      const character = literal[index];
+      if (character !== '\\') {
+        value += character;
+        continue;
+      }
+      index += 1;
+      if (index >= literal.length - 1) throw new Error('feed.js DOI string has an incomplete escape');
+      const escaped = literal[index];
+      const simpleEscapes = {
+        '\\': '\\',
+        "'": "'",
+        '"': '"',
+        b: '\b',
+        f: '\f',
+        n: '\n',
+        r: '\r',
+        t: '\t',
+        v: '\v'
+      };
+      value += Object.hasOwn(simpleEscapes, escaped) ? simpleEscapes[escaped] : escaped;
+    }
+    if (literal.at(-1) !== quote) throw new Error('feed.js DOI string is not terminated');
+    if (/^10\./i.test(value)) dois.push(normalizeDoi(value));
   }
   if (dois.length === 0) throw new Error('feed.js publication list does not contain any DOI');
   return dois;
@@ -309,7 +344,7 @@ async function fetchCanonicalRecord(doi, options) {
     throw new Error(`Crossref identifies ${doi} as a Crossref DOI but returned no work metadata`);
   }
 
-  const csl = await requestJson(new URL(`https://doi.org/${doi}`), {
+  const csl = await requestJson(new URL(doiResolverUrl(doi)), {
     fetchImpl,
     headers: {
       Accept: 'application/vnd.citationstyles.csl+json',
@@ -515,7 +550,7 @@ export function generateBibtex(snapshot, feedDois) {
       ['pages', record.pages],
       ['eid', record.articleNumber],
       ['doi', record.doi],
-      ['url', `https://doi.org/${record.doi}`]
+      ['url', doiResolverUrl(record.doi)]
     ].filter(([, value]) => optionalText(value));
     const body = fields.map(([name, value, alreadyEscaped], index) => {
       const suffix = index === fields.length - 1 ? '' : ',';
@@ -580,7 +615,7 @@ export function generateCff(snapshot, feedDois) {
     yamlLine(lines, 4, 'start', pages.start);
     yamlLine(lines, 4, 'end', pages.end);
     yamlLine(lines, 4, 'doi', record.doi);
-    yamlLine(lines, 4, 'url', `https://doi.org/${record.doi}`);
+    yamlLine(lines, 4, 'url', doiResolverUrl(record.doi));
   }
   return `${lines.join('\n')}\n`;
 }
