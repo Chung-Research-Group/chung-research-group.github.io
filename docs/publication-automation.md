@@ -26,17 +26,28 @@ Available labels are grouped as follows:
 - Applications: `Carbon Capture`, `Hydrogen Storage`, `Biogas Upgrading`, `Carbon Monoxide Separation`, `Natural Gas Sweetening`, `Noble Gas Separation`, `SF6/N2 Separation`, `Olefin/Paraffin Separation`, `Xylene Separation`, `Alkane Isomer Separation`, `Methane Storage`, `Adsorption Cooling`, `Secondary Battery`, `Supercapacitor`, `Organic Solvent Nanofiltration`, `Organic Liquid Separation`, `CO2 Conversion`, `Catalysis`, `Sensing`, `Air Pollution Control`, `Distillation`
 - Special: `Review` (exclusive)
 
-## Optional LLM label review
+## LLM label review
 
-The monitor can use OpenAI or Gemini to review the title and abstract of a new
-candidate. LLM classification is advisory: it may recommend only labels already
-listed in the allowlist above. If the model identifies a potentially useful new
-topic, the bot may show it in Slack as a topic candidate, but it never creates a
-taxonomy label or changes the website automatically.
+The monitor uses GitHub Models with an OpenAI model to review the title and
+abstract of a new candidate. GitHub Actions supplies a short-lived token with
+only `contents: read` and `models: read`; no separate model API secret is
+required for this default. An owner of the `Chung-Research-Group` organization
+must first enable GitHub Models under **Organization settings → Models →
+Development** and allow the selected publisher and model. GitHub Models
+repository integration is currently a public-preview feature; unavailable
+access always falls back to deterministic classification.
+LLM classification is advisory: it may recommend only labels already listed in
+the allowlist above. If the model identifies a potentially useful new topic, the
+bot may show it in Slack as a topic candidate, but it never creates a taxonomy
+label or changes the website automatically.
 
-If the provider or API key is missing, the provider is set to `none`, or the API
-request fails, the monitor falls back to the deterministic keyword classifier.
-This keeps publication monitoring available without an LLM service.
+If the GitHub Models request fails, the provider is explicitly set to `none`, or
+the workflow token lacks model access, the monitor falls back to the
+deterministic keyword classifier. This keeps publication monitoring available
+without an LLM service. Rate-limit and quota responses are not retried
+immediately, and they disable further model calls for the remainder of that
+monitor run. The GitHub Models path also bounds the abstract excerpt so the
+request remains within the free low-tier context allowance.
 
 ## Graphical abstracts
 
@@ -112,25 +123,26 @@ Configure these settings in GitHub:
    allowed to edit and approve candidates.
 4. Variable `CROSSREF_MAILTO`: contact email for the Crossref polite pool.
 
-Optional LLM setup:
+Optional external-provider override:
 
-1. Create repository secret `PUBLICATION_LLM_API_KEY` with the API key for the
-   selected provider.
-2. Create repository variable `PUBLICATION_LLM_PROVIDER` with one of `openai`,
-   `gemini`, or `none`. Leave it unset or use `none` to disable LLM review.
-3. Optionally create repository variable `PUBLICATION_LLM_MODEL`. When omitted,
-   OpenAI uses `gpt-5.4-nano-2026-03-17` and Gemini uses
+1. Leave `PUBLICATION_LLM_PROVIDER` unset to use GitHub Models with
+   `openai/gpt-4.1-mini`.
+2. To use a direct provider instead, create repository secret
+   `PUBLICATION_LLM_API_KEY` and set repository variable
+   `PUBLICATION_LLM_PROVIDER` to `openai` or `gemini`.
+3. Optionally set `PUBLICATION_LLM_MODEL`. Direct OpenAI defaults to
+   `gpt-5.4-nano-2026-03-17`; Gemini defaults to
    `gemini-3.5-flash-lite`.
-4. Run **Monitor publications and process Slack approvals** manually and confirm
+4. Set `PUBLICATION_LLM_PROVIDER` to `none` to disable LLM review.
+5. Run **Monitor publications and process Slack approvals** manually and confirm
    that a candidate still requires an authorized reaction before a PR is
    created.
 
-The workflow passes the API key only as a masked GitHub Actions secret. The bot
-must never print the key, request headers, or a full environment dump to logs.
-Provider API calls may incur charges even when a candidate is later excluded.
-Review the provider's current pricing and rate limits, configure a conservative
-spend cap, and keep the default low-cost model unless classification quality
-requires a more capable model.
+The workflow passes credentials only through masked GitHub Actions secrets or
+the short-lived job token. The bot must never print a credential, request
+headers, or a full environment dump to logs. Direct-provider API calls may incur
+charges even when a candidate is later excluded. Review the provider's current
+pricing and rate limits and configure a conservative spend cap.
 
 Run **Monitor publications and process Slack approvals** manually once after
 configuration. Scheduled checks run every 30 minutes.

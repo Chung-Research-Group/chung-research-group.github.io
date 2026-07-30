@@ -33,6 +33,7 @@ export const TOPIC_GROUPS = Object.freeze({
 export const TOPICS = [...Object.values(TOPIC_GROUPS).flat(), 'Review'];
 const TOPIC_GROUP_NAMES = Object.keys(TOPIC_GROUPS);
 const DEFAULT_LLM_MODELS = Object.freeze({
+  github: 'openai/gpt-4.1-mini',
   openai: 'gpt-5.4-nano-2026-03-17',
   gemini: 'gemini-3.5-flash-lite'
 });
@@ -223,25 +224,23 @@ export function classificationSchema() {
     properties: {
       labels: {
         type: 'array',
-        items: { type: 'string', enum: TOPICS },
-        maxItems: 12
+        items: { type: 'string', enum: TOPICS }
       },
       proposedTopics: {
         type: 'array',
-        maxItems: 3,
         items: {
           type: 'object',
           additionalProperties: false,
           properties: {
-            name: { type: 'string', maxLength: 80 },
+            name: { type: 'string' },
             group: { type: 'string', enum: TOPIC_GROUP_NAMES },
-            rationale: { type: 'string', maxLength: 240 }
+            rationale: { type: 'string' }
           },
           required: ['name', 'group', 'rationale']
         }
       },
-      confidence: { type: 'number', minimum: 0, maximum: 1 },
-      summary: { type: 'string', maxLength: 300 }
+      confidence: { type: 'number' },
+      summary: { type: 'string' }
     },
     required: ['labels', 'proposedTopics', 'confidence', 'summary']
   };
@@ -319,11 +318,11 @@ const CLASSIFIER_SYSTEM_PROMPT = [
   'Return concise evidence-based classifications using the required JSON schema.'
 ].join(' ');
 
-function classifierInput(candidate) {
+function classifierInput(candidate, abstractMaximum = 12000) {
   return {
     title: truncate(candidate?.title, 500),
     journal: truncate(candidate?.journal, 300),
-    abstract: truncate(candidate?.abstract, 12000),
+    abstract: truncate(candidate?.abstract, abstractMaximum),
     deterministicSuggestions: allowedLabels(candidate?.topics),
     allowedLabelsByGroup: TOPIC_GROUPS,
     specialRule: 'Review is exclusive.'
@@ -367,7 +366,9 @@ async function llmJsonRequest(url, request, options) {
       if (!response.ok) {
         const code = data?.error?.code || data?.error?.status || `http_${response.status}`;
         const exhausted = /credit|spend|usage.?limit/i.test(String(code));
-        const retryable = !exhausted && (response.status === 408 || response.status === 429 || response.status >= 500);
+        const retryable = !exhausted
+          && response.status !== 429
+          && (response.status === 408 || response.status >= 500);
         throw new LlmRequestError(String(code), response.status, retryable);
       }
       return data;
@@ -431,6 +432,38 @@ async function classifyWithOpenAI(input, config) {
   return parseStructuredText(output);
 }
 
+async function classifyWithGitHubModels(input, config) {
+  const data = await llmJsonRequest('https://models.github.ai/inference/chat/completions', {
+    method: 'POST',
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${config.apiKey}`,
+      'content-type': 'application/json',
+      'x-github-api-version': '2026-03-10'
+    },
+    body: JSON.stringify({
+      model: config.model,
+      messages: [
+        { role: 'system', content: CLASSIFIER_SYSTEM_PROMPT },
+        { role: 'user', content: JSON.stringify(input) }
+      ],
+      temperature: 0,
+      max_tokens: 800,
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'publication_topics',
+          strict: true,
+          schema: classificationSchema()
+        }
+      }
+    })
+  }, config);
+  const choice = data?.choices?.[0];
+  if (choice?.message?.refusal) throw new LlmRequestError('refusal');
+  return parseStructuredText(choice?.message?.content);
+}
+
 async function classifyWithGemini(input, config) {
   const data = await llmJsonRequest('https://generativelanguage.googleapis.com/v1beta/interactions', {
     method: 'POST',
@@ -461,23 +494,34 @@ function safeFailureReason(error) {
   const code = String(error?.code || error?.message || 'request_failed').toLowerCase();
   if (code === 'timeout') return 'timeout';
   if (code === 'refusal') return 'model refusal';
+  if (error?.status === 429 || /credit|spend|usage|rate.?limit|quota/.test(code)) {
+    return 'provider quota or rate limit';
+  }
   if (code.includes('invalid') || code.includes('missing') || code.includes('incomplete')) return 'invalid model response';
   if (error?.status) return `API HTTP ${error.status}`;
   return 'LLM unavailable';
 }
 
+function disablesProviderForRun(error) {
+  const code = String(error?.code || error?.message || '').toLowerCase();
+  return error?.status === 429 || /credit|spend|usage|rate.?limit|quota/.test(code);
+}
+
 export async function classifyCandidate(candidate, options = {}) {
   const provider = String(options.provider ?? process.env.PUBLICATION_LLM_PROVIDER ?? 'none').trim().toLowerCase();
-  const apiKey = String(options.apiKey ?? process.env.PUBLICATION_LLM_API_KEY ?? '').trim();
+  const providerApiKey = provider === 'github'
+    ? process.env.GITHUB_MODELS_TOKEN
+    : process.env.PUBLICATION_LLM_API_KEY;
+  const apiKey = String(options.apiKey ?? providerApiKey ?? '').trim();
   const configuredModel = String(options.model ?? process.env.PUBLICATION_LLM_MODEL ?? '').trim();
   const model = configuredModel || DEFAULT_LLM_MODELS[provider] || '';
   const fallback = deterministicClassification(candidate);
   if (provider === 'none' || !provider) return fallback;
-  if (!['openai', 'gemini'].includes(provider) || !apiKey || !model) {
+  if (!['github', 'openai', 'gemini'].includes(provider) || !apiKey || !model) {
     return deterministicClassification(candidate, 'LLM configuration incomplete');
   }
 
-  const input = classifierInput(candidate);
+  const input = classifierInput(candidate, provider === 'github' ? 5000 : 12000);
   const config = {
     apiKey,
     model,
@@ -487,9 +531,11 @@ export async function classifyCandidate(candidate, options = {}) {
     timeoutMs: options.timeoutMs
   };
   try {
-    const raw = provider === 'openai'
-      ? await classifyWithOpenAI(input, config)
-      : await classifyWithGemini(input, config);
+    const raw = provider === 'github'
+      ? await classifyWithGitHubModels(input, config)
+      : provider === 'openai'
+        ? await classifyWithOpenAI(input, config)
+        : await classifyWithGemini(input, config);
     return sanitizeClassification(raw, fallback.labels, {
       method: 'llm',
       provider,
@@ -497,7 +543,10 @@ export async function classifyCandidate(candidate, options = {}) {
       inputHash: classifierInputHash(input)
     });
   } catch (error) {
-    return deterministicClassification(candidate, safeFailureReason(error));
+    const fallbackResult = deterministicClassification(candidate, safeFailureReason(error));
+    return disablesProviderForRun(error)
+      ? { ...fallbackResult, disableProviderForRun: true }
+      : fallbackResult;
   }
 }
 
@@ -754,8 +803,12 @@ export function classificationFromCandidateMessage(text = '') {
   }
 
   const methodLine = String(text).match(/^분류 방식:\s*(.+)$/m)?.[1]?.trim() || '규칙 기반';
-  const providerMatch = methodLine.match(/^(OpenAI|Gemini)\s*·\s*(.+)$/i);
-  const provider = providerMatch?.[1]?.toLowerCase() || null;
+  const providerMatch = methodLine.match(/^(GitHub Models|OpenAI|Gemini)\s*·\s*(.+)$/i);
+  const provider = providerMatch
+    ? (providerMatch[1].toLowerCase() === 'github models'
+      ? 'github'
+      : providerMatch[1].toLowerCase())
+    : null;
   const model = providerMatch?.[2]?.trim() || null;
   const proposedTopics = [];
   const proposalPattern = /^•\s*(.+?)\s*·\s*(Computation|Physics|Materials|Systems|Applications)\s*—\s*(.+)$/gm;
@@ -772,8 +825,13 @@ export function classificationFromCandidateMessage(text = '') {
 export function candidateMessage(candidate) {
   const classification = candidate.classification || deterministicClassification(candidate);
   const labels = classification.labels.length ? classification.labels.join(', ') : '(라벨 미지정)';
+  const providerLabel = classification.provider === 'github'
+    ? 'GitHub Models'
+    : classification.provider === 'gemini'
+      ? 'Gemini'
+      : 'OpenAI';
   const method = classification.method === 'llm'
-    ? `${classification.provider === 'gemini' ? 'Gemini' : 'OpenAI'} · ${classification.model}`
+    ? `${providerLabel} · ${classification.model}`
     : `규칙 기반${classification.warning ? ` · ${classification.warning}` : ''}`;
   const proposals = classification.proposedTopics.length
     ? [
@@ -1230,9 +1288,13 @@ async function run() {
   const announced = new Set(roots.map(message => doiFromMessage(message.text)).filter(Boolean));
   const candidateRoots = roots.filter(message => isCandidateRoot(message, botUser));
   const llmProvider = String(process.env.PUBLICATION_LLM_PROVIDER || 'none').trim().toLowerCase();
-  const llmEnabled = ['openai', 'gemini'].includes(llmProvider)
-    && Boolean(process.env.PUBLICATION_LLM_API_KEY?.trim());
+  const llmApiKey = llmProvider === 'github'
+    ? process.env.GITHUB_MODELS_TOKEN
+    : process.env.PUBLICATION_LLM_API_KEY;
+  const llmEnabled = ['github', 'openai', 'gemini'].includes(llmProvider)
+    && Boolean(llmApiKey?.trim());
   let llmAttempts = 0;
+  let llmCircuitOpen = false;
 
   for (const root of candidateRoots) {
     const doi = doiFromMessage(root.text);
@@ -1246,11 +1308,15 @@ async function run() {
     if (!candidate) continue;
     if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })
         || announced.has(candidate.doi)) continue;
-    if (llmEnabled && llmAttempts >= MAX_LLM_CANDIDATES_PER_RUN) {
-      candidate.classification = deterministicClassification(candidate, 'per-run LLM limit reached');
+    if (llmEnabled && (llmCircuitOpen || llmAttempts >= MAX_LLM_CANDIDATES_PER_RUN)) {
+      candidate.classification = deterministicClassification(
+        candidate,
+        llmCircuitOpen ? 'LLM provider unavailable for this run' : 'per-run LLM limit reached'
+      );
     } else {
       if (llmEnabled) llmAttempts += 1;
       candidate.classification = await classifyCandidate(candidate);
+      if (candidate.classification.disableProviderForRun) llmCircuitOpen = true;
     }
     candidate.topics = candidate.classification.labels;
     const posted = await slack('chat.postMessage', {
