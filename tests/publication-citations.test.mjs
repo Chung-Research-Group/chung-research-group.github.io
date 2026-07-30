@@ -79,7 +79,8 @@ test('site validation reports duplicate feed DOIs even when the bibliography sna
     const doiMatches = [...publicationSource.matchAll(/'(10\.[^']+)'\)/gi)];
     assert.ok(doiMatches.length > 1);
     const secondMatch = doiMatches[1];
-    const duplicatedPublications = `${publicationSource.slice(0, secondMatch.index)}'${doiMatches[0][1]}')${publicationSource.slice(secondMatch.index + secondMatch[0].length)}`;
+    const escapedDuplicate = doiMatches[0][1].replace('/', '\\x2f');
+    const duplicatedPublications = `${publicationSource.slice(0, secondMatch.index)}'${escapedDuplicate}')${publicationSource.slice(secondMatch.index + secondMatch[0].length)}`;
     const duplicatedFeed = `${feedSource.slice(0, publicationStart)}${duplicatedPublications}${feedSource.slice(publicationEnd)}`;
     await writeFile(feedPath, duplicatedFeed, 'utf8');
     await rm(path.join(temporaryRoot, 'data', 'publication-bibliography.json'));
@@ -175,6 +176,27 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
   assert.match(cff, /^    title: ".*<110>.*"$/m);
   assert.match(cff, /start: "e17"/);
   assert.match(cff, /orcid: "https:\/\/orcid\.org\/0000-0002-1825-0097"/);
+});
+
+test('publication year ignores Crossref record creation time and prefers bibliographic dates', () => {
+  const directYear = normalizeCanonicalRecord({
+    DOI: '10.5555/direct-year',
+    title: ['Direct publication year'],
+    author: [{ given: 'Ada', family: 'Lovelace' }],
+    'container-title': ['Journal of Tests'],
+    year: 2019,
+    created: { 'date-parts': [[2024, 6, 1]] }
+  });
+  assert.equal(directYear.year, 2019);
+
+  const creationOnly = normalizeCanonicalRecord({
+    DOI: '10.5555/creation-only',
+    title: ['No publication date'],
+    author: [{ given: 'Ada', family: 'Lovelace' }],
+    'container-title': ['Journal of Tests'],
+    created: { 'date-parts': [[2024, 6, 1]] }
+  });
+  assert.equal(creationOnly.year, undefined);
 });
 
 test('accepts legacy DOI suffix punctuation without truncating the identifier', () => {
@@ -287,6 +309,19 @@ test('applies the curated Wei Li ORCID correction and rejects conflicting ORCID 
   assert.ok(validation.errors.some(error =>
     error.includes('conflicting structured author names')
     && error.includes('Wei Li')
+    && error.includes('Song Li')
+  ));
+
+  const differentFamily = structuredClone(snapshot);
+  const author = differentFamily.publications['10.1002/slct.201701934'].authors[0];
+  author.given = 'Song';
+  author.family = 'Wang';
+  author.orcid = 'https://orcid.org/0000-0003-3552-3250';
+  const familyConflict = validateBibliography(differentFamily, feedDois);
+  assert.equal(familyConflict.ok, false);
+  assert.ok(familyConflict.errors.some(error =>
+    error.includes('conflicting structured author names')
+    && error.includes('Song Wang')
     && error.includes('Song Li')
   ));
 });

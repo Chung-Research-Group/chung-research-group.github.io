@@ -16,6 +16,7 @@ import {
   graphicPathForDoi,
   validateGraphicalAbstractSvg
 } from "./publication-graphic.mjs";
+import { parseFeedDois } from "./publication-citations.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -191,9 +192,12 @@ const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.htm
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
 const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
-const publicationDois = [...publicationBlock.matchAll(/'(10\.[^']+)'\)/gi)]
-  .map((match) => normalizeDoi(match[1]))
-  .filter(Boolean);
+let publicationDois = [];
+try {
+  publicationDois = parseFeedDois(feedHtml);
+} catch (error) {
+  errors.push(`feed.js publication DOI parsing failed: ${error.message}`);
+}
 const publicationDoiSet = new Set(publicationDois);
 if (publicationDoiSet.size !== publicationDois.length) {
   errors.push("feed.js contains duplicate publication DOIs.");

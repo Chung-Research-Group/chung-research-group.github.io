@@ -118,8 +118,7 @@ function dateYear(raw) {
     raw?.['published-print'],
     raw?.['published-online'],
     raw?.published,
-    raw?.issued,
-    raw?.created
+    raw?.issued
   ];
   for (const candidate of candidates) {
     const value = candidate?.['date-parts']?.[0]?.[0];
@@ -595,8 +594,8 @@ export function validateBibliography(snapshot, feedDois) {
       for (let right = left + 1; right < identities.length; right += 1) {
         const first = identities[left];
         const second = identities[right];
-        if (first.family === second.family
-            && !compatibleGivenNames(first.given, second.given)) {
+        if (first.family !== second.family
+            || !compatibleGivenNames(first.given, second.given)) {
           errors.push(
             `${orcid}: conflicting structured author names ${first.display} (${first.key}) and ${second.display} (${second.key})`
           );
