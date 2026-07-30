@@ -10,6 +10,8 @@
 <meta property="og:title" content="Publications | Chung Research Group">
 <meta property="og:description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
 <meta property="og:url" content="https://chung-research-group.github.io/Publications.dc.html">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body id="top">
@@ -46,6 +48,11 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-graphic figcaption{margin:7px 0 0;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
 .publication-graphic-fallback{display:none;padding:18px;font-size:14px;line-height:20px;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:color-mix(in srgb,var(--color-text) 4%,transparent)}
 .publication-graphic-fallback.is-visible{display:block}
+.publication-search-tools{display:flex;align-items:center;gap:12px 16px;flex:1 1 520px;min-width:280px;flex-wrap:wrap}
+.publication-search-input{flex:1 1 280px;width:100%;max-width:440px;min-width:0}
+.publication-citation-downloads{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.publication-citation-download{display:inline-flex;align-items:center;min-height:42px;padding:0 12px;border:1px solid var(--color-accent);font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:800;text-decoration:none;color:var(--color-accent-700);background:var(--color-bg);transition:background .12s ease,color .12s ease}
+.publication-citation-download:hover,.publication-citation-download:focus-visible{color:#fff;background:var(--color-accent)}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -98,12 +105,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
   <div style="padding:0 64px">
     <header style="padding:48px 0 32px">
-      <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">논문</span></h1>
+      <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">??</span></h1>
       <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">*: corresponding author, #: co-first author</p>
       <div style="display:flex;align-items:center;gap:48px;flex-wrap:wrap;margin-top:24px">
         <div>
           <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ totalPubs }}</p>
-          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Publications · 논문</p>
+          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Publications ? ??</p>
         </div>
         <div data-google-scholar-citations>
           <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
@@ -121,9 +128,13 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Semantic Scholar)</p>
           </div>
         </sc-if>
-        <div style="display:flex;align-items:center;gap:16px;flex:1 1 420px;min-width:280px">
+        <div class="publication-search-tools">
           <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
-          <input aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;min-width:0;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <input class="publication-search-input" aria-label="Search publications" placeholder="Search publications (??????????? ??)" onInput="{{ onSearch }}" style="padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <div class="publication-citation-downloads" role="group" aria-label="Download publication citations">
+            <a class="publication-citation-download" href="exports/publications/publications.bib" download aria-label="Download all publications as a BibTeX file">Download BibTeX</a>
+            <a class="publication-citation-download" href="exports/publications/CITATION.cff" download aria-label="Download all publications as a Citation File Format file">Download CFF</a>
+          </div>
         </div>
       </div>
       <p data-publication-metadata-status style="font-size:14px;line-height:21px;margin:14px 0 0;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ metadataStatus }}</p>
@@ -139,15 +150,15 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <div class="publication-filter-group" data-filter-group="{{ group.title }}">
               <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" style="color:{{ group.titleFg }};background:{{ group.titleBg }}"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button></div>
               <sc-if value="{{ group.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-items">
-                <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
-                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}" style="color:{{ section.titleFg }};background:{{ section.titleBg }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
+                <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> ? {{ it.n }}</span></span></sc-for>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}" style="color:{{ section.titleFg }};background:{{ section.titleBg }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> ? {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
               </div></sc-if>
             </div>
           </sc-for>
         </div>
       </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found · 검색 결과 {{ resultCount }}편</p>
+        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found ? ?? ?? {{ resultCount }}?</p>
       </sc-if>
       <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
         <div style="display:grid;grid-template-columns:130px 1fr;gap:16px 48px;padding:26px 0;border-top:2px solid var(--color-text)">
@@ -193,7 +204,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         </div>
       </sc-for>
       <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">No publications match your search. 검색 결과가 없습니다.</p>
+        <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">No publications match your search. ?? ??? ????.</p>
       </sc-if>
     </section>
   </div>
@@ -201,8 +212,8 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
   <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
-    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
-    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University ? 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">? 2026 Chung Research Group. All rights reserved. ? Last updated July 2026</span>
   </footer>
 </div>
 </x-dc>
@@ -377,7 +388,7 @@ class Component extends DCLogic {
       const groupOpen = openGroups.includes(group.title);
       const groupCount = full.filter(p => (p.topics || []).some(t => group.labels.includes(t))).length;
       const base = {
-        title: group.title, c: group.c, n: groupCount, open: groupOpen, marker: groupOpen ? '−' : '+',
+        title: group.title, c: group.c, n: groupCount, open: groupOpen, marker: groupOpen ? '?' : '+',
         toggleLabel: (groupOpen ? 'Collapse ' : 'Expand ') + group.title,
         toggle: () => this.setState({ openGroups: groupOpen ? [] : [group.title], openSections: groupOpen ? [] : (group.title === 'Applications' ? applicationSections.map(section => section.title) : []), theme: groupOpen ? null : groupKey }),
         titleFg: activeTheme === groupKey ? '#ffffff' : group.c,
@@ -388,7 +399,7 @@ class Component extends DCLogic {
           const sectionKey = 'Section::Applications::' + section.title;
           const sectionOpen = openSections.includes(section.title);
           return {
-            title: section.title, c: section.c, open: sectionOpen, marker: sectionOpen ? '−' : '+',
+            title: section.title, c: section.c, open: sectionOpen, marker: sectionOpen ? '?' : '+',
             n: full.filter(p => (p.topics || []).some(t => section.labels.includes(t))).length,
             toggleLabel: (sectionOpen ? 'Collapse ' : 'Expand ') + section.title,
             toggle: () => this.setState({ openSections: sectionOpen ? openSections.filter(title => title !== section.title) : [...openSections, section.title], theme: sectionOpen ? null : sectionKey }),
@@ -446,7 +457,7 @@ class Component extends DCLogic {
     fallback.setAttribute('data-graphical-abstract-fallback', '');
     fallback.textContent = 'Visual summary unavailable.';
     const caption = document.createElement('figcaption');
-    caption.textContent = 'Generated from DOI metadata and reviewed website labels. Not the publisher’s official graphical abstract.';
+    caption.textContent = 'Generated from DOI metadata and reviewed website labels. Not the publisher?s official graphical abstract.';
     image.addEventListener('error', () => {
       image.hidden = true;
       fallback.classList.add('is-visible');

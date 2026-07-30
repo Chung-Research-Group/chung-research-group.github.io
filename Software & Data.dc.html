@@ -10,6 +10,8 @@
 <meta property="og:title" content="Software & Data | Chung Research Group">
 <meta property="og:description" content="Open materials databases, machine-learning models, and computational workflows from the Chung Research Group.">
 <meta property="og:url" content="https://chung-research-group.github.io/Software%20%26%20Data.dc.html">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body id="top">
@@ -58,9 +60,9 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
   <div style="padding:0 64px">
     <header style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:center;padding:48px 0 32px">
       <div>
-        <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Software &amp; data. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">소프트웨어 · 데이터</span></h1>
+        <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Software &amp; data. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">????? ? ???</span></h1>
         <p style="font-size:19px;line-height:30px;max-width:78ch;margin:14px 0 0">We develop open materials databases, machine-learning models, and computational workflows that transform quantum and atomistic information into reproducible material, process, and system-level predictions.</p>
-        <p lang="ko" style="font-size:18.5px;line-height:28px;max-width:78ch;margin:8px 0 0;color:var(--color-text)">양자·원자 수준의 정보를 재현 가능한 소재, 공정과 시스템 수준의 예측으로 전환하는 공개 소재 데이터베이스, 머신러닝 모델과 계산 워크플로를 개발합니다.</p>
+        <p lang="ko" style="font-size:18.5px;line-height:28px;max-width:78ch;margin:8px 0 0;color:var(--color-text)">????? ??? ??? ?? ??? ??, ??? ??? ??? ???? ???? ?? ?? ??????, ???? ??? ?? ????? ?????.</p>
       </div>
       <a class="icn" href="https://github.com/Chung-Research-Group" title="github.com/Chung-Research-Group" style="display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;transition:color .12s ease;text-align:center"><svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.9-.38 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg><span style="font-size:17px;line-height:21px;font-weight:700;font-family:var(--font-heading)">github.com/Chung-Research-Group</span></a>
     </header>
@@ -93,13 +95,13 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
               <div style="display:flex;flex-wrap:wrap;gap:12px 36px;margin:14px 0 0;border-top:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);padding-top:12px">
                 <sc-for list="{{ t.papers }}" as="pp" hint-placeholder-count="1">
                   <div style="display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap">
-                    <p style="font-size:17.5px;line-height:26px;margin:0;color:var(--color-text)"><span style="font-weight:700">{{ pp.title }}</span> · {{ pp.authors }}, <span style="font-weight:700">{{ pp.journal }}</span>, {{ pp.biblio }}</p>
+                    <p style="font-size:17.5px;line-height:26px;margin:0;color:var(--color-text)"><span style="font-weight:700">{{ pp.title }}</span> ? {{ pp.authors }}, <span style="font-weight:700">{{ pp.journal }}</span>, {{ pp.biblio }}</p>
                     <span class="__dimensions_badge_embed__" data-doi="{{ pp.doi }}" data-style="medium_rectangle"></span>
                     <div class="altmetric-embed" data-badge-type="medium-donut" data-hide-no-mentions="true" data-doi="{{ pp.doi }}"></div>
                   </div>
                 </sc-for>
               </div>
-              <p style="font-size:18px;line-height:24px;margin:12px 0 0;font-weight:700"><a href="{{ t.url }}" style="text-decoration:none;color:var(--color-accent-700)">{{ t.linkLabel }} ↗</a></p>
+              <p style="font-size:18px;line-height:24px;margin:12px 0 0;font-weight:700"><a href="{{ t.url }}" style="text-decoration:none;color:var(--color-accent-700)">{{ t.linkLabel }} ?</a></p>
             </div>
           </sc-for>
         </div>
@@ -111,8 +113,8 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
   <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:15px;line-height:24px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
-    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
-    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University ? 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">? 2026 Chung Research Group. All rights reserved. ? Last updated July 2026</span>
   </footer>
 </div>
 </x-dc>
@@ -129,21 +131,21 @@ class Component extends DCLogic {
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const dbTools = [
-      { kind: 'Database', name: 'CoRE MOF Database', logo: 'images/core-mof-logo.png', desc: 'A curated, computation-ready experimental metal–organic framework database with machine-learned properties for integrated material–process screening.', papers: [
-        { title: 'CoRE MOF 2014', authors: 'Chung, Y.G. et al.', journal: 'Chemistry of Materials', biblio: '26, 21, 6185–6192 (2014)', doi: '10.1021/cm502594j' },
-        { title: 'CoRE MOF 2019', authors: 'Chung, Y.G. et al.', journal: 'Journal of Chemical & Engineering Data', biblio: '64, 12, 5985–5998 (2019)', doi: '10.1021/acs.jced.9b00835' },
+      { kind: 'Database', name: 'CoRE MOF Database', logo: 'images/core-mof-logo.png', desc: 'A curated, computation-ready experimental metal?organic framework database with machine-learned properties for integrated material?process screening.', papers: [
+        { title: 'CoRE MOF 2014', authors: 'Chung, Y.G. et al.', journal: 'Chemistry of Materials', biblio: '26, 21, 6185?6192 (2014)', doi: '10.1021/cm502594j' },
+        { title: 'CoRE MOF 2019', authors: 'Chung, Y.G. et al.', journal: 'Journal of Chemical & Engineering Data', biblio: '64, 12, 5985?5998 (2019)', doi: '10.1021/acs.jced.9b00835' },
         { title: 'CoRE MOF 2025', authors: 'Zhao, G. et al.', journal: 'Matter', biblio: '8, 102140 (2025)', doi: '10.1016/j.matt.2025.102140' }
       ], url: 'CoRE MOF Database.dc.html', linkLabel: 'Details, downloads & citations' }
     ];
     const mlTools = [
       { kind: 'Machine learning', name: 'PACMAN', descParts: true, desc: 'A fast machine learning model that predicts DFT-quality partial atomic charges (DDEC06, CM5, Bader, and REPEAT) for MOFs and COFs in seconds per structure (vs. hours to days for DFT), with mean absolute errors of ~0.01 e against DFT-derived charges.', papers: [
-        { title: 'PACMAN: A robust partial atomic charge predicter for nanoporous materials based on crystal graph convolution networks', authors: 'Zhao, G. & Chung, Y.G.', journal: 'Journal of Chemical Theory and Computation', biblio: '20, 12, 5352–5367 (2024)', doi: '10.1021/acs.jctc.4c00434' }
+        { title: 'PACMAN: A robust partial atomic charge predicter for nanoporous materials based on crystal graph convolution networks', authors: 'Zhao, G. & Chung, Y.G.', journal: 'Journal of Chemical Theory and Computation', biblio: '20, 12, 5352?5367 (2024)', doi: '10.1021/acs.jctc.4c00434' }
       ], url: 'PACMAN.dc.html', linkLabel: 'Details, app & citation' },
-      { kind: 'Machine learning', name: 'MOFClassifier', desc: 'A machine learning approach for validating computation-ready metal–organic frameworks.', papers: [
-        { title: 'MOFClassifier', authors: 'Zhao, G. et al.', journal: 'Journal of the American Chemical Society', biblio: '147, 37, 33343–33349 (2025)', doi: '10.1021/jacs.5c10126' }
+      { kind: 'Machine learning', name: 'MOFClassifier', desc: 'A machine learning approach for validating computation-ready metal?organic frameworks.', papers: [
+        { title: 'MOFClassifier', authors: 'Zhao, G. et al.', journal: 'Journal of the American Chemical Society', biblio: '147, 37, 33343?33349 (2025)', doi: '10.1021/jacs.5c10126' }
       ], url: 'MOFClassifier.dc.html', linkLabel: 'Details & citation' },
-      { kind: 'Machine learning', name: 'Global Warming Potential (GWP) Estimator for Small Molecules', desc: 'A machine learning model to predict the atmospheric lifetime and the global warming potential (GWP) of molecules. The models were used to screen more than 7,000 molecules in the PubChem and bigQM7 data sets in a search for SF₆ replacement gases.', papers: [
-        { title: 'GWP-estimator', authors: 'Zhao, G. et al.', journal: 'Journal of Physical Chemistry A', biblio: '128, 12, 2399–2408 (2024)', doi: '10.1021/acs.jpca.3c07339' }
+      { kind: 'Machine learning', name: 'Global Warming Potential (GWP) Estimator for Small Molecules', desc: 'A machine learning model to predict the atmospheric lifetime and the global warming potential (GWP) of molecules. The models were used to screen more than 7,000 molecules in the PubChem and bigQM7 data sets in a search for SF? replacement gases.', papers: [
+        { title: 'GWP-estimator', authors: 'Zhao, G. et al.', journal: 'Journal of Physical Chemistry A', biblio: '128, 12, 2399?2408 (2024)', doi: '10.1021/acs.jpca.3c07339' }
       ], url: 'GWP-estimator.dc.html', linkLabel: 'Details & citation' }
     ];
     const wfTools = [
@@ -151,8 +153,8 @@ class Component extends DCLogic {
         { title: 'AIM', authors: 'Hassan, M. et al.', journal: 'Computer Physics Communications', biblio: '319, 109944 (2026)', doi: '10.1016/j.cpc.2025.109944' }
       ], url: 'AIM.dc.html', linkLabel: 'Details, tutorial & citation' },
       { kind: 'Web app', name: 'SESAMI-APP', desc: 'An accessible interface for surface area calculation of materials from adsorption isotherms, going beyond standard BET analysis.', papers: [
-        { title: 'SESAMI 1.0', authors: 'Sinha, P. et al.', journal: 'Journal of Physical Chemistry C', biblio: '123, 33, 20195–20209 (2019)', doi: '10.1021/acs.jpcc.9b02116' },
-        { title: 'SESAMI 2.0', authors: 'Datar, A. et al.', journal: 'Journal of Physical Chemistry Letters', biblio: '11, 14, 5412–5417 (2020)', doi: '10.1021/acs.jpclett.0c01518' },
+        { title: 'SESAMI 1.0', authors: 'Sinha, P. et al.', journal: 'Journal of Physical Chemistry C', biblio: '123, 33, 20195?20209 (2019)', doi: '10.1021/acs.jpcc.9b02116' },
+        { title: 'SESAMI 2.0', authors: 'Datar, A. et al.', journal: 'Journal of Physical Chemistry Letters', biblio: '11, 14, 5412?5417 (2020)', doi: '10.1021/acs.jpclett.0c01518' },
         { title: 'SESAMI APP', authors: 'Terrones, G.G. et al.', journal: 'Journal of Open Source Software', biblio: '8, 86, 5429 (2023)', doi: '10.21105/joss.05429' }
       ], url: 'SESAMI-APP.dc.html', linkLabel: 'Details, app & citations' }
     ];

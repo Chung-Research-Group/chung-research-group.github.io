@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -241,7 +243,7 @@ body{zoom:0.88}
         </h1>
         <p style="font-size:19px;line-height:30px;max-width:74ch;margin:24px 0 0">We develop end-to-end computational frameworks that integrate <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong>. These frameworks connect quantum and atomistic information to material properties, process performance, and system-level outcomes for the energy, environment, and industrial applications.</p>
         <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}">
-        <p lang="ko" style="font-size:19px;line-height:30px;max-width:74ch;margin:12px 0 0;color:var(--color-text)">양자·원자 시뮬레이션, 통계역학, 정제된 데이터와 인공지능을 통합하는 end-to-end 계산 프레임워크를 개발합니다. 이 프레임워크는 양자·원자 수준의 정보를 소재 물성, 공정 성능 및 시스템 수준의 성과로 연결하여 에너지·환경·산업 분야의 응용에 활용합니다.</p>
+        <p lang="ko" style="font-size:19px;line-height:30px;max-width:74ch;margin:12px 0 0;color:var(--color-text)">????? ?????, ????, ??? ???? ????? ???? end-to-end ?? ?????? ?????. ? ?????? ????? ??? ??? ?? ??, ?? ?? ? ??? ??? ??? ???? ????????? ??? ??? ?????.</p>
         </sc-if>
       </div>
     </section>
@@ -250,11 +252,11 @@ body{zoom:0.88}
 
     <section style="padding:44px 0" data-screen-label="Research">
       <div style="margin:0 0 28px">
-        <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Research · 연구 분야</span>
+        <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Research ? ?? ??</span>
       </div>
       <div class="home-research-context">
         <article class="home-research-context-card home-research-context-card--applications" style="--context-color:#1c4fa1">
-          <h2>Engineering application domains · 공학 응용 분야</h2>
+          <h2>Engineering application domains ? ?? ?? ??</h2>
           <p class="home-research-context-intro">Our modeling, data, and AI methods are developed around concrete engineering problems.</p>
           <div class="home-research-context-list">
             <span>Carbon Capture &amp; Gas Separations</span>
@@ -265,7 +267,7 @@ body{zoom:0.88}
           </div>
         </article>
         <article class="home-research-context-card" style="--context-color:#a86700">
-          <h2>Material platforms · 소재 플랫폼</h2>
+          <h2>Material platforms ? ?? ???</h2>
           <p class="home-research-context-intro">Materials classes that connect our fundamental and application-driven research.</p>
           <div class="home-research-context-list">
             <span>Reticular Materials</span>
@@ -280,19 +282,19 @@ body{zoom:0.88}
         <article class="home-research-card" style="--area-color:#1c4fa1">
           <span class="home-research-number">01</span>
           <h2>Quantum &amp; Atomistic Modeling</h2>
-          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">양자·원자 수준 모델링</p></sc-if>
+          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">????? ?? ???</p></sc-if>
           <p class="home-research-copy">Quantum calculations, Monte Carlo methods, molecular dynamics, and enhanced sampling for molecular-scale structure, energetics, diffusion, reaction, and electrochemical behavior.</p>
         </article>
         <article class="home-research-card" style="--area-color:#00794a">
           <span class="home-research-number">02</span>
           <h2>Fundamentals of Adsorption, Diffusion &amp; Reaction</h2>
-          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">흡착·확산·반응의 기초</p></sc-if>
+          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">????????? ??</p></sc-if>
           <p class="home-research-copy">Molecular-level theories and simulations of adsorption thermodynamics, molecular diffusion, and reaction mechanisms in porous and condensed materials.</p>
         </article>
         <article class="home-research-card" style="--area-color:#006b73">
           <span class="home-research-number">03</span>
           <h2>Cyclic Swing Adsorption</h2>
-          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">순환식 스윙 흡착</p></sc-if>
+          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">??? ?? ??</p></sc-if>
           <p class="home-research-copy">End-to-end models connecting adsorption and transport to pressure-, vacuum-, and temperature-swing cycle performance and techno-economic outcomes.</p>
         </article>
       </div>
@@ -300,13 +302,13 @@ body{zoom:0.88}
         <article class="home-research-card" style="--area-color:#a86700">
           <span class="home-research-number">04</span>
           <h2>Data-driven &amp; Autonomous Discovery</h2>
-          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">데이터 기반 자율 발견</p></sc-if>
+          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">??? ?? ?? ??</p></sc-if>
           <p class="home-research-copy">Curated materials data, machine-learning models, and high-throughput screening for reproducible materials discovery.</p>
         </article>
         <article class="home-research-card" style="--area-color:#4e2a84">
-          <span class="home-research-number">05 · Emerging direction</span>
+          <span class="home-research-number">05 ? Emerging direction</span>
           <h2>AI Scientists &amp; Computational Research Automation</h2>
-          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">AI 과학자와 계산 연구 자동화</p></sc-if>
+          <sc-if value="{{ kr }}" hint-placeholder-val="{{ true }}"><p class="home-research-ko">AI ???? ?? ?? ???</p></sc-if>
           <p class="home-research-copy">LLM orchestration and tool-using agents that plan, execute, verify, and refine computational research workflows.</p>
         </article>
       </div>
@@ -316,7 +318,7 @@ body{zoom:0.88}
 
     <section style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 64px;padding:44px 0 52px" data-screen-label="News + Publications">
       <div>
-        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">News &amp; Highlights · 소식</span>
+        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">News &amp; Highlights ? ??</span>
         <sc-for list="{{ newsGroups }}" as="yg" hint-placeholder-count="1">
           <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ yg.year }}</p>
           <sc-for list="{{ yg.items }}" as="item" hint-placeholder-count="6">
@@ -329,7 +331,7 @@ body{zoom:0.88}
         <div style="margin-top:18px"><a class="btn btn-secondary" href="News.dc.html" style="text-decoration:none">More news</a></div>
       </div>
       <div>
-        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">Latest publications · 최신 논문</span>
+        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">Latest publications ? ?? ??</span>
         <sc-for list="{{ pubGroups }}" as="pg" hint-placeholder-count="1">
           <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ pg.year }}</p>
           <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="6">
@@ -354,8 +356,8 @@ body{zoom:0.88}
   <a class="back-to-top" href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:15px;line-height:24px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
-    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
-    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University ? 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">? 2026 Chung Research Group. All rights reserved. ? Last updated July 2026</span>
   </footer>
 </div>
 </x-dc>
