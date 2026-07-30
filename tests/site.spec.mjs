@@ -92,6 +92,9 @@ test('publications remain usable when the metadata snapshot is unavailable', asy
 
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('[data-publication-no]').first()).toBeVisible();
+  const scholarCard = page.locator('[data-google-scholar-citations]');
+  await expect(scholarCard).toBeVisible();
+  await expect(scholarCard.locator('p').first()).toHaveText('\u2014');
   const publicationSearch = page.getByPlaceholder(/Search publications/);
   await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();

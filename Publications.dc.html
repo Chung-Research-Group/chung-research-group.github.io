@@ -105,12 +105,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
           <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ totalPubs }}</p>
           <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Publications · 논문</p>
         </div>
-        <sc-if value="{{ scholarCites }}" hint-placeholder-val="{{ false }}">
-          <div>
-            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
-            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
-          </div>
-        </sc-if>
+        <div data-google-scholar-citations>
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
+          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
+        </div>
         <sc-if value="{{ openAlexCites }}" hint-placeholder-val="{{ false }}">
           <div>
             <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ openAlexCitesText }}</p>
@@ -329,7 +327,12 @@ class Component extends DCLogic {
     groups.forEach(g => { g.count = g.items.length; });
     const openAlexCites = Number(metadata?.totals?.openAlexCitations || 0);
     const semanticScholarCites = Number(metadata?.totals?.semanticScholarCitations || 0);
-    const scholarCites = Number(metadata?.totals?.googleScholarCitations || 0);
+    const scholarCitationValue = metadata?.totals?.googleScholarCitations;
+    const scholarCites = Number(scholarCitationValue);
+    const hasScholarCites = scholarCitationValue !== null
+      && scholarCitationValue !== undefined
+      && Number.isFinite(scholarCites)
+      && scholarCites >= 0;
     let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
     if (metadata?.snapshotUpdatedAt) {
       const date = new Date(metadata.snapshotUpdatedAt);
@@ -401,8 +404,7 @@ class Component extends DCLogic {
       return { ...base, items: allItems, hasSections: false, sections: [] };
     });
     return {
-      scholarCites: scholarCites,
-      scholarCitesText: scholarCites.toLocaleString('en-US'),
+      scholarCitesText: hasScholarCites ? scholarCites.toLocaleString('en-US') : '\u2014',
       totalPubs: full.length,
       openAlexCites,
       openAlexCitesText: openAlexCites.toLocaleString('en-US'),
