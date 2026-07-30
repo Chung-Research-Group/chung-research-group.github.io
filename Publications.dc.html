@@ -105,12 +105,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
           <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ totalPubs }}</p>
           <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Publications · 논문</p>
         </div>
-        <sc-if value="{{ scholarCites }}" hint-placeholder-val="{{ false }}">
-          <div>
-            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
-            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
-          </div>
-        </sc-if>
+        <div data-google-scholar-citations>
+          <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
+          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
+        </div>
         <sc-if value="{{ openAlexCites }}" hint-placeholder-val="{{ false }}">
           <div>
             <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ openAlexCitesText }}</p>
@@ -208,7 +206,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
+<script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], metadata: null, metadataError: false };
   normalizeDoi(value) {
@@ -329,7 +327,12 @@ class Component extends DCLogic {
     groups.forEach(g => { g.count = g.items.length; });
     const openAlexCites = Number(metadata?.totals?.openAlexCitations || 0);
     const semanticScholarCites = Number(metadata?.totals?.semanticScholarCitations || 0);
-    const scholarCites = this.props.scholarCitations ?? 0;
+    const scholarCitationValue = metadata?.totals?.googleScholarCitations;
+    const scholarCites = Number(scholarCitationValue);
+    const hasScholarCites = scholarCitationValue !== null
+      && scholarCitationValue !== undefined
+      && Number.isFinite(scholarCites)
+      && scholarCites >= 0;
     let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
     if (metadata?.snapshotUpdatedAt) {
       const date = new Date(metadata.snapshotUpdatedAt);
@@ -337,6 +340,7 @@ class Component extends DCLogic {
         ? metadata.snapshotUpdatedAt
         : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       const sourceStates = [
+        metadata.sources?.googleScholar?.status === 'stale' ? 'Google Scholar using last snapshot' : '',
         metadata.sources?.openAlex?.status === 'stale' ? 'OpenAlex using last snapshot' : '',
         metadata.sources?.semanticScholar?.status === 'stale' ? 'Semantic Scholar using last snapshot' : ''
       ].filter(Boolean);
@@ -400,8 +404,7 @@ class Component extends DCLogic {
       return { ...base, items: allItems, hasSections: false, sections: [] };
     });
     return {
-      scholarCites: scholarCites,
-      scholarCitesText: scholarCites.toLocaleString('en-US'),
+      scholarCitesText: hasScholarCites ? scholarCites.toLocaleString('en-US') : '\u2014',
       totalPubs: full.length,
       openAlexCites,
       openAlexCitesText: openAlexCites.toLocaleString('en-US'),
@@ -460,4 +463,3 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
-

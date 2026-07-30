@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 test('publications use the static metadata snapshot without external API fan-out', async ({ page }) => {
   const externalMetadataRequests = [];
   page.on('request', request => {
-    if (/api\.crossref\.org|api\.semanticscholar\.org|api\.openalex\.org/i.test(request.url())) {
+    if (/api\.crossref\.org|api\.semanticscholar\.org|api\.openalex\.org|serpapi\.com/i.test(request.url())) {
       externalMetadataRequests.push(request.url());
     }
   });
@@ -26,10 +26,48 @@ test('publications use the static metadata snapshot without external API fan-out
   const status = page.locator('[data-publication-metadata-status]');
   await expect(status).toBeVisible();
   await expect(status).toContainText(/updated/i);
+  await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toBeVisible();
   await expect(page.locator('[data-publication-enrichment]').first()).toBeVisible();
   expect(externalMetadataRequests).toEqual([]);
+});
+
+test('Google Scholar aggregate is rendered from the static snapshot', async ({ page }) => {
+  await page.route('**/data/publication-metadata.json*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      schemaVersion: 2,
+      snapshotUpdatedAt: '2026-07-30T00:00:00.000Z',
+      sources: {
+        googleScholar: {
+          status: 'ok',
+          reason: null,
+          profileId: 'q-UUrywAAAAJ',
+          provider: 'SerpApi Google Scholar Author API',
+          contentUpdatedAt: '2026-07-30T00:00:00.000Z'
+        },
+        openAlex: { status: 'ok', reason: null, matched: 0, contentUpdatedAt: null },
+        semanticScholar: { status: 'ok', reason: null, matched: 0, contentUpdatedAt: null }
+      },
+      totals: {
+        publications: 0,
+        googleScholarCitations: 9876,
+        openAlexCitations: 0,
+        semanticScholarCitations: 0
+      },
+      googleScholar: {
+        profileId: 'q-UUrywAAAAJ',
+        citations: { all: 9876, since: 6000 }
+      },
+      publications: {}
+    })
+  }));
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  const card = page.getByText('Citations (Google Scholar)', { exact: true }).locator('..');
+  await expect(card).toContainText('9,876');
 });
 
 test('publication search includes a rendered metadata field or keyword', async ({ page }) => {
@@ -54,6 +92,9 @@ test('publications remain usable when the metadata snapshot is unavailable', asy
 
   await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('[data-publication-no]').first()).toBeVisible();
+  const scholarCard = page.locator('[data-google-scholar-citations]');
+  await expect(scholarCard).toBeVisible();
+  await expect(scholarCard.locator('p').first()).toHaveText('\u2014');
   const publicationSearch = page.getByPlaceholder(/Search publications/);
   await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
@@ -215,4 +256,3 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });
-

@@ -10,6 +10,16 @@ making one external API request per publication.
   reference counts, publication types, and fields of study.
 - OpenAlex Works API: citation counts, topics, field hierarchy, keywords,
   citation percentiles, and yearly citation counts.
+- Google Scholar author profile metrics through the SerpApi Google Scholar
+  Author API: total citations, h-index, i10-index, and yearly citation counts.
+
+Google Scholar does not provide a supported public API or bulk export service,
+and its help page asks automated clients to respect its access restrictions.
+The refresh job therefore does not scrape Scholar directly. SerpApi is called
+server-side once per daily refresh, while visitors only receive the committed
+static snapshot. The Google Scholar total covers the full public author profile;
+the OpenAlex and Semantic Scholar totals are sums over the curated DOI list, so
+the three values should not be compared as if they had identical coverage.
 
 The peer-reviewed DOI in `feed.js` is the canonical join key. ChemRxiv records
 remain excluded by the publication review automation.
@@ -31,14 +41,21 @@ metadata. Configure these source credentials:
   OpenAlex key is sufficient for this daily job.
 - `SEMANTIC_SCHOLAR_API_KEY` — optional, but recommended for a dedicated rate
   limit instead of the shared anonymous pool.
+- `SERPAPI_API_KEY` — required to refresh Google Scholar profile metrics.
+  SerpApi's recurring free plan currently provides substantially more requests
+  than this one-profile daily job needs.
 
 OpenAlex may currently answer some anonymous requests, but that behavior is not
 a production contract. The retired `mailto` polite-pool parameter is not used.
+If the SerpApi key is absent, exhausted, or temporarily fails, the job retains
+the last Google Scholar snapshot and marks that source stale instead of
+replacing it with zero. A drop below 80% of the previous citation total is also
+rejected as a likely provider or parsing failure.
 
 `snapshotUpdatedAt` records when the committed snapshot content or health last
 changed. Each source's `contentUpdatedAt` records when that source's retained
-publication records last changed; it is not updated merely because a scheduled
-request succeeded.
+records last changed; it is not updated merely because a scheduled request
+succeeded.
 
 Run a local refresh with:
 

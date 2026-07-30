@@ -214,11 +214,30 @@ if (await exists(publicationMetadataPath)) {
         }
       }
     }
-    for (const totalName of ["publications", "semanticScholarCitations", "openAlexCitations"]) {
+    for (const totalName of [
+      "publications",
+      "semanticScholarCitations",
+      "openAlexCitations",
+      "googleScholarCitations"
+    ]) {
       const value = metadata.totals?.[totalName];
       if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
         errors.push(`Publication metadata totals.${totalName} must be a nonnegative finite number.`);
       }
+    }
+    const scholarSource = metadata.sources?.googleScholar;
+    if (!scholarSource || !["ok", "stale"].includes(scholarSource.status)) {
+      errors.push("Publication metadata sources.googleScholar must have ok or stale status.");
+    }
+    if (scholarSource?.status === "stale" && !scholarSource.reason) {
+      errors.push("A stale Google Scholar source must include a reason.");
+    }
+    if (!metadata.googleScholar?.profileId
+        || metadata.googleScholar.profileId !== scholarSource?.profileId) {
+      errors.push("Google Scholar profile identity must be present and consistent.");
+    }
+    if (metadata.googleScholar?.citations?.all !== metadata.totals?.googleScholarCitations) {
+      errors.push("Google Scholar profile and aggregate citation totals must match.");
     }
   }
 }
@@ -233,6 +252,9 @@ if (!publicationsHtml.includes("snapshotUpdatedAt")) {
 }
 if (!publicationsHtml.includes("data-publication-enrichment")) {
   errors.push("Publications page must render static metadata fields or keywords.");
+}
+if (/<script\b[^>]*\bdata-props=["'][^"']*\bscholarCitations\b[^"']*["']/i.test(publicationsHtml)) {
+  errors.push("Publications page must read Google Scholar citations from the metadata snapshot, not a hardcoded property.");
 }
 if (!publicationsHtml.includes("data-graphical-abstract") || !publicationsHtml.includes("data-graphical-abstract-image")) {
   errors.push("Publications page must expose lazy, collapsible graphical abstracts.");
@@ -379,4 +401,3 @@ if (errors.length) {
 }
 
 console.log(`Validated ${htmlFiles.length} pages, ${jsFiles.length} scripts, and ${cssFiles.length} stylesheets.`);
-
