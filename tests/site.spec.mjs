@@ -8,10 +8,10 @@ const pages = [
 ];
 
 test.beforeEach(async ({ page }) => {
-  await page.route(/^https?:/, route => {
-    const host = new URL(route.request().url()).hostname;
-    return host === '127.0.0.1' || host === 'unpkg.com' ? route.continue() : route.abort();
-  });
+  // Leave local assets on Chromium's native network path. Intercepting every
+  // local request through Playwright can occasionally stall larger fixture
+  // responses on Windows and makes the metadata test flaky.
+  await page.route(/^https?:\/\/(?!127\.0\.0\.1(?::\d+)?\/|unpkg\.com\/)/, route => route.abort());
 });
 
 test('publications use the static metadata snapshot without external API fan-out', async ({ page }) => {
@@ -57,6 +57,32 @@ test('publications remain usable when the metadata snapshot is unavailable', asy
   const publicationSearch = page.getByPlaceholder(/Search publications/);
   await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
+});
+
+test('graphical abstracts are generated locally and loaded only when expanded', async ({ page }) => {
+  const graphicRequests = [];
+  page.on('request', request => {
+    if (request.url().includes('/images/publications/graphical-abstracts/')) {
+      graphicRequests.push(request.url());
+    }
+  });
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  const panels = page.locator('[data-graphical-abstract]');
+  await expect(panels).toHaveCount(72);
+  expect(graphicRequests).toEqual([]);
+
+  const first = panels.first();
+  const summary = first.locator('summary');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(first).toHaveAttribute('open', '');
+  const image = first.locator('[data-graphical-abstract-image]');
+  await expect(image).toBeVisible();
+  await expect.poll(() => image.evaluate((node) => node.naturalWidth)).toBeGreaterThan(0);
+  expect(graphicRequests).toHaveLength(1);
+  await expect(first.locator('[data-graphical-abstract-fallback]')).toBeHidden();
+  await expect(first.getByText(/Not the publisher’s official graphical abstract/)).toBeVisible();
 });
 
 test('every published page has metadata and renders its heading', async ({ page }) => {
@@ -189,3 +215,4 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await expect(jpcc.getByText('Reticular Materials', { exact: true })).toBeVisible();
   await expect(jpcc.getByText('Carbons', { exact: true })).toBeVisible();
 });
+

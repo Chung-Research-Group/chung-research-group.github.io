@@ -3,6 +3,7 @@ import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { generateAllPublicationGraphics } from "./publication-graphic.mjs";
 import { rootFilePatterns, staticDirectories } from "./site-files.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -44,6 +45,11 @@ for (const directory of staticDirectories) {
   });
 }
 
+const generatedGraphics = await generateAllPublicationGraphics({
+  feedPath: path.join(repoRoot, "feed.js"),
+  outputRoot
+});
+
 await writeFile(path.join(outputRoot, ".nojekyll"), "");
 
 const manifest = {};
@@ -61,4 +67,8 @@ await writeFile(
   `${JSON.stringify({ generatedAt: new Date().toISOString(), files: manifest }, null, 2)}\n`
 );
 
-console.log(`Built ${Object.keys(manifest).length} byte-preserved site files in dist/.`);
+console.log(
+  `Built ${Object.keys(manifest).length} site files in dist/, including `
+  + `${generatedGraphics.length} deterministic publication graphics.`
+);
+

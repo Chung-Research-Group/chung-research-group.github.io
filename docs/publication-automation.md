@@ -38,6 +38,38 @@ If the provider or API key is missing, the provider is set to `none`, or the API
 request fails, the monitor falls back to the deterministic keyword classifier.
 This keeps publication monitoring available without an LLM service.
 
+## Graphical abstracts
+
+Every approved DOI receives a deterministic visual summary during the production
+build. The renderer uses only the publication title, journal, year, DOI, and the
+reviewed website taxonomy. It does not copy publisher figures, infer molecular
+structures, or make new scientific claims.
+
+- Output: `images/publications/graphical-abstracts/<normalized-doi>.svg`
+- Size: 1200 × 630
+- Delivery: a collapsed, keyboard-accessible panel on the Publications page
+- Loading: the SVG is requested only when a visitor opens the panel
+- Fallback: the publication remains usable if its visual summary cannot load
+- Provenance: every panel states that it is not the publisher's official
+  graphical abstract
+
+The output is deterministic, self-contained, and contains no scripts, remote
+images, links, event handlers, or `foreignObject` content. CI regenerates and
+validates one graphic per DOI. A newly approved publication therefore receives
+its visual summary automatically without adding generated files to the review
+PR.
+
+To preview an existing or proposed DOI locally:
+
+```bash
+node scripts/publication-graphic.mjs --doi 10.xxxx/example --output-root dist
+```
+
+The command retrieves bibliographic metadata from Crossref, applies the same
+bounded topic rules used by the publication monitor, and writes a single SVG.
+Publisher artwork is deliberately not scraped because licensing, layout, and
+access controls vary by journal.
+
 Treat all Crossref and publisher metadata as untrusted input. Titles, abstracts,
 authors, DOI fields, and model-generated text are data to classify, not
 instructions to execute. Neither metadata nor an LLM response can approve or
@@ -122,3 +154,4 @@ configuration. Scheduled checks run every 30 minutes.
   conflicting reactions never change GitHub.
 - Review papers always receive the single `Review` label.
 - The bot never writes directly to `main`; it uses a PR and waits for CI.
+

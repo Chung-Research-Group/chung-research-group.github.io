@@ -11,6 +11,10 @@ import {
   rootFilePatterns,
   staticDirectories
 } from "./site-files.mjs";
+import {
+  graphicPathForDoi,
+  validateGraphicalAbstractSvg
+} from "./publication-graphic.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -230,6 +234,15 @@ if (!publicationsHtml.includes("snapshotUpdatedAt")) {
 if (!publicationsHtml.includes("data-publication-enrichment")) {
   errors.push("Publications page must render static metadata fields or keywords.");
 }
+if (!publicationsHtml.includes("data-graphical-abstract") || !publicationsHtml.includes("data-graphical-abstract-image")) {
+  errors.push("Publications page must expose lazy, collapsible graphical abstracts.");
+}
+if (!publicationsHtml.includes("Not the publisher’s official graphical abstract")) {
+  errors.push("Generated graphical abstracts must be clearly distinguished from publisher artwork.");
+}
+if (!feedHtml.includes("graphicalAbstractPath") || !feedHtml.includes("p.graphicalAbstract")) {
+  errors.push("Publication feed must assign a deterministic graphical abstract to each DOI.");
+}
 for (const forbiddenRuntimeMetadata of [
   "api.crossref.org",
   "api.semanticscholar.org",
@@ -257,6 +270,9 @@ const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || []
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
 const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
 const publicationEntries = [...publicationBlock.matchAll(/\bF\('\d{2}'/g)];
+const publicationDois = [...publicationBlock.matchAll(/'(10\.[^']+)'\)/gi)]
+  .map((match) => normalizeDoi(match[1]))
+  .filter(Boolean);
 if (topicAssignments.length !== publicationEntries.length) {
   errors.push(`Expected one explicit topic assignment per publication; found ${topicAssignments.length} assignments for ${publicationEntries.length} publications.`);
 }
@@ -324,8 +340,17 @@ if (compareRoot) {
   const sourceFiles = (await listFiles(compareRoot)).filter(publishedSourceFile);
   const builtFiles = files.filter((file) => file !== "site-manifest.json" && file !== ".nojekyll");
   const expectedFiles = sourceFiles.filter((file) => file !== ".nojekyll");
-  if (JSON.stringify(builtFiles) !== JSON.stringify(expectedFiles)) {
+  const generatedGraphicFiles = new Set(publicationDois.map(graphicPathForDoi));
+  const comparableBuiltFiles = builtFiles.filter((file) => !generatedGraphicFiles.has(file));
+  if (JSON.stringify(comparableBuiltFiles) !== JSON.stringify(expectedFiles)) {
     errors.push("Built file set differs from the published source file set.");
+  }
+  const unexpectedGraphics = builtFiles.filter(
+    (file) => file.startsWith("images/publications/graphical-abstracts/")
+      && !generatedGraphicFiles.has(file)
+  );
+  if (unexpectedGraphics.length) {
+    errors.push(`Unexpected generated publication graphics: ${unexpectedGraphics.join(", ")}`);
   }
   for (const file of expectedFiles) {
     const [source, built] = await Promise.all([
@@ -333,6 +358,18 @@ if (compareRoot) {
       readFile(path.join(siteRoot, file))
     ]);
     if (sha256(source) !== sha256(built)) errors.push(`${file}: build changed published bytes.`);
+  }
+  for (const file of generatedGraphicFiles) {
+    const absolute = path.join(siteRoot, file);
+    if (!await exists(absolute)) {
+      errors.push(`Missing generated publication graphic: ${file}`);
+      continue;
+    }
+    try {
+      validateGraphicalAbstractSvg((await readFile(absolute, "utf8")).trim());
+    } catch (error) {
+      errors.push(`${file}: ${error.message}`);
+    }
   }
 }
 
@@ -342,3 +379,4 @@ if (errors.length) {
 }
 
 console.log(`Validated ${htmlFiles.length} pages, ${jsFiles.length} scripts, and ${cssFiles.length} stylesheets.`);
+
