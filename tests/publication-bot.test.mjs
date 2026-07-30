@@ -30,6 +30,7 @@ import {
   normalizeTitle,
   parsePublicationBibliography,
   publicationFileState,
+  publicationJournalKey,
   reactionDecision,
   safeCandidateFromCrossref,
   sanitizeClassification,
@@ -930,9 +931,47 @@ test('inserts an approved candidate without changing existing entries', () => {
   };
   const updated = addCandidateToFeed(feed, candidate);
   assert.match(updated, /F\('73', 'New paper'/);
+  assert.doesNotMatch(updated, /'auto'/);
+  assert.match(updated, /'doi-new-journal-[a-f0-9]{20}'/);
   assert.match(updated, /'73': \['Grand Canonical Monte Carlo', 'Adsorption'\]/);
   assert.match(updated, /F\('72', 'Old'/);
   assert.equal(addCandidateToFeed(updated, candidate), updated);
+});
+
+test('reuses curated journal keys but gives unseen publications DOI-specific visual identities', () => {
+  const feed = [
+    'const PUBS = [',
+    "  F('72', 'Existing paper', 'A', 'jcp', 'Journal of Chemical Physics', ' (2026)', null, '10.1063/existing')",
+    '];',
+    'const PUB_TOPICS = {',
+    "  '72': ['Molecular Dynamics']",
+    '};'
+  ].join('\n');
+  const known = {
+    doi: '10.1063/future',
+    journal: 'Journal of Chemical Physics'
+  };
+  const firstUnknown = {
+    doi: 'https://doi.org/10.5555/Future.One',
+    journal: 'Future Journal & Systems'
+  };
+  const secondUnknown = {
+    doi: '10.5555/future.two',
+    journal: 'Future Journal & Systems'
+  };
+
+  assert.equal(publicationJournalKey(feed, known), 'jcp');
+  const firstKey = publicationJournalKey(feed, firstUnknown);
+  assert.equal(firstKey, publicationJournalKey(feed, {
+    ...firstUnknown,
+    doi: '10.5555/future.one'
+  }));
+  assert.match(firstKey, /^doi-future-journal-and-systems-[a-f0-9]{20}$/);
+  assert.notEqual(firstKey, publicationJournalKey(feed, secondUnknown));
+  assert.throws(
+    () => publicationJournalKey(feed, { journal: 'Unseen Journal' }),
+    /DOI is required/
+  );
 });
 
 test('adds structured metadata and repairs a one-sided feed/bibliography state', () => {

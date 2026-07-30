@@ -37,7 +37,7 @@ jobs:
       - name: Install test dependencies
         run: npm ci
 
-      - name: Refresh publication research metadata
+      - name: Refresh publication and per-paper citation metadata
         env:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}

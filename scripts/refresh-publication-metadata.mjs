@@ -10,6 +10,11 @@ const nonRetryableRequestError = Symbol("nonRetryableRequestError");
 const googleScholarAuthorId = String(
   process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ"
 ).trim();
+const googleScholarArticleLimit = 100;
+
+export const googleScholarCitationOverrides = Object.freeze({
+  "10.1021/acs.jpcc.9b02116": "q-UUrywAAAAJ:3fE2CSJIrl8C"
+});
 
 export function normalizeDoi(value = "") {
   return String(value)
@@ -17,6 +22,42 @@ export function normalizeDoi(value = "") {
     .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")
     .replace(/^doi:\s*/i, "")
     .toLowerCase();
+}
+
+function decodeTitleEntities(value) {
+  return String(value || "")
+    .replace(/&#x([0-9a-f]+);/gi, (_, digits) => {
+      const codePoint = Number.parseInt(digits, 16);
+      return Number.isInteger(codePoint) && codePoint <= 0x10ffff
+        ? String.fromCodePoint(codePoint)
+        : " ";
+    })
+    .replace(/&#([0-9]+);/g, (_, digits) => {
+      const codePoint = Number.parseInt(digits, 10);
+      return Number.isInteger(codePoint) && codePoint <= 0x10ffff
+        ? String.fromCodePoint(codePoint)
+        : " ";
+    })
+    .replace(/&(amp|lt|gt|quot|apos|nbsp);/gi, (entity, name) => ({
+      amp: "&",
+      lt: "<",
+      gt: ">",
+      quot: "\"",
+      apos: "'",
+      nbsp: " "
+    })[name.toLowerCase()] || entity);
+}
+
+export function normalizePublicationTitle(value = "") {
+  return decodeTitleEntities(value)
+    .replace(/<[^>]*>/g, " ")
+    .normalize("NFKD")
+    .replace(/\p{Mark}+/gu, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 function unique(values) {
@@ -153,7 +194,7 @@ export async function fetchOpenAlex(dois, {
   const select = [
     "id", "doi", "display_name", "cited_by_count", "primary_topic", "topics",
     "keywords", "fwci", "citation_normalized_percentile", "counts_by_year",
-    "type", "is_retracted", "updated_date"
+    "type", "is_retracted", "publication_year", "updated_date"
   ].join(",");
 
   for (let offset = 0; offset < dois.length; offset += chunkSize) {
@@ -174,6 +215,7 @@ export async function fetchOpenAlex(dois, {
         workId: work.id || null,
         title: work.display_name || null,
         citationCount: Number(work.cited_by_count || 0),
+        year: validPublicationYear(work.publication_year),
         type: work.type || null,
         isRetracted: Boolean(work.is_retracted),
         fwci: Number.isFinite(work.fwci) ? work.fwci : null,
@@ -228,34 +270,15 @@ function scholarMetric(table, key) {
   };
 }
 
-export async function fetchGoogleScholarProfile({
-  authorId,
-  apiKey,
-  fetchImpl = fetch,
-  maxAttempts = 5
-} = {}) {
-  const normalizedAuthorId = String(authorId || "").trim();
-  const normalizedApiKey = String(apiKey || "").trim();
-  if (!normalizedAuthorId) throw new Error("Google Scholar author ID is required.");
-  if (!normalizedApiKey) throw new Error("SerpApi API key is required.");
-
-  const params = new URLSearchParams({
-    engine: "google_scholar_author",
-    author_id: normalizedAuthorId,
-    hl: "en",
-    api_key: normalizedApiKey
-  });
-  const payload = await requestJson(
-    `https://serpapi.com/search.json?${params}`,
-    {},
-    fetchImpl,
-    { maxAttempts }
-  );
+function validateGoogleScholarPayload(payload, authorId) {
   if (payload?.error) throw new Error("SerpApi Google Scholar request returned an error.");
-  if (payload?.search_parameters?.author_id !== normalizedAuthorId) {
+  if (payload?.search_parameters?.author_id !== authorId) {
     throw new Error("SerpApi Google Scholar response did not match the configured author profile.");
   }
+}
 
+function googleScholarProfileFromPayload(payload, authorId) {
+  validateGoogleScholarPayload(payload, authorId);
   const table = payload?.cited_by?.table || [];
   const citations = scholarMetric(table, "citations");
   const hIndex = scholarMetric(table, "h_index");
@@ -265,8 +288,8 @@ export async function fetchGoogleScholarProfile({
   }
 
   return {
-    profileId: normalizedAuthorId,
-    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(normalizedAuthorId)}&hl=en`,
+    profileId: authorId,
+    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(authorId)}&hl=en`,
     name: payload?.author?.name || null,
     affiliations: payload?.author?.affiliations || null,
     citations,
@@ -283,6 +306,258 @@ export async function fetchGoogleScholarProfile({
         && item.citationCount >= 0)
       .sort((left, right) => left.year - right.year),
     provider: "SerpApi Google Scholar Author API"
+  };
+}
+
+function safeGoogleScholarUrl(value) {
+  try {
+    const url = new URL(String(value || ""));
+    if (url.protocol !== "https:" || url.hostname !== "scholar.google.com") return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+function googleScholarArticleFromPayload(article, authorId) {
+  const title = String(article?.title || "").trim();
+  const citationId = String(article?.citation_id || "").trim();
+  if (!title || !citationId.startsWith(`${authorId}:`)) return null;
+  const rawCitationCount = article?.cited_by?.value;
+  const citationCount = rawCitationCount == null ? 0 : Number(rawCitationCount);
+  if (!Number.isInteger(citationCount) || citationCount < 0) return null;
+  const year = Number(article?.year);
+  const url = safeGoogleScholarUrl(article?.link)
+    || `https://scholar.google.com/citations?view_op=view_citation&hl=en`
+      + `&user=${encodeURIComponent(authorId)}`
+      + `&citation_for_view=${encodeURIComponent(citationId)}`;
+  return {
+    title,
+    citationId,
+    citationCount,
+    url,
+    citedByUrl: safeGoogleScholarUrl(article?.cited_by?.link),
+    year: Number.isInteger(year) && year >= 1900 ? year : null
+  };
+}
+
+export async function fetchGoogleScholarAuthor({
+  authorId,
+  apiKey,
+  fetchImpl = fetch,
+  maxAttempts = 5
+} = {}) {
+  const normalizedAuthorId = String(authorId || "").trim();
+  const normalizedApiKey = String(apiKey || "").trim();
+  if (!normalizedAuthorId) throw new Error("Google Scholar author ID is required.");
+  if (!normalizedApiKey) throw new Error("SerpApi API key is required.");
+
+  const params = new URLSearchParams({
+    engine: "google_scholar_author",
+    author_id: normalizedAuthorId,
+    hl: "en",
+    sort: "pubdate",
+    num: String(googleScholarArticleLimit),
+    api_key: normalizedApiKey
+  });
+  const payload = await requestJson(
+    `https://serpapi.com/search.json?${params}`,
+    {},
+    fetchImpl,
+    { maxAttempts }
+  );
+  validateGoogleScholarPayload(payload, normalizedAuthorId);
+
+  const articlesById = new Map();
+  let discardedArticles = 0;
+  for (const rawArticle of Array.isArray(payload?.articles) ? payload.articles : []) {
+    const article = googleScholarArticleFromPayload(rawArticle, normalizedAuthorId);
+    if (!article) {
+      discardedArticles += 1;
+      continue;
+    }
+    const prior = articlesById.get(article.citationId);
+    if (prior && JSON.stringify(prior) !== JSON.stringify(article)) {
+      throw new Error("SerpApi Google Scholar response reused a citation ID inconsistently.");
+    }
+    articlesById.set(article.citationId, article);
+  }
+
+  const rawArticleCount = Array.isArray(payload?.articles) ? payload.articles.length : 0;
+  const responseTruncated = rawArticleCount >= googleScholarArticleLimit
+    || Boolean(payload?.serpapi_pagination?.next);
+  return {
+    profile: googleScholarProfileFromPayload(payload, normalizedAuthorId),
+    articles: [...articlesById.values()],
+    responseTruncated,
+    discardedArticles
+  };
+}
+
+export async function fetchGoogleScholarProfile(options = {}) {
+  return (await fetchGoogleScholarAuthor(options)).profile;
+}
+
+function validPublicationYear(value) {
+  const year = Number(value);
+  return Number.isInteger(year) && year >= 1900 ? year : null;
+}
+
+function yearsCompatible(left, right) {
+  const leftYear = validPublicationYear(left);
+  const rightYear = validPublicationYear(right);
+  return leftYear !== null && rightYear !== null && Math.abs(leftYear - rightYear) <= 1;
+}
+
+function publicGoogleScholarRecord(article, matchedBy) {
+  return {
+    title: article.title,
+    citationId: article.citationId,
+    citationCount: article.citationCount,
+    url: article.url || null,
+    citedByUrl: article.citedByUrl || null,
+    year: validPublicationYear(article.year),
+    matchedBy
+  };
+}
+
+function isSafeTruncatedPrefix(left, right) {
+  if (!left || !right || left === right) return false;
+  const shorter = left.length < right.length ? left : right;
+  const longer = left.length < right.length ? right : left;
+  if (shorter.length < 48 || shorter.split(" ").length < 8) return false;
+  if (shorter.length / longer.length < 0.55) return false;
+  return longer.startsWith(`${shorter} `);
+}
+
+export function matchGoogleScholarArticles({
+  publications = [],
+  articles = [],
+  previous = {},
+  semanticScholar = {},
+  openAlex = {},
+  overrides = googleScholarCitationOverrides
+} = {}) {
+  const publicationByDoi = new Map();
+  for (const publication of publications) {
+    const doi = normalizeDoi(publication?.doi);
+    if (doi) publicationByDoi.set(doi, { ...publication, doi });
+  }
+  const articleById = new Map();
+  for (const article of articles) {
+    const citationId = String(article?.citationId || "").trim();
+    const title = normalizePublicationTitle(article?.title);
+    if (!citationId || !title || articleById.has(citationId)) continue;
+    articleById.set(citationId, { ...article, normalizedTitle: title });
+  }
+
+  const assignments = {};
+  const claimedArticles = new Set();
+  const unmatchedDois = new Set(publicationByDoi.keys());
+  const ambiguousDois = new Set();
+
+  const assignByDirectId = (method, citationIdForDoi) => {
+    const claims = new Map();
+    for (const doi of unmatchedDois) {
+      const citationId = String(citationIdForDoi(doi) || "").trim();
+      if (!citationId || claimedArticles.has(citationId) || !articleById.has(citationId)) continue;
+      const claimants = claims.get(citationId) || [];
+      claimants.push(doi);
+      claims.set(citationId, claimants);
+    }
+    for (const [citationId, dois] of claims) {
+      if (dois.length !== 1) {
+        dois.forEach((doi) => ambiguousDois.add(doi));
+        continue;
+      }
+      const [doi] = dois;
+      assignments[doi] = publicGoogleScholarRecord(articleById.get(citationId), method);
+      claimedArticles.add(citationId);
+      unmatchedDois.delete(doi);
+      ambiguousDois.delete(doi);
+    }
+  };
+
+  const assignByCandidates = (method, candidatesForPublication) => {
+    const candidatesByDoi = new Map();
+    const claimantsByCitationId = new Map();
+    for (const doi of unmatchedDois) {
+      const publication = publicationByDoi.get(doi);
+      const candidates = [...new Set(
+        candidatesForPublication(publication)
+          .map((article) => article?.citationId)
+          .filter((citationId) => citationId && !claimedArticles.has(citationId))
+      )];
+      if (!candidates.length) continue;
+      candidatesByDoi.set(doi, candidates);
+      for (const citationId of candidates) {
+        const claimants = claimantsByCitationId.get(citationId) || [];
+        claimants.push(doi);
+        claimantsByCitationId.set(citationId, claimants);
+      }
+    }
+    for (const [doi, candidates] of candidatesByDoi) {
+      if (candidates.length !== 1
+          || claimantsByCitationId.get(candidates[0])?.length !== 1) {
+        ambiguousDois.add(doi);
+        continue;
+      }
+      const [citationId] = candidates;
+      assignments[doi] = publicGoogleScholarRecord(articleById.get(citationId), method);
+      claimedArticles.add(citationId);
+      unmatchedDois.delete(doi);
+      ambiguousDois.delete(doi);
+    }
+  };
+
+  assignByDirectId("override", (doi) => overrides?.[doi]);
+  assignByDirectId(
+    "prior-citation-id",
+    (doi) => previous?.publications?.[doi]?.googleScholar?.citationId
+  );
+
+  assignByCandidates("feed-title", (publication) => {
+    const title = normalizePublicationTitle(publication?.title);
+    return [...articleById.values()].filter((article) => article.normalizedTitle === title
+      && yearsCompatible(article.year, publication?.year));
+  });
+
+  assignByCandidates("provider-title", (publication) => {
+    const doi = publication.doi;
+    const providers = [semanticScholar?.[doi], openAlex?.[doi]].filter(Boolean);
+    return [...articleById.values()].filter((article) => providers.some((provider) => {
+      const titleMatches = article.normalizedTitle === normalizePublicationTitle(provider?.title);
+      const providerYear = validPublicationYear(provider?.year) ?? validPublicationYear(publication.year);
+      return titleMatches && yearsCompatible(article.year, providerYear);
+    }));
+  });
+
+  assignByCandidates("truncated-prefix", (publication) => {
+    const doi = publication.doi;
+    const sourceTitles = unique([
+      publication?.title,
+      semanticScholar?.[doi]?.title,
+      openAlex?.[doi]?.title
+    ]).map(normalizePublicationTitle);
+    const sourceYears = unique([
+      publication?.year,
+      semanticScholar?.[doi]?.year,
+      openAlex?.[doi]?.year
+    ]).map(validPublicationYear).filter((year) => year !== null);
+    return [...articleById.values()].filter((article) => {
+      if (!sourceYears.some((year) => yearsCompatible(article.year, year))) return false;
+      return sourceTitles.some((title) => isSafeTruncatedPrefix(title, article.normalizedTitle));
+    });
+  });
+
+  return {
+    records: assignments,
+    matched: Object.keys(assignments).length,
+    unmatchedDois: [...unmatchedDois].sort(),
+    ambiguousDois: [...ambiguousDois].filter((doi) => unmatchedDois.has(doi)).sort(),
+    unusedArticleCount: [...articleById.keys()]
+      .filter((citationId) => !claimedArticles.has(citationId))
+      .length
   };
 }
 
@@ -310,9 +585,75 @@ export function guardGoogleScholarProfile({
   return { profile, status: "ok", reason: null };
 }
 
+export function guardGoogleScholarCoverage({
+  profile,
+  matchResult = {},
+  previous = {},
+  expectedCount,
+  responseTruncated = false,
+  minimumCitationRatio = 0.8,
+  minimumCoverageRatio = 0.8
+}) {
+  const profileCoverage = guardGoogleScholarProfile({
+    profile,
+    previous,
+    minimumCitationRatio
+  });
+  if (profileCoverage.status !== "ok") {
+    return { ...profileCoverage, records: {}, freshMatched: 0 };
+  }
+  if (responseTruncated) {
+    return {
+      profile: null,
+      records: {},
+      status: "stale",
+      reason: "response-truncated",
+      freshMatched: 0
+    };
+  }
+
+  const records = matchResult.records || {};
+  const freshMatched = Object.keys(records).length;
+  const priorMatched = Math.max(
+    Number(previous.sources?.googleScholar?.matched || 0),
+    Object.values(previous.publications || {})
+      .filter((publication) => publication?.googleScholar)
+      .length
+  );
+  const baseline = priorMatched || Number(expectedCount || 0);
+  const minimumMatched = baseline >= 10
+    ? Math.ceil(Math.min(baseline, Number(expectedCount || baseline)) * minimumCoverageRatio)
+    : 0;
+  if (minimumMatched && freshMatched < minimumMatched) {
+    return {
+      profile: null,
+      records: {},
+      status: "stale",
+      reason: "coverage-collapse",
+      freshMatched: 0,
+      observedMatched: freshMatched,
+      minimumMatched
+    };
+  }
+
+  const expected = Number(expectedCount || 0);
+  const partial = freshMatched < expected
+    || Number(matchResult.ambiguousDois?.length || 0) > 0;
+  return {
+    profile: profileCoverage.profile,
+    records,
+    status: partial ? "partial" : "ok",
+    reason: partial ? "partial-match" : null,
+    freshMatched,
+    observedMatched: freshMatched,
+    minimumMatched
+  };
+}
+
 function sourceProperty(sourceName) {
   if (sourceName === "semanticScholar") return "semanticScholar";
   if (sourceName === "openAlex") return "openAlex";
+  if (sourceName === "googleScholar") return "googleScholar";
   throw new Error(`Unknown publication metadata source: ${sourceName}`);
 }
 
@@ -367,11 +708,68 @@ function sourceProjection(publications, sourceName) {
   );
 }
 
-function sourceState(previous, status, reason, matched, now, contentChanged) {
+function sourceRecordState({
+  freshRecord,
+  priorRecord,
+  priorFreshness,
+  priorSource,
+  now
+}) {
+  if (freshRecord) {
+    const contentChanged = JSON.stringify(freshRecord) !== JSON.stringify(priorRecord || null);
+    return {
+      record: freshRecord,
+      freshness: {
+        status: "observed",
+        contentUpdatedAt: contentChanged
+          ? now
+          : (priorFreshness?.contentUpdatedAt || priorSource?.contentUpdatedAt || now)
+      }
+    };
+  }
+  if (priorRecord) {
+    return {
+      record: priorRecord,
+      freshness: {
+        status: "retained",
+        contentUpdatedAt: priorFreshness?.contentUpdatedAt
+          || priorSource?.contentUpdatedAt
+          || null
+      }
+    };
+  }
   return {
-    status,
-    reason: status === "stale" ? (reason || "request-failed") : null,
+    record: null,
+    freshness: {
+      status: "unavailable",
+      contentUpdatedAt: null
+    }
+  };
+}
+
+function sourceState(previous, {
+  status,
+  reason,
+  matched,
+  observedMatched,
+  retainedMatched,
+  now,
+  contentChanged
+}) {
+  const effectiveStatus = status === "ok" && retainedMatched > 0 ? "stale" : status;
+  const effectiveReason = effectiveStatus === "ok"
+    ? null
+    : (
+        status === "ok" && retainedMatched > 0
+          ? "partial-refresh-retained-prior-records"
+          : (reason || "request-failed")
+      );
+  return {
+    status: effectiveStatus,
+    reason: effectiveReason,
     matched,
+    observedMatched,
+    retainedMatched,
     contentUpdatedAt: contentChanged
       ? now
       : (previous?.contentUpdatedAt || previous?.lastSuccessfulAt || null)
@@ -383,12 +781,15 @@ export function buildMetadata({
   semanticScholar = {},
   openAlex = {},
   googleScholar = null,
+  googleScholarArticles = {},
   semanticScholarStatus = "ok",
   openAlexStatus = "ok",
   googleScholarStatus = "stale",
   semanticScholarReason = null,
   openAlexReason = null,
   googleScholarReason = "unconfigured",
+  semanticScholarObservedMatched = null,
+  openAlexObservedMatched = null,
   previous = {},
   now = new Date().toISOString()
 }) {
@@ -406,13 +807,44 @@ export function buildMetadata({
     provider: "Unconfigured"
   };
   const entries = {};
+  const sourceRefreshCounts = {
+    semanticScholar: { observed: 0, retained: 0 },
+    openAlex: { observed: 0, retained: 0 }
+  };
 
   for (const publication of publications) {
     const doi = normalizeDoi(publication.doi);
     if (!doi) continue;
     const prior = previousPublications[doi] || {};
-    const semantic = semanticScholar[doi] || prior.semanticScholar || null;
-    const alex = openAlex[doi] || prior.openAlex || null;
+    const semanticState = sourceRecordState({
+      freshRecord: semanticScholar[doi] || null,
+      priorRecord: prior.semanticScholar || null,
+      priorFreshness: prior.sourceFreshness?.semanticScholar,
+      priorSource: previous.sources?.semanticScholar,
+      now
+    });
+    const openAlexState = sourceRecordState({
+      freshRecord: openAlex[doi] || null,
+      priorRecord: prior.openAlex || null,
+      priorFreshness: prior.sourceFreshness?.openAlex,
+      priorSource: previous.sources?.openAlex,
+      now
+    });
+    const semantic = semanticState.record;
+    const alex = openAlexState.record;
+    if (semanticState.freshness.status === "observed") {
+      sourceRefreshCounts.semanticScholar.observed += 1;
+    } else if (semanticState.freshness.status === "retained") {
+      sourceRefreshCounts.semanticScholar.retained += 1;
+    }
+    if (openAlexState.freshness.status === "observed") {
+      sourceRefreshCounts.openAlex.observed += 1;
+    } else if (openAlexState.freshness.status === "retained") {
+      sourceRefreshCounts.openAlex.retained += 1;
+    }
+    const freshScholar = googleScholarArticles[doi] || null;
+    const priorScholar = prior.googleScholar || null;
+    const scholar = freshScholar || priorScholar || null;
     const fields = unique([
       ...(semantic?.fields || []),
       alex?.primaryTopic?.field,
@@ -424,47 +856,97 @@ export function buildMetadata({
     ]).filter((keyword) => !fields.some((field) => field.toLowerCase() === keyword.toLowerCase()))
       .slice(0, 10);
 
-    entries[doi] = {
+    const entry = {
       no: publication.no,
       doi,
       title: publication.title,
       year: publication.year || null,
       semanticScholar: semantic,
       openAlex: alex,
+      sourceFreshness: {
+        semanticScholar: semanticState.freshness,
+        openAlex: openAlexState.freshness
+      },
       fields,
       keywords
     };
+    if (scholar) entry.googleScholar = scholar;
+    const priorFreshness = prior.sourceFreshness?.googleScholar || null;
+    const scholarChanged = freshScholar
+      && JSON.stringify(freshScholar) !== JSON.stringify(priorScholar);
+    const freshnessStatus = freshScholar
+      ? "fresh"
+      : (priorScholar ? "stale" : "unavailable");
+    entry.sourceFreshness.googleScholar = {
+      status: freshnessStatus,
+      reason: freshScholar
+        ? null
+        : (googleScholarStatus === "ok"
+          ? "no-confident-match"
+          : (googleScholarReason || "request-failed")),
+      contentUpdatedAt: freshScholar
+        ? (scholarChanged || !priorFreshness
+          ? now
+          : (priorFreshness.contentUpdatedAt || now))
+        : (priorFreshness?.contentUpdatedAt || null)
+    };
+    entries[doi] = entry;
   }
 
   const values = Object.values(entries);
   const semanticProjection = sourceProjection(entries, "semanticScholar");
   const openAlexProjection = sourceProjection(entries, "openAlex");
+  const googleScholarProjection = sourceProjection(entries, "googleScholar");
   const previousSemanticProjection = sourceProjection(previousPublications, "semanticScholar");
   const previousOpenAlexProjection = sourceProjection(previousPublications, "openAlex");
-  const googleScholarChanged = JSON.stringify(retainedGoogleScholar) !== JSON.stringify(priorGoogleScholar);
+  const previousGoogleScholarProjection = sourceProjection(previousPublications, "googleScholar");
+  const googleScholarChanged = JSON.stringify(retainedGoogleScholar) !== JSON.stringify(priorGoogleScholar)
+    || JSON.stringify(googleScholarProjection) !== JSON.stringify(previousGoogleScholarProjection);
+  const googleScholarMatched = Object.keys(googleScholarProjection).length;
+  const googleScholarFreshMatched = values
+    .filter((publication) => publication.sourceFreshness?.googleScholar?.status === "fresh")
+    .length;
+  const normalizedSemanticObservedMatched = Number.isInteger(semanticScholarObservedMatched)
+    && semanticScholarObservedMatched >= 0
+    ? semanticScholarObservedMatched
+    : sourceRefreshCounts.semanticScholar.observed;
+  const normalizedOpenAlexObservedMatched = Number.isInteger(openAlexObservedMatched)
+    && openAlexObservedMatched >= 0
+    ? openAlexObservedMatched
+    : sourceRefreshCounts.openAlex.observed;
   const metadata = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     snapshotUpdatedAt: now,
     sources: {
       semanticScholar: sourceState(
         previous.sources?.semanticScholar,
-        semanticScholarStatus,
-        semanticScholarReason,
-        Object.keys(semanticProjection).length,
-        now,
-        JSON.stringify(semanticProjection) !== JSON.stringify(previousSemanticProjection)
+        {
+          status: semanticScholarStatus,
+          reason: semanticScholarReason,
+          matched: Object.keys(semanticProjection).length,
+          observedMatched: normalizedSemanticObservedMatched,
+          retainedMatched: sourceRefreshCounts.semanticScholar.retained,
+          now,
+          contentChanged: JSON.stringify(semanticProjection) !== JSON.stringify(previousSemanticProjection)
+        }
       ),
       openAlex: sourceState(
         previous.sources?.openAlex,
-        openAlexStatus,
-        openAlexReason,
-        Object.keys(openAlexProjection).length,
-        now,
-        JSON.stringify(openAlexProjection) !== JSON.stringify(previousOpenAlexProjection)
+        {
+          status: openAlexStatus,
+          reason: openAlexReason,
+          matched: Object.keys(openAlexProjection).length,
+          observedMatched: normalizedOpenAlexObservedMatched,
+          retainedMatched: sourceRefreshCounts.openAlex.retained,
+          now,
+          contentChanged: JSON.stringify(openAlexProjection) !== JSON.stringify(previousOpenAlexProjection)
+        }
       ),
       googleScholar: {
         status: googleScholarStatus,
-        reason: googleScholarStatus === "stale" ? (googleScholarReason || "request-failed") : null,
+        reason: googleScholarStatus === "ok" ? null : (googleScholarReason || "request-failed"),
+        matched: googleScholarMatched,
+        freshMatched: googleScholarFreshMatched,
         profileId: retainedGoogleScholar?.profileId || previous.sources?.googleScholar?.profileId || null,
         provider: retainedGoogleScholar?.provider
           || previous.sources?.googleScholar?.provider
@@ -505,7 +987,10 @@ export function comparableMetadata(metadata) {
         {
           status: source.status,
           reason: source.reason || null,
-          matched: source.matched
+          matched: source.matched,
+          freshMatched: source.freshMatched,
+          observedMatched: source.observedMatched,
+          retainedMatched: source.retainedMatched
         }
       ])
     ),
@@ -521,7 +1006,7 @@ export function metadataContentEquals(left, right) {
 
 export function validateMetadataSnapshot(metadata, expectedDois = []) {
   const errors = [];
-  if (metadata?.schemaVersion !== 2) errors.push("schemaVersion must be 2");
+  if (metadata?.schemaVersion !== 3) errors.push("schemaVersion must be 3");
   if (!Number.isFinite(Date.parse(metadata?.snapshotUpdatedAt || ""))) {
     errors.push("snapshotUpdatedAt must be an ISO timestamp");
   }
@@ -535,14 +1020,27 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
   }
   for (const sourceName of ["semanticScholar", "openAlex"]) {
     const source = metadata?.sources?.[sourceName];
-    if (!source || !["ok", "stale"].includes(source.status)) {
-      errors.push(`${sourceName} status must be ok or stale`);
+    if (!source || !["ok", "partial", "stale"].includes(source.status)) {
+      errors.push(`${sourceName} status must be ok, partial, or stale`);
     }
     if (!Number.isInteger(source?.matched) || source.matched < 0) {
       errors.push(`${sourceName} matched must be a non-negative integer`);
     }
-    if (source?.status === "stale" && !source.reason) {
-      errors.push(`${sourceName} stale status must include a reason`);
+    for (const field of ["observedMatched", "retainedMatched"]) {
+      if (source?.[field] !== undefined
+          && (!Number.isInteger(source[field]) || source[field] < 0)) {
+        errors.push(`${sourceName} ${field} must be a non-negative integer when present`);
+      }
+    }
+    if (Number.isInteger(source?.retainedMatched)
+        && source.retainedMatched > source.matched) {
+      errors.push(`${sourceName} retainedMatched cannot exceed matched`);
+    }
+    if (source?.status === "ok" && Number(source?.retainedMatched || 0) > 0) {
+      errors.push(`${sourceName} cannot be ok while prior records are retained`);
+    }
+    if (source?.status !== "ok" && !source.reason) {
+      errors.push(`${sourceName} non-ok status must include a reason`);
     }
     if (source?.contentUpdatedAt !== null
         && !Number.isFinite(Date.parse(source?.contentUpdatedAt || ""))) {
@@ -550,11 +1048,17 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
     }
   }
   const googleScholarSource = metadata?.sources?.googleScholar;
-  if (!googleScholarSource || !["ok", "stale"].includes(googleScholarSource.status)) {
-    errors.push("googleScholar status must be ok or stale");
+  if (!googleScholarSource || !["ok", "partial", "stale"].includes(googleScholarSource.status)) {
+    errors.push("googleScholar status must be ok, partial, or stale");
   }
-  if (googleScholarSource?.status === "stale" && !googleScholarSource.reason) {
-    errors.push("googleScholar stale status must include a reason");
+  if (googleScholarSource?.status !== "ok" && !googleScholarSource?.reason) {
+    errors.push("googleScholar non-ok status must include a reason");
+  }
+  for (const countName of ["matched", "freshMatched"]) {
+    if (!Number.isInteger(googleScholarSource?.[countName])
+        || googleScholarSource[countName] < 0) {
+      errors.push(`googleScholar ${countName} must be a non-negative integer`);
+    }
   }
   if (googleScholarSource?.contentUpdatedAt !== null
       && !Number.isFinite(Date.parse(googleScholarSource?.contentUpdatedAt || ""))) {
@@ -605,7 +1109,78 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
       if (citations != null && (!Number.isFinite(citations) || citations < 0)) {
         errors.push(`${doi} has an invalid ${sourceName} citation count`);
       }
+      const freshness = publication?.sourceFreshness?.[sourceName];
+      if (freshness !== undefined) {
+        if (!freshness
+            || !["observed", "retained", "unavailable"].includes(freshness.status)) {
+          errors.push(`${doi} has invalid ${sourceName} source freshness`);
+        } else {
+          if ((publication?.[sourceName] == null) !== (freshness.status === "unavailable")) {
+            errors.push(`${doi} ${sourceName} source freshness does not match record availability`);
+          }
+          if (freshness.status === "retained"
+              && metadata?.sources?.[sourceName]?.status !== "stale") {
+            errors.push(`${doi} retains ${sourceName} data while the source is not stale`);
+          }
+          if (freshness.contentUpdatedAt !== null
+              && !Number.isFinite(Date.parse(freshness.contentUpdatedAt || ""))) {
+            errors.push(`${doi} has invalid ${sourceName} contentUpdatedAt freshness`);
+          }
+        }
+      }
     }
+    const scholar = publication?.googleScholar;
+    const freshness = publication?.sourceFreshness?.googleScholar;
+    if (scholar) {
+      if (!Number.isInteger(scholar.citationCount) || scholar.citationCount < 0) {
+        errors.push(`${doi} has an invalid googleScholar citation count`);
+      }
+      if (typeof scholar.title !== "string" || !scholar.title.trim()) {
+        errors.push(`${doi} has an invalid googleScholar title`);
+      }
+      if (typeof scholar.citationId !== "string"
+          || !scholar.citationId.startsWith(`${googleScholarAuthorId}:`)) {
+        errors.push(`${doi} has a googleScholar citation ID for another profile`);
+      }
+      if (!["override", "prior-citation-id", "feed-title", "provider-title", "truncated-prefix"]
+        .includes(scholar.matchedBy)) {
+        errors.push(`${doi} has an invalid googleScholar match method`);
+      }
+      if (scholar.year !== null && !validPublicationYear(scholar.year)) {
+        errors.push(`${doi} has an invalid googleScholar publication year`);
+      }
+      for (const name of ["url", "citedByUrl"]) {
+        if (scholar[name] !== null && safeGoogleScholarUrl(scholar[name]) !== scholar[name]) {
+          errors.push(`${doi} has an invalid googleScholar ${name}`);
+        }
+      }
+      if (!freshness || !["fresh", "stale"].includes(freshness.status)) {
+        errors.push(`${doi} googleScholar data must include fresh or stale sourceFreshness`);
+      }
+    } else if (freshness && !["unavailable", "stale"].includes(freshness.status)) {
+      errors.push(`${doi} without googleScholar data has invalid sourceFreshness`);
+    }
+    if (freshness) {
+      if (freshness.status !== "fresh" && !freshness.reason) {
+        errors.push(`${doi} non-fresh googleScholar sourceFreshness must include a reason`);
+      }
+      if (freshness.contentUpdatedAt !== null
+          && !Number.isFinite(Date.parse(freshness.contentUpdatedAt || ""))) {
+        errors.push(`${doi} googleScholar sourceFreshness contentUpdatedAt must be null or ISO`);
+      }
+    }
+  }
+  const matchedScholar = Object.values(entries)
+    .filter((publication) => publication?.googleScholar)
+    .length;
+  const freshMatchedScholar = Object.values(entries)
+    .filter((publication) => publication?.sourceFreshness?.googleScholar?.status === "fresh")
+    .length;
+  if (googleScholarSource?.matched !== matchedScholar) {
+    errors.push("googleScholar matched does not equal retained per-paper records");
+  }
+  if (googleScholarSource?.freshMatched !== freshMatchedScholar) {
+    errors.push("googleScholar freshMatched does not equal fresh per-paper records");
   }
   if (metadata?.totals?.googleScholarCitations !== metadata?.googleScholar?.citations?.all) {
     errors.push("totals.googleScholarCitations must match googleScholar citations.all");
@@ -669,14 +1244,37 @@ async function main() {
     : { records: {}, status: "stale", reason: "request-failed" };
   let googleScholarCoverage = {
     profile: null,
+    records: {},
     status: "stale",
-    reason: options.googleScholar.apiKey ? "request-failed" : "unconfigured"
+    reason: options.googleScholar.apiKey ? "request-failed" : "unconfigured",
+    freshMatched: 0
   };
   let googleScholarFailureDetail = null;
   if (options.googleScholar.apiKey) {
     try {
-      const profile = await fetchGoogleScholarProfile(options.googleScholar);
-      googleScholarCoverage = guardGoogleScholarProfile({ profile, previous });
+      const author = await fetchGoogleScholarAuthor(options.googleScholar);
+      const semanticForMatching = {
+        ...sourceProjection(previous.publications || {}, "semanticScholar"),
+        ...semanticCoverage.records
+      };
+      const openAlexForMatching = {
+        ...sourceProjection(previous.publications || {}, "openAlex"),
+        ...openAlexCoverage.records
+      };
+      const matchResult = matchGoogleScholarArticles({
+        publications,
+        articles: author.articles,
+        previous,
+        semanticScholar: semanticForMatching,
+        openAlex: openAlexForMatching
+      });
+      googleScholarCoverage = guardGoogleScholarCoverage({
+        profile: author.profile,
+        matchResult,
+        previous,
+        expectedCount: publications.length,
+        responseTruncated: author.responseTruncated
+      });
     } catch (error) {
       googleScholarFailureDetail = error?.message || "request failed";
     }
@@ -702,6 +1300,21 @@ async function main() {
       `Google Scholar citations unexpectedly fell to ${googleScholarCoverage.observedCitations} `
       + `(minimum ${googleScholarCoverage.minimumCitations}); preserving the previous snapshot.`
     );
+  } else if (googleScholarCoverage.reason === "coverage-collapse") {
+    console.warn(
+      `Google Scholar per-paper matching fell to ${googleScholarCoverage.observedMatched} DOI records `
+      + `(minimum ${googleScholarCoverage.minimumMatched}); preserving the previous snapshot.`
+    );
+  } else if (googleScholarCoverage.reason === "response-truncated") {
+    console.warn(
+      "The Google Scholar author response exceeded the single-request 100-paper safety limit; "
+      + "preserving the previous snapshot."
+    );
+  } else if (googleScholarCoverage.status === "partial") {
+    console.warn(
+      `Google Scholar refreshed ${googleScholarCoverage.freshMatched} of ${publications.length} `
+      + "DOI records; unmatched prior records remain marked stale."
+    );
   } else if (!options.googleScholar.apiKey) {
     console.warn("SERPAPI_API_KEY is not configured; preserving the previous Google Scholar snapshot.");
   } else if (googleScholarCoverage.status === "stale") {
@@ -722,12 +1335,15 @@ async function main() {
     semanticScholar: semanticCoverage.records,
     openAlex: openAlexCoverage.records,
     googleScholar: googleScholarCoverage.profile,
+    googleScholarArticles: googleScholarCoverage.records,
     semanticScholarStatus: semanticCoverage.status,
     openAlexStatus: openAlexCoverage.status,
     googleScholarStatus: googleScholarCoverage.status,
     semanticScholarReason: semanticCoverage.reason,
     openAlexReason: openAlexCoverage.reason,
     googleScholarReason: googleScholarCoverage.reason,
+    semanticScholarObservedMatched: semanticCoverage.observedMatched,
+    openAlexObservedMatched: openAlexCoverage.observedMatched,
     previous
   });
   validateMetadataSnapshot(next, dois);
@@ -742,6 +1358,7 @@ async function main() {
     `Updated ${path.relative(repositoryRoot, outputPath)}: `
     + `${next.sources.semanticScholar.matched} Semantic Scholar matches, `
     + `${next.sources.openAlex.matched} OpenAlex matches, `
+    + `${next.sources.googleScholar.freshMatched} fresh Google Scholar paper matches, `
     + `${next.totals.googleScholarCitations} Google Scholar profile citations.`
   );
 }

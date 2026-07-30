@@ -4,13 +4,18 @@ import test from "node:test";
 import {
   buildMetadata,
   comparableMetadata,
+  fetchGoogleScholarAuthor,
   fetchGoogleScholarProfile,
   fetchOpenAlex,
   fetchSemanticScholar,
+  googleScholarCitationOverrides,
+  guardGoogleScholarCoverage,
   guardGoogleScholarProfile,
   guardSourceCoverage,
+  matchGoogleScholarArticles,
   metadataContentEquals,
   normalizeDoi,
+  normalizePublicationTitle,
   validateMetadataSnapshot
 } from "../scripts/refresh-publication-metadata.mjs";
 
@@ -82,6 +87,8 @@ test("maps Google Scholar author metrics without exposing the API key", async ()
     const parsed = new URL(url);
     assert.equal(parsed.searchParams.get("engine"), "google_scholar_author");
     assert.equal(parsed.searchParams.get("author_id"), "q-UUrywAAAAJ");
+    assert.equal(parsed.searchParams.get("sort"), "pubdate");
+    assert.equal(parsed.searchParams.get("num"), "100");
     assert.equal(parsed.searchParams.get("api_key"), "private-key");
     return {
       ok: true,
@@ -158,6 +165,214 @@ test("maps Google Scholar author metrics without exposing the API key", async ()
     }),
     (error) => !error.message.includes("private-key") && /returned an error/.test(error.message)
   );
+});
+
+test("fetches profile and per-paper Scholar data in one bounded Author API request", async () => {
+  let requests = 0;
+  const result = await fetchGoogleScholarAuthor({
+    authorId: "q-UUrywAAAAJ",
+    apiKey: "private-key",
+    fetchImpl: async (url) => {
+      requests += 1;
+      const parsed = new URL(url);
+      assert.equal(parsed.searchParams.get("sort"), "pubdate");
+      assert.equal(parsed.searchParams.get("num"), "100");
+      return {
+        ok: true,
+        json: async () => ({
+          search_parameters: { author_id: "q-UUrywAAAAJ" },
+          author: { name: "Yongchul G. Chung" },
+          cited_by: {
+            table: [{ citations: { all: 6426 } }],
+            graph: []
+          },
+          articles: [
+            {
+              title: "A paper",
+              citation_id: "q-UUrywAAAAJ:paper",
+              link: "https://scholar.google.com/citations?view_op=view_citation&citation_for_view=q-UUrywAAAAJ:paper",
+              cited_by: {
+                value: 17,
+                link: "https://scholar.google.com/scholar?cites=123"
+              },
+              year: "2025",
+              serpapi_link: "https://serpapi.com/private",
+              private_field: "private-key"
+            }
+          ]
+        })
+      };
+    }
+  });
+  assert.equal(requests, 1);
+  assert.equal(result.profile.citations.all, 6426);
+  assert.deepEqual(result.articles, [{
+    title: "A paper",
+    citationId: "q-UUrywAAAAJ:paper",
+    citationCount: 17,
+    url: "https://scholar.google.com/citations?view_op=view_citation&citation_for_view=q-UUrywAAAAJ:paper",
+    citedByUrl: "https://scholar.google.com/scholar?cites=123",
+    year: 2025
+  }]);
+  assert.equal(result.responseTruncated, false);
+  assert.doesNotMatch(JSON.stringify(result), /private-key|serpapi_link|private_field/);
+});
+
+test("matches Scholar articles by reviewed deterministic precedence", () => {
+  const authorId = "q-UUrywAAAAJ";
+  const article = (title, id, citationCount, year = 2024) => ({
+    title,
+    citationId: `${authorId}:${id}`,
+    citationCount,
+    url: `https://scholar.google.com/citations?citation_for_view=${authorId}:${id}`,
+    citedByUrl: null,
+    year
+  });
+  const jpccDoi = "10.1021/acs.jpcc.9b02116";
+  assert.equal(
+    googleScholarCitationOverrides[jpccDoi],
+    "q-UUrywAAAAJ:3fE2CSJIrl8C"
+  );
+  assert.equal(
+    normalizePublicationTitle("CO\u2082 Adsorption\u2014A Caf\u00e9 Study &amp; Test"),
+    "co2 adsorption a cafe study and test"
+  );
+
+  const publications = [
+    {
+      doi: jpccDoi,
+      title: "Surface area determination of porous materials using the Brunauer-Emmett-Teller method",
+      year: 2019
+    },
+    { doi: "10.1000/prior", title: "A title shared by profile duplicates", year: 2023 },
+    { doi: "10.1000/feed", title: "CO\u2082 Adsorption\u2014A Caf\u00e9 Study &amp; Test", year: 2024 },
+    { doi: "10.1000/provider", title: "Corrected website title", year: 2022 },
+    {
+      doi: "10.1000/prefix",
+      title: "A deliberately long publication title describing molecular adsorption in porous materials with additional findings",
+      year: 2021
+    },
+    { doi: "10.1000/ambiguous", title: "An ambiguous exact title", year: 2020 }
+  ];
+  const articles = [
+    article(
+      "Surface area determination of porous materials using the Brunauer-Emmett-Teller method",
+      "3fE2CSJIrl8C",
+      443,
+      2019
+    ),
+    article(
+      "Surface area determination of porous materials using the Brunauer-Emmett-Teller method",
+      "similar-zero",
+      0,
+      2019
+    ),
+    article("A title shared by profile duplicates", "prior-right", 22, 2023),
+    article("A title shared by profile duplicates", "prior-wrong", 0, 2023),
+    article("CO2 adsorption - a cafe study & test", "feed", 17, 2025),
+    article("Provider canonical title", "provider", 8, 2022),
+    article(
+      "A deliberately long publication title describing molecular adsorption in porous materials",
+      "prefix",
+      6,
+      2021
+    ),
+    article("An ambiguous exact title", "ambiguous-a", 3, 2020),
+    article("An ambiguous exact title", "ambiguous-b", 4, 2020)
+  ];
+  const previous = {
+    publications: {
+      "10.1000/prior": {
+        googleScholar: { citationId: "q-UUrywAAAAJ:prior-right" }
+      }
+    }
+  };
+  const matched = matchGoogleScholarArticles({
+    publications,
+    articles,
+    previous,
+    semanticScholar: {
+      "10.1000/provider": {
+        title: "Provider canonical title",
+        year: 2022
+      }
+    }
+  });
+
+  assert.equal(matched.records[jpccDoi].citationCount, 443);
+  assert.equal(matched.records[jpccDoi].matchedBy, "override");
+  assert.equal(
+    matched.records[jpccDoi].citationId,
+    "q-UUrywAAAAJ:3fE2CSJIrl8C"
+  );
+  assert.equal(matched.records["10.1000/prior"].matchedBy, "prior-citation-id");
+  assert.equal(matched.records["10.1000/feed"].matchedBy, "feed-title");
+  assert.equal(matched.records["10.1000/provider"].matchedBy, "provider-title");
+  assert.equal(matched.records["10.1000/prefix"].matchedBy, "truncated-prefix");
+  assert.equal(matched.records["10.1000/ambiguous"], undefined);
+  assert.deepEqual(matched.ambiguousDois, ["10.1000/ambiguous"]);
+});
+
+test("guards Scholar profile totals and per-paper coverage independently", () => {
+  const profile = { citations: { all: 6426 } };
+  const previousPublications = Object.fromEntries(
+    Array.from({ length: 20 }, (_, index) => [
+      `10.1000/${index}`,
+      {
+        googleScholar: {
+          title: `Paper ${index}`,
+          citationId: `q-UUrywAAAAJ:${index}`,
+          citationCount: index,
+          url: null,
+          citedByUrl: null,
+          year: 2024,
+          matchedBy: "feed-title"
+        }
+      }
+    ])
+  );
+  const previous = {
+    googleScholar: { citations: { all: 6400 } },
+    sources: { googleScholar: { matched: 20 } },
+    publications: previousPublications
+  };
+  const partialRecords = Object.fromEntries(
+    Object.entries(previousPublications).slice(0, 18)
+      .map(([doi, publication]) => [doi, publication.googleScholar])
+  );
+  const partial = guardGoogleScholarCoverage({
+    profile,
+    matchResult: { records: partialRecords, ambiguousDois: ["10.1000/18"] },
+    previous,
+    expectedCount: 20
+  });
+  assert.equal(partial.status, "partial");
+  assert.equal(partial.profile.citations.all, 6426);
+  assert.equal(partial.freshMatched, 18);
+
+  const collapsed = guardGoogleScholarCoverage({
+    profile,
+    matchResult: {
+      records: Object.fromEntries(Object.entries(partialRecords).slice(0, 3)),
+      ambiguousDois: []
+    },
+    previous,
+    expectedCount: 20
+  });
+  assert.equal(collapsed.status, "stale");
+  assert.equal(collapsed.reason, "coverage-collapse");
+  assert.equal(collapsed.profile, null);
+  assert.deepEqual(collapsed.records, {});
+
+  const truncated = guardGoogleScholarCoverage({
+    profile,
+    matchResult: { records: partialRecords, ambiguousDois: [] },
+    previous,
+    expectedCount: 20,
+    responseTruncated: true
+  });
+  assert.equal(truncated.status, "stale");
+  assert.equal(truncated.reason, "response-truncated");
 });
 
 test("rejects a Google Scholar response for a different author profile", async () => {
@@ -291,6 +506,64 @@ test("rejects a collapsed source response so prior records can be preserved", ()
   assert.equal(metadata.publications["10.1000/19"].openAlex.citationCount, 19);
 });
 
+test("marks a partial refresh stale when an omitted work is retained from the prior snapshot", () => {
+  const publications = [
+    { no: "01", doi: "10.1000/observed", title: "Observed", year: 2025 },
+    { no: "02", doi: "10.1000/retained", title: "Retained", year: 2026 }
+  ];
+  const firstObservedAt = "2026-07-01T00:00:00.000Z";
+  const refreshedAt = "2026-07-30T00:00:00.000Z";
+  const previous = buildMetadata({
+    publications,
+    openAlex: {
+      "10.1000/observed": { citationCount: 10 },
+      "10.1000/retained": { citationCount: 20 }
+    },
+    openAlexObservedMatched: 2,
+    now: firstObservedAt
+  });
+
+  const metadata = buildMetadata({
+    publications,
+    openAlex: {
+      "10.1000/observed": { citationCount: 11 }
+    },
+    openAlexObservedMatched: 1,
+    previous,
+    now: refreshedAt
+  });
+
+  assert.deepEqual(metadata.sources.openAlex, {
+    status: "stale",
+    reason: "partial-refresh-retained-prior-records",
+    matched: 2,
+    observedMatched: 1,
+    retainedMatched: 1,
+    contentUpdatedAt: refreshedAt
+  });
+  assert.equal(metadata.totals.openAlexCitations, 31);
+  assert.equal(metadata.publications["10.1000/observed"].openAlex.citationCount, 11);
+  assert.deepEqual(
+    metadata.publications["10.1000/observed"].sourceFreshness.openAlex,
+    {
+      status: "observed",
+      contentUpdatedAt: refreshedAt
+    }
+  );
+  assert.equal(metadata.publications["10.1000/retained"].openAlex.citationCount, 20);
+  assert.deepEqual(
+    metadata.publications["10.1000/retained"].sourceFreshness.openAlex,
+    {
+      status: "retained",
+      contentUpdatedAt: firstObservedAt
+    }
+  );
+  assert.equal(validateMetadataSnapshot(
+    metadata,
+    publications.map(publication => publication.doi)
+  ), true);
+});
+
 test("builds combined fields and preserves previous data during a source outage", () => {
   const previous = {
     sources: {
@@ -322,6 +595,119 @@ test("builds combined fields and preserves previous data during a source outage"
   assert.deepEqual(publication.keywords, ["Porous materials", "Adsorption"]);
   assert.equal(metadata.sources.openAlex.status, "stale");
   assert.equal(metadata.sources.openAlex.contentUpdatedAt, "2026-07-01T00:00:00.000Z");
+});
+
+test("keeps profile aggregate separate and preserves per-paper Scholar data on ambiguity", () => {
+  const priorScholar = {
+    title: "Ambiguous paper",
+    citationId: "q-UUrywAAAAJ:retained",
+    citationCount: 37,
+    url: "https://scholar.google.com/citations?citation_for_view=q-UUrywAAAAJ:retained",
+    citedByUrl: null,
+    year: 2024,
+    matchedBy: "prior-citation-id"
+  };
+  const previous = {
+    schemaVersion: 3,
+    snapshotUpdatedAt: "2026-07-01T00:00:00.000Z",
+    sources: {
+      googleScholar: {
+        status: "ok",
+        reason: null,
+        matched: 1,
+        freshMatched: 1,
+        profileId: "q-UUrywAAAAJ",
+        provider: "SerpApi Google Scholar Author API",
+        contentUpdatedAt: "2026-07-01T00:00:00.000Z"
+      }
+    },
+    totals: {
+      publications: 1,
+      semanticScholarCitations: 0,
+      openAlexCitations: 0,
+      googleScholarCitations: 6426
+    },
+    googleScholar: {
+      profileId: "q-UUrywAAAAJ",
+      profileUrl: "https://scholar.google.com/citations?user=q-UUrywAAAAJ&hl=en",
+      name: "Yongchul G. Chung",
+      affiliations: null,
+      citations: { all: 6426, since: null, sinceYear: null },
+      hIndex: { all: 33, since: null, sinceYear: null },
+      i10Index: { all: 53, since: null, sinceYear: null },
+      countsByYear: [],
+      provider: "SerpApi Google Scholar Author API"
+    },
+    publications: {
+      "10.1000/ambiguous": {
+        no: "01",
+        doi: "10.1000/ambiguous",
+        title: "Ambiguous paper",
+        year: 2024,
+        googleScholar: priorScholar,
+        sourceFreshness: {
+          googleScholar: {
+            status: "fresh",
+            reason: null,
+            contentUpdatedAt: "2026-07-01T00:00:00.000Z"
+          }
+        },
+        fields: [],
+        keywords: []
+      }
+    }
+  };
+  const metadata = buildMetadata({
+    publications: [{
+      no: "01",
+      doi: "10.1000/ambiguous",
+      title: "Ambiguous paper",
+      year: 2024
+    }],
+    googleScholar: {
+      ...previous.googleScholar,
+      citations: { all: 6500, since: null, sinceYear: null }
+    },
+    googleScholarArticles: {},
+    googleScholarStatus: "partial",
+    googleScholarReason: "partial-match",
+    semanticScholarStatus: "stale",
+    semanticScholarReason: "request-failed",
+    openAlexStatus: "stale",
+    openAlexReason: "request-failed",
+    previous,
+    now: "2026-07-30T00:00:00.000Z"
+  });
+
+  assert.equal(metadata.schemaVersion, 3);
+  assert.equal(metadata.totals.googleScholarCitations, 6500);
+  assert.equal(metadata.publications["10.1000/ambiguous"].googleScholar.citationCount, 37);
+  assert.equal(
+    metadata.publications["10.1000/ambiguous"].sourceFreshness.googleScholar.status,
+    "stale"
+  );
+  assert.equal(metadata.sources.googleScholar.matched, 1);
+  assert.equal(metadata.sources.googleScholar.freshMatched, 0);
+  assert.equal(validateMetadataSnapshot(metadata, ["10.1000/ambiguous"]), true);
+
+  const repeatedFailure = buildMetadata({
+    publications: [{
+      no: "01",
+      doi: "10.1000/ambiguous",
+      title: "Ambiguous paper",
+      year: 2024
+    }],
+    googleScholarStatus: "stale",
+    googleScholarReason: "request-failed",
+    semanticScholarStatus: "stale",
+    semanticScholarReason: "request-failed",
+    openAlexStatus: "stale",
+    openAlexReason: "request-failed",
+    previous: metadata,
+    now: "2026-07-31T00:00:00.000Z"
+  });
+  assert.equal(repeatedFailure.googleScholar.citations.all, 6500);
+  assert.equal(repeatedFailure.publications["10.1000/ambiguous"].googleScholar.citationCount, 37);
 });
 
 test("repeated total outages do not churn snapshot timestamps", () => {

@@ -16,6 +16,7 @@ export const requiredPages = [
   "People.dc.html",
   "Software & Data.dc.html",
   "Publications.dc.html",
+  "Statistics.dc.html",
   "Join Us.dc.html",
   "AIM.dc.html",
   "CoRE MOF Database.dc.html",
@@ -27,6 +28,8 @@ export const requiredPages = [
 
 export const requiredRuntimeFiles = [
   "support.js",
+  "force-layout.js",
+  "publication-visuals.js",
   "feed.js",
   "people-data.js",
   "image-slot.js",
@@ -40,3 +43,6 @@ export const generatedPublicationCitationFiles = [
   "exports/publications/publications.bib",
   "exports/publications/CITATION.cff"
 ];
+
+export const generatedLabStatisticsFile = "data/lab-statistics.json";
+export const generatedPublicationJcrBandsFile = "data/publication-jcr-bands.json";

@@ -80,7 +80,7 @@ function optionalText(value) {
   return cleaned || undefined;
 }
 
-function normalizeDoi(value) {
+export function normalizeDoi(value) {
   const cleaned = String(value ?? '')
     .replace(/[\u0000-\u001f\u007f]/g, '')
     .replace(/^doi:\s*/i, '')

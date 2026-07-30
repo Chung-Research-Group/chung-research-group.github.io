@@ -3,8 +3,12 @@ import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { generateAllPublicationGraphics } from "./publication-graphic.mjs";
 import { generatePublicationCitationFiles } from "./publication-citations.mjs";
+import { generateJournalTitleCards } from "./publication-visual.mjs";
+import {
+  generateLabStatisticsFile,
+  generatePublicationJcrBandsFile
+} from "./lab-statistics.mjs";
 import { rootFilePatterns, staticDirectories } from "./site-files.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -46,7 +50,8 @@ for (const directory of staticDirectories) {
   });
 }
 
-const generatedGraphics = await generateAllPublicationGraphics({
+const generatedJournalCards = await generateJournalTitleCards({
+  visualsPath: path.join(repoRoot, "publication-visuals.js"),
   feedPath: path.join(repoRoot, "feed.js"),
   outputRoot
 });
@@ -55,6 +60,22 @@ await generatePublicationCitationFiles({
   feedPath: path.join(repoRoot, "feed.js"),
   bibliographyPath: path.join(repoRoot, "data/publication-bibliography.json"),
   outputRoot
+});
+
+await generateLabStatisticsFile({
+  feedPath: path.join(repoRoot, "feed.js"),
+  metadataPath: path.join(repoRoot, "data/publication-metadata.json"),
+  bibliographyPath: path.join(repoRoot, "data/publication-bibliography.json"),
+  peoplePath: path.join(repoRoot, "people-data.js"),
+  outputPath: path.join(outputRoot, "data/lab-statistics.json"),
+  impactFactorJson: process.env.JOURNAL_IMPACT_FACTORS_JSON || null,
+  currentYear: new Date().getUTCFullYear()
+});
+
+await generatePublicationJcrBandsFile({
+  feedPath: path.join(repoRoot, "feed.js"),
+  outputPath: path.join(outputRoot, "data/publication-jcr-bands.json"),
+  impactFactorJson: process.env.JOURNAL_IMPACT_FACTORS_JSON || null
 });
 
 await writeFile(path.join(outputRoot, ".nojekyll"), "");
@@ -76,6 +97,7 @@ await writeFile(
 
 console.log(
   `Built ${Object.keys(manifest).length} site files in dist/, including `
-  + `${generatedGraphics.length} deterministic publication graphics and citation exports.`
+  + `${generatedJournalCards.length} journal title cards, citation exports, `
+  + "the lab statistics snapshot, and the public per-publication JCR band snapshot."
 );
 

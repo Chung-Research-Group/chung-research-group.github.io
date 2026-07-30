@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab Statistics | Chung Research Group</title>
+<meta name="description" content="Publication, journal, collaboration, citation, research-area, and team statistics for the Chung Research Group at Pusan National University.">
+<link rel="canonical" href="https://chung-research-group.github.io/Statistics.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lab Statistics | Chung Research Group">
+<meta property="og:description" content="Publication, journal, collaboration, citation, research-area, and team statistics derived from the Chung Research Group's public datasets.">
+<meta property="og:url" content="https://chung-research-group.github.io/Statistics.dc.html">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+<script src="./force-layout.js"></script>
+</head>
+<body id="top">
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
+<script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
+<style>
+:root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
+body{margin:0;background:var(--color-bg);text-wrap:pretty}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
+nav.nav a{font-size:19px;transition:transform .12s ease}
+nav.nav a:hover{transform:translateY(-2px)}
+a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
+button,select{font:inherit}
+select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+.sr-only{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;white-space:nowrap !important;border:0 !important}
+.skip-link{position:fixed;z-index:100;top:12px;left:12px;padding:10px 14px;background:var(--color-text);color:var(--color-bg);font-family:var(--font-heading);font-weight:800;text-decoration:none;transform:translateY(-180%)}
+.skip-link:focus{color:var(--color-bg);transform:translateY(0)}
+
+.statistics-intro{max-width:900px;font-size:19px;line-height:30px;margin:18px 0 0;color:var(--color-text)}
+.statistics-caveat{display:flex;align-items:flex-start;gap:10px;max-width:900px;margin:18px 0 0;padding:12px 14px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:16px;line-height:24px}
+.statistics-caveat strong{font-family:var(--font-heading);font-weight:800}
+.statistics-state{margin:32px 0 56px;padding:26px;border:2px solid var(--color-divider);font-size:18px;line-height:28px}
+.statistics-state[data-tone="error"]{border-left:7px solid #a52a1d;background:color-mix(in srgb,#a52a1d 5%,var(--color-bg))}
+.statistics-section{padding:42px 0;border-top:2px solid var(--color-divider)}
+.statistics-section-heading{display:flex;align-items:end;justify-content:space-between;gap:18px 32px;flex-wrap:wrap;margin:0 0 26px}
+.statistics-section-title{font-family:var(--font-heading);font-size:31px;line-height:38px;font-weight:800;letter-spacing:-.015em;margin:0}
+.statistics-section-title span{display:block;margin-top:3px;font-size:17px;line-height:24px;letter-spacing:.03em;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
+.statistics-section-note{max-width:690px;font-size:16px;line-height:24px;margin:0;color:color-mix(in srgb,var(--color-text) 76%,transparent)}
+.statistics-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--color-text);border-bottom:2px solid var(--color-text)}
+.statistics-summary-card{min-width:0;padding:24px 22px;border-left:1px solid var(--color-divider)}
+.statistics-summary-card:first-child{border-left:0}
+.statistics-kicker{display:block;font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-700)}
+.statistics-value{display:block;margin-top:8px;font-family:var(--font-heading);font-size:46px;line-height:52px;font-weight:800;font-feature-settings:"tnum" 1;color:var(--color-accent)}
+.statistics-card-label{display:block;margin-top:7px;font-size:17px;line-height:24px;font-weight:700}
+.statistics-card-meta{display:block;margin-top:5px;font-size:14px;line-height:21px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
+.statistics-bars{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.statistics-bar-row{display:grid;grid-template-columns:minmax(104px,160px) minmax(0,1fr) minmax(44px,auto);gap:12px;align-items:center;min-height:30px}
+.statistics-bar-label{font-family:var(--font-heading);font-size:15px;line-height:21px;font-weight:800}
+.statistics-bar-track{position:relative;height:18px;background:color-mix(in srgb,var(--color-text) 9%,transparent);overflow:hidden}
+.statistics-bar-fill{display:block;height:100%;min-width:0;background:var(--bar-color,var(--color-accent))}
+.statistics-bar-value{font-family:var(--font-heading);font-size:15px;line-height:21px;font-weight:800;text-align:right;font-feature-settings:"tnum" 1}
+.statistics-bar-breakdown{grid-column:2/4;margin:-5px 0 2px;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 67%,transparent)}
+.statistics-journal-row{grid-template-columns:minmax(160px,260px) minmax(0,1fr) minmax(44px,auto)}
+.statistics-source-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--color-text);border-bottom:2px solid var(--color-text);margin-bottom:32px}
+.statistics-source-card{min-width:0;padding:20px;border-left:1px solid var(--color-divider)}
+.statistics-source-card:first-child{border-left:0}
+.statistics-source-card[data-selected="true"]{background:var(--color-accent-100);box-shadow:inset 0 -5px 0 var(--color-accent)}
+.statistics-source-name{display:block;font-family:var(--font-heading);font-size:17px;line-height:24px;font-weight:800}
+.statistics-source-total{display:block;margin-top:7px;font-family:var(--font-heading);font-size:34px;line-height:40px;font-weight:800;font-feature-settings:"tnum" 1;color:var(--color-accent)}
+.statistics-source-status{display:block;margin-top:5px;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
+.statistics-source-status[data-status="fresh"],.statistics-source-status[data-status="ok"]{color:#00794a}
+.statistics-source-status[data-status="stale"],.statistics-source-status[data-status="partial"]{color:#7f4e00}
+.statistics-source-status[data-status="unavailable"],.statistics-source-status[data-status="error"]{color:#a52a1d}
+.statistics-source-provider,.statistics-source-coverage,.statistics-source-history,.statistics-source-reason{display:block;margin-top:7px;font-size:13px;line-height:19px}
+.statistics-source-provider,.statistics-source-coverage,.statistics-source-history{color:color-mix(in srgb,var(--color-text) 72%,transparent)}
+.statistics-source-history[data-history-status="partial"]{color:#7f4e00;font-weight:700}
+.statistics-source-history[data-history-status="unavailable"]{color:#a52a1d}
+.statistics-source-reason{padding-top:7px;border-top:1px solid var(--color-divider);color:color-mix(in srgb,var(--color-text) 82%,transparent)}
+.statistics-select-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.statistics-select-wrap label{font-family:var(--font-heading);font-size:15px;line-height:21px;font-weight:800}
+.statistics-select{min-height:42px;padding:7px 38px 7px 11px;border:2px solid var(--color-divider);border-radius:0;color:var(--color-text);background:var(--color-bg)}
+.statistics-empty-trend{padding:24px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:17px;line-height:26px}
+.statistics-history-note{margin:18px 0 0;padding:13px 15px;border-left:5px solid var(--color-accent);background:var(--color-accent-100);font-size:14px;line-height:22px}
+.statistics-history-note[data-history-status="partial"]{border-left-color:var(--color-accent-2);background:var(--color-accent-2-100)}
+.statistics-history-note[data-history-status="unavailable"]{border-left-color:#a52a1d;background:color-mix(in srgb,#a52a1d 5%,var(--color-bg))}
+.statistics-metrics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--color-text);border-bottom:2px solid var(--color-text)}
+.statistics-metric{min-width:0;padding:24px 22px;border-left:1px solid var(--color-divider)}
+.statistics-metric:first-child{border-left:0}
+.statistics-metric-value{display:block;margin-top:8px;font-family:var(--font-heading);font-size:46px;line-height:52px;font-weight:800;font-feature-settings:"tnum" 1;color:var(--color-accent)}
+.statistics-metric-status{display:block;margin-top:7px;font-size:15px;line-height:23px;font-weight:700}
+.statistics-metric-explanation{max-width:620px;margin:9px 0 0;font-size:14px;line-height:22px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
+.statistics-metric-link{display:inline-block;margin-top:10px;font-family:var(--font-heading);font-size:14px;line-height:21px;font-weight:800}
+.statistics-unavailable{margin:18px 0 0;padding:16px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:15px;line-height:23px}
+.statistics-network{position:relative;width:100%;margin:0;overflow:hidden}
+.statistics-network-canvas{display:block;width:100%;height:auto;aspect-ratio:1000/680;overflow:hidden}
+.statistics-network-line{stroke:color-mix(in srgb,var(--color-text) 27%,transparent);stroke-linecap:round;vector-effect:non-scaling-stroke}
+.statistics-network-node{fill:var(--color-accent-200);stroke:var(--color-accent-700);stroke-width:2;vector-effect:non-scaling-stroke}
+.statistics-network-node[data-focal="true"]{fill:var(--color-accent);stroke:var(--color-accent-900);stroke-width:3}
+.statistics-network-initials-box,.statistics-network-label-box{overflow:visible;pointer-events:none}
+.statistics-network-initials{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--font-heading);font-size:12px;line-height:1;font-weight:800;color:var(--color-accent-900)}
+.statistics-network-node-group[data-focal="true"] .statistics-network-initials{color:#ffffff}
+.statistics-network-label{width:100%;overflow:hidden;font-family:var(--font-heading);font-size:12px;line-height:16px;font-weight:800;text-align:center;color:var(--color-text);white-space:nowrap;text-overflow:ellipsis}
+.statistics-network-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 22px;margin:12px 0 0;padding:0;list-style:none;font-size:13px;line-height:20px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
+.statistics-network-legend li{display:inline-flex;align-items:center;gap:7px}
+.statistics-network-swatch{display:inline-block;width:13px;height:13px;border-radius:50%;background:var(--color-accent-200);border:2px solid var(--color-accent-700)}
+.statistics-network-swatch[data-focal="true"]{background:var(--color-accent);border-color:var(--color-accent-900)}
+.statistics-network-edge-key{display:inline-block;width:28px;height:3px;background:color-mix(in srgb,var(--color-text) 38%,transparent)}
+.statistics-mobile-collaborators{display:none}
+.statistics-collaborator-intro{margin:0 0 16px;font-size:15px;line-height:23px;color:color-mix(in srgb,var(--color-text) 76%,transparent)}
+.statistics-collaborator-row{grid-template-columns:minmax(130px,220px) minmax(0,1fr) minmax(44px,auto)}
+.statistics-details{margin-top:22px;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)}
+.statistics-details summary{padding:12px 4px;cursor:pointer;font-family:var(--font-heading);font-size:15px;line-height:22px;font-weight:800;color:var(--color-accent-700)}
+.statistics-table-wrap{overflow-x:auto;padding:0 0 16px}
+.statistics-table{display:table;width:100%;border-collapse:collapse;font-size:15px;line-height:22px}
+.statistics-table-caption{display:table-caption;padding:0 10px 8px;text-align:left}
+.statistics-table-rowgroup{display:table-row-group}
+.statistics-table-row{display:table-row}
+.statistics-table-cell{display:table-cell;padding:8px 10px;border-top:1px solid var(--color-divider);text-align:left}
+.statistics-table-cell[role="columnheader"],.statistics-table-cell[role="rowheader"]{font-family:var(--font-heading);font-weight:800;background:color-mix(in srgb,var(--color-text) 4%,transparent)}
+.statistics-table-cell:last-child{text-align:right;font-feature-settings:"tnum" 1}
+.statistics-status-grid{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,2fr);gap:18px 40px;padding:24px 0;border-top:2px solid var(--color-text)}
+.statistics-as-of{font-family:var(--font-heading);font-size:20px;line-height:28px;font-weight:800;margin:0}
+.statistics-as-of span{display:block;margin-top:3px;font-family:var(--font-body);font-size:14px;line-height:21px;font-weight:400;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
+.statistics-status-list{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.statistics-status-pill{display:inline-flex;align-items:center;gap:7px;padding:5px 8px;border:1px solid var(--color-divider);font-size:13px;line-height:19px;font-weight:700}
+.statistics-status-dot{width:8px;height:8px;background:#5B6770}
+.statistics-status-pill[data-status="fresh"] .statistics-status-dot,.statistics-status-pill[data-status="ok"] .statistics-status-dot{background:#00a651}
+.statistics-status-pill[data-status="stale"] .statistics-status-dot,.statistics-status-pill[data-status="partial"] .statistics-status-dot{background:#ffa500}
+.statistics-status-pill[data-status="unavailable"] .statistics-status-dot,.statistics-status-pill[data-status="error"] .statistics-status-dot{background:#a52a1d}
+
+@media (max-width:840px){
+  nav.nav{position:static !important;flex-wrap:wrap;gap:6px 18px;padding:12px 20px !important}
+  .statistics-page-shell{padding-left:20px !important;padding-right:20px !important}
+  .statistics-page-header{padding-top:38px !important}
+  .statistics-page-title{font-size:34px !important;line-height:40px !important;flex-wrap:wrap;gap:7px !important}
+  .statistics-page-title span{font-size:19px !important;line-height:26px !important}
+  .statistics-summary-grid,.statistics-source-grid,.statistics-metrics-grid{grid-template-columns:1fr}
+  .statistics-summary-card,.statistics-source-card,.statistics-metric{border-left:0;border-top:1px solid var(--color-divider)}
+  .statistics-summary-card:first-child,.statistics-source-card:first-child,.statistics-metric:first-child{border-top:0}
+  .statistics-status-grid{grid-template-columns:1fr}
+  .statistics-network-canvas,.statistics-network-legend{display:none}
+  .statistics-mobile-collaborators{display:block}
+}
+@media (max-width:600px){
+  .statistics-collaborator-row{grid-template-columns:minmax(0,1fr) 38px;gap:7px 8px}
+  .statistics-collaborator-row .statistics-bar-track{grid-column:1/3;grid-row:2}
+  .statistics-collaborator-row .statistics-bar-value{grid-column:2;grid-row:1}
+  .back-to-top{display:none !important}
+}
+@media (max-width:440px){
+  nav.nav{padding-left:14px !important;padding-right:14px !important}
+  nav.nav .nav-brand{width:100%;flex-wrap:wrap}
+  nav.nav a{font-size:15px}
+  .statistics-page-shell{padding-left:14px !important;padding-right:14px !important}
+  .statistics-intro{font-size:17px;line-height:27px}
+  .statistics-section{padding:34px 0}
+  .statistics-section-title{font-size:26px;line-height:32px}
+  .statistics-bar-row{grid-template-columns:minmax(78px,102px) minmax(0,1fr) 38px;gap:8px}
+  .statistics-bar-label,.statistics-bar-value{font-size:13px;line-height:19px}
+  .statistics-bar-breakdown{grid-column:1/4;margin:0 0 4px}
+  .statistics-journal-row{grid-template-columns:minmax(0,1fr) 38px;gap:7px 8px}
+  .statistics-journal-row .statistics-bar-track{grid-column:1/3;grid-row:2}
+  .statistics-journal-row .statistics-bar-value{grid-column:2;grid-row:1}
+  .statistics-summary-card,.statistics-source-card,.statistics-metric{padding:18px 14px}
+  .statistics-value{font-size:39px;line-height:45px}
+  .statistics-metric-value{font-size:39px;line-height:45px}
+  .statistics-select-wrap{align-items:stretch;flex-direction:column}
+  .statistics-select{width:100%}
+  footer{padding-left:14px !important;padding-right:14px !important}
+  .back-to-top{right:14px !important;bottom:14px !important}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</helmet>
+
+<div data-screen-label="Lab Statistics">
+  <a class="skip-link" href="#statistics-main">Skip to lab statistics</a>
+  <div style="height:4px;background:var(--color-accent)"></div>
+  <nav class="nav" aria-label="Primary navigation" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
+    <a class="nav-brand" href="index.html" style="display:inline-flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit"><span style="font-size:24px">Chung Research Group</span><span style="color:var(--color-accent);font-size:24px;font-family:var(--font-heading);font-weight:800">@ PNU</span></a>
+    <a href="News.dc.html">News</a>
+    <a href="People.dc.html">People</a>
+    <a href="Software %26 Data.dc.html">Software &amp; Data</a>
+    <a href="Publications.dc.html">Publications</a>
+    <a href="Statistics.dc.html" aria-current="page" style="color:var(--color-accent)">Statistics</a>
+    <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
+  </nav>
+
+  <main id="statistics-main" class="statistics-page-shell" style="padding:0 64px" data-lab-statistics tabindex="-1">
+    <header class="statistics-page-header" style="padding:48px 0 32px">
+      <h1 class="statistics-page-title" style="display:flex;align-items:baseline;gap:14px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-.02em;margin:0 0 0 -.058em">Lab Statistics. <span lang="ko" style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb,var(--color-text) 72%,transparent)">/ 연구실 통계</span></h1>
+      <p class="statistics-intro">A transparent view of the group's publication history, journal distribution, public coauthor network, research footprint, source-specific metrics, and current team composition.</p>
+      <p class="statistics-caveat"><strong>How to read citation totals.</strong><span>Google Scholar, OpenAlex, and Semantic Scholar use different coverage and matching methods. Each source is reported separately; the totals must not be added together.</span></p>
+    </header>
+
+    <div aria-live="polite" aria-atomic="true">
+      <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+        <p class="statistics-state" data-statistics-status>Loading the latest lab statistics…</p>
+      </sc-if>
+      <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+        <div class="statistics-state" data-tone="error" data-statistics-status role="alert">
+          <strong style="display:block;font-family:var(--font-heading);font-size:20px;line-height:28px">Statistics are temporarily unavailable.</strong>
+          <span>The publication and people pages remain available. Please try this page again later.</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <section class="statistics-section" aria-labelledby="statistics-summary-title">
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="statistics-summary-title">At a glance<span lang="ko">핵심 지표</span></h2>
+          <p class="statistics-section-note">{{ publicationRangeText }}</p>
+        </div>
+        <div class="statistics-summary-grid">
+          <article class="statistics-summary-card">
+            <span class="statistics-kicker">Research output</span>
+            <strong class="statistics-value">{{ publicationTotal }}</strong>
+            <span class="statistics-card-label">Publications</span>
+            <span class="statistics-card-meta">{{ publicationTypeText }}</span>
+          </article>
+          <article class="statistics-summary-card">
+            <span class="statistics-kicker">Selected citation source</span>
+            <strong class="statistics-value">{{ selectedCitationTotal }}</strong>
+            <span class="statistics-card-label">Citations · {{ selectedCitationLabel }}</span>
+            <span class="statistics-card-meta">{{ selectedCitationStatus }}</span>
+          </article>
+          <article class="statistics-summary-card">
+            <span class="statistics-kicker">Current team</span>
+            <strong class="statistics-value">{{ teamTotal }}</strong>
+            <span class="statistics-card-label">Researchers, excluding PI</span>
+            <span class="statistics-card-meta">Postdoctoral, graduate, and undergraduate researchers</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="publications-over-time-title" data-publications-by-year>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="publications-over-time-title">Publications over time<span lang="ko">연도별 논문 수</span></h2>
+          <p class="statistics-section-note">Counts follow the curated publication list. A zero year is retained, and the current year is marked as year-to-date.</p>
+        </div>
+        <ol class="statistics-bars" aria-label="Publications by year">
+          <sc-for list="{{ publicationYears }}" as="row" hint-placeholder-count="8">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+              <span class="statistics-bar-label">{{ row.label }}</span>
+              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
+              <strong class="statistics-bar-value">{{ row.count }}</strong>
+            </li>
+          </sc-for>
+        </ol>
+        <details class="statistics-details">
+          <summary>View publication counts as a table</summary>
+          <div class="statistics-table-wrap">
+            <div class="statistics-table" role="table" aria-label="Annual publication counts">
+              <div class="statistics-table-caption">Annual publication counts</div>
+              <div class="statistics-table-rowgroup" role="rowgroup">
+                <div class="statistics-table-row" role="row">
+                  <span class="statistics-table-cell" role="columnheader">Year</span>
+                  <span class="statistics-table-cell" role="columnheader">Status</span>
+                  <span class="statistics-table-cell" role="columnheader">Publications</span>
+                </div>
+              </div>
+              <div class="statistics-table-rowgroup" role="rowgroup">
+                <sc-for list="{{ publicationYears }}" as="row" hint-placeholder-count="8">
+                  <div class="statistics-table-row" role="row">
+                    <span class="statistics-table-cell" role="rowheader">{{ row.label }}</span>
+                    <span class="statistics-table-cell" role="cell">{{ row.status }}</span>
+                    <span class="statistics-table-cell" role="cell">{{ row.count }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="journal-distribution-title" data-journal-distribution>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="journal-distribution-title">Journal distribution<span lang="ko">저널별 논문 분포</span></h2>
+          <p class="statistics-section-note">{{ journalNote }}</p>
+        </div>
+        <sc-if value="{{ journalDistributionAvailable }}" hint-placeholder-val="{{ true }}">
+          <ul class="statistics-bars" aria-label="Highlighted publications by journal" data-journal-highlights>
+            <sc-for list="{{ journalHighlights }}" as="row" hint-placeholder-count="8">
+              <li class="statistics-bar-row statistics-journal-row" aria-label="{{ row.aria }}">
+                <span class="statistics-bar-label">{{ row.name }}</span>
+                <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
+                <strong class="statistics-bar-value">{{ row.count }}</strong>
+              </li>
+            </sc-for>
+          </ul>
+          <details class="statistics-details">
+            <summary>View journal counts as a table</summary>
+            <div class="statistics-table-wrap">
+              <div class="statistics-table" role="table" aria-label="Publications by journal">
+                <div class="statistics-table-caption">Publications by journal</div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <div class="statistics-table-row" role="row">
+                    <span class="statistics-table-cell" role="columnheader">Journal</span>
+                    <span class="statistics-table-cell" role="columnheader">Publications</span>
+                  </div>
+                </div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <sc-for list="{{ journals }}" as="row" hint-placeholder-count="8">
+                    <div class="statistics-table-row" role="row">
+                      <span class="statistics-table-cell" role="rowheader">{{ row.name }}</span>
+                      <span class="statistics-table-cell" role="cell">{{ row.count }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </details>
+        </sc-if>
+        <sc-if value="{{ journalDistributionUnavailable }}" hint-placeholder-val="{{ false }}">
+          <p class="statistics-unavailable">Journal distribution is unavailable in this snapshot. No journal names or counts have been inferred.</p>
+        </sc-if>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="research-footprint-title" data-research-footprint>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="research-footprint-title">Research-area footprint<span lang="ko">연구 분야 분포</span></h2>
+          <p class="statistics-section-note">{{ researchAreaNote }} Counts overlap: one paper can contribute to more than one area, so these values are not parts of a single 100% total.</p>
+        </div>
+        <ul class="statistics-bars" aria-label="Publications by overlapping research area">
+          <sc-for list="{{ researchAreas }}" as="row" hint-placeholder-count="5">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+              <span class="statistics-bar-label">{{ row.name }}</span>
+              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
+              <strong class="statistics-bar-value">{{ row.count }}</strong>
+              <sc-if value="{{ row.hasBreakdown }}" hint-placeholder-val="{{ false }}"><span class="statistics-bar-breakdown">{{ row.breakdown }}</span></sc-if>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="citation-sources-title">
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="citation-sources-title">Citation sources<span lang="ko">인용 출처별 통계</span></h2>
+          <p class="statistics-section-note">Source totals are intentionally kept separate because database coverage differs. Partial coverage means at least one catalogue publication was not matched, so the displayed total covers matched records only.</p>
+        </div>
+        <div class="statistics-source-grid" aria-label="Citation totals by source">
+          <sc-for list="{{ citationSources }}" as="source" hint-placeholder-count="3">
+            <article class="statistics-source-card" data-citation-source-card data-selected="{{ source.selected }}">
+              <span class="statistics-source-name">{{ source.label }}</span>
+              <strong class="statistics-source-total">{{ source.totalText }}</strong>
+              <span class="statistics-source-status" data-status="{{ source.status }}">{{ source.statusText }}</span>
+              <span class="statistics-source-provider">{{ source.providerText }}</span>
+              <span class="statistics-source-coverage">{{ source.coverageText }}</span>
+              <span class="statistics-source-history" data-history-status="{{ source.historyStatus }}">{{ source.historyText }}</span>
+              <sc-if value="{{ source.reasonAvailable }}" hint-placeholder-val="{{ false }}">
+                <span class="statistics-source-reason">{{ source.reasonText }}</span>
+              </sc-if>
+            </article>
+          </sc-for>
+        </div>
+
+        <div class="statistics-section-heading" style="align-items:center">
+          <h3 style="font-family:var(--font-heading);font-size:23px;line-height:30px;font-weight:800;margin:0">{{ citationTrendHeading }}</h3>
+          <div class="statistics-select-wrap">
+            <label for="citation-source-select">Citation source</label>
+            <select id="citation-source-select" class="statistics-select" value="{{ selectedCitationId }}" onChange="{{ onCitationSourceChange }}">
+              <sc-for list="{{ citationSources }}" as="source" hint-placeholder-count="3">
+                <option value="{{ source.id }}">{{ source.label }}</option>
+              </sc-for>
+            </select>
+            <label for="citation-mode-select">History view</label>
+            <select id="citation-mode-select" class="statistics-select" value="{{ selectedCitationMode }}" onChange="{{ onCitationModeChange }}">
+              <option value="annual">Annual</option>
+              <option value="cumulative">Cumulative</option>
+            </select>
+          </div>
+        </div>
+
+        <div data-citation-trend aria-live="polite">
+          <sc-if value="{{ citationTrendAvailable }}" hint-placeholder-val="{{ true }}">
+            <ol class="statistics-bars" aria-label="{{ citationTrendAriaLabel }}">
+              <sc-for list="{{ citationYears }}" as="row" hint-placeholder-count="8">
+                <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+                  <span class="statistics-bar-label">{{ row.label }}</span>
+                  <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent-2)"></span></span>
+                  <strong class="statistics-bar-value">{{ row.countText }}</strong>
+                </li>
+              </sc-for>
+            </ol>
+            <p class="statistics-history-note" data-citation-history-note data-history-status="{{ selectedCitationHistoryStatus }}">{{ selectedCitationHistoryText }}</p>
+          </sc-if>
+          <sc-if value="{{ citationTrendUnavailable }}" hint-placeholder-val="{{ false }}">
+            <p class="statistics-empty-trend">Annual and cumulative history are unavailable for {{ selectedCitationLabel }} because this provider snapshot contains no citation-year series. Its source status, provider, and coverage are shown above.</p>
+          </sc-if>
+        </div>
+
+        <details class="statistics-details">
+          <summary>View selected {{ citationModeLabelLower }} citation history as a table</summary>
+          <sc-if value="{{ citationTrendAvailable }}" hint-placeholder-val="{{ true }}">
+            <div class="statistics-table-wrap">
+              <div class="statistics-table" role="table" aria-label="{{ selectedCitationLabel }} {{ citationModeLabelLower }} citation counts">
+                <div class="statistics-table-caption">{{ selectedCitationLabel }} {{ citationModeLabelLower }} citation counts</div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <div class="statistics-table-row" role="row">
+                    <span class="statistics-table-cell" role="columnheader">Year</span>
+                    <span class="statistics-table-cell" role="columnheader">{{ citationTableValueLabel }}</span>
+                  </div>
+                </div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <sc-for list="{{ citationYears }}" as="row" hint-placeholder-count="8">
+                    <div class="statistics-table-row" role="row">
+                      <span class="statistics-table-cell" role="rowheader">{{ row.label }}</span>
+                      <span class="statistics-table-cell" role="cell">{{ row.countText }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ citationTrendUnavailable }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;padding:0 10px 16px;font-size:15px;line-height:23px">No annual or cumulative rows are available for this source.</p>
+          </sc-if>
+        </details>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="research-metrics-title" data-research-metrics>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="research-metrics-title">Research metrics<span lang="ko">연구 성과 지표</span></h2>
+          <p class="statistics-section-note">Each metric is shown only from its named source. Missing data are reported as unavailable, not as zero, and no citation or CiteScore proxy is substituted for Journal Impact Factor.</p>
+        </div>
+        <div class="statistics-metrics-grid">
+          <article class="statistics-metric" data-h-index-status="{{ hIndexStatus }}">
+            <span class="statistics-kicker">{{ hIndexSourceLabel }}</span>
+            <strong class="statistics-metric-value">{{ hIndexText }}</strong>
+            <span class="statistics-card-label">h-index</span>
+            <span class="statistics-metric-status">{{ hIndexStatusText }}</span>
+            <p class="statistics-metric-explanation">{{ hIndexExplanation }}</p>
+            <p class="statistics-metric-explanation">{{ hIndexProviderText }}</p>
+            <p class="statistics-metric-explanation">{{ hIndexMethodText }}</p>
+            <p class="statistics-metric-explanation">{{ hIndexCoverageText }}</p>
+            <sc-if value="{{ hIndexReasonAvailable }}" hint-placeholder-val="{{ false }}">
+              <p class="statistics-source-reason">{{ hIndexReason }}</p>
+            </sc-if>
+            <sc-if value="{{ hIndexProfileAvailable }}" hint-placeholder-val="{{ false }}">
+              <a class="statistics-metric-link" href="{{ hIndexProfileUrl }}" target="_blank" rel="noopener noreferrer">{{ hIndexLinkText }}</a>
+            </sc-if>
+          </article>
+          <article class="statistics-metric" data-impact-factor-status="{{ impactFactorStatus }}">
+            <span class="statistics-kicker">{{ impactFactorMetricLabel }}</span>
+            <strong class="statistics-metric-value">{{ impactFactorTotalText }}</strong>
+            <span class="statistics-card-label">Cumulative Journal Impact Factor</span>
+            <span class="statistics-metric-status">{{ impactFactorStatusText }}</span>
+            <p class="statistics-metric-explanation">{{ impactFactorCoverageText }}</p>
+            <p class="statistics-metric-explanation"><strong>Formula:</strong> sum the licensed journal-level JIF assigned to each covered catalogue publication, counting each publication once. Missing matches are excluded, not counted as zero.</p>
+            <p class="statistics-metric-explanation"><strong>Interpretation:</strong> JIF provides journal-level context; it is not a measure of an individual article's or researcher's quality.</p>
+            <sc-if value="{{ impactFactorProvenanceAvailable }}" hint-placeholder-val="{{ false }}">
+              <div data-impact-factor-provenance>
+                <p class="statistics-metric-explanation">{{ impactFactorMetricText }}</p>
+                <p class="statistics-metric-explanation">{{ impactFactorSourceText }}</p>
+                <p class="statistics-metric-explanation">{{ impactFactorEditionText }}</p>
+                <p class="statistics-metric-explanation">{{ impactFactorAuthorizationText }}</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ impactFactorReasonAvailable }}" hint-placeholder-val="{{ true }}">
+              <p class="statistics-unavailable">{{ impactFactorReason }}</p>
+            </sc-if>
+          </article>
+        </div>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="journal-standing-title" data-journal-standing data-journal-standing-status="{{ journalStandingStatus }}">
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="journal-standing-title">Previous-year JCR standing<span lang="ko">게재연도 전년도 JCR</span></h2>
+          <p class="statistics-section-note">Publication year Y is evaluated with JCR data year Y−1. For example, a 2026 publication uses 2025 JCR and a 2025 publication uses 2024 JCR.</p>
+        </div>
+        <sc-if value="{{ journalStandingAvailable }}" hint-placeholder-val="{{ false }}">
+          <ol class="statistics-bars" data-journal-standing-bars aria-label="Exclusive previous-year JCR standing bands">
+            <sc-for list="{{ journalStandingBands }}" as="row" hint-placeholder-count="8">
+              <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+                <span class="statistics-bar-label">{{ row.label }}</span>
+                <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
+                <strong class="statistics-bar-value">{{ row.count }}</strong>
+              </li>
+            </sc-for>
+          </ol>
+          <p class="statistics-history-note" data-history-status="{{ journalStandingStatus }}">{{ journalStandingCoverageText }}</p>
+          <div data-journal-standing-provenance>
+            <p class="statistics-metric-explanation">{{ journalStandingSourceText }}</p>
+            <p class="statistics-metric-explanation">{{ journalStandingEditionText }}</p>
+            <p class="statistics-metric-explanation">{{ journalStandingAuthorizationText }}</p>
+            <p class="statistics-metric-explanation">{{ journalStandingYearBasisText }}</p>
+          </div>
+          <p class="statistics-metric-explanation"><strong>Exclusive bands:</strong> Top 1% ≥99; Top 5% 95–&lt;99; Top 10% 90–&lt;95; Other Q1 75–&lt;90; Q2 50–&lt;75; Q3 25–&lt;50; Q4 &lt;25. Each publication is counted once using its highest supplied JIF percentile across JCR categories.</p>
+          <p class="statistics-metric-explanation"><strong>Missing history:</strong> Unavailable includes publications without an authorized JCR ranking for year Y−1. JCR data matching publication year Y, the latest edition, or any other year are never substituted.</p>
+          <sc-if value="{{ journalStandingReasonAvailable }}" hint-placeholder-val="{{ false }}">
+            <p class="statistics-source-reason">{{ journalStandingReason }}</p>
+          </sc-if>
+        </sc-if>
+        <sc-if value="{{ journalStandingUnavailable }}" hint-placeholder-val="{{ true }}">
+          <p class="statistics-unavailable" data-journal-standing-unavailable>{{ journalStandingReason }}</p>
+          <p class="statistics-metric-explanation">{{ journalStandingYearBasisText }} Publication-year or current JCR percentiles and quartiles cannot replace unavailable year Y−1 data.</p>
+        </sc-if>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="coauthor-network-title" data-coauthor-network>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="coauthor-network-title">Coauthor network<span lang="ko">공동연구 네트워크</span></h2>
+          <p class="statistics-section-note">{{ coauthorNetworkSummary }}</p>
+        </div>
+        <sc-if value="{{ coauthorNetworkAvailable }}" hint-placeholder-val="{{ true }}">
+          <figure class="statistics-network">
+            <svg class="statistics-network-canvas" viewBox="0 0 1000 680" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="coauthor-network-visual-title coauthor-network-visual-desc" data-force-layout="{{ coauthorLayoutMethod }}" data-force-seed="{{ coauthorLayoutSeed }}">
+              <title id="coauthor-network-visual-title">Selected coauthor network from the public publication catalog</title>
+              <desc id="coauthor-network-visual-desc">A deterministic force-directed layout. The principal investigator is anchored at the center for orientation. Link attraction, author repulsion, collision avoidance, and a center force position every other author. Node size represents publications in this catalog, and line width represents shared publications. A complete text table for the displayed network follows.</desc>
+              <sc-for list="{{ coauthorEdges }}" as="edge" hint-placeholder-count="16">
+                <line class="statistics-network-line" aria-hidden="true" x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" strokeWidth="{{ edge.strokeWidth }}"></line>
+              </sc-for>
+              <sc-for list="{{ coauthorNodes }}" as="node" hint-placeholder-count="12">
+                <g class="statistics-network-node-group" aria-hidden="true" data-node-id="{{ node.id }}" data-node-x="{{ node.x }}" data-node-y="{{ node.y }}" data-node-radius="{{ node.radius }}" data-label-y="{{ node.labelY }}" data-focal="{{ node.focal }}" transform="translate({{ node.x }} {{ node.y }})">
+                  <circle class="statistics-network-node" data-focal="{{ node.focal }}" r="{{ node.radius }}"></circle>
+                  <foreignObject class="statistics-network-initials-box" x="-24" y="-12" width="48" height="24">
+                    <div class="statistics-network-initials">{{ node.initials }}</div>
+                  </foreignObject>
+                  <foreignObject class="statistics-network-label-box" x="-77" y="{{ node.labelY }}" width="154" height="18">
+                    <div class="statistics-network-label">{{ node.displayLabel }}</div>
+                  </foreignObject>
+                </g>
+              </sc-for>
+            </svg>
+            <div class="statistics-mobile-collaborators" data-top-collaborators>
+              <p class="statistics-collaborator-intro">Top collaborators ranked by publications shared directly with the principal investigator in this catalogue.</p>
+              <ol class="statistics-bars" aria-label="Top collaborators by publications shared with the principal investigator">
+                <sc-for list="{{ topCollaborators }}" as="row" hint-placeholder-count="8">
+                  <li class="statistics-bar-row statistics-collaborator-row" aria-label="{{ row.aria }}">
+                    <span class="statistics-bar-label">{{ row.rank }}. {{ row.name }}</span>
+                    <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
+                    <strong class="statistics-bar-value">{{ row.count }}</strong>
+                  </li>
+                </sc-for>
+              </ol>
+            </div>
+            <figcaption>
+              <ul class="statistics-network-legend" aria-label="Coauthor network legend">
+                <li><span class="statistics-network-swatch" data-focal="true" aria-hidden="true"></span>Principal investigator</li>
+                <li><span class="statistics-network-swatch" aria-hidden="true"></span>Public bibliography coauthor</li>
+                <li><span class="statistics-network-edge-key" aria-hidden="true"></span>Shared publication link</li>
+              </ul>
+            </figcaption>
+          </figure>
+          <details class="statistics-details">
+            <summary>View the displayed coauthor network as tables</summary>
+            <div class="statistics-table-wrap">
+              <div class="statistics-table" role="table" aria-label="Authors displayed in the coauthor network">
+                <div class="statistics-table-caption">Authors displayed in the coauthor network</div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <div class="statistics-table-row" role="row">
+                    <span class="statistics-table-cell" role="columnheader">Author</span>
+                    <span class="statistics-table-cell" role="columnheader">Role</span>
+                    <span class="statistics-table-cell" role="columnheader">Catalog publications</span>
+                  </div>
+                </div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <sc-for list="{{ coauthorNodes }}" as="node" hint-placeholder-count="12">
+                    <div class="statistics-table-row" role="row">
+                      <span class="statistics-table-cell" role="rowheader">{{ node.label }}</span>
+                      <span class="statistics-table-cell" role="cell">{{ node.role }}</span>
+                      <span class="statistics-table-cell" role="cell">{{ node.publicationCount }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div class="statistics-table" role="table" aria-label="Displayed coauthorship links" style="margin-top:22px">
+                <div class="statistics-table-caption">Displayed coauthorship links</div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <div class="statistics-table-row" role="row">
+                    <span class="statistics-table-cell" role="columnheader">Authors</span>
+                    <span class="statistics-table-cell" role="columnheader">Shared publications</span>
+                  </div>
+                </div>
+                <div class="statistics-table-rowgroup" role="rowgroup">
+                  <sc-for list="{{ coauthorEdges }}" as="edge" hint-placeholder-count="16">
+                    <div class="statistics-table-row" role="row">
+                      <span class="statistics-table-cell" role="rowheader">{{ edge.label }}</span>
+                      <span class="statistics-table-cell" role="cell">{{ edge.publicationCount }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </details>
+        </sc-if>
+        <sc-if value="{{ coauthorNetworkUnavailable }}" hint-placeholder-val="{{ false }}">
+          <p class="statistics-unavailable">A coauthor network is unavailable in this snapshot. No author relationships have been inferred.</p>
+        </sc-if>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="team-composition-title" data-team-composition>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="team-composition-title">Current team composition<span lang="ko">현재 연구진 구성</span></h2>
+          <p class="statistics-section-note">Aggregate current-member counts only; the principal investigator is excluded.</p>
+        </div>
+        <ul class="statistics-bars" aria-label="Current researchers by role">
+          <sc-for list="{{ teamGroups }}" as="row" hint-placeholder-count="3">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+              <span class="statistics-bar-label">{{ row.label }}</span>
+              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
+              <strong class="statistics-bar-value">{{ row.count }}</strong>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+
+      <section class="statistics-section" aria-labelledby="data-status-title" data-statistics-status>
+        <div class="statistics-section-heading">
+          <h2 class="statistics-section-title" id="data-status-title">Data status<span lang="ko">데이터 기준일 및 상태</span></h2>
+        </div>
+        <div class="statistics-status-grid">
+          <p class="statistics-as-of">Data as of <time datetime="{{ dataAsOfIso }}">{{ dataAsOfText }}</time><span>This static snapshot is regenerated from the site's curated datasets.</span></p>
+          <ul class="statistics-status-list" aria-label="Citation source data status">
+            <sc-for list="{{ citationSources }}" as="source" hint-placeholder-count="3">
+              <li class="statistics-status-pill" data-status="{{ source.status }}"><span class="statistics-status-dot" aria-hidden="true"></span>{{ source.label }} · {{ source.statusText }}</li>
+            </sc-for>
+            <li class="statistics-status-pill" data-status="{{ hIndexStatus }}"><span class="statistics-status-dot" aria-hidden="true"></span>h-index · {{ hIndexStatusText }}</li>
+            <li class="statistics-status-pill" data-status="{{ impactFactorStatus }}"><span class="statistics-status-dot" aria-hidden="true"></span>Journal Impact Factor · {{ impactFactorStatusText }}</li>
+            <li class="statistics-status-pill" data-status="{{ journalStandingStatus }}"><span class="statistics-status-dot" aria-hidden="true"></span>Previous-year JCR standing · {{ journalStandingStatusText }}</li>
+          </ul>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <a class="back-to-top" href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+  <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
+    <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
+    <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <span style="display:block;margin-top:6px;color:color-mix(in srgb,var(--color-text) 72%,transparent)">© {{ footerYear }} Chung Research Group. All rights reserved. · Statistics snapshot <time datetime="{{ dataAsOfIso }}">{{ dataAsOfText }}</time></span>
+      <span style="display:block;color:color-mix(in srgb,var(--color-text) 72%,transparent)">{{ footerCitationFreshness }}</span>
+    </sc-if>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    statistics: null,
+    loading: true,
+    error: false,
+    selectedCitationSource: '',
+    selectedCitationMode: 'annual'
+  };
+
+  componentDidMount() {
+    this.loadStatistics();
+  }
+
+  async loadStatistics() {
+    try {
+      const response = await fetch('data/lab-statistics.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Lab statistics unavailable');
+      const statistics = await response.json();
+      if (!statistics || statistics.schemaVersion !== 4 || !statistics.publications || !statistics.citations || !statistics.team || !statistics.journalStanding) {
+        throw new Error('Lab statistics invalid');
+      }
+      const sources = Array.isArray(statistics.citations.sources) ? statistics.citations.sources : [];
+      const preferred = sources.find(source => source.id === 'openAlex' && Array.isArray(source.countsByYear) && source.countsByYear.length)
+        || sources.find(source => Array.isArray(source.countsByYear) && source.countsByYear.length)
+        || sources.find(source => source.id === 'googleScholar')
+        || sources[0];
+      this.setState({
+        statistics,
+        loading: false,
+        error: false,
+        selectedCitationSource: preferred ? preferred.id : '',
+        selectedCitationMode: 'annual'
+      });
+    } catch (error) {
+      this.setState({ statistics: null, loading: false, error: true });
+    }
+  }
+
+  formatDate(value) {
+    if (!value) return 'Unavailable';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  numberText(value) {
+    if (value === null || value === undefined || value === '') return '—';
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0 ? number.toLocaleString('en-US') : '—';
+  }
+
+  decimalText(value) {
+    if (value === null || value === undefined || value === '') return '—';
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0
+      ? number.toLocaleString('en-US', { maximumFractionDigits: 2 })
+      : '—';
+  }
+
+  humanizeReason(value) {
+    const reason = String(value || '').trim();
+    if (!reason) return '';
+    const knownReasons = {
+      unconfigured: 'Automatic refresh is not configured; showing the last verified snapshot.',
+      'incomplete-catalogue-coverage': 'This value covers only the catalogue publications matched by the provider.',
+      'source-partial': 'The source snapshot has partial coverage.',
+      'source-stale': 'The source snapshot is stale.',
+      'provider-year-history-unavailable': 'The provider supplied no citation-year history.'
+    };
+    if (knownReasons[reason]) return knownReasons[reason];
+    if (/^source-status-[a-z-]+$/i.test(reason)) {
+      return 'The source reported status: ' + reason.slice('source-status-'.length).replace(/-/g, ' ') + '.';
+    }
+    if (/^[a-z0-9]+(?:-[a-z0-9]+)+$/i.test(reason)) {
+      const words = reason.replace(/-/g, ' ');
+      return words[0].toUpperCase() + words.slice(1) + '.';
+    }
+    return reason;
+  }
+
+  authorInitials(value) {
+    const parts = String(value || '')
+      .normalize('NFKC')
+      .replace(/[^\p{L}\p{N}, -]+/gu, ' ')
+      .split(/[,\s-]+/)
+      .filter(Boolean);
+    return parts.slice(0, 2).map(part => Array.from(part)[0]).join('').toUpperCase() || '•';
+  }
+
+  shortAuthorLabel(value) {
+    const characters = Array.from(String(value || '').trim());
+    return characters.length > 22 ? characters.slice(0, 21).join('') + '…' : characters.join('');
+  }
+
+  coauthorNetwork(rawNodes, rawEdges) {
+    const cached = this.coauthorNetworkCache;
+    if (cached && cached.rawNodes === rawNodes && cached.rawEdges === rawEdges) {
+      return cached.value;
+    }
+    const normalizedNodes = (Array.isArray(rawNodes) ? rawNodes : [])
+      .filter(node => node && typeof node.id === 'string' && typeof node.label === 'string')
+      .map(node => ({
+        id: node.id,
+        label: node.label.trim(),
+        publicationCount: Math.max(0, Number(node.publicationCount) || 0),
+        isPrincipalInvestigator: node.isPrincipalInvestigator === true
+      }));
+    if (!normalizedNodes.length) {
+      const empty = { nodes: [], edges: [], topCollaborators: [] };
+      this.coauthorNetworkCache = { rawNodes, rawEdges, value: empty };
+      return empty;
+    }
+
+    const focal = normalizedNodes.find(node => node.isPrincipalInvestigator) || normalizedNodes[0];
+    const collaborators = normalizedNodes
+      .filter(node => node.id !== focal.id)
+      .sort((left, right) => right.publicationCount - left.publicationCount || left.label.localeCompare(right.label));
+    const maxNodeCount = Math.max(1, ...normalizedNodes.map(node => node.publicationCount));
+    const networkNodes = [...collaborators, focal].map(node => {
+      const radius = 12 + Math.sqrt(node.publicationCount / maxNodeCount) * 15;
+      return {
+        ...node,
+        radius
+      };
+    });
+    const nodeById = new Map(networkNodes.map(node => [node.id, node]));
+    const edgeSource = (Array.isArray(rawEdges) ? rawEdges : [])
+      .filter(edge => edge && nodeById.has(edge.source) && nodeById.has(edge.target) && edge.source !== edge.target)
+      .map(edge => ({
+        source: edge.source,
+        target: edge.target,
+        publicationCount: Math.max(0, Number(edge.publicationCount) || 0)
+      }))
+      .filter(edge => edge.publicationCount > 0);
+    const layoutEngine = globalThis.MTAP_FORCE_LAYOUT;
+    if (!layoutEngine || typeof layoutEngine.layoutForceGraph !== 'function') {
+      throw new Error('Deterministic coauthor force layout is unavailable');
+    }
+    const layout = layoutEngine.layoutForceGraph(networkNodes, edgeSource, {
+      focalId: focal.id,
+      seed: 'chung-research-group-coauthors-v1',
+      width: 1000,
+      height: 680
+    });
+    const positioned = new Map(layout.nodes.map(node => [node.id, node]));
+    const nodes = networkNodes.map(node => {
+      const position = positioned.get(node.id);
+      if (!position) throw new Error('Coauthor force layout omitted node ' + node.id);
+      return {
+        ...node,
+        focal: node.id === focal.id ? 'true' : 'false',
+        radius: node.radius.toFixed(2),
+        labelY: (
+          position.y < 340 && node.id !== focal.id
+            ? -(node.radius + 22)
+            : node.radius + 7
+        ).toFixed(2),
+        x: position.x.toFixed(3),
+        y: position.y.toFixed(3),
+        initials: this.authorInitials(node.label),
+        displayLabel: this.shortAuthorLabel(node.label),
+        role: node.id === focal.id ? 'Principal investigator' : 'Coauthor'
+      };
+    });
+    const maxEdgeCount = Math.max(1, ...edgeSource.map(edge => edge.publicationCount));
+    const edges = edgeSource.map(edge => {
+      const sourceNode = nodeById.get(edge.source);
+      const targetNode = nodeById.get(edge.target);
+      const sourcePosition = positioned.get(edge.source);
+      const targetPosition = positioned.get(edge.target);
+      return {
+        ...edge,
+        x1: sourcePosition.x.toFixed(3),
+        y1: sourcePosition.y.toFixed(3),
+        x2: targetPosition.x.toFixed(3),
+        y2: targetPosition.y.toFixed(3),
+        strokeWidth: (1 + edge.publicationCount / maxEdgeCount * 4).toFixed(2),
+        label: sourceNode.label + ' — ' + targetNode.label
+      };
+    });
+    const directCollaborators = edges
+      .filter(edge => edge.source === focal.id || edge.target === focal.id)
+      .map(edge => {
+        const collaboratorId = edge.source === focal.id ? edge.target : edge.source;
+        const collaborator = nodeById.get(collaboratorId);
+        return {
+          id: collaboratorId,
+          name: collaborator ? collaborator.label : 'Coauthor',
+          count: edge.publicationCount
+        };
+      })
+      .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name))
+      .slice(0, 8);
+    const collaboratorMax = Math.max(1, ...directCollaborators.map(row => row.count));
+    const topCollaborators = directCollaborators.map((row, index) => ({
+      ...row,
+      rank: index + 1,
+      percent: Math.max(1.5, row.count / collaboratorMax * 100).toFixed(2),
+      aria: (index + 1) + '. ' + row.name + ': ' + row.count + ' shared publications'
+    }));
+    const value = {
+      nodes,
+      edges,
+      topCollaborators,
+      layoutMethod: layout.method,
+      layoutSeed: String(layout.seed)
+    };
+    this.coauthorNetworkCache = { rawNodes, rawEdges, value };
+    return value;
+  }
+
+  yearRows(points, options = {}) {
+    const source = Array.isArray(points) ? points : [];
+    if (!source.length) return [];
+    const normalized = source
+      .map(point => ({
+        year: Number(point.year),
+        count: Math.max(0, Number(point.count) || 0),
+        partial: !!point.partial
+      }))
+      .filter(point => Number.isInteger(point.year))
+      .sort((a, b) => a.year - b.year);
+    if (!normalized.length) return [];
+    const byYear = new Map(normalized.map(point => [point.year, point]));
+    const rows = [];
+    for (let year = normalized[0].year; year <= normalized[normalized.length - 1].year; year++) {
+      const point = byYear.get(year) || { year, count: 0, partial: false };
+      rows.push(point);
+    }
+    const max = Math.max(1, ...rows.map(point => point.count));
+    const partialYear = Number(options.partialYear);
+    return rows.map(point => {
+      const partial = options.showPartial
+        && (point.partial || (Number.isInteger(partialYear) && point.year === partialYear));
+      const label = String(point.year) + (partial ? ' YTD' : '');
+      return {
+        year: point.year,
+        count: point.count,
+        countText: this.numberText(point.count),
+        label,
+        status: partial ? 'Year to date' : 'Complete year',
+        percent: point.count === 0 ? 0 : Math.max(1.5, point.count / max * 100).toFixed(2),
+        aria: label + ': ' + point.count + (options.unit || '')
+      };
+    });
+  }
+
+  renderVals() {
+    const data = this.state.statistics;
+    if (!data) {
+      return {
+        loading: this.state.loading,
+        error: this.state.error,
+        ready: false,
+        publicationYears: [],
+        researchAreas: [],
+        journals: [],
+        journalHighlights: [],
+        citationSources: [],
+        citationYears: [],
+        selectedCitationMode: 'annual',
+        citationModeLabelLower: 'annual',
+        citationTrendHeading: 'Annual citation history',
+        citationTrendAriaLabel: 'Annual citations by year',
+        citationTableValueLabel: 'Citations',
+        selectedCitationHistoryStatus: 'unavailable',
+        selectedCitationHistoryText: '',
+        teamGroups: [],
+        coauthorNodes: [],
+        coauthorEdges: [],
+        topCollaborators: [],
+        journalDistributionAvailable: false,
+        journalDistributionUnavailable: true,
+        coauthorNetworkAvailable: false,
+        coauthorNetworkUnavailable: true,
+        hIndexProfileAvailable: false,
+        impactFactorUnavailable: true
+      };
+    }
+
+    const publications = data.publications || {};
+    const rawPublicationYears = Array.isArray(publications.byYear) ? publications.byYear : [];
+    const declaredPartialYear = rawPublicationYears
+      .map(point => point?.partial === true ? Number(point.year) : 0)
+      .find(year => Number.isInteger(year) && year > 0);
+    const currentYear = Number(publications.currentYear);
+    const reportingYear = declaredPartialYear
+      || (Number.isInteger(currentYear) && currentYear > 0 ? currentYear : 0);
+    const publicationYears = this.yearRows(rawPublicationYears, {
+      showPartial: true,
+      partialYear: reportingYear,
+      unit: ' publications'
+    });
+    const areaColors = {
+      computation: '#005baa',
+      physics: '#00794a',
+      materials: '#e18a00',
+      systems: '#006b73',
+      applications: '#9b2948'
+    };
+    const rawAreas = Array.isArray(data.researchAreas?.groups) ? data.researchAreas.groups : [];
+    const areaMax = Math.max(1, ...rawAreas.map(area => Number(area.count) || 0));
+    const researchAreas = rawAreas.map(area => {
+      const count = Math.max(0, Number(area.count) || 0);
+      const articleCount = Math.max(0, Number(area.articleCount) || 0);
+      const reviewCount = Math.max(0, Number(area.reviewCount) || 0);
+      return {
+        id: area.id,
+        name: area.name,
+        count,
+        articleCount,
+        reviewCount,
+        hasBreakdown: reviewCount > 0,
+        breakdown: articleCount + ' articles + ' + reviewCount + ' reviews',
+        percent: count === 0 ? 0 : Math.max(1.5, count / areaMax * 100).toFixed(2),
+        color: areaColors[area.id] || '#5B6770',
+        aria: area.name + ': ' + count + ' publications'
+      };
+    });
+
+    const rawSources = Array.isArray(data.citations?.sources) ? data.citations.sources : [];
+    const requestedId = this.state.selectedCitationSource;
+    const selectedSource = rawSources.find(source => source.id === requestedId)
+      || rawSources.find(source => source.id === 'openAlex' && Array.isArray(source.countsByYear) && source.countsByYear.length)
+      || rawSources.find(source => Array.isArray(source.countsByYear) && source.countsByYear.length)
+      || rawSources.find(source => source.id === 'googleScholar')
+      || rawSources[0]
+      || {
+        id: '',
+        label: 'Citation source',
+        total: null,
+        status: 'unavailable',
+        countsByYear: [],
+        cumulativeCountsByYear: [],
+        history: { status: 'unavailable' }
+      };
+    const statusText = source => {
+      const status = String(source.status || 'unavailable').toLowerCase();
+      const updated = source.updatedAt ? ' · updated ' + this.formatDate(source.updatedAt) : '';
+      if (status === 'fresh' || status === 'ok') return 'Current' + updated;
+      if (status === 'stale') return 'Using last available snapshot' + updated;
+      if (status === 'partial') return 'Partial coverage' + updated;
+      return 'Unavailable' + updated;
+    };
+    const optionalCount = value => {
+      if (value === null || value === undefined || value === '') return null;
+      const number = Number(value);
+      return Number.isInteger(number) && number >= 0 ? number : null;
+    };
+    const citationHistoryFacts = source => {
+      const annualPoints = Array.isArray(source.countsByYear) ? source.countsByYear : [];
+      const derivedAnnualTotal = annualPoints.reduce(
+        (sum, point) => sum + (optionalCount(point?.count) || 0),
+        0
+      );
+      const reportedTotal = optionalCount(source.history?.reportedTotal)
+        ?? optionalCount(source.total);
+      const annualTotal = annualPoints.length
+        ? (optionalCount(source.history?.annualTotal) ?? derivedAnnualTotal)
+        : null;
+      const delta = annualTotal !== null && reportedTotal !== null
+        ? reportedTotal - annualTotal
+        : null;
+      const declaredStatus = String(source.history?.status || '').toLowerCase();
+      const sourceStatus = String(source.status || 'unavailable').toLowerCase();
+      const historyStatus = !annualPoints.length
+        ? 'unavailable'
+        : ['ok', 'stale', 'partial'].includes(declaredStatus)
+          ? declaredStatus
+          : delta !== 0
+            ? 'partial'
+            : sourceStatus === 'stale'
+              ? 'stale'
+              : sourceStatus === 'partial'
+                ? 'partial'
+                : 'ok';
+      return {
+        annualPoints,
+        annualTotal,
+        reportedTotal,
+        delta,
+        historyStatus
+      };
+    };
+    const citationHistoryCardText = source => {
+      const history = citationHistoryFacts(source);
+      if (!history.annualPoints.length) {
+        return 'Citation-year history: unavailable; the provider supplied no annual series.';
+      }
+      if (history.delta > 0) {
+        return 'Citation-year history: ' + this.numberText(history.annualTotal) + ' of '
+          + this.numberText(history.reportedTotal) + ' citations assigned to a year; '
+          + this.numberText(history.delta) + ' unassigned.';
+      }
+      if (history.delta < 0) {
+        return 'Citation-year history: yearly sum exceeds the current total by '
+          + this.numberText(Math.abs(history.delta)) + '; no adjustment was made.';
+      }
+      if (history.reportedTotal !== null) {
+        return 'Citation-year history: all ' + this.numberText(history.reportedTotal)
+          + ' reported citations assigned to a year.';
+      }
+      return 'Citation-year history: ' + this.numberText(history.annualTotal)
+        + ' year-attributed citations; current total unavailable.';
+    };
+    const citationSources = rawSources.map(source => {
+      const provider = String(source.provider || '').trim();
+      const reason = String(source.reason || '').trim();
+      const matched = optionalCount(source.matched);
+      const publicationTotal = optionalCount(source.publicationTotal);
+      const sourceStatus = String(source.status || 'unavailable').toLowerCase();
+      let coverageText = 'Coverage: Not reported';
+      if (matched !== null && publicationTotal !== null) {
+        coverageText = 'Coverage: ' + this.numberText(matched) + ' of ' + this.numberText(publicationTotal) + ' catalogue publications matched';
+        if (matched < publicationTotal) {
+          coverageText += '; displayed total covers matched records only';
+        }
+      } else if (matched !== null) {
+        coverageText = 'Coverage: ' + this.numberText(matched) + ' catalogue publications matched';
+      } else if (publicationTotal !== null) {
+        coverageText = 'Coverage: matched count unavailable for ' + this.numberText(publicationTotal) + ' catalogue publications';
+      }
+      return {
+        id: source.id,
+        label: source.label,
+        totalText: this.numberText(source.total),
+        status: sourceStatus,
+        statusText: statusText(source),
+        providerText: provider ? 'Provider: ' + provider : 'Provider: Not reported',
+        coverageText,
+        historyStatus: citationHistoryFacts(source).historyStatus,
+        historyText: citationHistoryCardText(source),
+        reasonAvailable: !!reason,
+        reasonText: this.humanizeReason(reason),
+        selected: source.id === selectedSource.id ? 'true' : 'false'
+      };
+    });
+    const selectedCitationMode = this.state.selectedCitationMode === 'cumulative'
+      ? 'cumulative'
+      : 'annual';
+    const selectedHistory = citationHistoryFacts(selectedSource);
+    const annualCountByYear = new Map(
+      selectedHistory.annualPoints.map(point => [
+        Number(point.year),
+        optionalCount(point?.count) || 0
+      ])
+    );
+    let cumulativeRunningTotal = 0;
+    const fallbackCumulativePoints = [];
+    if (selectedHistory.annualPoints.length) {
+      const sortedYears = [...annualCountByYear.keys()]
+        .filter(Number.isInteger)
+        .sort((left, right) => left - right);
+      for (let year = sortedYears[0]; year <= sortedYears.at(-1); year += 1) {
+        cumulativeRunningTotal += annualCountByYear.get(year) || 0;
+        fallbackCumulativePoints.push({ year, count: cumulativeRunningTotal });
+      }
+    }
+    const cumulativePoints = Array.isArray(selectedSource.cumulativeCountsByYear)
+      && selectedSource.cumulativeCountsByYear.length
+      ? selectedSource.cumulativeCountsByYear
+      : fallbackCumulativePoints;
+    const selectedCitationPoints = selectedCitationMode === 'cumulative'
+      ? cumulativePoints
+      : selectedHistory.annualPoints;
+    const citationYears = this.yearRows(selectedCitationPoints, {
+      showPartial: true,
+      partialYear: reportingYear,
+      unit: selectedCitationMode === 'cumulative'
+        ? ' cumulative citations from provider-assigned years'
+        : ' citations'
+    });
+    let selectedCitationHistoryText;
+    if (!selectedHistory.annualPoints.length) {
+      selectedCitationHistoryText = 'No provider-assigned citation-year series is available. A cumulative series cannot be inferred from the current total alone.';
+    } else if (selectedHistory.delta > 0) {
+      selectedCitationHistoryText = 'The ' + selectedSource.label + ' current total is '
+        + this.numberText(selectedHistory.reportedTotal) + '. Provider year records account for '
+        + this.numberText(selectedHistory.annualTotal) + '; ' + this.numberText(selectedHistory.delta)
+        + (selectedHistory.delta === 1 ? ' citation has' : ' citations have')
+        + ' no provider-assigned year. '
+        + (selectedHistory.delta === 1 ? 'It is' : 'They are')
+        + ' not placed into any annual or cumulative chart year.';
+    } else if (selectedHistory.delta < 0) {
+      selectedCitationHistoryText = 'Provider year records total '
+        + this.numberText(selectedHistory.annualTotal) + ', which is '
+        + this.numberText(Math.abs(selectedHistory.delta))
+        + ' higher than the current reported total of '
+        + this.numberText(selectedHistory.reportedTotal)
+        + '. No year was altered; the discrepancy remains explicit.';
+    } else if (selectedHistory.reportedTotal !== null) {
+      selectedCitationHistoryText = 'The cumulative series is the running sum of provider-assigned annual counts and reconciles exactly to the current '
+        + selectedSource.label + ' total of ' + this.numberText(selectedHistory.reportedTotal) + '.';
+    } else {
+      selectedCitationHistoryText = 'The cumulative series is the running sum of '
+        + this.numberText(selectedHistory.annualTotal)
+        + ' provider-assigned annual citations; the current source total is unavailable.';
+    }
+
+    const rawJournals = Array.isArray(data.journals?.groups) ? data.journals.groups : [];
+    const journalMax = Math.max(1, ...rawJournals.map(journal => Number(journal.count) || 0));
+    const journals = rawJournals
+      .map(journal => ({
+        name: String(journal.name || '').trim(),
+        count: Math.max(0, Number(journal.count) || 0)
+      }))
+      .filter(journal => journal.name && journal.count > 0)
+      .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name))
+      .map(journal => ({
+        ...journal,
+        percent: Math.max(1.5, journal.count / journalMax * 100).toFixed(2),
+        aria: journal.name + ': ' + journal.count + ' publications'
+      }));
+    const recurringJournals = journals.filter(journal => journal.count >= 2);
+    const journalHighlights = recurringJournals.length ? recurringJournals : journals.slice(0, 10);
+    const distinctJournalCount = optionalCount(data.journals?.distinctCount) ?? journals.length;
+    const journalPublicationTotal = optionalCount(data.journals?.publicationTotal)
+      ?? journals.reduce((sum, journal) => sum + journal.count, 0);
+    const journalCountingMethod = String(data.journals?.countingMethod || '').trim();
+    const journalHighlightText = recurringJournals.length
+      ? this.numberText(journalHighlights.length) + ' recurring journals with two or more publications are shown; expand the table for all ' + this.numberText(distinctJournalCount) + '.'
+      : (
+          journals.length > journalHighlights.length
+            ? 'No journal repeats; the first ' + this.numberText(journalHighlights.length) + ' are shown and the table contains all ' + this.numberText(distinctJournalCount) + '.'
+            : 'All ' + this.numberText(distinctJournalCount) + ' journals are shown.'
+        );
+    const journalNote = journals.length
+      ? this.numberText(distinctJournalCount) + ' distinct journals across ' + this.numberText(journalPublicationTotal) + ' publications. ' + journalHighlightText + ' ' + journalCountingMethod
+      : 'Journal names are taken from the curated publication bibliography.';
+
+    const coauthorView = this.coauthorNetwork(data.coauthors?.nodes, data.coauthors?.edges);
+    const displayedAuthors = Math.max(0, Number(data.coauthors?.displayedAuthors) || coauthorView.nodes.length);
+    const totalAuthors = Math.max(displayedAuthors, Number(data.coauthors?.totalAuthors) || displayedAuthors);
+    const totalCollaborators = Math.max(0, Number(data.coauthors?.totalCollaborators) || Math.max(0, totalAuthors - 1));
+    const omittedAuthors = Math.max(0, totalAuthors - displayedAuthors);
+    const coauthorCountingMethod = String(data.coauthors?.countingMethod || '').trim();
+    const coauthorNetworkSummary = coauthorView.nodes.length
+      ? 'Showing ' + this.numberText(displayedAuthors) + ' of ' + this.numberText(totalAuthors) + ' public bibliography authors, including the PI'
+        + (omittedAuthors ? '; ' + this.numberText(omittedAuthors) + ' omitted for legibility' : '')
+        + '. The complete catalog includes ' + this.numberText(totalCollaborators) + ' unique collaborators. Node size represents catalog publications, not citation impact; line width represents shared publications. '
+        + coauthorCountingMethod
+      : 'The network is derived only from public bibliography author lists.';
+
+    const hIndex = data.metrics?.hIndex || {};
+    const hIndexValue = Number(hIndex.value);
+    const hIndexRawStatus = String(hIndex.status || 'unavailable').toLowerCase();
+    const hIndexAvailable = ['ok', 'fresh', 'stale', 'partial'].includes(hIndexRawStatus)
+      && hIndex.value !== null
+      && hIndex.value !== undefined
+      && Number.isInteger(hIndexValue)
+      && hIndexValue >= 0;
+    const hIndexStatus = hIndexAvailable
+      ? (hIndexRawStatus === 'fresh' ? 'ok' : hIndexRawStatus)
+      : 'unavailable';
+    const hIndexSourceLabel = String(hIndex.source || hIndex.provider || 'Source not reported').trim();
+    const hIndexProvider = String(hIndex.provider || hIndex.source || '').trim();
+    const hIndexMethod = String(hIndex.method || '').trim();
+    const hIndexReason = this.humanizeReason(hIndex.reason);
+    const hIndexUpdated = hIndex.updatedAt ? ' · updated ' + this.formatDate(hIndex.updatedAt) : '';
+    const hIndexStatusLead = hIndexStatus === 'stale'
+      ? 'Using last available snapshot'
+      : hIndexStatus === 'partial'
+        ? 'Partial coverage'
+        : hIndexStatus === 'ok'
+          ? 'Current'
+          : 'Unavailable';
+    const hIndexStatusText = hIndexAvailable
+      ? hIndexStatusLead + ' · ' + hIndexSourceLabel + hIndexUpdated
+      : 'Unavailable · ' + hIndexSourceLabel + hIndexUpdated + ' · not counted as zero';
+    const hIndexSince = Number(hIndex.since);
+    const hIndexSinceYear = Number(hIndex.sinceYear);
+    const hIndexExplanation = hIndexAvailable
+      ? (
+          hIndex.since !== null && hIndex.since !== undefined
+            && hIndex.sinceYear !== null && hIndex.sinceYear !== undefined
+            && Number.isInteger(hIndexSince) && hIndexSince >= 0
+            && Number.isInteger(hIndexSinceYear) && hIndexSinceYear > 0
+            ? 'All-time value; since ' + hIndexSinceYear + ': ' + this.numberText(hIndexSince) + '.'
+            : 'All-time value from the named source.'
+        )
+      : 'This snapshot does not include a verified h-index value from the named source.';
+    const hIndexCoverageObject = hIndex.coverage && typeof hIndex.coverage === 'object'
+      ? hIndex.coverage
+      : {};
+    const hIndexCoverageNarrative = typeof hIndex.coverage === 'string' ? hIndex.coverage.trim() : '';
+    const hIndexMatched = optionalCount(hIndex.matched ?? hIndexCoverageObject.matched);
+    const hIndexPublicationTotal = optionalCount(hIndex.publicationTotal ?? hIndexCoverageObject.publicationTotal);
+    let hIndexCoverageText = 'Coverage: Not reported in this snapshot';
+    if (hIndexCoverageNarrative) {
+      hIndexCoverageText = 'Coverage: ' + hIndexCoverageNarrative;
+    } else if (hIndexMatched !== null && hIndexPublicationTotal !== null) {
+      hIndexCoverageText = 'Coverage: ' + this.numberText(hIndexMatched) + ' of ' + this.numberText(hIndexPublicationTotal) + ' catalogue publications matched';
+    } else if (hIndexMatched !== null) {
+      hIndexCoverageText = 'Coverage: ' + this.numberText(hIndexMatched) + ' catalogue publications matched';
+    } else if (hIndexPublicationTotal !== null) {
+      hIndexCoverageText = 'Coverage: matched count unavailable for ' + this.numberText(hIndexPublicationTotal) + ' catalogue publications';
+    }
+    const hIndexProfileUrl = [hIndex.profileUrl, hIndex.sourceUrl, hIndex.url]
+      .find(value => typeof value === 'string' && value.trim());
+
+    const impactFactors = data.impactFactors || {};
+    const impactFactorTotal = Number(impactFactors.total);
+    const impactFactorRawStatus = String(impactFactors.status || 'unavailable').toLowerCase();
+    const impactFactorMetricLabel = String(impactFactors.metric || 'Journal Impact Factor').trim();
+    const impactFactorSourceValue = String(impactFactors.source || '').trim();
+    const impactFactorEditionValue = String(impactFactors.edition || '').trim();
+    const impactFactorLicenseConfirmed = impactFactors.licenseConfirmed === true;
+    const impactFactorAggregateAuthorized = impactFactors.aggregatePublicationAuthorized === true;
+    const impactFactorAvailable = ['ok', 'fresh', 'stale', 'partial'].includes(impactFactorRawStatus)
+      && impactFactors.total !== null
+      && impactFactors.total !== undefined
+      && Number.isFinite(impactFactorTotal)
+      && impactFactorTotal >= 0
+      && impactFactorLicenseConfirmed
+      && impactFactorAggregateAuthorized;
+    const impactFactorStatus = impactFactorAvailable
+      ? (impactFactorRawStatus === 'fresh' ? 'ok' : impactFactorRawStatus)
+      : ['error', 'unavailable'].includes(impactFactorRawStatus)
+        ? impactFactorRawStatus
+        : 'unavailable';
+    const impactFactorCovered = optionalCount(impactFactors.coveredPublications);
+    const impactFactorPublicationTotal = optionalCount(impactFactors.publicationTotal)
+      ?? optionalCount(publications.total);
+    let impactFactorCoverageText = 'Publication coverage is unavailable in this snapshot.';
+    if (impactFactorCovered !== null && impactFactorPublicationTotal !== null) {
+      impactFactorCoverageText = this.numberText(impactFactorCovered) + ' of ' + this.numberText(impactFactorPublicationTotal)
+        + (impactFactorAvailable ? ' publications covered.' : ' publications have a verified Journal Impact Factor record in the local dataset.');
+    } else if (impactFactorCovered !== null) {
+      impactFactorCoverageText = this.numberText(impactFactorCovered) + ' publications have a verified Journal Impact Factor record; the catalogue total is unavailable.';
+    } else if (impactFactorPublicationTotal !== null) {
+      impactFactorCoverageText = 'Verified Journal Impact Factor coverage is unavailable for ' + this.numberText(impactFactorPublicationTotal) + ' catalogue publications.';
+    }
+    const impactFactorProvidedReason = String(impactFactors.reason || '').trim();
+    const impactFactorReason = impactFactorProvidedReason
+      || (
+        impactFactorAvailable
+          ? ''
+          : 'No authoritative, locally curated Journal Impact Factor source is configured. The site does not infer this value from citations or substitute CiteScore.'
+      );
+    const impactFactorSource = impactFactorSourceValue || 'Source not configured';
+    const impactFactorUpdated = impactFactors.updatedAt ? ' · updated ' + this.formatDate(impactFactors.updatedAt) : '';
+    const impactFactorStatusLead = impactFactorStatus === 'stale'
+      ? 'Using last available snapshot'
+      : impactFactorStatus === 'partial'
+        ? 'Partial coverage'
+        : impactFactorStatus === 'ok'
+          ? 'Current'
+          : 'Unavailable';
+    const impactFactorProvenanceAvailable = !!(impactFactorSourceValue || impactFactorEditionValue);
+    const impactFactorAuthorizationText = impactFactorLicenseConfirmed && impactFactorAggregateAuthorized
+      ? 'Authorization: Licensed source confirmed; aggregate publication display authorized.'
+      : 'Authorization: Licensed aggregate publication display is not confirmed.';
+
+    const journalStanding = data.journalStanding || {};
+    const journalStandingRawStatus = String(
+      journalStanding.status || 'unavailable'
+    ).toLowerCase();
+    const journalStandingLicenseConfirmed = journalStanding.licenseConfirmed === true;
+    const journalStandingPublicationAuthorized =
+      journalStanding.aggregatePublicationAuthorized === true;
+    const journalStandingRankingAuthorized =
+      journalStanding.aggregateRankingDisplayAuthorized === true;
+    const rawJournalStandingBands = Array.isArray(journalStanding.bands)
+      ? journalStanding.bands
+      : [];
+    const journalStandingAvailable =
+      ['ok', 'partial'].includes(journalStandingRawStatus)
+      && journalStandingLicenseConfirmed
+      && journalStandingPublicationAuthorized
+      && journalStandingRankingAuthorized
+      && rawJournalStandingBands.length > 0;
+    const journalStandingStatus = journalStandingAvailable
+      ? journalStandingRawStatus
+      : 'unavailable';
+    const journalStandingMax = Math.max(
+      1,
+      ...rawJournalStandingBands.map(band => optionalCount(band?.count) || 0)
+    );
+    const journalStandingBands = journalStandingAvailable
+      ? rawJournalStandingBands.map(band => {
+          const count = optionalCount(band?.count) || 0;
+          const label = String(band?.label || band?.id || 'Standing band').trim();
+          return {
+            id: String(band?.id || ''),
+            label,
+            count: this.numberText(count),
+            percent: count === 0
+              ? 0
+              : Math.max(1.5, count / journalStandingMax * 100).toFixed(2),
+            color: band?.id === 'unavailable' ? '#5B6770' : '#005baa',
+            aria: label + ': ' + this.numberText(count) + ' publications'
+          };
+        })
+      : [];
+    const journalStandingCovered =
+      optionalCount(journalStanding.coveredPublications) || 0;
+    const journalStandingPublicationTotal =
+      optionalCount(journalStanding.publicationTotal)
+      ?? optionalCount(publications.total)
+      ?? 0;
+    const journalStandingUnavailableCount =
+      optionalCount(journalStanding.unavailablePublications)
+      ?? Math.max(0, journalStandingPublicationTotal - journalStandingCovered);
+    const journalStandingCoverageText = journalStandingAvailable
+      ? this.numberText(journalStandingCovered) + ' of '
+        + this.numberText(journalStandingPublicationTotal)
+        + ' catalogue publications have an authorized previous-year JCR ranking; '
+        + this.numberText(journalStandingUnavailableCount)
+        + (journalStandingUnavailableCount === 1 ? ' is' : ' are') + ' unavailable.'
+      : 'No authorized previous-year JCR ranking bands are available for this snapshot.';
+    const journalStandingSourceValue = String(journalStanding.source || '').trim();
+    const journalStandingEditionValue = String(journalStanding.edition || '').trim();
+    const journalStandingUpdated = journalStanding.updatedAt
+      ? ' · source updated ' + this.formatDate(journalStanding.updatedAt)
+      : '';
+    const journalStandingStatusText = journalStandingStatus === 'ok'
+      ? 'Complete licensed coverage' + journalStandingUpdated
+      : journalStandingStatus === 'partial'
+        ? 'Partial licensed coverage' + journalStandingUpdated
+        : 'Unavailable · no other-year substitute';
+    const journalStandingAuthorizationReference = String(
+      journalStanding.authorizationReference || ''
+    ).trim();
+    const journalStandingAuthorizationDate = journalStanding.authorizationDate
+      ? this.formatDate(journalStanding.authorizationDate)
+      : '';
+    const journalStandingAuthorizationText = journalStandingRankingAuthorized
+      ? 'Authorization: Licensed source and public aggregate ranking display confirmed'
+        + (journalStandingAuthorizationReference
+          ? ' · permission reference ' + journalStandingAuthorizationReference
+          : '')
+        + (journalStandingAuthorizationDate
+          ? ' · permission dated ' + journalStandingAuthorizationDate
+          : '')
+        + '.'
+      : 'Authorization: Public display of aggregate JCR ranking bands is not confirmed.';
+    const journalStandingYearBasis = String(
+      journalStanding.yearBasis
+      || 'Previous-year JCR: publication year Y uses JCR year Y-1.'
+    ).trim();
+    const journalStandingProvidedReason = String(
+      journalStanding.reason || ''
+    ).trim();
+    const journalStandingReason = journalStandingProvidedReason || (
+      journalStandingAvailable
+        ? ''
+        : 'Previous-year JCR ranking aggregates are unavailable. No publication-year or current JCR percentile or quartile is substituted.'
+    );
+
+    const rawTeamGroups = Array.isArray(data.team?.groups) ? data.team.groups : [];
+    const teamMax = Math.max(1, ...rawTeamGroups.map(group => Number(group.count) || 0));
+    const teamColors = ['#005baa', '#ffa500', '#00a651'];
+    const teamGroups = rawTeamGroups.map((group, index) => {
+      const count = Math.max(0, Number(group.count) || 0);
+      return {
+        id: group.id,
+        label: group.label,
+        count,
+        percent: count === 0 ? 0 : Math.max(1.5, count / teamMax * 100).toFixed(2),
+        color: teamColors[index] || '#5B6770',
+        aria: group.label + ': ' + count
+      };
+    });
+
+    const dataAsOfIso = typeof data.dataAsOf === 'string' ? data.dataAsOf : '';
+    const dataAsOfDate = new Date(dataAsOfIso);
+    const footerYear = Number.isNaN(dataAsOfDate.getTime()) ? '—' : dataAsOfDate.getUTCFullYear();
+    const footerCitationFreshness = citationSources.length
+      ? 'Citation source freshness · ' + citationSources.map(source => source.label + ': ' + source.statusText).join(' · ')
+      : 'Citation source freshness unavailable.';
+    const firstYearFromRows = publicationYears.length ? publicationYears[0].year : null;
+    const firstYear = Number(publications.firstYear ?? firstYearFromRows);
+    const lastPublicationYear = Number(publications.lastPublicationYear);
+    const rangeEnd = reportingYear || (Number.isInteger(lastPublicationYear) ? lastPublicationYear : 0);
+    const range = Number.isInteger(firstYear) && firstYear > 0 && rangeEnd > 0
+      ? firstYear + '–' + rangeEnd
+      : 'Curated publication history';
+    const latestPublicationNote = Number.isInteger(lastPublicationYear)
+      && lastPublicationYear > 0
+      && reportingYear > 0
+      && lastPublicationYear < reportingYear
+      ? ' Latest publication year: ' + lastPublicationYear + '.'
+      : '';
+    const publicationRangeText = range
+      + (reportingYear > 0 ? ' · ' + reportingYear + ' is year-to-date.' : '')
+      + latestPublicationNote;
+    const normalizedHIndexUrl = typeof hIndexProfileUrl === 'string' ? hIndexProfileUrl.trim() : '';
+    return {
+      loading: false,
+      error: false,
+      ready: true,
+      publicationTotal: this.numberText(publications.total),
+      publicationTypeText: this.numberText(publications.articles) + ' articles · ' + this.numberText(publications.reviews) + ' reviews',
+      publicationRangeText,
+      publicationYears,
+      journals,
+      journalHighlights,
+      journalNote,
+      journalDistributionAvailable: journals.length > 0,
+      journalDistributionUnavailable: journals.length === 0,
+      researchAreas,
+      researchAreaNote: data.researchAreas?.countingMethod || 'Distinct publications; one publication may count in multiple research areas.',
+      selectedCitationId: selectedSource.id,
+      selectedCitationLabel: selectedSource.label,
+      selectedCitationTotal: this.numberText(selectedSource.total),
+      selectedCitationStatus: statusText(selectedSource),
+      selectedCitationMode,
+      citationModeLabelLower: selectedCitationMode,
+      citationTrendHeading: selectedCitationMode === 'cumulative'
+        ? 'Cumulative citation history'
+        : 'Annual citation history',
+      citationTrendAriaLabel: selectedSource.label + ' '
+        + selectedCitationMode + ' citations by year',
+      citationTableValueLabel: selectedCitationMode === 'cumulative'
+        ? 'Cumulative citations'
+        : 'Citations',
+      selectedCitationHistoryStatus: selectedHistory.historyStatus,
+      selectedCitationHistoryText,
+      citationSources,
+      citationYears,
+      citationTrendAvailable: citationYears.length > 0,
+      citationTrendUnavailable: citationYears.length === 0,
+      onCitationSourceChange: event => this.setState({ selectedCitationSource: event.target.value }),
+      onCitationModeChange: event => this.setState({
+        selectedCitationMode: event.target.value === 'cumulative' ? 'cumulative' : 'annual'
+      }),
+      hIndexStatus,
+      hIndexText: hIndexAvailable ? this.numberText(hIndexValue) : '—',
+      hIndexStatusText,
+      hIndexExplanation,
+      hIndexSourceLabel,
+      hIndexProviderText: 'Provider: ' + (hIndexProvider || 'Not reported in this snapshot'),
+      hIndexMethodText: 'Method: ' + (hIndexMethod || 'Not reported in this snapshot'),
+      hIndexCoverageText,
+      hIndexReasonAvailable: !!hIndexReason,
+      hIndexReason,
+      hIndexProfileAvailable: /^https?:\/\//i.test(normalizedHIndexUrl),
+      hIndexProfileUrl: normalizedHIndexUrl,
+      hIndexLinkText: /google scholar/i.test(hIndexSourceLabel) ? 'Open Google Scholar profile' : 'Open h-index source',
+      impactFactorStatus,
+      impactFactorMetricLabel,
+      impactFactorTotalText: impactFactorAvailable ? this.decimalText(impactFactorTotal) : '—',
+      impactFactorStatusText: impactFactorAvailable
+        ? impactFactorStatusLead + ' · ' + impactFactorSource + impactFactorUpdated
+        : 'Unavailable · ' + impactFactorSource + impactFactorUpdated + ' · not counted as zero',
+      impactFactorCoverageText,
+      impactFactorProvenanceAvailable,
+      impactFactorMetricText: 'Metric: ' + impactFactorMetricLabel,
+      impactFactorSourceText: 'Source: ' + (impactFactorSourceValue || 'Not configured'),
+      impactFactorEditionText: 'Edition: ' + (impactFactorEditionValue || 'Not configured'),
+      impactFactorAuthorizationText,
+      impactFactorReasonAvailable: !!impactFactorReason,
+      impactFactorUnavailable: !impactFactorAvailable,
+      impactFactorReason,
+      journalStandingStatus,
+      journalStandingStatusText,
+      journalStandingAvailable,
+      journalStandingUnavailable: !journalStandingAvailable,
+      journalStandingBands,
+      journalStandingCoverageText,
+      journalStandingSourceText: 'Source: ' + (
+        journalStandingSourceValue || 'Not configured'
+      ) + journalStandingUpdated,
+      journalStandingEditionText: 'Edition: ' + (
+        journalStandingEditionValue || 'Not configured'
+      ),
+      journalStandingAuthorizationText,
+      journalStandingYearBasisText: 'Year basis: ' + journalStandingYearBasis,
+      journalStandingReasonAvailable: !!journalStandingReason,
+      journalStandingReason,
+      coauthorNodes: coauthorView.nodes,
+      coauthorEdges: coauthorView.edges,
+      topCollaborators: coauthorView.topCollaborators,
+      coauthorLayoutMethod: coauthorView.layoutMethod || '',
+      coauthorLayoutSeed: coauthorView.layoutSeed || '',
+      coauthorNetworkSummary,
+      coauthorNetworkAvailable: coauthorView.nodes.length > 0,
+      coauthorNetworkUnavailable: coauthorView.nodes.length === 0,
+      teamTotal: this.numberText(data.team?.total),
+      teamGroups,
+      dataAsOfIso,
+      dataAsOfText: this.formatDate(dataAsOfIso),
+      footerYear,
+      footerCitationFreshness
+    };
+  }
+}
+</script>
+</body>
+</html>
