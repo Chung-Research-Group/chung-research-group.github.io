@@ -10,6 +10,7 @@ import {
   generateBibtex,
   generateCff,
   generatePublicationCitationFiles,
+  normalizeBibliographyOverrides,
   normalizeCanonicalRecord,
   parseFeedDois,
   parseGeneratedBibtexDois,
@@ -20,6 +21,7 @@ import {
 const REPOSITORY_ROOT = path.resolve(import.meta.dirname, '..');
 const FEED_PATH = path.join(REPOSITORY_ROOT, 'feed.js');
 const BIBLIOGRAPHY_PATH = path.join(REPOSITORY_ROOT, 'data', 'publication-bibliography.json');
+const OVERRIDES_PATH = path.join(REPOSITORY_ROOT, 'config', 'publication-bibliography-overrides.json');
 
 async function fixture() {
   const [feedSource, snapshotSource] = await Promise.all([
@@ -56,6 +58,15 @@ test('committed bibliography has the exact feed DOI set and complete structured 
       );
     }
   }
+});
+
+test('committed bibliography overrides are valid and limited to feed DOIs', async () => {
+  const [{ feedDois }, overridesSource] = await Promise.all([
+    fixture(),
+    readFile(OVERRIDES_PATH, 'utf8')
+  ]);
+  const overrides = normalizeBibliographyOverrides(JSON.parse(overridesSource), feedDois);
+  assert.equal(overrides.size, 0);
 });
 
 test('site validation reports duplicate feed DOIs even when the bibliography snapshot is missing', async () => {
@@ -409,11 +420,30 @@ test('refresh uses at most two requests concurrently, retries transient failures
     fetchImpl,
     mailto: 'test@example.com',
     concurrency: 2,
+    overrides: {
+      schemaVersion: 1,
+      publications: {
+        '10.5555/one': {
+          title: 'Reviewed title',
+          authors: [{
+            given: 'Grace',
+            family: 'Hopper',
+            orcid: 'https://orcid.org/0000-0002-1825-0097'
+          }]
+        }
+      }
+    },
     now: () => new Date('2024-06-01T00:00:00.000Z'),
     sleep: async () => {}
   });
   assert.ok(maximumActive <= 2);
   assert.equal(snapshot.publications['10.5555/one'].source.provider, 'crossref');
+  assert.equal(snapshot.publications['10.5555/one'].title, 'Reviewed title');
+  assert.deepEqual(snapshot.publications['10.5555/one'].authors, [{
+    given: 'Grace',
+    family: 'Hopper',
+    orcid: 'https://orcid.org/0000-0002-1825-0097'
+  }]);
   assert.equal(snapshot.publications['10.5555/three'].source.provider, 'doi-csl');
   const retriedUrl = [...attempts.keys()].find(url => url.includes(encodeURIComponent('10.5555/one')));
   assert.equal(attempts.get(retriedUrl), 2);

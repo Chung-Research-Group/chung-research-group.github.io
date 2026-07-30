@@ -37,8 +37,13 @@ structured response in the committed snapshot, and applies bounded retries.
 
 KISTI DOI records that Crossref cannot resolve are looked up through DOI.org
 during the explicit refresh only. That fallback is never used by the browser,
-build, or CI. Incomplete records must be reviewed and corrected in the snapshot;
-the generator does not substitute display-only author strings containing `*`,
+build, or CI. Reviewed corrections belong in
+`config/publication-bibliography-overrides.json`, keyed by normalized DOI. Each
+entry may replace `title`, `authors`, `journal`, `year`, `volume`, `issue`,
+`pages`, `articleNumber`, or `publisher`; an `authors` correction supplies the
+complete reviewed author array. The explicit refresh reapplies these overrides
+after provider retrieval, so later refreshes cannot silently erase them.
+The generator does not substitute display-only author strings containing `*`,
 `#`, or `et al.`.
 
 New publications approved through Slack update both `feed.js` and the

@@ -27,6 +27,7 @@ import {
   normalizeDoi,
   normalizeTitle,
   parsePublicationBibliography,
+  publicationFileState,
   reactionDecision,
   safeCandidateFromCrossref,
   sanitizeClassification,
@@ -830,6 +831,17 @@ test('adds structured metadata and repairs a one-sided feed/bibliography state',
   assert.equal(feedOnly.consistencyRepair, true);
   assert.equal(feedOnly.feed, synchronized.feed);
   assert.ok(parsePublicationBibliography(feedOnly.bibliography).publications[candidate.doi]);
+
+  const feedOnlyState = publicationFileState(synchronized.feed, emptyBibliography);
+  assert.deepEqual([...feedOnlyState.completeDois], []);
+  assert.deepEqual([...feedOnlyState.feedOnlyDois], [candidate.doi]);
+  assert.equal(
+    shouldIgnoreCandidate(synchronized.feed, candidate, {
+      repairDois: feedOnlyState.feedOnlyDois
+    }),
+    false
+  );
+  assert.equal(shouldIgnoreCandidate(synchronized.feed, candidate), true);
 });
 
 test('creates one atomic Git commit containing both publication files', async () => {

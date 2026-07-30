@@ -7,6 +7,7 @@ const MODULE_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPOSITORY_ROOT = path.resolve(MODULE_DIR, '..');
 const DEFAULT_FEED_PATH = path.join(REPOSITORY_ROOT, 'feed.js');
 const DEFAULT_BIBLIOGRAPHY_PATH = path.join(REPOSITORY_ROOT, 'data', 'publication-bibliography.json');
+const DEFAULT_OVERRIDES_PATH = path.join(REPOSITORY_ROOT, 'config', 'publication-bibliography-overrides.json');
 const DEFAULT_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, 'dist');
 const USER_AGENT_BASE = 'Chung-Research-Group-publication-catalogue/1.0';
 // DOI suffixes may contain Unicode graphic characters, including legacy
@@ -436,6 +437,44 @@ async function mapWithConcurrency(values, concurrency, task) {
   return results;
 }
 
+const BIBLIOGRAPHY_OVERRIDE_FIELDS = new Set([
+  'title',
+  'authors',
+  'journal',
+  'year',
+  'volume',
+  'issue',
+  'pages',
+  'articleNumber',
+  'publisher'
+]);
+
+export function normalizeBibliographyOverrides(overrides, expectedDois) {
+  if (overrides === undefined || overrides === null) return new Map();
+  if (overrides?.schemaVersion !== 1
+      || !overrides.publications
+      || Array.isArray(overrides.publications)
+      || typeof overrides.publications !== 'object') {
+    throw new Error('Bibliography overrides must use schemaVersion 1 and a publications object');
+  }
+  const expected = new Set(expectedDois);
+  const normalized = new Map();
+  for (const [rawDoi, override] of Object.entries(overrides.publications)) {
+    const doi = normalizeDoi(rawDoi);
+    if (!expected.has(doi)) throw new Error(`Bibliography override DOI is not present in feed.js: ${doi}`);
+    if (normalized.has(doi)) throw new Error(`Bibliography overrides contain duplicate DOI: ${doi}`);
+    if (!override || Array.isArray(override) || typeof override !== 'object') {
+      throw new Error(`Bibliography override for ${doi} must be an object`);
+    }
+    const unsupported = Object.keys(override).filter(field => !BIBLIOGRAPHY_OVERRIDE_FIELDS.has(field));
+    if (unsupported.length) {
+      throw new Error(`Bibliography override for ${doi} contains unsupported field(s): ${unsupported.join(', ')}`);
+    }
+    normalized.set(doi, override);
+  }
+  return normalized;
+}
+
 /**
  * Refresh a canonical snapshot. This is the only exported operation that uses the network.
  * Build and validation callers should consume the committed snapshot instead.
@@ -445,6 +484,7 @@ export async function refreshBibliographySnapshot({
   fetchImpl = globalThis.fetch,
   mailto = process.env.CROSSREF_MAILTO,
   concurrency = 2,
+  overrides,
   now = () => new Date(),
   sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds))
 }) {
@@ -463,9 +503,20 @@ export async function refreshBibliographySnapshot({
     retrievedAt,
     sleep
   }));
+  const reviewedOverrides = normalizeBibliographyOverrides(overrides, normalizedDois);
   const publications = {};
   normalizedDois.forEach((doi, index) => {
-    publications[doi] = records[index];
+    const providerRecord = records[index];
+    const reviewed = reviewedOverrides.get(doi);
+    publications[doi] = reviewed
+      ? {
+          ...providerRecord,
+          ...reviewed,
+          doi,
+          type: 'article',
+          source: providerRecord.source
+        }
+      : providerRecord;
   });
   const snapshot = {
     schemaVersion: 1,
@@ -785,6 +836,7 @@ function parseArguments(argv) {
     generate: false,
     feedPath: DEFAULT_FEED_PATH,
     bibliographyPath: DEFAULT_BIBLIOGRAPHY_PATH,
+    overridesPath: DEFAULT_OVERRIDES_PATH,
     outputRoot: DEFAULT_OUTPUT_ROOT,
     bibtexPath: undefined,
     cffPath: undefined,
@@ -802,6 +854,7 @@ function parseArguments(argv) {
     else if (argument === '--generate') options.generate = true;
     else if (argument === '--feed') options.feedPath = readValue();
     else if (argument === '--snapshot') options.bibliographyPath = readValue();
+    else if (argument === '--overrides') options.overridesPath = readValue();
     else if (argument === '--output-root') options.outputRoot = readValue();
     else if (argument === '--bibtex') options.bibtexPath = readValue();
     else if (argument === '--cff') options.cffPath = readValue();
@@ -821,11 +874,15 @@ function parseArguments(argv) {
 async function runCli(argv) {
   const options = parseArguments(argv);
   if (options.refresh) {
-    const feedSource = await readFile(options.feedPath, 'utf8');
+    const [feedSource, overridesSource] = await Promise.all([
+      readFile(options.feedPath, 'utf8'),
+      readFile(options.overridesPath, 'utf8')
+    ]);
     const feedDois = parseFeedDois(feedSource);
     const snapshot = await refreshBibliographySnapshot({
       dois: feedDois,
-      concurrency: options.concurrency
+      concurrency: options.concurrency,
+      overrides: JSON.parse(overridesSource)
     });
     await writeUtf8(options.bibliographyPath, `${JSON.stringify(snapshot, null, 2)}\n`);
     process.stdout.write(`Refreshed ${feedDois.length} publication records in ${options.bibliographyPath}\n`);

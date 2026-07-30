@@ -101,13 +101,16 @@ export function isChemRxivDoi(value = '') {
   return /^10\.26434\/chemrxiv-/i.test(normalizeDoi(value));
 }
 
-export function shouldIgnoreCandidate(feed, candidate) {
+export function shouldIgnoreCandidate(feed, candidate, { repairDois = new Set() } = {}) {
   const doi = normalizeDoi(candidate?.doi);
   const title = normalizeTitle(candidate?.title);
+  const consistencyRepair = repairDois.has(doi);
   return !doi
-    || existingDois(feed).has(doi)
     || isChemRxivDoi(doi)
-    || (title && existingTitles(feed).has(title));
+    || (!consistencyRepair && (
+      existingDois(feed).has(doi)
+      || (title && existingTitles(feed).has(title))
+    ));
 }
 
 function crossrefDate(work) {
@@ -599,6 +602,24 @@ export function parsePublicationBibliography(text) {
     }
   }
   return snapshot;
+}
+
+export function publicationFileState(feed, bibliographyText) {
+  const feedDois = existingDois(feed);
+  const bibliography = parsePublicationBibliography(bibliographyText);
+  const bibliographyDois = new Set(
+    Object.keys(bibliography.publications).map(normalizeDoi).filter(Boolean)
+  );
+  const completeDois = new Set([...feedDois].filter(doi => bibliographyDois.has(doi)));
+  const feedOnlyDois = new Set([...feedDois].filter(doi => !bibliographyDois.has(doi)));
+  const bibliographyOnlyDois = new Set([...bibliographyDois].filter(doi => !feedDois.has(doi)));
+  return {
+    feedDois,
+    bibliographyDois,
+    completeDois,
+    feedOnlyDois,
+    bibliographyOnlyDois
+  };
 }
 
 function bibliographyForCandidate(candidate) {
@@ -1177,8 +1198,14 @@ async function run() {
 
   const history = await slack('conversations.history', { channel, limit: 15, include_all_metadata: true });
   const roots = history.messages || [];
-  const feed = await getFeed(github, 'main');
-  const known = existingDois(feed.content);
+  const mainFiles = await getPublicationFiles(github, 'main');
+  const feed = { content: mainFiles.feed };
+  const {
+    completeDois: known,
+    feedOnlyDois,
+    bibliographyOnlyDois
+  } = publicationFileState(mainFiles.feed, mainFiles.bibliography);
+  const repairDois = new Set([...feedOnlyDois, ...bibliographyOnlyDois]);
   const announced = new Set(roots.map(message => doiFromMessage(message.text)).filter(Boolean));
   const candidateRoots = roots.filter(message => isCandidateRoot(message, botUser));
   const llmProvider = String(process.env.PUBLICATION_LLM_PROVIDER || 'none').trim().toLowerCase();
@@ -1196,7 +1223,8 @@ async function run() {
   for (const work of await crossrefWorks(orcid, process.env.CROSSREF_MAILTO)) {
     const candidate = safeCandidateFromCrossref(work);
     if (!candidate) continue;
-    if (shouldIgnoreCandidate(feed.content, candidate) || announced.has(candidate.doi)) continue;
+    if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })
+        || announced.has(candidate.doi)) continue;
     if (llmEnabled && llmAttempts >= MAX_LLM_CANDIDATES_PER_RUN) {
       candidate.classification = deterministicClassification(candidate, 'per-run LLM limit reached');
     } else {
@@ -1273,7 +1301,7 @@ async function run() {
     if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 
     const candidate = await candidateByDoi(doi);
-    if (shouldIgnoreCandidate(feed.content, candidate)) continue;
+    if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })) continue;
     const postedClassification = classificationFromCandidateMessage(root.text);
     if (postedClassification) {
       candidate.classification = postedClassification;
