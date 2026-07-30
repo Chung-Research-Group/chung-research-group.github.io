@@ -6,6 +6,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 import {
+  generatedPublicationCitationFiles,
   requiredPages,
   requiredRuntimeFiles,
   rootFilePatterns,
@@ -15,6 +16,10 @@ import {
   graphicPathForDoi,
   validateGraphicalAbstractSvg
 } from "./publication-graphic.mjs";
+import {
+  parseFeedDois,
+  parseGeneratedBibtexDois
+} from "./publication-citations.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -24,6 +29,8 @@ const compareFlag = args.indexOf("--compare-source");
 const siteRoot = path.resolve(repositoryRoot, rootFlag >= 0 ? args[rootFlag + 1] : ".");
 const compareRoot = compareFlag >= 0 ? path.resolve(repositoryRoot, args[compareFlag + 1]) : null;
 const errors = [];
+const generatedCitationFileSet = new Set(generatedPublicationCitationFiles);
+const generatedBuildFileSet = new Set(generatedPublicationCitationFiles);
 
 async function exists(file) {
   try {
@@ -71,6 +78,45 @@ function normalizeDoi(value) {
     .toLowerCase();
 }
 
+function reportDoiSetDifference(label, actualDois, expectedDoiSet) {
+  const actualDoiSet = new Set(actualDois.map(normalizeDoi).filter(Boolean));
+  const missing = [...expectedDoiSet].filter((doi) => !actualDoiSet.has(doi));
+  const extra = [...actualDoiSet].filter((doi) => !expectedDoiSet.has(doi));
+  if (actualDois.length !== actualDoiSet.size || missing.length || extra.length) {
+    errors.push(
+      `${label} DOI set must exactly match feed.js`
+      + `${actualDois.length !== actualDoiSet.size ? "; duplicate DOI entries found" : ""}`
+      + `${missing.length ? `; missing: ${missing.join(", ")}` : ""}`
+      + `${extra.length ? `; extra: ${extra.join(", ")}` : ""}.`
+    );
+  }
+}
+
+function validatePublicationCitationExports(bibtex, cff, expectedDoiSet) {
+  const bibtexEntries = [...bibtex.matchAll(/^@article\s*\{/gmi)];
+  if (bibtexEntries.length !== expectedDoiSet.size) {
+    errors.push(`BibTeX export must contain ${expectedDoiSet.size} article entries; found ${bibtexEntries.length}.`);
+  }
+  const bibtexDois = parseGeneratedBibtexDois(bibtex);
+  reportDoiSetDifference("BibTeX export", bibtexDois, expectedDoiSet);
+
+  for (const marker of [
+    'cff-version: "1.2.0"',
+    'type: "dataset"',
+    'title: "Chung Research Group Publication Catalogue"',
+    "references:"
+  ]) {
+    if (!cff.includes(marker)) errors.push(`CFF export is missing required marker: ${marker}`);
+  }
+  const cffArticleReferences = [...cff.matchAll(/^\s*-\s+type:\s*["']?article["']?\s*$/gmi)];
+  if (cffArticleReferences.length !== expectedDoiSet.size) {
+    errors.push(`CFF export must contain ${expectedDoiSet.size} article references; found ${cffArticleReferences.length}.`);
+  }
+  const cffDois = [...cff.matchAll(/^\s+doi:\s*["']?([^"'\s]+)["']?\s*$/gmi)]
+    .map((match) => match[1]);
+  reportDoiSetDifference("CFF export", cffDois, expectedDoiSet);
+}
+
 for (const file of [...requiredPages, ...requiredRuntimeFiles]) {
   if (!await exists(path.join(siteRoot, file))) errors.push(`Missing required file: ${file}`);
 }
@@ -90,6 +136,9 @@ for (const file of htmlFiles) {
     errors.push(`${label}: template expressions exist without a page data script.`);
   }
   if (!html.includes("support.js")) errors.push(`${label}: missing local runtime.`);
+  if (!/<script\s+src=["']\.\/vendor\/react\.production\.min\.js["']><\/script>\s*<script\s+src=["']\.\/vendor\/react-dom\.production\.min\.js["']><\/script>\s*<script\s+src=["']\.\/support\.js["']><\/script>/i.test(html)) {
+    errors.push(`${label}: React, ReactDOM, and the local runtime must load synchronously in dependency order.`);
+  }
   if (!html.includes("_ds_bundle.js")) errors.push(`${label}: missing design-system bundle.`);
   if (!html.includes("styles.css")) errors.push(`${label}: missing design-system stylesheet.`);
   if (!/<html\b[^>]*\blang=["']en["']/i.test(html)) errors.push(`${label}: missing English document language.`);
@@ -112,7 +161,12 @@ for (const file of htmlFiles) {
     const target = reference.startsWith("/")
       ? path.join(siteRoot, reference.slice(1))
       : path.resolve(path.dirname(absolute), reference);
-    if (!await exists(target)) errors.push(`${label}: broken local reference ${match[1]}`);
+    if (!await exists(target)) {
+      const siteRelativeTarget = path.relative(siteRoot, target).split(path.sep).join("/");
+      const isBuildGeneratedLink = siteRoot === repositoryRoot
+        && generatedBuildFileSet.has(siteRelativeTarget);
+      if (!isBuildGeneratedLink) errors.push(`${label}: broken local reference ${match[1]}`);
+    }
   }
 }
 
@@ -138,6 +192,17 @@ const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
+const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
+let publicationDois = [];
+try {
+  publicationDois = parseFeedDois(feedHtml);
+} catch (error) {
+  errors.push(`feed.js publication DOI parsing failed: ${error.message}`);
+}
+const publicationDoiSet = new Set(publicationDois);
+if (publicationDoiSet.size !== publicationDois.length) {
+  errors.push("feed.js contains duplicate publication DOIs.");
+}
 const publicationMetadataPath = path.join(siteRoot, "data/publication-metadata.json");
 if (await exists(publicationMetadataPath)) {
   let metadata;
@@ -241,8 +306,119 @@ if (await exists(publicationMetadataPath)) {
     }
   }
 }
+
+const publicationBibliographyPath = path.join(siteRoot, "data/publication-bibliography.json");
+let publicationBibliography = null;
+if (await exists(publicationBibliographyPath)) {
+  try {
+    publicationBibliography = JSON.parse(await readFile(publicationBibliographyPath, "utf8"));
+  } catch (error) {
+    errors.push(`Publication bibliography is not valid JSON: ${error.message}`);
+  }
+
+  if (publicationBibliography) {
+    const bibliography = publicationBibliography;
+    if (bibliography.schemaVersion !== 1) {
+      errors.push(`Publication bibliography schemaVersion must be 1; found ${JSON.stringify(bibliography.schemaVersion)}.`);
+    }
+    if (!Number.isFinite(Date.parse(bibliography.snapshotUpdatedAt || ""))) {
+      errors.push("Publication bibliography snapshotUpdatedAt must be an ISO timestamp.");
+    }
+    if (!bibliography.publications
+        || typeof bibliography.publications !== "object"
+        || Array.isArray(bibliography.publications)) {
+      errors.push("Publication bibliography must contain a publications object keyed by normalized DOI.");
+    } else {
+      const bibliographyDois = Object.keys(bibliography.publications);
+      const normalizedBibliographyDois = bibliographyDois.map(normalizeDoi);
+      const bibliographyDoiSet = new Set(normalizedBibliographyDois);
+      for (const doi of bibliographyDois) {
+        if (!doi || doi !== normalizeDoi(doi)) {
+          errors.push(`Publication bibliography DOI key is not normalized: ${doi}`);
+        }
+      }
+      const missingBibliographyDois = [...publicationDoiSet]
+        .filter((doi) => !bibliographyDoiSet.has(doi));
+      const extraBibliographyDois = [...bibliographyDoiSet]
+        .filter((doi) => !publicationDoiSet.has(doi));
+      if (missingBibliographyDois.length || extraBibliographyDois.length) {
+        errors.push(
+          "Publication bibliography DOI set must exactly match feed.js"
+          + `${missingBibliographyDois.length ? `; missing: ${missingBibliographyDois.join(", ")}` : ""}`
+          + `${extraBibliographyDois.length ? `; extra: ${extraBibliographyDois.join(", ")}` : ""}.`
+        );
+      }
+
+      for (const [doi, record] of Object.entries(bibliography.publications)) {
+        if (!record || typeof record !== "object" || Array.isArray(record)) {
+          errors.push(`Publication bibliography record must be an object: ${doi}`);
+          continue;
+        }
+        if (normalizeDoi(record.doi) !== doi) {
+          errors.push(`Publication bibliography record DOI does not match its key: ${doi}`);
+        }
+        if (record.type !== "article") {
+          errors.push(`${doi}: bibliography type must be article.`);
+        }
+        for (const field of ["title", "journal"]) {
+          if (typeof record[field] !== "string" || !record[field].trim()) {
+            errors.push(`${doi}: bibliography ${field} must be a nonempty string.`);
+          }
+        }
+        for (const field of ["volume", "issue", "pages", "articleNumber", "publisher"]) {
+          if (record[field] !== undefined
+              && (typeof record[field] !== "string" || !record[field].trim())) {
+            errors.push(`${doi}: bibliography ${field} must be a nonempty string when present.`);
+          }
+        }
+        if (!Number.isInteger(record.year) || record.year < 1000 || record.year > 9999) {
+          errors.push(`${doi}: bibliography year must be a four-digit integer.`);
+        }
+        if (!Array.isArray(record.authors) || record.authors.length === 0) {
+          errors.push(`${doi}: bibliography authors must be a nonempty array.`);
+        } else {
+          for (const [index, author] of record.authors.entries()) {
+            const hasLiteral = typeof author?.literal === "string" && author.literal.trim();
+            const hasFamily = typeof author?.family === "string" && author.family.trim();
+            if (!author || typeof author !== "object" || Array.isArray(author) || (!hasLiteral && !hasFamily)) {
+              errors.push(`${doi}: bibliography author ${index + 1} must have family or literal name data.`);
+            }
+            const authorText = [author?.given, author?.family, author?.literal]
+              .filter((value) => typeof value === "string")
+              .join(" ");
+            if (/\bet al\.|\*|#/i.test(authorText)) {
+              errors.push(`${doi}: bibliography author ${index + 1} contains a display-only author marker.`);
+            }
+          }
+        }
+        if (!record.source
+            || typeof record.source !== "object"
+            || !["crossref", "doi-csl"].includes(record.source.provider)) {
+          errors.push(`${doi}: bibliography source.provider must be crossref or doi-csl.`);
+        }
+        if (record.source?.retrievedAt !== undefined
+            && !Number.isFinite(Date.parse(record.source.retrievedAt))) {
+          errors.push(`${doi}: bibliography source.retrievedAt must be an ISO timestamp when present.`);
+        }
+      }
+    }
+  }
+}
+
 if (!publicationsHtml.includes("data/publication-metadata.json")) {
   errors.push("Publications page must load the static publication metadata snapshot.");
+}
+for (const [file, label] of [
+  ["exports/publications/publications.bib", "BibTeX"],
+  ["exports/publications/CITATION.cff", "CFF"]
+]) {
+  if (!publicationsHtml.includes(`href="${file}"`)) {
+    errors.push(`Publications page must link to the generated ${label} export.`);
+  }
+}
+if (!publicationsHtml.includes("Download BibTeX file of all publications")
+    || !publicationsHtml.includes("Download CFF file of all publications")) {
+  errors.push("Publication citation downloads must have descriptive accessible names.");
 }
 if (!publicationsHtml.includes("data-publication-metadata-status")) {
   errors.push("Publications page must expose citation sources and metadata freshness.");
@@ -290,11 +466,7 @@ if (!publicationsHtml.includes(".filter(Boolean)")) {
 }
 const topicBlock = (feedHtml.match(/const PUB_TOPICS = \{([\s\S]*?)\n\};/) || [])[1] || "";
 const topicAssignments = [...topicBlock.matchAll(/'\d{2}':\s*\[/g)];
-const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
 const publicationEntries = [...publicationBlock.matchAll(/\bF\('\d{2}'/g)];
-const publicationDois = [...publicationBlock.matchAll(/'(10\.[^']+)'\)/gi)]
-  .map((match) => normalizeDoi(match[1]))
-  .filter(Boolean);
 if (topicAssignments.length !== publicationEntries.length) {
   errors.push(`Expected one explicit topic assignment per publication; found ${topicAssignments.length} assignments for ${publicationEntries.length} publications.`);
 }
@@ -358,12 +530,29 @@ for (const runtime of ["vendor/react.production.min.js", "vendor/react-dom.produ
   if (!supportJs.includes(`./${runtime}`) || !await exists(path.join(siteRoot, runtime))) errors.push(`Local browser runtime is missing: ${runtime}`);
 }
 
+const citationExportPresence = await Promise.all(
+  generatedPublicationCitationFiles.map((file) => exists(path.join(siteRoot, file)))
+);
+if (compareRoot || citationExportPresence.some(Boolean)) {
+  for (const [index, file] of generatedPublicationCitationFiles.entries()) {
+    if (!citationExportPresence[index]) errors.push(`Missing generated publication citation export: ${file}`);
+  }
+  if (citationExportPresence.every(Boolean)) {
+    const [bibtex, cff] = await Promise.all(
+      generatedPublicationCitationFiles.map((file) => readFile(path.join(siteRoot, file), "utf8"))
+    );
+    validatePublicationCitationExports(bibtex, cff, publicationDoiSet);
+  }
+}
+
 if (compareRoot) {
   const sourceFiles = (await listFiles(compareRoot)).filter(publishedSourceFile);
   const builtFiles = files.filter((file) => file !== "site-manifest.json" && file !== ".nojekyll");
   const expectedFiles = sourceFiles.filter((file) => file !== ".nojekyll");
   const generatedGraphicFiles = new Set(publicationDois.map(graphicPathForDoi));
-  const comparableBuiltFiles = builtFiles.filter((file) => !generatedGraphicFiles.has(file));
+  const comparableBuiltFiles = builtFiles.filter(
+    (file) => !generatedGraphicFiles.has(file) && !generatedBuildFileSet.has(file)
+  );
   if (JSON.stringify(comparableBuiltFiles) !== JSON.stringify(expectedFiles)) {
     errors.push("Built file set differs from the published source file set.");
   }
@@ -373,6 +562,13 @@ if (compareRoot) {
   );
   if (unexpectedGraphics.length) {
     errors.push(`Unexpected generated publication graphics: ${unexpectedGraphics.join(", ")}`);
+  }
+  const unexpectedCitationExports = builtFiles.filter(
+    (file) => file.startsWith("exports/publications/")
+      && !generatedCitationFileSet.has(file)
+  );
+  if (unexpectedCitationExports.length) {
+    errors.push(`Unexpected generated publication citation exports: ${unexpectedCitationExports.join(", ")}`);
   }
   for (const file of expectedFiles) {
     const [source, built] = await Promise.all([

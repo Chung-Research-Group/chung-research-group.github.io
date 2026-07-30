@@ -10,6 +10,8 @@
 <meta property="og:title" content="Publications | Chung Research Group">
 <meta property="og:description" content="Publications from the Chung Research Group, filterable by computational method and research topic.">
 <meta property="og:url" content="https://chung-research-group.github.io/Publications.dc.html">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body id="top">
@@ -46,6 +48,11 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-graphic figcaption{margin:7px 0 0;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
 .publication-graphic-fallback{display:none;padding:18px;font-size:14px;line-height:20px;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:color-mix(in srgb,var(--color-text) 4%,transparent)}
 .publication-graphic-fallback.is-visible{display:block}
+.publication-search-tools{display:flex;align-items:center;gap:12px 16px;flex:1 1 520px;min-width:280px;flex-wrap:wrap}
+.publication-search-input{flex:1 1 280px;width:100%;max-width:440px;min-width:0}
+.publication-citation-downloads{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.publication-citation-download{display:inline-flex;align-items:center;min-height:42px;padding:0 12px;border:1px solid var(--color-accent);font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:800;text-decoration:none;color:var(--color-accent-700);background:var(--color-bg);transition:background .12s ease,color .12s ease}
+.publication-citation-download:hover,.publication-citation-download:focus-visible{color:#fff;background:var(--color-accent)}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -121,9 +128,13 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Semantic Scholar)</p>
           </div>
         </sc-if>
-        <div style="display:flex;align-items:center;gap:16px;flex:1 1 420px;min-width:280px">
+        <div class="publication-search-tools">
           <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
-          <input aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="width:100%;max-width:440px;min-width:0;padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <input class="publication-search-input" aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <div class="publication-citation-downloads" role="group" aria-label="Download publication citations">
+            <a class="publication-citation-download" href="exports/publications/publications.bib" download aria-label="Download BibTeX file of all publications">Download BibTeX</a>
+            <a class="publication-citation-download" href="exports/publications/CITATION.cff" download aria-label="Download CFF file of all publications">Download CFF</a>
+          </div>
         </div>
       </div>
       <p data-publication-metadata-status style="font-size:14px;line-height:21px;margin:14px 0 0;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ metadataStatus }}</p>

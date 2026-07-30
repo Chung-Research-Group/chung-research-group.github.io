@@ -1,6 +1,12 @@
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
+import {
+  doiResolverUrl,
+  normalizeCanonicalRecord,
+  parseFeedDois
+} from './publication-citations.mjs';
+
 export const TOPIC_GROUPS = Object.freeze({
   Computation: Object.freeze([
     'Density Functional Theory', 'Grand Canonical Monte Carlo', 'Molecular Dynamics',
@@ -56,7 +62,16 @@ export function normalizeDoi(value = '') {
 }
 
 export function existingDois(feed) {
-  return new Set([...feed.matchAll(/'((?:10\.)[^']+)'\)/gi)].map(match => normalizeDoi(match[1])));
+  const source = String(feed);
+  const completeFeed = source.includes('const PUBS = [')
+    ? source
+    : `const PUBS = [\n${source}\n];`;
+  try {
+    return new Set(parseFeedDois(completeFeed));
+  } catch (error) {
+    if (error?.message === 'feed.js publication list does not contain any DOI') return new Set();
+    throw error;
+  }
 }
 
 function cleanText(value = '') {
@@ -86,38 +101,60 @@ export function isChemRxivDoi(value = '') {
   return /^10\.26434\/chemrxiv-/i.test(normalizeDoi(value));
 }
 
-export function shouldIgnoreCandidate(feed, candidate) {
+export function shouldIgnoreCandidate(feed, candidate, { repairDois = new Set() } = {}) {
   const doi = normalizeDoi(candidate?.doi);
   const title = normalizeTitle(candidate?.title);
+  const consistencyRepair = repairDois.has(doi);
   return !doi
-    || existingDois(feed).has(doi)
     || isChemRxivDoi(doi)
-    || (title && existingTitles(feed).has(title));
+    || (!consistencyRepair && (
+      existingDois(feed).has(doi)
+      || (title && existingTitles(feed).has(title))
+    ));
 }
 
 function crossrefDate(work) {
   const parts = work['published-print']?.['date-parts']?.[0]
     || work['published-online']?.['date-parts']?.[0]
     || work.published?.['date-parts']?.[0]
+    || work.issued?.['date-parts']?.[0]
     || [];
-  return { year: String(parts[0] || ''), month: String(parts[1] || '').padStart(2, '0') };
+  const year = parts[0] || work.year || '';
+  return { year: String(year), month: String(parts[1] || '').padStart(2, '0') };
 }
 
 function authorName(author) {
+  if (author.literal) return author.literal;
   const name = [author.family, author.given].filter(Boolean).join(', ');
   return name || author.name || '';
 }
 
-export function candidateFromCrossref(work) {
-  const { year } = crossrefDate(work);
-  const title = cleanText(work.title?.[0]);
-  const journal = cleanText(work['container-title']?.[0]) || 'Journal article';
-  const authors = (work.author || []).map(authorName).filter(Boolean).join(', ');
-  const pieces = [work.volume, work.issue, work.page || work['article-number']].filter(Boolean);
+/**
+ * Map either a Crossref work or a DOI content-negotiation CSL work to the
+ * committed bibliography schema. This is intentionally pure so the DOI CSL
+ * fallback can be tested without a network call.
+ */
+export function canonicalBibliographyFromWork(work = {}, provider = 'crossref') {
+  return normalizeCanonicalRecord(work, {
+    doi: work.DOI || work.doi,
+    provider: work.source?.provider || provider
+  });
+}
+
+export function candidateFromCrossref(work, options = {}) {
+  const bibliography = canonicalBibliographyFromWork(work, options.provider || 'crossref');
+  const { year, title } = bibliography;
+  const journal = bibliography.journal || 'Journal article';
+  const authors = bibliography.authors.map(authorName).filter(Boolean).join(', ');
+  const pieces = [
+    bibliography.volume,
+    bibliography.issue,
+    bibliography.pages || bibliography.articleNumber
+  ].filter(Boolean);
   const meta = `${pieces.length ? `, ${pieces.join(', ')}` : ''}${year ? ` (${year})` : ''}`;
   const abstract = cleanText(work.abstract);
   return {
-    doi: normalizeDoi(work.DOI), title, journal, authors, meta, year, abstract,
+    doi: bibliography.doi, title, journal, authors, meta, year, abstract, bibliography,
     topics: suggestTopics(`${title} ${abstract}`)
   };
 }
@@ -543,8 +580,117 @@ export function addCandidateToFeed(feed, candidate) {
   return next;
 }
 
+export function parsePublicationBibliography(text) {
+  let snapshot;
+  try {
+    snapshot = JSON.parse(String(text));
+  } catch {
+    throw new Error('data/publication-bibliography.json is not valid JSON.');
+  }
+  if (snapshot?.schemaVersion !== 1
+    || !snapshot.publications
+    || Array.isArray(snapshot.publications)
+    || typeof snapshot.publications !== 'object') {
+    throw new Error('data/publication-bibliography.json does not match schemaVersion 1.');
+  }
+  if (!snapshot.snapshotUpdatedAt || !Number.isFinite(Date.parse(snapshot.snapshotUpdatedAt))) {
+    throw new Error('data/publication-bibliography.json has an invalid snapshotUpdatedAt value.');
+  }
+  for (const [key, publication] of Object.entries(snapshot.publications)) {
+    if (key !== normalizeDoi(key) || normalizeDoi(publication?.doi) !== key) {
+      throw new Error(`Bibliography DOI key is not normalized: ${key}`);
+    }
+  }
+  return snapshot;
+}
+
+export function publicationFileState(feed, bibliographyText) {
+  const feedDois = existingDois(feed);
+  const bibliography = parsePublicationBibliography(bibliographyText);
+  const bibliographyDois = new Set(
+    Object.keys(bibliography.publications).map(normalizeDoi).filter(Boolean)
+  );
+  const completeDois = new Set([...feedDois].filter(doi => bibliographyDois.has(doi)));
+  const feedOnlyDois = new Set([...feedDois].filter(doi => !bibliographyDois.has(doi)));
+  const bibliographyOnlyDois = new Set([...bibliographyDois].filter(doi => !feedDois.has(doi)));
+  return {
+    feedDois,
+    bibliographyDois,
+    completeDois,
+    feedOnlyDois,
+    bibliographyOnlyDois
+  };
+}
+
+export async function guardedPublicationFileState(feed, bibliographyText, onError = async () => {}) {
+  try {
+    return publicationFileState(feed, bibliographyText);
+  } catch (error) {
+    await onError(error);
+    return null;
+  }
+}
+
+function bibliographyForCandidate(candidate) {
+  const record = candidate?.bibliography
+    ? canonicalBibliographyFromWork(candidate.bibliography, candidate.bibliography.source?.provider)
+    : canonicalBibliographyFromWork(candidate, candidate?.source?.provider);
+  const doi = normalizeDoi(candidate?.doi || record.doi);
+  if (!doi || record.doi !== doi) {
+    throw new Error(`Candidate bibliography DOI does not match: ${candidate?.doi || '(missing DOI)'}`);
+  }
+  return record;
+}
+
+export function addCandidateToBibliography(text, candidate, snapshotUpdatedAt = new Date().toISOString()) {
+  const snapshot = parsePublicationBibliography(text);
+  const doi = normalizeDoi(candidate?.doi);
+  if (snapshot.publications[doi]) return String(text);
+  const record = bibliographyForCandidate(candidate);
+  const next = {
+    ...snapshot,
+    snapshotUpdatedAt,
+    publications: {
+      ...snapshot.publications,
+      [doi]: record
+    }
+  };
+  return `${JSON.stringify(next, null, 2)}\n`;
+}
+
+export function synchronizePublicationFiles(feed, bibliographyText, candidate, snapshotUpdatedAt) {
+  const doi = normalizeDoi(candidate?.doi);
+  if (!doi) throw new Error('Publication candidate DOI is required.');
+  const snapshot = parsePublicationBibliography(bibliographyText);
+  const inFeed = existingDois(feed).has(doi);
+  const inBibliography = Boolean(snapshot.publications[doi]);
+  const nextFeed = inFeed ? feed : addCandidateToFeed(feed, candidate);
+  const nextBibliography = inBibliography
+    ? bibliographyText
+    : addCandidateToBibliography(bibliographyText, candidate, snapshotUpdatedAt);
+  return {
+    feed: nextFeed,
+    bibliography: nextBibliography,
+    changed: nextFeed !== feed || nextBibliography !== bibliographyText,
+    consistencyRepair: inFeed !== inBibliography,
+    inFeed,
+    inBibliography
+  };
+}
+
 function slugForDoi(doi) {
   return normalizeDoi(doi).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 70);
+}
+
+export class HttpRequestError extends Error {
+  constructor(message, { status = 0, method = 'GET', url = '', data = null } = {}) {
+    super(message);
+    this.name = 'HttpRequestError';
+    this.status = status;
+    this.method = method;
+    this.url = url;
+    this.data = data;
+  }
 }
 
 async function jsonRequest(url, options = {}) {
@@ -552,7 +698,13 @@ async function jsonRequest(url, options = {}) {
   const text = await response.text();
   let data;
   try { data = text ? JSON.parse(text) : {}; } catch { data = { text }; }
-  if (!response.ok || data.ok === false) throw new Error(`${options.method || 'GET'} ${url}: ${response.status} ${data.error || data.message || text}`);
+  if (!response.ok || data.ok === false) {
+    const method = options.method || 'GET';
+    throw new HttpRequestError(
+      `${method} ${url}: ${response.status} ${data.error || data.message || text}`,
+      { status: response.status, method, url, data }
+    );
+  }
   return data;
 }
 
@@ -651,12 +803,52 @@ export function candidateMessage(candidate) {
 }
 
 function doiFromMessage(text) {
-  return normalizeDoi(text.match(/DOI:\s*([^\s>]+)/i)?.[1]);
+  const encoded = String(text || '').match(/^DOI:\s*(\S+)\s*$/im)?.[1] || '';
+  const decoded = encoded
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&amp;/gi, '&');
+  return normalizeDoi(decoded);
+}
+
+export function nextOpenPublicationPr(pulls, repository) {
+  return (pulls || [])
+    .map(pr => {
+      const doiLine = String(pr?.body || '').match(
+        /^\s*-\s*\*\*DOI:\*\*\s+https?:\/\/(?:dx\.)?doi\.org\/(\S+)\s*$/im
+      )?.[1];
+      const candidates = [normalizeDoi(doiLine)];
+      try {
+        const decoded = normalizeDoi(decodeURIComponent(doiLine || ''));
+        if (decoded && !candidates.includes(decoded)) candidates.push(decoded);
+      } catch {
+        // A raw legacy DOI may contain a literal percent sign rather than URL encoding.
+      }
+      const doi = candidates.find(candidate =>
+        pr?.head?.ref === `publication/${slugForDoi(candidate)}`
+      ) || candidates[0];
+      return { pr, doi };
+    })
+    .filter(({ pr, doi }) => doi
+      && pr?.base?.ref === 'main'
+      && pr?.head?.repo?.full_name === repository
+      && pr?.head?.ref === `publication/${slugForDoi(doi)}`)
+    .sort((left, right) => Number(left.pr.number) - Number(right.pr.number))[0] || null;
+}
+
+async function getRepositoryText(github, path, ref) {
+  const file = await github(`/contents/${path}?ref=${encodeURIComponent(ref)}`);
+  return Buffer.from(file.content, 'base64').toString('utf8');
 }
 
 async function getFeed(github, ref = 'main') {
-  const file = await github(`/contents/feed.js?ref=${encodeURIComponent(ref)}`);
-  return { content: Buffer.from(file.content, 'base64').toString('utf8'), sha: file.sha };
+  return { content: await getRepositoryText(github, 'feed.js', ref) };
+}
+
+async function getPublicationFiles(github, ref) {
+  const feed = await getRepositoryText(github, 'feed.js', ref);
+  const bibliography = await getRepositoryText(github, 'data/publication-bibliography.json', ref);
+  return { feed, bibliography };
 }
 
 async function crossrefByDoi(doi) {
@@ -664,34 +856,77 @@ async function crossrefByDoi(doi) {
   return data.message;
 }
 
-async function createOrUpdatePr(github, repository, candidate) {
-  const [owner] = repository.split('/');
-  const branch = `publication/${slugForDoi(candidate.doi)}`;
-  const baseRef = await github('/git/ref/heads/main');
-  let branchExists = true;
-  try { await github(`/git/ref/heads/${encodeURIComponent(branch)}`); }
-  catch { branchExists = false; }
-  if (!branchExists) {
-    await github('/git/refs', { method: 'POST', body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: baseRef.object.sha }) });
+function hasCompleteBibliography(candidate) {
+  const record = candidate?.bibliography;
+  return Boolean(record?.doi && record.title && record.journal && record.year && record.authors?.length);
+}
+
+export function candidateFromMetadataSources(crossrefWork, cslWork = null) {
+  let crossrefCandidate = null;
+  let crossrefError = null;
+  if (crossrefWork) {
+    try {
+      crossrefCandidate = candidateFromCrossref(crossrefWork, { provider: 'crossref' });
+    } catch (error) {
+      crossrefError = error;
+    }
+  }
+  if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+  if (!cslWork) {
+    if (crossrefError) throw crossrefError;
+    return crossrefCandidate;
+  }
+  let cslCandidate = null;
+  let cslError = null;
+  try {
+    cslCandidate = candidateFromCrossref(cslWork, { provider: 'doi-csl' });
+  } catch (error) {
+    cslError = error;
+  }
+  if (hasCompleteBibliography(cslCandidate)) return cslCandidate;
+  if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+  if (cslCandidate || crossrefCandidate) {
+    const doi = cslCandidate?.doi || crossrefCandidate?.doi || '(unknown DOI)';
+    throw new Error(`Publication metadata is incomplete for DOI ${doi}`);
+  }
+  throw crossrefError || cslError || new Error('Publication metadata is unavailable');
+}
+
+export function safeCandidateFromCrossref(work, onError = message => console.error(message)) {
+  try {
+    return candidateFromCrossref(work);
+  } catch (error) {
+    const doi = cleanText(work?.DOI || '(unknown DOI)').slice(0, 200);
+    const reason = cleanText(error?.message || String(error)).slice(0, 300);
+    onError(`Skipping unprocessable Crossref work ${doi}: ${reason}`);
+    return null;
+  }
+}
+
+async function candidateByDoi(doi) {
+  let crossrefWork = null;
+  let crossrefCandidate = null;
+  let crossrefError = null;
+  try {
+    crossrefWork = await crossrefByDoi(doi);
+    crossrefCandidate = candidateFromMetadataSources(crossrefWork);
+    if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+  } catch (error) {
+    crossrefError = error;
   }
 
-  const mainFeed = await getFeed(github, 'main');
-  const branchFeed = await getFeed(github, branch);
-  const content = addCandidateToFeed(mainFeed.content, candidate);
-  if (content !== branchFeed.content) {
-    await github('/contents/feed.js', {
-      method: 'PUT',
-      body: JSON.stringify({
-        message: `Add publication ${candidate.doi}`,
-        branch,
-        sha: branchFeed.sha,
-        content: Buffer.from(content).toString('base64')
-      })
+  try {
+    const cslWork = await jsonRequest(doiResolverUrl(doi), {
+      headers: { accept: 'application/vnd.citationstyles.csl+json' }
     });
+    return candidateFromMetadataSources(crossrefWork, cslWork);
+  } catch (error) {
+    if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
+    throw crossrefError || error;
   }
+}
 
-  const pulls = await github(`/pulls?state=open&head=${encodeURIComponent(`${owner}:${branch}`)}`);
-  if (pulls[0]) return { pr: pulls[0], created: false };
+function publicationPrBody(candidate) {
   const classification = candidate.classification;
   const classificationMethod = classification?.method === 'llm'
     ? `${safeGithubText(classification.provider)} / ${safeGithubText(classification.model)}`
@@ -701,41 +936,231 @@ async function createOrUpdatePr(github, repository, candidate) {
         .map(topic => `  - ${safeGithubText(topic.name)} (${topic.group}): ${safeGithubText(topic.rationale)}`)
         .join('\n')
     : '  - None';
+  return [
+    '## Publication',
+    '',
+    `- **Title:** ${safeGithubText(candidate.title)}`,
+    `- **Journal:** ${safeGithubText(candidate.journal)}`,
+    `- **DOI:** ${doiResolverUrl(candidate.doi)}`,
+    `- **Labels:** ${candidate.topics.join(', ') || 'None'}`,
+    `- **Classification:** ${classificationMethod}`,
+    '',
+    '### Novel topic proposals',
+    '',
+    novelTopics,
+    '',
+    'Novel topic proposals are review notes only and were not added to the website taxonomy.',
+    '',
+    'Approved from the configured Slack publication-review channel.'
+  ].join('\n');
+}
+
+export async function ensurePublicationPrIncludesBase(
+  github,
+  prNumber,
+  baseSha,
+  headSha
+) {
+  const comparison = await github(`/compare/${baseSha}...${headSha}`);
+  if (comparison.status === 'ahead' || comparison.status === 'identical') {
+    return { updated: false };
+  }
+  if (comparison.status !== 'behind' && comparison.status !== 'diverged') {
+    throw new Error(`Unexpected publication branch comparison status: ${comparison.status || 'missing'}`);
+  }
+  await github(`/pulls/${prNumber}/update-branch`, {
+    method: 'PUT',
+    body: JSON.stringify({ expected_head_sha: headSha })
+  });
+  return { updated: true };
+}
+
+/**
+ * Update feed.js and the structured bibliography with one Git commit. The
+ * branch head read below is also the sole parent and the expected ref value,
+ * so a concurrent/manual update fails safely instead of being overwritten.
+ */
+export async function createOrUpdatePr(github, repository, candidate, options = {}) {
+  const [owner] = repository.split('/');
+  const branch = `publication/${slugForDoi(candidate.doi)}`;
+  const baseRef = await github('/git/ref/heads/main');
+  const baseSha = baseRef.object.sha;
+  const mainFiles = await getPublicationFiles(github, baseSha);
+  const mainState = synchronizePublicationFiles(
+    mainFiles.feed,
+    mainFiles.bibliography,
+    candidate,
+    options.snapshotUpdatedAt
+  );
+  if (mainState.inFeed && mainState.inBibliography) {
+    return {
+      pr: null,
+      created: false,
+      updated: false,
+      noop: true,
+      baseSha,
+      expectedHeadSha: baseSha
+    };
+  }
+
+  let branchRef;
+  try {
+    branchRef = await github(`/git/ref/heads/${encodeURIComponent(branch)}`);
+  } catch (error) {
+    if (error?.status !== 404) throw error;
+    branchRef = await github('/git/refs', {
+      method: 'POST',
+      body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: baseSha })
+    });
+  }
+  const branchHeadSha = branchRef.object.sha;
+  const branchFiles = await getPublicationFiles(github, branchHeadSha);
+  const synchronized = synchronizePublicationFiles(
+    branchFiles.feed,
+    branchFiles.bibliography,
+    candidate,
+    options.snapshotUpdatedAt
+  );
+  let expectedHeadSha = branchHeadSha;
+
+  if (synchronized.changed) {
+    const branchCommit = await github(`/git/commits/${branchHeadSha}`);
+    const feedBlob = await github('/git/blobs', {
+      method: 'POST',
+      body: JSON.stringify({ content: synchronized.feed, encoding: 'utf-8' })
+    });
+    const bibliographyBlob = await github('/git/blobs', {
+      method: 'POST',
+      body: JSON.stringify({ content: synchronized.bibliography, encoding: 'utf-8' })
+    });
+    const tree = await github('/git/trees', {
+      method: 'POST',
+      body: JSON.stringify({
+        base_tree: branchCommit.tree.sha,
+        tree: [
+          { path: 'feed.js', mode: '100644', type: 'blob', sha: feedBlob.sha },
+          {
+            path: 'data/publication-bibliography.json',
+            mode: '100644',
+            type: 'blob',
+            sha: bibliographyBlob.sha
+          }
+        ]
+      })
+    });
+    const commit = await github('/git/commits', {
+      method: 'POST',
+      body: JSON.stringify({
+        message: `Add publication ${candidate.doi}`,
+        tree: tree.sha,
+        parents: [branchHeadSha]
+      })
+    });
+    await github(`/git/refs/heads/${encodeURIComponent(branch)}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ sha: commit.sha, force: false })
+    });
+    expectedHeadSha = commit.sha;
+  }
+
+  const pulls = await github(`/pulls?state=open&head=${encodeURIComponent(`${owner}:${branch}`)}`);
+  if (pulls[0]) {
+    const baseUpdate = await ensurePublicationPrIncludesBase(
+      github,
+      pulls[0].number,
+      baseSha,
+      expectedHeadSha
+    );
+    return {
+      pr: pulls[0],
+      created: false,
+      updated: synchronized.changed,
+      consistencyRepair: synchronized.consistencyRepair,
+      baseSha,
+      expectedHeadSha,
+      baseUpdated: baseUpdate.updated
+    };
+  }
   const pr = await github('/pulls', {
     method: 'POST',
     body: JSON.stringify({
       title: `Add publication: ${safeGithubText(candidate.title)}`,
       head: branch,
       base: 'main',
-      body: [
-        '## Publication',
-        '',
-        `- **Title:** ${safeGithubText(candidate.title)}`,
-        `- **Journal:** ${safeGithubText(candidate.journal)}`,
-        `- **DOI:** https://doi.org/${candidate.doi}`,
-        `- **Labels:** ${candidate.topics.join(', ') || 'None'}`,
-        `- **Classification:** ${classificationMethod}`,
-        '',
-        '### Novel topic proposals',
-        '',
-        novelTopics,
-        '',
-        'Novel topic proposals are review notes only and were not added to the website taxonomy.',
-        '',
-        'Approved from the configured Slack publication-review channel.'
-      ].join('\n'),
+      body: publicationPrBody(candidate),
       maintainer_can_modify: true
     })
   });
-  return { pr, created: true };
+  const baseUpdate = await ensurePublicationPrIncludesBase(
+    github,
+    pr.number,
+    baseSha,
+    expectedHeadSha
+  );
+  return {
+    pr,
+    created: true,
+    updated: synchronized.changed,
+    consistencyRepair: synchronized.consistencyRepair,
+    baseSha,
+    expectedHeadSha,
+    baseUpdated: baseUpdate.updated
+  };
 }
 
-async function checksPassed(github, sha) {
+export async function checksPassed(github, sha) {
   const runs = await github(`/actions/runs?head_sha=${sha}&event=pull_request&per_page=20`);
   const relevant = (runs.workflow_runs || []).filter(run => run.name === 'Validate and deploy website');
   if (!relevant.length || relevant.some(run => run.status !== 'completed')) return false;
   if (relevant.some(run => run.conclusion !== 'success')) throw new Error('The publication PR CI failed; review the PR before merging.');
   return true;
+}
+
+export async function mergePublicationPrIfReady(github, prNumber, expected) {
+  const verifyExactRefs = async () => {
+    const fresh = await github(`/pulls/${prNumber}`);
+    const mainRef = await github('/git/ref/heads/main');
+    const exact = fresh.head.sha === expected.headSha
+      && fresh.base.sha === expected.baseSha
+      && mainRef.object.sha === expected.baseSha;
+    return { exact, fresh };
+  };
+
+  const beforeChecks = await verifyExactRefs();
+  if (!beforeChecks.exact) return { merged: false, reason: 'publication_pr_changed' };
+  if (!await checksPassed(github, expected.headSha)) {
+    return { merged: false, reason: 'checks_pending' };
+  }
+  const beforeMerge = await verifyExactRefs();
+  if (!beforeMerge.exact) return { merged: false, reason: 'publication_pr_changed' };
+  return github(`/pulls/${prNumber}/merge`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      sha: expected.headSha,
+      merge_method: 'squash',
+      commit_title: expected.commitTitle
+    })
+  });
+}
+
+export async function advanceOpenPublicationPr(github, pr) {
+  const mainRef = await github('/git/ref/heads/main');
+  const baseSha = mainRef.object.sha;
+  const headSha = pr.head.sha;
+  const baseUpdate = await ensurePublicationPrIncludesBase(
+    github,
+    pr.number,
+    baseSha,
+    headSha
+  );
+  if (baseUpdate.updated) {
+    return { merged: false, reason: 'base_updated' };
+  }
+  return mergePublicationPrIfReady(github, pr.number, {
+    baseSha,
+    headSha,
+    commitTitle: pr.title
+  });
 }
 
 async function ensureControlReactions(slack, channel, message, botUser) {
@@ -782,8 +1207,26 @@ async function run() {
 
   const history = await slack('conversations.history', { channel, limit: 15, include_all_metadata: true });
   const roots = history.messages || [];
-  const feed = await getFeed(github, 'main');
-  const known = existingDois(feed.content);
+  const mainFiles = await getPublicationFiles(github, 'main');
+  const feed = { content: mainFiles.feed };
+  const fileState = await guardedPublicationFileState(
+    mainFiles.feed,
+    mainFiles.bibliography,
+    async error => {
+      const detail = escapeSlackText(cleanText(error?.message || 'Unknown parse error')).slice(0, 300);
+      await slack('chat.postMessage', {
+        channel,
+        text: `⚠️ Publication automation stopped safely because the main publication data could not be parsed: ${detail}`
+      });
+    }
+  );
+  if (!fileState) return;
+  const {
+    completeDois: known,
+    feedOnlyDois,
+    bibliographyOnlyDois
+  } = fileState;
+  const repairDois = new Set([...feedOnlyDois, ...bibliographyOnlyDois]);
   const announced = new Set(roots.map(message => doiFromMessage(message.text)).filter(Boolean));
   const candidateRoots = roots.filter(message => isCandidateRoot(message, botUser));
   const llmProvider = String(process.env.PUBLICATION_LLM_PROVIDER || 'none').trim().toLowerCase();
@@ -799,8 +1242,10 @@ async function run() {
   }
 
   for (const work of await crossrefWorks(orcid, process.env.CROSSREF_MAILTO)) {
-    const candidate = candidateFromCrossref(work);
-    if (shouldIgnoreCandidate(feed.content, candidate) || announced.has(candidate.doi)) continue;
+    const candidate = safeCandidateFromCrossref(work);
+    if (!candidate) continue;
+    if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })
+        || announced.has(candidate.doi)) continue;
     if (llmEnabled && llmAttempts >= MAX_LLM_CANDIDATES_PER_RUN) {
       candidate.classification = deterministicClassification(candidate, 'per-run LLM limit reached');
     } else {
@@ -818,16 +1263,66 @@ async function run() {
   }
 
   const authorizedReactions = await listAuthorizedReactions(slack, approvers);
+  const openPublicationPrs = await github('/pulls?state=open&per_page=100');
+  const openPublication = nextOpenPublicationPr(openPublicationPrs, repository);
+  let processedApproval = false;
+
+  const advancePublicationCandidate = async (candidate, root = null) => {
+    const {
+      pr,
+      created,
+      baseSha,
+      expectedHeadSha,
+      baseUpdated
+    } = await createOrUpdatePr(github, repository, candidate);
+    processedApproval = true;
+    if (!pr) return;
+    const marker = `PR #${pr.number}`;
+    if (created) {
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
+      });
+    }
+    if (baseUpdated) return;
+
+    const merged = await mergePublicationPrIfReady(github, pr.number, {
+      baseSha,
+      headSha: expectedHeadSha,
+      commitTitle: `Add publication: ${candidate.title}`
+    });
+    if (merged.merged) {
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}`
+      });
+    }
+  };
+
+  if (openPublication) {
+    const merged = await advanceOpenPublicationPr(github, openPublication.pr);
+    if (merged.merged) {
+      const root = candidateRoots.find(message => doiFromMessage(message.text) === openPublication.doi);
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `🚀 PR #${openPublication.pr.number} CI 통과 및 main 병합 완료: ${openPublication.pr.html_url}`
+      });
+    }
+    return;
+  }
 
   for (const root of candidateRoots) {
+    if (processedApproval) break;
     const doi = doiFromMessage(root.text);
     if (!doi || known.has(doi)) continue;
     const reactions = reactionDecision(authorizedReactions, channel, root.ts);
     if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 
-    const work = await crossrefByDoi(doi);
-    const candidate = candidateFromCrossref(work);
-    if (shouldIgnoreCandidate(feed.content, candidate)) continue;
+    const candidate = await candidateByDoi(doi);
+    if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })) continue;
     const postedClassification = classificationFromCandidateMessage(root.text);
     if (postedClassification) {
       candidate.classification = postedClassification;
@@ -836,30 +1331,7 @@ async function run() {
       candidate.classification = deterministicClassification(candidate, 'legacy Slack candidate');
       candidate.topics = candidate.classification.labels;
     }
-    const { pr, created } = await createOrUpdatePr(github, repository, candidate);
-    const marker = `PR #${pr.number}`;
-    if (created) {
-      await slack('chat.postMessage', {
-        channel,
-        thread_ts: root.ts,
-        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
-      });
-    }
-
-    const fresh = await github(`/pulls/${pr.number}`);
-    if (await checksPassed(github, fresh.head.sha)) {
-      const merged = await github(`/pulls/${pr.number}/merge`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          sha: fresh.head.sha,
-          merge_method: 'squash',
-          commit_title: `Add publication: ${candidate.title}`
-        })
-      });
-      if (merged.merged) {
-        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}` });
-      }
-    }
+    await advancePublicationCandidate(candidate, root);
   }
 }
 

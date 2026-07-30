@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { generateAllPublicationGraphics } from "./publication-graphic.mjs";
+import { generatePublicationCitationFiles } from "./publication-citations.mjs";
 import { rootFilePatterns, staticDirectories } from "./site-files.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -50,6 +51,12 @@ const generatedGraphics = await generateAllPublicationGraphics({
   outputRoot
 });
 
+await generatePublicationCitationFiles({
+  feedPath: path.join(repoRoot, "feed.js"),
+  bibliographyPath: path.join(repoRoot, "data/publication-bibliography.json"),
+  outputRoot
+});
+
 await writeFile(path.join(outputRoot, ".nojekyll"), "");
 
 const manifest = {};
@@ -69,6 +76,6 @@ await writeFile(
 
 console.log(
   `Built ${Object.keys(manifest).length} site files in dist/, including `
-  + `${generatedGraphics.length} deterministic publication graphics.`
+  + `${generatedGraphics.length} deterministic publication graphics and citation exports.`
 );
 

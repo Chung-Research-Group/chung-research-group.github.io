@@ -1697,10 +1697,15 @@
     if (w.React && w.ReactDOM) return Promise.resolve();
     const react = cdnScriptFor(REACT_URL, REACT_SRI);
     const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
-    return Promise.all([
-      loadScript(react.src, react.integrity),
-      loadScript(reactDom.src, reactDom.integrity)
-    ]).then(() => void 0);
+    const reactReady = w.React ? Promise.resolve() : loadScript(react.src, react.integrity).then(() => {
+      if (!w.React) throw new Error("React loaded without exposing window.React");
+    });
+    return reactReady.then(() => {
+      if (w.ReactDOM) return;
+      return loadScript(reactDom.src, reactDom.integrity).then(() => {
+        if (!w.ReactDOM) throw new Error("ReactDOM loaded without exposing window.ReactDOM");
+      });
+    });
   }
   function init() {
     const runtime = createRuntime(document);

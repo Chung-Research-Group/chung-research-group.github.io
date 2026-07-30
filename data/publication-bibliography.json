@@ -1,0 +1,3118 @@
+{
+  "schemaVersion": 1,
+  "snapshotUpdatedAt": "2026-07-30T05:18:45.289Z",
+  "publications": {
+    "10.1002/ijch.70028": {
+      "doi": "10.1002/ijch.70028",
+      "type": "article",
+      "title": "Hunting Structural Demons in Digital Reticular Chemistry: Lessons From Metal‐Organic Frameworks",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Myoung Soo",
+          "family": "Lah",
+          "orcid": "https://orcid.org/0000-0001-9517-7519"
+        }
+      ],
+      "journal": "Israel Journal of Chemistry",
+      "year": 2026,
+      "volume": "66",
+      "issue": "4",
+      "articleNumber": "e70028",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1063/5.0307954": {
+      "doi": "10.1063/5.0307954",
+      "type": "article",
+      "title": "Data-driven prediction of ionic conductivity in solid-state electrolytes with machine learning and large language models",
+      "authors": [
+        {
+          "given": "Haewon",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0009-0007-5486-9851"
+        },
+        {
+          "given": "Taekgi",
+          "family": "Lee",
+          "orcid": "https://orcid.org/0009-0000-2130-2970"
+        },
+        {
+          "given": "Seongeun",
+          "family": "Hong",
+          "orcid": "https://orcid.org/0009-0006-1823-0594"
+        },
+        {
+          "given": "Kyeong-Ho",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0000-0002-5760-4599"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "The Journal of Chemical Physics",
+      "year": 2026,
+      "volume": "164",
+      "issue": "11",
+      "articleNumber": "114502",
+      "publisher": "AIP Publishing",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2026.175117": {
+      "doi": "10.1016/j.cej.2026.175117",
+      "type": "article",
+      "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
+      "authors": [
+        {
+          "given": "Muhammad",
+          "family": "Hassan"
+        },
+        {
+          "given": "Changdon",
+          "family": "Shin"
+        },
+        {
+          "given": "Taekgi",
+          "family": "Lee"
+        },
+        {
+          "given": "Seunghyun",
+          "family": "Lee"
+        },
+        {
+          "given": "Somnath",
+          "family": "Chowdhury"
+        },
+        {
+          "given": "Hyuk Taek",
+          "family": "Kwon"
+        },
+        {
+          "given": "Sung Gu",
+          "family": "Kang"
+        },
+        {
+          "given": "Sol",
+          "family": "Ahn"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2026,
+      "volume": "534",
+      "articleNumber": "175117",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/aenm.202504672": {
+      "doi": "10.1002/aenm.202504672",
+      "type": "article",
+      "title": "Bridging the Gap Between Materials and Engineering: Large‐Scale Screening of Metal–Organic Frameworks for Adsorption Cooling From Device Level",
+      "authors": [
+        {
+          "given": "Yiqi",
+          "family": "Wang"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Weixiong",
+          "family": "Wu"
+        },
+        {
+          "given": "Wei",
+          "family": "Li",
+          "orcid": "https://orcid.org/0000-0002-3920-3863"
+        },
+        {
+          "given": "Song",
+          "family": "Li"
+        }
+      ],
+      "journal": "Advanced Energy Materials",
+      "year": 2026,
+      "volume": "16",
+      "issue": "5",
+      "articleNumber": "e04672",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cpc.2025.109944": {
+      "doi": "10.1016/j.cpc.2025.109944",
+      "type": "article",
+      "title": "AIM: A user-friendly GUI workflow program for isotherm fitting, mixture prediction, isosteric heat of adsorption estimation, and breakthrough simulation",
+      "authors": [
+        {
+          "given": "Muhammad",
+          "family": "Hassan"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen"
+        },
+        {
+          "given": "Pilseok",
+          "family": "Kim"
+        },
+        {
+          "given": "Hongryeol",
+          "family": "Yun"
+        },
+        {
+          "given": "Hyuk Taek",
+          "family": "Kwon"
+        },
+        {
+          "given": "Youn-Sang",
+          "family": "Bae"
+        },
+        {
+          "given": "Chung-Yul",
+          "family": "Yoo"
+        },
+        {
+          "given": "Dong-Yeun",
+          "family": "Koh"
+        },
+        {
+          "given": "Chang Seop",
+          "family": "Hong"
+        },
+        {
+          "given": "Ki Bong",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Computer Physics Communications",
+      "year": 2026,
+      "volume": "319",
+      "articleNumber": "109944",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/d5me00131e": {
+      "doi": "10.1039/d5me00131e",
+      "type": "article",
+      "title": "Multiscale, techno-economic evaluation of isoreticular series of CALF-20 for biogas upgrading using a pressure/vacuum swing adsorption (PVSA) process",
+      "authors": [
+        {
+          "given": "Changdon",
+          "family": "Shin"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Molecular Systems Design & Engineering",
+      "year": 2026,
+      "volume": "11",
+      "issue": "2",
+      "pages": "181–194",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.iecr.5c03794": {
+      "doi": "10.1021/acs.iecr.5c03794",
+      "type": "article",
+      "title": "Integrating Macrostate Probability Distributions with Swing Adsorption Modeling for Binary/Ternary Gas Separation",
+      "authors": [
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Jui",
+          "family": "Tu"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Industrial & Engineering Chemistry Research",
+      "year": 2025,
+      "volume": "64",
+      "issue": "52",
+      "pages": "25017–25033",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.langmuir.5c04369": {
+      "doi": "10.1021/acs.langmuir.5c04369",
+      "type": "article",
+      "title": "A Master Isotherm Model Approach to Quantify Defects in UiO-66 from Nitrogen Adsorption Isotherms",
+      "authors": [
+        {
+          "given": "Yu",
+          "family": "Chen",
+          "orcid": "https://orcid.org/0000-0002-6530-0974"
+        },
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Langmuir",
+      "year": 2025,
+      "volume": "41",
+      "issue": "44",
+      "pages": "29851–29858",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.seppur.2025.134786": {
+      "doi": "10.1016/j.seppur.2025.134786",
+      "type": "article",
+      "title": "Techno-economic analysis of Cu(I)-loaded porous carbons for CO separation via pressure/vacuum swing adsorption process",
+      "authors": [
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Jaehyung",
+          "family": "Jung",
+          "orcid": "https://orcid.org/0009-0009-7216-7743"
+        },
+        {
+          "given": "Guobin",
+          "family": "Zhao"
+        },
+        {
+          "given": "Yeji",
+          "family": "Lee",
+          "orcid": "https://orcid.org/0009-0000-5304-6465"
+        },
+        {
+          "given": "Ki Bong",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Separation and Purification Technology",
+      "year": 2025,
+      "volume": "378",
+      "articleNumber": "134786",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/jacs.5c10126": {
+      "doi": "10.1021/jacs.5c10126",
+      "type": "article",
+      "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal–Organic Frameworks",
+      "authors": [
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Pengyu",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0009-0007-0506-7916"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Journal of the American Chemical Society",
+      "year": 2025,
+      "volume": "147",
+      "issue": "37",
+      "pages": "33343–33349",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2025.164419": {
+      "doi": "10.1016/j.cej.2025.164419",
+      "type": "article",
+      "title": "Accelerated discovery of high-performance MOFs for water adsorption chillers through molecular simulation and machine learning",
+      "authors": [
+        {
+          "given": "Zhilu",
+          "family": "Liu"
+        },
+        {
+          "given": "Dongchen",
+          "family": "Shen"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Wei",
+          "family": "Li"
+        },
+        {
+          "given": "Song",
+          "family": "Li"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2025,
+      "volume": "517",
+      "articleNumber": "164419",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.memsci.2025.124298": {
+      "doi": "10.1016/j.memsci.2025.124298",
+      "type": "article",
+      "title": "Enhancing interchain interactions in spirobifluorene-based microporous polyimides for high-performance organic solvent nanofiltration",
+      "authors": [
+        {
+          "given": "Min-Jun",
+          "family": "Jang"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen"
+        },
+        {
+          "given": "Jihoon",
+          "family": "Choi"
+        },
+        {
+          "given": "Hyeokjun",
+          "family": "Seo"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Dong-Yeun",
+          "family": "Koh",
+          "orcid": "https://orcid.org/0000-0002-6049-9371"
+        }
+      ],
+      "journal": "Journal of Membrane Science",
+      "year": 2025,
+      "volume": "733",
+      "articleNumber": "124298",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.matt.2025.102140": {
+      "doi": "10.1016/j.matt.2025.102140",
+      "type": "article",
+      "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
+      "authors": [
+        {
+          "given": "Guobin",
+          "family": "Zhao"
+        },
+        {
+          "given": "Logan M.",
+          "family": "Brabson"
+        },
+        {
+          "given": "Saumil",
+          "family": "Chheda"
+        },
+        {
+          "given": "Ju",
+          "family": "Huang"
+        },
+        {
+          "given": "Haewon",
+          "family": "Kim"
+        },
+        {
+          "given": "Kunhuan",
+          "family": "Liu"
+        },
+        {
+          "given": "Kenji",
+          "family": "Mochida"
+        },
+        {
+          "given": "Thang D.",
+          "family": "Pham"
+        },
+        {
+          "literal": "Prerna"
+        },
+        {
+          "given": "Gianmarco G.",
+          "family": "Terrones"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Lionel",
+          "family": "Zoubritzky"
+        },
+        {
+          "given": "François-Xavier",
+          "family": "Coudert"
+        },
+        {
+          "given": "Maciej",
+          "family": "Haranczyk"
+        },
+        {
+          "given": "Heather J.",
+          "family": "Kulik",
+          "orcid": "https://orcid.org/0000-0001-9342-0191"
+        },
+        {
+          "given": "Seyed Mohamad",
+          "family": "Moosavi"
+        },
+        {
+          "given": "David S.",
+          "family": "Sholl"
+        },
+        {
+          "given": "J. Ilja",
+          "family": "Siepmann"
+        },
+        {
+          "given": "Randall.Q.",
+          "family": "Snurr"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Matter",
+      "year": 2025,
+      "volume": "8",
+      "issue": "6",
+      "articleNumber": "102140",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2025.160517": {
+      "doi": "10.1016/j.cej.2025.160517",
+      "type": "article",
+      "title": "Modeling, screening, and techno-economic evaluation of metal–organic frameworks for boil-off gas capture during intercontinental transportation of LNG",
+      "authors": [
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Haneul",
+          "family": "Mun"
+        },
+        {
+          "given": "Seongbin",
+          "family": "Ga"
+        },
+        {
+          "given": "Jinwoo",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0002-1616-0880"
+        },
+        {
+          "given": "Inkyu",
+          "family": "Lee",
+          "orcid": "https://orcid.org/0000-0002-7942-832X"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2025,
+      "volume": "507",
+      "articleNumber": "160517",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/adfm.202417288": {
+      "doi": "10.1002/adfm.202417288",
+      "type": "article",
+      "title": "Hierarchically Structured Conductive Lanthanide Metal Organic Framework Nanorods for Ultrastable Flexible Magnesium Ion Capacitors",
+      "authors": [
+        {
+          "given": "Hye Rin",
+          "family": "Park"
+        },
+        {
+          "given": "Gun",
+          "family": "Jang"
+        },
+        {
+          "given": "Jin Suk",
+          "family": "Byun"
+        },
+        {
+          "given": "Yeonju",
+          "family": "Park"
+        },
+        {
+          "given": "Won Il",
+          "family": "Kim"
+        },
+        {
+          "given": "Sang Joon",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Young Mee",
+          "family": "Jung"
+        },
+        {
+          "given": "Ho Seok",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0002-4424-4037"
+        }
+      ],
+      "journal": "Advanced Functional Materials",
+      "year": 2025,
+      "volume": "35",
+      "issue": "11",
+      "articleNumber": "2417288",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/adfm.202412577": {
+      "doi": "10.1002/adfm.202412577",
+      "type": "article",
+      "title": "Polyoxometalate Initiated In situ Conformal Coating of Multifunctional Hybrid Artificial Layers for High Performance Zinc Metal Anodes",
+      "authors": [
+        {
+          "given": "Jin Suk",
+          "family": "Byun"
+        },
+        {
+          "given": "Won Il",
+          "family": "Kim"
+        },
+        {
+          "given": "Sang Ha",
+          "family": "Baek"
+        },
+        {
+          "given": "Fu",
+          "family": "Hao"
+        },
+        {
+          "given": "Haewon",
+          "family": "Kim"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Ling‐Xuan",
+          "family": "Li"
+        },
+        {
+          "given": "Rui",
+          "family": "Zhang"
+        },
+        {
+          "given": "Ho Seok",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0002-4424-4037"
+        }
+      ],
+      "journal": "Advanced Functional Materials",
+      "year": 2025,
+      "volume": "35",
+      "issue": "10",
+      "articleNumber": "2412577",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acsami.4c11953": {
+      "doi": "10.1021/acsami.4c11953",
+      "type": "article",
+      "title": "Computational Exploration of Adsorption-Based Hydrogen Storage in Mg-Alkoxide Functionalized Covalent-Organic Frameworks (COFs): Force-Field and Machine Learning Models",
+      "authors": [
+        {
+          "given": "Yu",
+          "family": "Chen",
+          "orcid": "https://orcid.org/0000-0002-6530-0974"
+        },
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Parsa",
+          "family": "Habibi"
+        },
+        {
+          "given": "Chang Seop",
+          "family": "Hong",
+          "orcid": "https://orcid.org/0000-0002-4329-4745"
+        },
+        {
+          "given": "Song",
+          "family": "Li"
+        },
+        {
+          "given": "Othonas A.",
+          "family": "Moultos",
+          "orcid": "https://orcid.org/0000-0001-7477-9684"
+        },
+        {
+          "given": "Poulumi",
+          "family": "Dey",
+          "orcid": "https://orcid.org/0000-0003-4679-1752"
+        },
+        {
+          "given": "Thijs J. H.",
+          "family": "Vlugt",
+          "orcid": "https://orcid.org/0000-0003-3059-8712"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "ACS Applied Materials & Interfaces",
+      "year": 2024,
+      "volume": "16",
+      "issue": "45",
+      "pages": "61995–62009",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2024.154116": {
+      "doi": "10.1016/j.cej.2024.154116",
+      "type": "article",
+      "title": "Multi-scale computational screening of all-silica zeolites for adsorptive separation of ternary (H2S/CO2/CH4) mixtures",
+      "authors": [
+        {
+          "given": "Sunghyun",
+          "family": "Yoon",
+          "orcid": "https://orcid.org/0000-0003-4151-1459"
+        },
+        {
+          "given": "Muhammad",
+          "family": "Hassan",
+          "orcid": "https://orcid.org/0000-0002-6658-5609"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2024,
+      "volume": "496",
+      "articleNumber": "154116",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jctc.4c00434": {
+      "doi": "10.1021/acs.jctc.4c00434",
+      "type": "article",
+      "title": "PACMAN: A Robust Partial Atomic Charge Predicter for Nanoporous Materials Based on Crystal Graph Convolution Networks",
+      "authors": [
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Journal of Chemical Theory and Computation",
+      "year": 2024,
+      "volume": "20",
+      "issue": "12",
+      "pages": "5368–5380",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1007/s11144-024-02656-4": {
+      "doi": "10.1007/s11144-024-02656-4",
+      "type": "article",
+      "title": "Linker-defect assisted catalytic fixation of CO2 in a dual-linker metal–organic framework",
+      "authors": [
+        {
+          "given": "Yunjang",
+          "family": "Gu"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Robin",
+          "family": "Babu"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Dae-Won",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0003-4668-4906"
+        }
+      ],
+      "journal": "Reaction Kinetics, Mechanisms and Catalysis",
+      "year": 2024,
+      "volume": "137",
+      "issue": "4",
+      "pages": "2197–2213",
+      "publisher": "Springer Science and Business Media LLC",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.seppur.2024.127752": {
+      "doi": "10.1016/j.seppur.2024.127752",
+      "type": "article",
+      "title": "Transfer learning-assisted computational screening of metal-organic frameworks and covalent-organic frameworks for the separation of Xe/Kr noble gas",
+      "authors": [
+        {
+          "given": "Zhiliang",
+          "family": "Cai"
+        },
+        {
+          "given": "Wei",
+          "family": "Li",
+          "orcid": "https://orcid.org/0000-0002-3920-3863"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Song",
+          "family": "Li"
+        },
+        {
+          "given": "Tiangui",
+          "family": "Liang"
+        },
+        {
+          "given": "Teng",
+          "family": "Wu"
+        }
+      ],
+      "journal": "Separation and Purification Technology",
+      "year": 2024,
+      "volume": "348",
+      "articleNumber": "127752",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/adma.202401739": {
+      "doi": "10.1002/adma.202401739",
+      "type": "article",
+      "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
+      "authors": [
+        {
+          "given": "Dae Won",
+          "family": "Kim"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen"
+        },
+        {
+          "given": "Hyunlim",
+          "family": "Kim"
+        },
+        {
+          "given": "Namju",
+          "family": "Kim"
+        },
+        {
+          "given": "Young Hoon",
+          "family": "Lee"
+        },
+        {
+          "given": "Hyunchul",
+          "family": "Oh"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Chang Seop",
+          "family": "Hong",
+          "orcid": "https://orcid.org/0000-0002-4329-4745"
+        }
+      ],
+      "journal": "Advanced Materials",
+      "year": 2024,
+      "volume": "36",
+      "issue": "26",
+      "articleNumber": "2401739",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jpca.3c07339": {
+      "doi": "10.1021/acs.jpca.3c07339",
+      "type": "article",
+      "title": "Leveraging Machine Learning To Predict the Atmospheric Lifetime and the Global Warming Potential of SF6 Replacement Gases",
+      "authors": [
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Haewon",
+          "family": "Kim"
+        },
+        {
+          "given": "Changwon",
+          "family": "Yang"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "The Journal of Physical Chemistry A",
+      "year": 2024,
+      "volume": "128",
+      "issue": "12",
+      "pages": "2399–2408",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.jechem.2024.02.032": {
+      "doi": "10.1016/j.jechem.2024.02.032",
+      "type": "article",
+      "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
+      "authors": [
+        {
+          "given": "Taehun",
+          "family": "Kang"
+        },
+        {
+          "given": "Puritut",
+          "family": "Nakhanivej",
+          "orcid": "https://orcid.org/0000-0003-4052-9534"
+        },
+        {
+          "given": "Kyung Jae",
+          "family": "Wang"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen"
+        },
+        {
+          "given": "Yongchul G",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Ho Seok",
+          "family": "Park"
+        }
+      ],
+      "journal": "Journal of Energy Chemistry",
+      "year": 2024,
+      "volume": "94",
+      "pages": "646–655",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1038/s41560-023-01417-2": {
+      "doi": "10.1038/s41560-023-01417-2",
+      "type": "article",
+      "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
+      "authors": [
+        {
+          "given": "Peyman Z.",
+          "family": "Moghadam",
+          "orcid": "https://orcid.org/0000-0002-1592-0139"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        }
+      ],
+      "journal": "Nature Energy",
+      "year": 2024,
+      "volume": "9",
+      "issue": "2",
+      "pages": "121–133",
+      "publisher": "Springer Science and Business Media LLC",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1007/s11814-024-00048-x": {
+      "doi": "10.1007/s11814-024-00048-x",
+      "type": "article",
+      "title": "Synthesis and Characterization of Bimetallic ZnCo-ZIF-71 with Defect for an Efficient Catalytic CO2 Conversion",
+      "authors": [
+        {
+          "given": "Yunjang",
+          "family": "Gu"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Robin",
+          "family": "Babu"
+        },
+        {
+          "given": "Sung-June",
+          "family": "Cho"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Dae-Won",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0003-4668-4906"
+        }
+      ],
+      "journal": "Korean Journal of Chemical Engineering",
+      "year": 2024,
+      "volume": "41",
+      "issue": "3",
+      "pages": "749–761",
+      "publisher": "Springer Science and Business Media LLC",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.iecr.3c02211": {
+      "doi": "10.1021/acs.iecr.3c02211",
+      "type": "article",
+      "title": "High-Throughput, Multiscale Computational Screening of Metal–Organic Frameworks for Xe/Kr Separation with Machine-Learned Parameters",
+      "authors": [
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen",
+          "orcid": "https://orcid.org/0000-0002-6530-0974"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Industrial & Engineering Chemistry Research",
+      "year": 2023,
+      "volume": "62",
+      "issue": "37",
+      "pages": "15176–15189",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.chemmater.3c00694": {
+      "doi": "10.1021/acs.chemmater.3c00694",
+      "type": "article",
+      "title": "Construction of Chimeric Metal–Organic Frameworks with Symmetry-Mismatched Building Blocks",
+      "authors": [
+        {
+          "given": "Seungwan",
+          "family": "Han"
+        },
+        {
+          "given": "Seonghwan",
+          "family": "Lee"
+        },
+        {
+          "given": "Dongwook",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0000-0003-4432-371X"
+        },
+        {
+          "given": "Junmo",
+          "family": "Seong"
+        },
+        {
+          "given": "Amitosh",
+          "family": "Sharma"
+        },
+        {
+          "given": "Jaewoong",
+          "family": "Lim",
+          "orcid": "https://orcid.org/0000-0002-4557-0870"
+        },
+        {
+          "given": "Seok",
+          "family": "Jeong"
+        },
+        {
+          "given": "Guobin",
+          "family": "Zhao",
+          "orcid": "https://orcid.org/0000-0002-7728-4211"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen",
+          "orcid": "https://orcid.org/0000-0002-6530-0974"
+        },
+        {
+          "given": "Seung Bin",
+          "family": "Baek"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Myoung Soo",
+          "family": "Lah",
+          "orcid": "https://orcid.org/0000-0001-9517-7519"
+        }
+      ],
+      "journal": "Chemistry of Materials",
+      "year": 2023,
+      "volume": "35",
+      "issue": "15",
+      "pages": "5903–5913",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2023.143644": {
+      "doi": "10.1016/j.cej.2023.143644",
+      "type": "article",
+      "title": "Polyoxometalate–polymer hybrid artificial layers for ultrastable and reversible Zn metal anodes",
+      "authors": [
+        {
+          "given": "Sang Ha",
+          "family": "Baek"
+        },
+        {
+          "given": "Jin Suk",
+          "family": "Byun"
+        },
+        {
+          "given": "Hwi Jung",
+          "family": "Kim"
+        },
+        {
+          "given": "Sang Joon",
+          "family": "Lee"
+        },
+        {
+          "given": "Jae Min",
+          "family": "Park"
+        },
+        {
+          "given": "Peixun",
+          "family": "Xiong",
+          "orcid": "https://orcid.org/0000-0003-0824-1784"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Ho Seok",
+          "family": "Park"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2023,
+      "volume": "468",
+      "articleNumber": "143644",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.21105/joss.05429": {
+      "doi": "10.21105/joss.05429",
+      "type": "article",
+      "title": "SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms",
+      "authors": [
+        {
+          "given": "Gianmarco G.",
+          "family": "Terrones",
+          "orcid": "https://orcid.org/0000-0001-5360-165X"
+        },
+        {
+          "given": "Yu",
+          "family": "Chen",
+          "orcid": "https://orcid.org/0000-0002-6530-0974"
+        },
+        {
+          "given": "Archit",
+          "family": "Datar",
+          "orcid": "https://orcid.org/0000-0002-5276-0103"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        },
+        {
+          "given": "Heather J.",
+          "family": "Kulik",
+          "orcid": "https://orcid.org/0000-0001-9342-0191"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Journal of Open Source Software",
+      "year": 2023,
+      "volume": "8",
+      "issue": "86",
+      "pages": "5429",
+      "publisher": "The Open Journal",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.matt.2023.03.009": {
+      "doi": "10.1016/j.matt.2023.03.009",
+      "type": "article",
+      "title": "A database of ultrastable MOFs reassembled from stable fragments with machine learning models",
+      "authors": [
+        {
+          "given": "Aditya",
+          "family": "Nandy"
+        },
+        {
+          "given": "Shuwen",
+          "family": "Yue"
+        },
+        {
+          "given": "Changhwan",
+          "family": "Oh"
+        },
+        {
+          "given": "Chenru",
+          "family": "Duan"
+        },
+        {
+          "given": "Gianmarco G.",
+          "family": "Terrones"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Heather J.",
+          "family": "Kulik",
+          "orcid": "https://orcid.org/0000-0001-9342-0191"
+        }
+      ],
+      "journal": "Matter",
+      "year": 2023,
+      "volume": "6",
+      "issue": "5",
+      "pages": "1585–1603",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cattod.2022.07.024": {
+      "doi": "10.1016/j.cattod.2022.07.024",
+      "type": "article",
+      "title": "Effective delamination of a layered two-dimensional MCM-22 zeolite: Quantitative insights into the role of the delaminated structure on acid catalytic reactions",
+      "authors": [
+        {
+          "given": "Gihoon",
+          "family": "Lee"
+        },
+        {
+          "given": "Eunhee",
+          "family": "Jang"
+        },
+        {
+          "given": "Taehee",
+          "family": "Lee"
+        },
+        {
+          "given": "Yanghwan",
+          "family": "Jeong"
+        },
+        {
+          "given": "Heejoong",
+          "family": "Kim"
+        },
+        {
+          "given": "Seulchan",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Kyoung-Su",
+          "family": "Ha"
+        },
+        {
+          "given": "Hionsuck",
+          "family": "Baik"
+        },
+        {
+          "given": "Hoi-Gu",
+          "family": "Jang"
+        },
+        {
+          "given": "Sung June",
+          "family": "Cho"
+        },
+        {
+          "given": "Jungkyu",
+          "family": "Choi"
+        }
+      ],
+      "journal": "Catalysis Today",
+      "year": 2023,
+      "volume": "411-412",
+      "articleNumber": "113856",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.ijhydene.2022.09.199": {
+      "doi": "10.1016/j.ijhydene.2022.09.199",
+      "type": "article",
+      "title": "Room-temperature hydrogen storage performance of metal-organic framework/graphene oxide composites by molecular simulations",
+      "authors": [
+        {
+          "given": "Yuexin",
+          "family": "Liu"
+        },
+        {
+          "given": "Dongchen",
+          "family": "Shen",
+          "orcid": "https://orcid.org/0000-0001-5534-6445"
+        },
+        {
+          "given": "Zhengkai",
+          "family": "Tu",
+          "orcid": "https://orcid.org/0000-0002-0388-533X"
+        },
+        {
+          "given": "Lu",
+          "family": "Xing",
+          "orcid": "https://orcid.org/0000-0002-5561-7417"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Song",
+          "family": "Li",
+          "orcid": "https://orcid.org/0000-0003-3552-3250"
+        }
+      ],
+      "journal": "International Journal of Hydrogen Energy",
+      "year": 2022,
+      "volume": "47",
+      "issue": "97",
+      "pages": "41055–41068",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/d2ta05420e": {
+      "doi": "10.1039/d2ta05420e",
+      "type": "article",
+      "title": "Highly efficient bromine capture and storage using N-containing porous organic cages",
+      "authors": [
+        {
+          "given": "Sunggyu",
+          "family": "Lee",
+          "orcid": "https://orcid.org/0000-0001-9841-2529"
+        },
+        {
+          "given": "Ilia",
+          "family": "Kevlishvili",
+          "orcid": "https://orcid.org/0000-0001-8133-4165"
+        },
+        {
+          "given": "Heather J.",
+          "family": "Kulik",
+          "orcid": "https://orcid.org/0000-0001-9342-0191"
+        },
+        {
+          "given": "Hee-Tak",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0000-0003-4578-5422"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Dong-Yeun",
+          "family": "Koh",
+          "orcid": "https://orcid.org/0000-0002-6049-9371"
+        }
+      ],
+      "journal": "Journal of Materials Chemistry A",
+      "year": 2022,
+      "volume": "10",
+      "issue": "46",
+      "pages": "24802–24812",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.langmuir.2c01390": {
+      "doi": "10.1021/acs.langmuir.2c01390",
+      "type": "article",
+      "title": "Brunauer–Emmett–Teller Areas from Nitrogen and Argon Isotherms Are Similar",
+      "authors": [
+        {
+          "given": "Archit",
+          "family": "Datar"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Langmuir",
+      "year": 2022,
+      "volume": "38",
+      "issue": "38",
+      "pages": "11631–11640",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/d2me00036a": {
+      "doi": "10.1039/d2me00036a",
+      "type": "article",
+      "title": "Recent advances in software tools for adsorption science and engineering",
+      "authors": [
+        {
+          "given": "Seongbin",
+          "family": "Ga"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Molecular Systems Design & Engineering",
+      "year": 2022,
+      "volume": "7",
+      "issue": "7",
+      "pages": "686–701",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/d2ta00503d": {
+      "doi": "10.1039/d2ta00503d",
+      "type": "article",
+      "title": "Defect-engineered MOF-801 for cycloaddition of CO 2 with epoxides",
+      "authors": [
+        {
+          "given": "Yunjang",
+          "family": "Gu"
+        },
+        {
+          "given": "Bai Amutha",
+          "family": "Anjali"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Youngson",
+          "family": "Choe",
+          "orcid": "https://orcid.org/0000-0003-0655-7582"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Dae-Won",
+          "family": "Park",
+          "orcid": "https://orcid.org/0000-0003-4668-4906"
+        }
+      ],
+      "journal": "Journal of Materials Chemistry A",
+      "year": 2022,
+      "volume": "10",
+      "issue": "18",
+      "pages": "10051–10061",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/advs.202201559": {
+      "doi": "10.1002/advs.202201559",
+      "type": "article",
+      "title": "Discovery of High‐Performing Metal–Organic Frameworks for On‐Board Methane Storage and Delivery via LNG–ANG Coupling: High‐Throughput Screening, Machine Learning, and Experimental Validation",
+      "authors": [
+        {
+          "given": "Seo‐Yul",
+          "family": "Kim"
+        },
+        {
+          "given": "Seungyun",
+          "family": "Han"
+        },
+        {
+          "given": "Seulchan",
+          "family": "Lee"
+        },
+        {
+          "given": "Jo Hong",
+          "family": "Kang"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Wanje",
+          "family": "Park"
+        },
+        {
+          "given": "Min Woo",
+          "family": "Shin"
+        },
+        {
+          "given": "Jinyoung",
+          "family": "Kim"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Youn‐Sang",
+          "family": "Bae",
+          "orcid": "https://orcid.org/0000-0002-3447-4058"
+        }
+      ],
+      "journal": "Advanced Science",
+      "year": 2022,
+      "volume": "9",
+      "issue": "21",
+      "articleNumber": "2201559",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acsami.1c18440": {
+      "doi": "10.1021/acsami.1c18440",
+      "type": "article",
+      "title": "Microplasma Band Structure Engineering in Graphene Quantum Dots for Sensitive and Wide-Range pH Sensing",
+      "authors": [
+        {
+          "given": "Darwin",
+          "family": "Kurniawan",
+          "orcid": "https://orcid.org/0000-0003-4198-7641"
+        },
+        {
+          "given": "Bai Amutha",
+          "family": "Anjali"
+        },
+        {
+          "given": "Owen",
+          "family": "Setiawan"
+        },
+        {
+          "given": "Kostya Ken",
+          "family": "Ostrikov",
+          "orcid": "https://orcid.org/0000-0001-8672-9297"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Wei-Hung",
+          "family": "Chiang",
+          "orcid": "https://orcid.org/0000-0002-6350-6696"
+        }
+      ],
+      "journal": "ACS Applied Materials & Interfaces",
+      "year": 2022,
+      "volume": "14",
+      "issue": "1",
+      "pages": "1670–1683",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.cej.2021.131787": {
+      "doi": "10.1016/j.cej.2021.131787",
+      "type": "article",
+      "title": "Integrated material and process evaluation of metal–organic frameworks database for energy-efficient SF 6 /N 2 separation",
+      "authors": [
+        {
+          "given": "Jaehoon",
+          "family": "Cha"
+        },
+        {
+          "given": "Seongbin",
+          "family": "Ga",
+          "orcid": "https://orcid.org/0000-0002-2730-9249"
+        },
+        {
+          "given": "Seung-jun",
+          "family": "Lee"
+        },
+        {
+          "given": "Soomyung",
+          "family": "Nam"
+        },
+        {
+          "given": "Youn-Sang",
+          "family": "Bae"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        }
+      ],
+      "journal": "Chemical Engineering Journal",
+      "year": 2021,
+      "volume": "426",
+      "articleNumber": "131787",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/bkcs.12380": {
+      "doi": "10.1002/bkcs.12380",
+      "type": "article",
+      "title": "Limitation of model‐based estimations of the hydrogen adsorption capacities in nanoporous materials: A molecular simulation study",
+      "authors": [
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        }
+      ],
+      "journal": "Bulletin of the Korean Chemical Society",
+      "year": 2021,
+      "volume": "42",
+      "issue": "11",
+      "pages": "1539–1548",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/advs.202004999": {
+      "doi": "10.1002/advs.202004999",
+      "type": "article",
+      "title": "Shape‐Selective Ultramicroporous Carbon Membranes for Sub‐0.1 nm Organic Liquid Separation",
+      "authors": [
+        {
+          "given": "Hyeokjun",
+          "family": "Seo"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Banseok",
+          "family": "Oh"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Dong‐Yeun",
+          "family": "Koh",
+          "orcid": "https://orcid.org/0000-0002-6049-9371"
+        }
+      ],
+      "journal": "Advanced Science",
+      "year": 2021,
+      "volume": "8",
+      "issue": "17",
+      "articleNumber": "2004999",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/advs.202004940": {
+      "doi": "10.1002/advs.202004940",
+      "type": "article",
+      "title": "High‐Throughput Discovery of Ni(IN)2 for Ethane/Ethylene Separation",
+      "authors": [
+        {
+          "given": "Minjung",
+          "family": "Kang"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Seongbin",
+          "family": "Ga"
+        },
+        {
+          "given": "Dong Won",
+          "family": "Kang"
+        },
+        {
+          "given": "Seungyun",
+          "family": "Han"
+        },
+        {
+          "given": "Jong Hyeak",
+          "family": "Choe"
+        },
+        {
+          "given": "Hyojin",
+          "family": "Kim"
+        },
+        {
+          "given": "Dae Won",
+          "family": "Kim"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Chang Seop",
+          "family": "Hong",
+          "orcid": "https://orcid.org/0000-0002-4329-4745"
+        }
+      ],
+      "journal": "Advanced Science",
+      "year": 2021,
+      "volume": "8",
+      "issue": "11",
+      "articleNumber": "2004940",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acsanm.1c00740": {
+      "doi": "10.1021/acsanm.1c00740",
+      "type": "article",
+      "title": "Unraveling the Fluorescence Quenching of Colloidal Graphene Quantum Dots for Selective Metal Ion Detection",
+      "authors": [
+        {
+          "given": "Pei-Chun",
+          "family": "Yeh"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Darwin",
+          "family": "Kurniawan"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Wei-Hung",
+          "family": "Chiang",
+          "orcid": "https://orcid.org/0000-0002-6350-6696"
+        }
+      ],
+      "journal": "ACS Applied Nano Materials",
+      "year": 2021,
+      "volume": "4",
+      "issue": "6",
+      "pages": "5636–5642",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/int.22368": {
+      "doi": "10.1002/int.22368",
+      "type": "article",
+      "title": "Development and application of machine learning‐based prediction model for distillation column",
+      "authors": [
+        {
+          "given": "Hyukwon",
+          "family": "Kwon",
+          "orcid": "https://orcid.org/0000-0003-0475-5753"
+        },
+        {
+          "given": "Kwang Cheol",
+          "family": "Oh",
+          "orcid": "https://orcid.org/0000-0001-8445-7910"
+        },
+        {
+          "given": "Yeongryeol",
+          "family": "Choi",
+          "orcid": "https://orcid.org/0000-0002-6809-4109"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Junghwan",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0000-0002-2311-4567"
+        }
+      ],
+      "journal": "International Journal of Intelligent Systems",
+      "year": 2021,
+      "volume": "36",
+      "issue": "5",
+      "pages": "1970–1997",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.7464/ksct.2021.27.4.341": {
+      "doi": "10.7464/ksct.2021.27.4.341",
+      "type": "article",
+      "title": "Simultaneous Removal of NO and SO2 using Microbubble and Reducing Agent",
+      "authors": [
+        {
+          "given": "Dong Hun",
+          "family": "Song"
+        },
+        {
+          "given": "Jo Hong",
+          "family": "Kang"
+        },
+        {
+          "given": "Hyun Sic",
+          "family": "Park"
+        },
+        {
+          "given": "Hojun",
+          "family": "Song"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        }
+      ],
+      "journal": "Clean Technology",
+      "year": 2021,
+      "volume": "27",
+      "issue": "4",
+      "pages": "341–349",
+      "publisher": "한국청정기술학회",
+      "source": {
+        "provider": "doi-csl",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jpclett.0c01518": {
+      "doi": "10.1021/acs.jpclett.0c01518",
+      "type": "article",
+      "title": "Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method",
+      "authors": [
+        {
+          "given": "Archit",
+          "family": "Datar",
+          "orcid": "https://orcid.org/0000-0002-5276-0103"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        }
+      ],
+      "journal": "The Journal of Physical Chemistry Letters",
+      "year": 2020,
+      "volume": "11",
+      "issue": "14",
+      "pages": "5412–5417",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.14478/ace.2020.1057": {
+      "doi": "10.14478/ace.2020.1057",
+      "type": "article",
+      "title": "Development of Machine Learning Model for Predicting Distillation Column Temperature",
+      "authors": [
+        {
+          "given": "Hyukwon",
+          "family": "Kwon"
+        },
+        {
+          "given": "Kwang Cheol",
+          "family": "Oh"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Hyungtae",
+          "family": "Cho"
+        },
+        {
+          "given": "Junghwan",
+          "family": "Kim"
+        }
+      ],
+      "journal": "Applied Chemistry for Engineering",
+      "year": 2020,
+      "volume": "31",
+      "issue": "5",
+      "pages": "520–525",
+      "publisher": "한국공업화학회",
+      "source": {
+        "provider": "doi-csl",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.molliq.2019.111825": {
+      "doi": "10.1016/j.molliq.2019.111825",
+      "type": "article",
+      "title": "CO2 absorption characteristics of amino group functionalized imidazolium-based amino acid ionic liquids",
+      "authors": [
+        {
+          "given": "Sehee",
+          "family": "Kang"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Jo Hong",
+          "family": "Kang"
+        },
+        {
+          "given": "Hojun",
+          "family": "Song"
+        }
+      ],
+      "journal": "Journal of Molecular Liquids",
+      "year": 2020,
+      "volume": "297",
+      "articleNumber": "111825",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.apcatb.2019.117888": {
+      "doi": "10.1016/j.apcatb.2019.117888",
+      "type": "article",
+      "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
+      "authors": [
+        {
+          "given": "Chi",
+          "family": "Van Nguyen"
+        },
+        {
+          "given": "Seulchan",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Wei-Hung",
+          "family": "Chiang",
+          "orcid": "https://orcid.org/0000-0002-6350-6696"
+        },
+        {
+          "given": "Kevin C.-W.",
+          "family": "Wu",
+          "orcid": "https://orcid.org/0000-0003-0590-1396"
+        }
+      ],
+      "journal": "Applied Catalysis B: Environmental",
+      "year": 2019,
+      "volume": "257",
+      "articleNumber": "117888",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jced.9b00835": {
+      "doi": "10.1021/acs.jced.9b00835",
+      "type": "article",
+      "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Emmanuel",
+          "family": "Haldoupis"
+        },
+        {
+          "given": "Benjamin J.",
+          "family": "Bucior"
+        },
+        {
+          "given": "Maciej",
+          "family": "Haranczyk"
+        },
+        {
+          "given": "Seulchan",
+          "family": "Lee"
+        },
+        {
+          "given": "Hongda",
+          "family": "Zhang",
+          "orcid": "https://orcid.org/0000-0001-9133-1224"
+        },
+        {
+          "given": "Konstantinos D.",
+          "family": "Vogiatzis",
+          "orcid": "https://orcid.org/0000-0002-7439-3850"
+        },
+        {
+          "given": "Marija",
+          "family": "Milisavljevic"
+        },
+        {
+          "given": "Sanliang",
+          "family": "Ling",
+          "orcid": "https://orcid.org/0000-0003-1574-7476"
+        },
+        {
+          "given": "Jeffrey S.",
+          "family": "Camp"
+        },
+        {
+          "given": "Ben",
+          "family": "Slater"
+        },
+        {
+          "given": "J. Ilja",
+          "family": "Siepmann",
+          "orcid": "https://orcid.org/0000-0003-2534-4507"
+        },
+        {
+          "given": "David S.",
+          "family": "Sholl",
+          "orcid": "https://orcid.org/0000-0002-2771-9168"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        }
+      ],
+      "journal": "Journal of Chemical & Engineering Data",
+      "year": 2019,
+      "volume": "64",
+      "issue": "12",
+      "pages": "5985–5998",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1080/08927022.2019.1648809": {
+      "doi": "10.1080/08927022.2019.1648809",
+      "type": "article",
+      "title": "The role of molecular modelling and simulation in the discovery and deployment of metal-organic frameworks for gas storage and separation",
+      "authors": [
+        {
+          "given": "Arni",
+          "family": "Sturluson"
+        },
+        {
+          "given": "Melanie T.",
+          "family": "Huynh"
+        },
+        {
+          "given": "Alec R.",
+          "family": "Kaija"
+        },
+        {
+          "given": "Caleb",
+          "family": "Laird"
+        },
+        {
+          "given": "Sunghyun",
+          "family": "Yoon"
+        },
+        {
+          "given": "Feier",
+          "family": "Hou"
+        },
+        {
+          "given": "Zhenxing",
+          "family": "Feng"
+        },
+        {
+          "given": "Christopher E.",
+          "family": "Wilmer"
+        },
+        {
+          "given": "Yamil J.",
+          "family": "Colón"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Daniel W.",
+          "family": "Siderius"
+        },
+        {
+          "given": "Cory M.",
+          "family": "Simon"
+        }
+      ],
+      "journal": "Molecular Simulation",
+      "year": 2019,
+      "volume": "45",
+      "issue": "14-15",
+      "pages": "1082–1121",
+      "publisher": "Informa UK Limited",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acsami.9b11343": {
+      "doi": "10.1021/acsami.9b11343",
+      "type": "article",
+      "title": "The Origin of p-Xylene Selectivity in a DABCO Pillar-Layered Metal–Organic Framework: A Combined Experimental and Computational Investigation",
+      "authors": [
+        {
+          "given": "Seung-Ik",
+          "family": "Kim"
+        },
+        {
+          "given": "Seulchan",
+          "family": "Lee"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Youn-Sang",
+          "family": "Bae",
+          "orcid": "https://orcid.org/0000-0002-3447-4058"
+        }
+      ],
+      "journal": "ACS Applied Materials & Interfaces",
+      "year": 2019,
+      "volume": "11",
+      "issue": "34",
+      "pages": "31227–31236",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jpcc.9b02116": {
+      "doi": "10.1021/acs.jpcc.9b02116",
+      "type": "article",
+      "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
+      "authors": [
+        {
+          "given": "Priya",
+          "family": "Sinha"
+        },
+        {
+          "given": "Archit",
+          "family": "Datar"
+        },
+        {
+          "given": "Chungsik",
+          "family": "Jeong"
+        },
+        {
+          "given": "Xuepeng",
+          "family": "Deng"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Li-Chiang",
+          "family": "Lin",
+          "orcid": "https://orcid.org/0000-0002-2821-9501"
+        }
+      ],
+      "journal": "The Journal of Physical Chemistry C",
+      "year": 2019,
+      "volume": "123",
+      "issue": "33",
+      "pages": "20195–20209",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acssuschemeng.9b01418": {
+      "doi": "10.1021/acssuschemeng.9b01418",
+      "type": "article",
+      "title": "Development of a General Evaluation Metric for Rapid Screening of Adsorbent Materials for Postcombustion CO2 Capture",
+      "authors": [
+        {
+          "given": "Karson T.",
+          "family": "Leperi"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Fengqi",
+          "family": "You",
+          "orcid": "https://orcid.org/0000-0001-9609-4299"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr"
+        }
+      ],
+      "journal": "ACS Sustainable Chemistry & Engineering",
+      "year": 2019,
+      "volume": "7",
+      "issue": "13",
+      "pages": "11529–11539",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.ccr.2019.03.008": {
+      "doi": "10.1016/j.ccr.2019.03.008",
+      "type": "article",
+      "title": "Elucidation of flexible metal-organic frameworks: Research progresses and recent developments",
+      "authors": [
+        {
+          "given": "Jae Hwa",
+          "family": "Lee"
+        },
+        {
+          "given": "Sungeun",
+          "family": "Jeoung"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Hoi Ri",
+          "family": "Moon",
+          "orcid": "https://orcid.org/0000-0002-6967-894X"
+        }
+      ],
+      "journal": "Coordination Chemistry Reviews",
+      "year": 2019,
+      "volume": "389",
+      "pages": "161–188",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1007/s11814-018-0023-y": {
+      "doi": "10.1007/s11814-018-0023-y",
+      "type": "article",
+      "title": "Two dimensional Zn-stilbenedicarboxylic acid (SDC) metal-organic frameworks for cyclic carbonate synthesis from CO2 and epoxides",
+      "authors": [
+        {
+          "given": "Gak-Gyu",
+          "family": "Choi"
+        },
+        {
+          "given": "Jintu Francis",
+          "family": "Kurisingal"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Dae-Won",
+          "family": "Park"
+        }
+      ],
+      "journal": "Korean Journal of Chemical Engineering",
+      "year": 2018,
+      "volume": "35",
+      "issue": "6",
+      "pages": "1373–1379",
+      "publisher": "Springer Science and Business Media LLC",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/s1872-2067(17)62916-4": {
+      "doi": "10.1016/s1872-2067(17)62916-4",
+      "type": "article",
+      "title": "Cycloaddition of CO 2 with epoxides by using an amino-acid-based Cu(II)–tryptophan MOF catalyst",
+      "authors": [
+        {
+          "given": "Gyeong Seon",
+          "family": "Jeong"
+        },
+        {
+          "given": "Amal Cherian",
+          "family": "Kathalikkattil"
+        },
+        {
+          "given": "Robin",
+          "family": "Babu"
+        },
+        {
+          "given": "Yongchul Greg",
+          "family": "Chung"
+        },
+        {
+          "given": "Dae",
+          "family": "Won Park"
+        }
+      ],
+      "journal": "Chinese Journal of Catalysis",
+      "year": 2018,
+      "volume": "39",
+      "issue": "1",
+      "pages": "63–70",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.jpclett.7b02700": {
+      "doi": "10.1021/acs.jpclett.7b02700",
+      "type": "article",
+      "title": "High-Throughput Computational Screening of Multivariate Metal–Organic Frameworks (MTV-MOFs) for CO2 Capture",
+      "authors": [
+        {
+          "given": "Song",
+          "family": "Li"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Cory M.",
+          "family": "Simon"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        }
+      ],
+      "journal": "The Journal of Physical Chemistry Letters",
+      "year": 2017,
+      "volume": "8",
+      "issue": "24",
+      "pages": "6135–6141",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.chemmater.7b01565": {
+      "doi": "10.1021/acs.chemmater.7b01565",
+      "type": "article",
+      "title": "Computational Screening of Nanoporous Materials for Hexane and Heptane Isomer Separation",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Peng",
+          "family": "Bai",
+          "orcid": "https://orcid.org/0000-0002-6881-4663"
+        },
+        {
+          "given": "Maciej",
+          "family": "Haranczyk"
+        },
+        {
+          "given": "Karson T.",
+          "family": "Leperi"
+        },
+        {
+          "given": "Peng",
+          "family": "Li"
+        },
+        {
+          "given": "Hongda",
+          "family": "Zhang"
+        },
+        {
+          "given": "Timothy C.",
+          "family": "Wang",
+          "orcid": "https://orcid.org/0000-0002-2736-2488"
+        },
+        {
+          "given": "Tim",
+          "family": "Duerinck"
+        },
+        {
+          "given": "Fengqi",
+          "family": "You",
+          "orcid": "https://orcid.org/0000-0001-9609-4299"
+        },
+        {
+          "given": "Joseph T.",
+          "family": "Hupp",
+          "orcid": "https://orcid.org/0000-0003-3982-9812"
+        },
+        {
+          "given": "Omar K.",
+          "family": "Farha",
+          "orcid": "https://orcid.org/0000-0002-9904-9845"
+        },
+        {
+          "given": "J. Ilja",
+          "family": "Siepmann",
+          "orcid": "https://orcid.org/0000-0003-2534-4507"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        }
+      ],
+      "journal": "Chemistry of Materials",
+      "year": 2017,
+      "volume": "29",
+      "issue": "15",
+      "pages": "6315–6328",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/slct.201701934": {
+      "doi": "10.1002/slct.201701934",
+      "type": "article",
+      "title": "The Role of Partial Atomic Charge Assignment Methods on the Computational Screening of Metal‐Organic Frameworks for CO 2 Capture under Humid Conditions",
+      "authors": [
+        {
+          "given": "Wei",
+          "family": "Li",
+          "orcid": "https://orcid.org/0000-0002-3920-3863"
+        },
+        {
+          "given": "Zizhen",
+          "family": "Rao"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Song",
+          "family": "Li"
+        }
+      ],
+      "journal": "ChemistrySelect",
+      "year": 2017,
+      "volume": "2",
+      "issue": "29",
+      "pages": "9458–9465",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.chemmater.6b04226": {
+      "doi": "10.1021/acs.chemmater.6b04226",
+      "type": "article",
+      "title": "Large-Scale Refinement of Metal−Organic Framework Structures Using Density Functional Theory",
+      "authors": [
+        {
+          "given": "Dalar",
+          "family": "Nazarian"
+        },
+        {
+          "given": "Jeffrey S.",
+          "family": "Camp"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        },
+        {
+          "given": "David S.",
+          "family": "Sholl",
+          "orcid": "https://orcid.org/0000-0002-2771-9168"
+        }
+      ],
+      "journal": "Chemistry of Materials",
+      "year": 2017,
+      "volume": "29",
+      "issue": "6",
+      "pages": "2521–2528",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1016/j.jcou.2016.12.001": {
+      "doi": "10.1016/j.jcou.2016.12.001",
+      "type": "article",
+      "title": "Catalytic performance of zeolitic imidazolate framework ZIF-95 for the solventless synthesis of cyclic carbonates from CO 2 and epoxides",
+      "authors": [
+        {
+          "given": "Kyung Mi",
+          "family": "Bhin"
+        },
+        {
+          "given": "Jose",
+          "family": "Tharun"
+        },
+        {
+          "given": "Kuruppathparambil Roshith",
+          "family": "Roshan"
+        },
+        {
+          "given": "Dong-Woo",
+          "family": "Kim"
+        },
+        {
+          "given": "Yongchul",
+          "family": "Chung"
+        },
+        {
+          "given": "Dae-Won",
+          "family": "Park"
+        }
+      ],
+      "journal": "Journal of CO2 Utilization",
+      "year": 2017,
+      "volume": "17",
+      "pages": "112–118",
+      "publisher": "Elsevier BV",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1126/sciadv.1600909": {
+      "doi": "10.1126/sciadv.1600909",
+      "type": "article",
+      "title": "In silico discovery of metal-organic frameworks for precombustion CO 2 capture using a genetic algorithm",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Diego A.",
+          "family": "Gómez-Gualdrón"
+        },
+        {
+          "given": "Peng",
+          "family": "Li",
+          "orcid": "https://orcid.org/0000-0002-4273-4577"
+        },
+        {
+          "given": "Karson T.",
+          "family": "Leperi",
+          "orcid": "https://orcid.org/0000-0002-9162-2774"
+        },
+        {
+          "given": "Pravas",
+          "family": "Deria",
+          "orcid": "https://orcid.org/0000-0001-7998-4492"
+        },
+        {
+          "given": "Hongda",
+          "family": "Zhang"
+        },
+        {
+          "given": "Nicolaas A.",
+          "family": "Vermeulen"
+        },
+        {
+          "given": "J. Fraser",
+          "family": "Stoddart"
+        },
+        {
+          "given": "Fengqi",
+          "family": "You",
+          "orcid": "https://orcid.org/0000-0001-9609-4299"
+        },
+        {
+          "given": "Joseph T.",
+          "family": "Hupp"
+        },
+        {
+          "given": "Omar K.",
+          "family": "Farha"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr",
+          "orcid": "https://orcid.org/0000-0003-2925-9246"
+        }
+      ],
+      "journal": "Science Advances",
+      "year": 2016,
+      "volume": "2",
+      "issue": "10",
+      "articleNumber": "e1600909",
+      "publisher": "American Association for the Advancement of Science (AAAS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.langmuir.6b02803": {
+      "doi": "10.1021/acs.langmuir.6b02803",
+      "type": "article",
+      "title": "High-Throughput Screening of Metal–Organic Frameworks for CO2 Capture in the Presence of Water",
+      "authors": [
+        {
+          "given": "Song",
+          "family": "Li"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr"
+        }
+      ],
+      "journal": "Langmuir",
+      "year": 2016,
+      "volume": "32",
+      "issue": "40",
+      "pages": "10368–10376",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/c5sc01784j": {
+      "doi": "10.1039/c5sc01784j",
+      "type": "article",
+      "title": "Water stabilization of Zr 6 -based metal–organic frameworks via solvent-assisted ligand incorporation",
+      "authors": [
+        {
+          "given": "Pravas",
+          "family": "Deria",
+          "orcid": "https://orcid.org/0000-0001-7998-4492"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr"
+        },
+        {
+          "given": "Joseph T.",
+          "family": "Hupp"
+        },
+        {
+          "given": "Omar K.",
+          "family": "Farha",
+          "orcid": "https://orcid.org/0000-0002-9904-9845"
+        }
+      ],
+      "journal": "Chemical Science",
+      "year": 2015,
+      "volume": "6",
+      "issue": "9",
+      "pages": "5172–5176",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1039/c4ee03515a": {
+      "doi": "10.1039/c4ee03515a",
+      "type": "article",
+      "title": "The materials genome in action: identifying the performance limits for methane storage",
+      "authors": [
+        {
+          "given": "Cory M.",
+          "family": "Simon"
+        },
+        {
+          "given": "Jihan",
+          "family": "Kim"
+        },
+        {
+          "given": "Diego A.",
+          "family": "Gomez-Gualdron"
+        },
+        {
+          "given": "Jeffrey S.",
+          "family": "Camp"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Richard L.",
+          "family": "Martin"
+        },
+        {
+          "given": "Rocio",
+          "family": "Mercado"
+        },
+        {
+          "given": "Michael W.",
+          "family": "Deem"
+        },
+        {
+          "given": "Dan",
+          "family": "Gunter"
+        },
+        {
+          "given": "Maciej",
+          "family": "Haranczyk"
+        },
+        {
+          "given": "David S.",
+          "family": "Sholl"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr"
+        },
+        {
+          "given": "Berend",
+          "family": "Smit"
+        }
+      ],
+      "journal": "Energy & Environmental Science",
+      "year": 2015,
+      "volume": "8",
+      "issue": "4",
+      "pages": "1190–1199",
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/cm502594j": {
+      "doi": "10.1021/cm502594j",
+      "type": "article",
+      "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Jeffrey",
+          "family": "Camp"
+        },
+        {
+          "given": "Maciej",
+          "family": "Haranczyk"
+        },
+        {
+          "given": "Benjamin J.",
+          "family": "Sikora"
+        },
+        {
+          "given": "Wojciech",
+          "family": "Bury"
+        },
+        {
+          "given": "Vaiva",
+          "family": "Krungleviciute"
+        },
+        {
+          "given": "Taner",
+          "family": "Yildirim"
+        },
+        {
+          "given": "Omar K.",
+          "family": "Farha"
+        },
+        {
+          "given": "David S.",
+          "family": "Sholl"
+        },
+        {
+          "given": "Randall Q.",
+          "family": "Snurr"
+        }
+      ],
+      "journal": "Chemistry of Materials",
+      "year": 2014,
+      "volume": "26",
+      "issue": "21",
+      "pages": "6185–6192",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1002/polb.23166": {
+      "doi": "10.1002/polb.23166",
+      "type": "article",
+      "title": "Atomic mobility in strained glassy polymers: The role of fold catastrophes on the potential energy surface",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Daniel J.",
+          "family": "Lacks"
+        }
+      ],
+      "journal": "Journal of Polymer Science Part B: Polymer Physics",
+      "year": 2012,
+      "volume": "50",
+      "issue": "24",
+      "pages": "1733–1739",
+      "publisher": "Wiley",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/jp309772f": {
+      "doi": "10.1021/jp309772f",
+      "type": "article",
+      "title": "Atomic Mobility in a Polymer Glass after Shear and Thermal Cycles",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Daniel J.",
+          "family": "Lacks"
+        }
+      ],
+      "journal": "The Journal of Physical Chemistry B",
+      "year": 2012,
+      "volume": "116",
+      "issue": "48",
+      "pages": "14201–14205",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/ma300431x": {
+      "doi": "10.1021/ma300431x",
+      "type": "article",
+      "title": "How Deformation Enhances Mobility in a Polymer Glass",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Daniel J.",
+          "family": "Lacks"
+        }
+      ],
+      "journal": "Macromolecules",
+      "year": 2012,
+      "volume": "45",
+      "issue": "10",
+      "pages": "4416–4421",
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1063/1.3698473": {
+      "doi": "10.1063/1.3698473",
+      "type": "article",
+      "title": "Sheared polymer glass and the question of mechanical rejuvenation",
+      "authors": [
+        {
+          "given": "Yongchul G.",
+          "family": "Chung"
+        },
+        {
+          "given": "Daniel J.",
+          "family": "Lacks"
+        }
+      ],
+      "journal": "The Journal of Chemical Physics",
+      "year": 2012,
+      "volume": "136",
+      "issue": "12",
+      "articleNumber": "124907",
+      "publisher": "AIP Publishing",
+      "source": {
+        "provider": "crossref",
+        "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    }
+  }
+}

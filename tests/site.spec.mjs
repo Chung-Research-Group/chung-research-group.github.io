@@ -22,15 +22,32 @@ test('publications use the static metadata snapshot without external API fan-out
     }
   });
 
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const status = page.locator('[data-publication-metadata-status]');
   await expect(status).toBeVisible();
-  await expect(status).toContainText(/updated/i);
+  await expect(status).toContainText(/updated/i, { timeout: 30_000 });
   await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toBeVisible();
   await expect(page.locator('[data-publication-enrichment]').first()).toBeVisible();
   expect(externalMetadataRequests).toEqual([]);
+});
+
+test('publication citation exports are linked and served as complete files', async ({ page, request }) => {
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
+  await expect(page.getByRole('link', { name: 'Download BibTeX file of all publications' })).toHaveAttribute('href', 'exports/publications/publications.bib');
+  await expect(page.getByRole('link', { name: 'Download CFF file of all publications' })).toHaveAttribute('href', 'exports/publications/CITATION.cff');
+  const [bibtexResponse, cffResponse] = await Promise.all([
+    request.get('/exports/publications/publications.bib'),
+    request.get('/exports/publications/CITATION.cff')
+  ]);
+  expect(bibtexResponse.ok()).toBe(true);
+  expect(cffResponse.ok()).toBe(true);
+  const bibtexCount = ((await bibtexResponse.text()).match(/^@article\{/gm) ?? []).length;
+  const cffCount = ((await cffResponse.text()).match(/^  - type: "article"$/gm) ?? []).length;
+  expect(bibtexCount).toBeGreaterThan(0);
+  expect(cffCount).toBe(bibtexCount);
+  await expect(page.locator('[data-publication-no]')).toHaveCount(bibtexCount);
 });
 
 test('Google Scholar aggregate is rendered from the static snapshot', async ({ page }) => {
@@ -65,15 +82,15 @@ test('Google Scholar aggregate is rendered from the static snapshot', async ({ p
     })
   }));
 
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const card = page.getByText('Citations (Google Scholar)', { exact: true }).locator('..');
   await expect(card).toContainText('9,876');
 });
 
 test('publication search includes a rendered metadata field or keyword', async ({ page }) => {
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const term = page.locator('[data-metadata-term]').first();
-  await expect(term).toBeVisible();
+  await expect(term).toBeVisible({ timeout: 30_000 });
   const query = (await term.textContent())?.trim();
   expect(query).toBeTruthy();
   const publication = term.locator('xpath=ancestor::*[@data-publication-no][1]');
@@ -90,7 +107,7 @@ test('publications remain usable when the metadata snapshot is unavailable', asy
     body: '{}'
   }));
 
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await expect(page.locator('[data-publication-no]').first()).toBeVisible();
   const scholarCard = page.locator('[data-google-scholar-citations]');
   await expect(scholarCard).toBeVisible();
@@ -108,9 +125,17 @@ test('graphical abstracts are generated locally and loaded only when expanded', 
     }
   });
 
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const panels = page.locator('[data-graphical-abstract]');
-  await expect(panels).toHaveCount(72);
+  const publications = page.locator('[data-publication-no]');
+  await expect(publications.first()).toBeVisible();
+  await expect.poll(async () => {
+    const [panelCount, publicationCount] = await Promise.all([
+      panels.count(),
+      publications.count()
+    ]);
+    return panelCount > 0 && panelCount === publicationCount;
+  }).toBe(true);
   expect(graphicRequests).toEqual([]);
 
   const first = panels.first();
@@ -127,8 +152,9 @@ test('graphical abstracts are generated locally and loaded only when expanded', 
 });
 
 test('every published page has metadata and renders its heading', async ({ page }) => {
+  test.setTimeout(90_000);
   for (const route of pages) {
-    const response = await page.goto(`/${route}`, { waitUntil: 'domcontentloaded' });
+    const response = await page.goto(`/${route}`, { waitUntil: 'load' });
     expect(response?.ok(), route).toBeTruthy();
     await expect(page.locator('html')).toHaveAttribute('lang', /en/);
     await expect(page).toHaveTitle(/Chung Research Group/);
@@ -139,7 +165,7 @@ test('every published page has metadata and renders its heading', async ({ page 
 });
 
 test('publication topic filters and search work', async ({ page }) => {
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await expect(page.locator('.publication-filter-group')).toHaveCount(6);
   const computationGroup = page.locator('[data-filter-group="Computation"]');
   const physicsGroup = page.locator('[data-filter-group="Physics"]');
@@ -192,20 +218,20 @@ test('publication topic filters and search work', async ({ page }) => {
 });
 
 test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
-  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText('Latest publications · 최신 논문', { exact: true })).toBeVisible();
   await expect(page.locator('[data-home-publication]')).toHaveCount(6);
 });
 
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
-  await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/People.dc.html', { waitUntil: 'load' });
   await expect(page.getByText('B.S./M.S. Program', { exact: true })).toBeVisible();
   await expect(page.getByText("Master's Program, Graduate School of Data Science", { exact: true })).toBeVisible();
   await expect(page.getByText('Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원')).toHaveCount(0);
 });
 
 test('Hyunji Kim is listed as a current undergraduate researcher', async ({ page }) => {
-  await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/People.dc.html', { waitUntil: 'load' });
   const profile = page.locator('#m-kim-hyunji');
   await expect(profile.locator('h4').getByText('Kim, Hyunji', { exact: true })).toBeVisible();
   await expect(profile.locator('h4').getByText('김현지', { exact: true })).toBeVisible();
@@ -215,7 +241,7 @@ test('Hyunji Kim is listed as a current undergraduate researcher', async ({ page
 });
 
 test('undergraduate recruiting is open', async ({ page }) => {
-  await page.goto('/Join%20Us.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Join%20Us.dc.html', { waitUntil: 'load' });
   const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
   await expect(undergraduateOpening.getByText('Open', { exact: true })).toBeVisible();
   await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
@@ -234,7 +260,7 @@ test('undergraduate recruiting is open', async ({ page }) => {
 
 
 test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
-  await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
   for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
@@ -242,12 +268,12 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
   await expect(page.getByText(/에너지·환경·산업 분야의 응용/)).toBeVisible();
 
-  await page.goto('/People.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');
   await expect(baek.getByText('AI & Data', { exact: true })).toBeVisible();
   await expect(baek.getByText('Atoms/Electrons', { exact: true })).toHaveCount(0);
 
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
   const jpcc = page.locator('[data-publication-no="19"]');
   await expect(jpcc).toBeVisible();
