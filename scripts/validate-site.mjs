@@ -16,7 +16,10 @@ import {
   graphicPathForDoi,
   validateGraphicalAbstractSvg
 } from "./publication-graphic.mjs";
-import { parseFeedDois } from "./publication-citations.mjs";
+import {
+  parseFeedDois,
+  parseGeneratedBibtexDois
+} from "./publication-citations.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
@@ -94,9 +97,7 @@ function validatePublicationCitationExports(bibtex, cff, expectedDoiSet) {
   if (bibtexEntries.length !== expectedDoiSet.size) {
     errors.push(`BibTeX export must contain ${expectedDoiSet.size} article entries; found ${bibtexEntries.length}.`);
   }
-  const bibtexDois = [...bibtex.matchAll(
-    /^\s*doi\s*=\s*(?:\{([^}]+)\}|"([^"]+)")\s*,?\s*$/gmi
-  )].map((match) => match[1] || match[2]);
+  const bibtexDois = parseGeneratedBibtexDois(bibtex);
   reportDoiSetDifference("BibTeX export", bibtexDois, expectedDoiSet);
 
   for (const marker of [

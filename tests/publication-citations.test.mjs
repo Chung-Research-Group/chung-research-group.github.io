@@ -12,6 +12,7 @@ import {
   generatePublicationCitationFiles,
   normalizeCanonicalRecord,
   parseFeedDois,
+  parseGeneratedBibtexDois,
   refreshBibliographySnapshot,
   validateBibliography
 } from '../scripts/publication-citations.mjs';
@@ -245,11 +246,11 @@ test('accepts legacy DOI suffix punctuation without truncating the identifier', 
   );
 });
 
-test('decodes feed string escapes and percent-encodes reserved DOI suffix characters in links', () => {
-  const escapedDoi = "10.1234/O'Reilly\\Path?#/Part%<End>";
+test('decodes feed and BibTeX escapes while percent-encoding reserved DOI links', () => {
+  const escapedDoi = "10.1234/O'Reilly\\Path?#/Part_%{End}";
   const feedLiteral = escapedDoi.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-  const normalizedDoi = "10.1234/o'reilly\\path?#/part%<end>";
-  const resolverUrl = "https://doi.org/10.1234/o'reilly%5Cpath%3F%23%2Fpart%25%3Cend%3E";
+  const normalizedDoi = "10.1234/o'reilly\\path?#/part_%{end}";
+  const resolverUrl = "https://doi.org/10.1234/o'reilly%5Cpath%3F%23%2Fpart_%25%7Bend%7D";
 
   assert.deepEqual(
     parseFeedDois(
@@ -274,13 +275,14 @@ test('decodes feed string escapes and percent-encodes reserved DOI suffix charac
   const bibtex = generateBibtex(snapshot, [record.doi]);
   const cff = generateCff(snapshot, [record.doi]);
 
+  assert.deepEqual(parseGeneratedBibtexDois(bibtex), [normalizedDoi]);
   assert.match(
     bibtex,
-    /url = \{https:\/\/doi\.org\/10\.1234\/o'reilly\\%5Cpath\\%3F\\%23\\%2Fpart\\%25\\%3Cend\\%3E\}/
+    /doi = \{10\.1234\/o'reilly\\textbackslash\{\}path\?\\#\/part\\_\\%\\\{end\\\}\}/
   );
   assert.match(
     cff,
-    /^    url: "https:\/\/doi\.org\/10\.1234\/o'reilly%5Cpath%3F%23%2Fpart%25%3Cend%3E"$/m
+    /^    url: "https:\/\/doi\.org\/10\.1234\/o'reilly%5Cpath%3F%23%2Fpart_%25%7Bend%7D"$/m
   );
   assert.doesNotMatch(cff, /https:\/\/doi\.org\/10\.1234\/o'reilly\\path\?#/);
 });
