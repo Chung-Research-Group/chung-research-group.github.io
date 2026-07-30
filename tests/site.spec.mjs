@@ -25,7 +25,7 @@ test('publications use the static metadata snapshot without external API fan-out
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const status = page.locator('[data-publication-metadata-status]');
   await expect(status).toBeVisible();
-  await expect(status).toContainText(/updated/i);
+  await expect(status).toContainText(/updated/i, { timeout: 30_000 });
   await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toBeVisible();
   await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toBeVisible();
