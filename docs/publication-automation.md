@@ -201,7 +201,12 @@ configuration. Scheduled checks run every 30 minutes.
 - DOI values already present in `feed.js` are ignored.
 - ChemRxiv DOI records are not announced or added. When a preprint has a
   peer-reviewed version, the journal DOI in `feed.js` remains the canonical
-  website record.
+  website record. Legacy Slack roots for ChemRxiv DOIs are rejected before any
+  DOI metadata lookup, so an old approval reaction cannot reintroduce a
+  preprint or stop the scheduled monitor.
+- If an approved non-preprint DOI temporarily has incomplete Crossref and DOI
+  CSL metadata, that candidate is logged and deferred without aborting the
+  remaining monitor pass.
 - Normalized publication titles are also checked before announcing a candidate.
   This prevents duplicate cards when Crossref supplies a different DOI or uses
   `metal-organic framework(s)` instead of `MOF(s)`.
