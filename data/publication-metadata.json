@@ -1,18 +1,22 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-07-30T09:03:40.320Z",
+  "snapshotUpdatedAt": "2026-07-30T19:39:55.961Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
       "reason": null,
       "matched": 70,
-      "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+      "observedMatched": 70,
+      "retainedMatched": 0,
+      "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
     },
     "openAlex": {
       "status": "ok",
       "reason": null,
       "matched": 71,
-      "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+      "observedMatched": 71,
+      "retainedMatched": 0,
+      "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -26,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4421,
+    "semanticScholarCitations": 4423,
     "openAlexCitations": 5700,
     "googleScholarCitations": 6355
   },
@@ -82,6 +86,7 @@
         "workId": "https://openalex.org/W7162036201",
         "title": "Hunting Structural Demons in Digital Reticular Chemistry: Lessons From Metal‐Organic Frameworks",
         "citationCount": 0,
+        "year": 2026,
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
@@ -156,6 +161,21 @@
         "countsByYear": [],
         "updatedAt": "2026-05-23T06:10:36.450269"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Physics",
         "Chemistry",
@@ -204,6 +224,7 @@
         "workId": "https://openalex.org/W7137066060",
         "title": "Data-driven prediction of ionic conductivity in solid-state electrolytes with machine learning and large language models",
         "citationCount": 1,
+        "year": 2026,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.6685,
@@ -288,6 +309,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Physics",
         "Medicine",
@@ -336,6 +372,7 @@
         "workId": "https://openalex.org/W7135218082",
         "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
         "citationCount": 3,
+        "year": 2026,
         "type": "article",
         "isRetracted": false,
         "fwci": 10.4367,
@@ -420,6 +457,21 @@
         ],
         "updatedAt": "2026-07-25T15:57:00.446498"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Engineering",
         "Environmental Science",
@@ -465,6 +517,7 @@
         "workId": "https://openalex.org/W7107949320",
         "title": "Bridging the Gap Between Materials and Engineering: Large‐Scale Screening of Metal–Organic Frameworks for Adsorption Cooling From Device Level",
         "citationCount": 0,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
@@ -539,6 +592,21 @@
         "countsByYear": [],
         "updatedAt": "2026-05-21T06:26:12.895304"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Engineering",
         "Materials Science",
@@ -586,6 +654,7 @@
         "workId": "https://openalex.org/W4416458579",
         "title": "AIM: A user-friendly GUI workflow program for isotherm fitting, mixture prediction, isosteric heat of adsorption estimation, and breakthrough simulation",
         "citationCount": 8,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.8961,
@@ -674,6 +743,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Computer Science",
         "Physics",
@@ -721,6 +805,7 @@
         "workId": "https://openalex.org/W4415847876",
         "title": "Multiscale, techno-economic evaluation of isoreticular series of CALF-20 for biogas upgrading using a pressure/vacuum swing adsorption (PVSA) process",
         "citationCount": 0,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
@@ -785,6 +870,21 @@
         "countsByYear": [],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Physics",
         "Environmental Science",
@@ -831,6 +931,7 @@
         "workId": "https://openalex.org/W4417397428",
         "title": "Integrating Macrostate Probability Distributions with Swing Adsorption Modeling for Binary/Ternary Gas Separation",
         "citationCount": 0,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
@@ -905,6 +1006,21 @@
         "countsByYear": [],
         "updatedAt": "2026-07-25T09:21:30.201066"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Physics",
         "Chemistry",
@@ -952,6 +1068,7 @@
         "workId": "https://openalex.org/W4415648382",
         "title": "A Master Isotherm Model Approach to Quantify Defects in UiO-66 from Nitrogen Adsorption Isotherms",
         "citationCount": 2,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.583,
@@ -1026,6 +1143,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -1072,6 +1204,7 @@
         "workId": "https://openalex.org/W4413324627",
         "title": "Techno-economic analysis of Cu(I)-loaded porous carbons for CO separation via pressure/vacuum swing adsorption process",
         "citationCount": 2,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.6706,
@@ -1165,6 +1298,21 @@
         ],
         "updatedAt": "2026-07-26T05:49:09.470579"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Environmental Science",
         "Engineering",
@@ -1213,6 +1361,7 @@
         "workId": "https://openalex.org/W4413100409",
         "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal–Organic Frameworks",
         "citationCount": 14,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.8674,
@@ -1306,6 +1455,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Physics",
         "Medicine",
@@ -1354,6 +1518,7 @@
         "workId": "https://openalex.org/W4411079963",
         "title": "Accelerated discovery of high-performance MOFs for water adsorption chillers through molecular simulation and machine learning",
         "citationCount": 7,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.5437,
@@ -1447,6 +1612,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Engineering",
@@ -1493,6 +1673,7 @@
         "workId": "https://openalex.org/W4410978239",
         "title": "Enhancing interchain interactions in spirobifluorene-based microporous polyimides for high-performance organic solvent nanofiltration",
         "citationCount": 3,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.1084,
@@ -1582,6 +1763,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -1629,6 +1825,7 @@
         "workId": "https://openalex.org/W4410091570",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
         "citationCount": 84,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 24.4865,
@@ -1702,6 +1899,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -1746,6 +1958,7 @@
         "workId": "https://openalex.org/W4407317706",
         "title": "Modeling, screening, and techno-economic evaluation of metal–organic frameworks for boil-off gas capture during intercontinental transportation of LNG",
         "citationCount": 2,
+        "year": 2025,
         "type": "article",
         "isRetracted": false,
         "fwci": 7.6741,
@@ -1815,6 +2028,21 @@
         ],
         "updatedAt": "2026-06-14T06:11:07.267592"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Engineering",
         "Environmental Science",
@@ -1857,6 +2085,7 @@
         "workId": "https://openalex.org/W4403846058",
         "title": "Hierarchically Structured Conductive Lanthanide Metal Organic Framework Nanorods for Ultrastable Flexible Magnesium Ion Capacitors",
         "citationCount": 15,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.3368,
@@ -1954,6 +2183,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Engineering",
@@ -2000,6 +2244,7 @@
         "workId": "https://openalex.org/W4402146149",
         "title": "Polyoxometalate Initiated In situ Conformal Coating of Multifunctional Hybrid Artificial Layers for High Performance Zinc Metal Anodes",
         "citationCount": 19,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.3716,
@@ -2093,6 +2338,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -2140,6 +2400,7 @@
         "workId": "https://openalex.org/W4403922784",
         "title": "Computational Exploration of Adsorption-Based Hydrogen Storage in Mg-Alkoxide Functionalized Covalent-Organic Frameworks (COFs): Force-Field and Machine Learning Models",
         "citationCount": 20,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.3904,
@@ -2233,6 +2494,21 @@
         ],
         "updatedAt": "2026-07-26T07:53:14.480251"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Chemistry",
@@ -2279,6 +2555,7 @@
         "workId": "https://openalex.org/W4400798317",
         "title": "Multi-scale computational screening of all-silica zeolites for adsorptive separation of ternary (H2S/CO2/CH4) mixtures",
         "citationCount": 7,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.9716,
@@ -2367,6 +2644,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Engineering",
@@ -2412,6 +2704,7 @@
         "workId": "https://openalex.org/W4399259267",
         "title": "PACMAN: A Robust Partial Atomic Charge Predicter for Nanoporous Materials Based on Crystal Graph Convolution Networks",
         "citationCount": 39,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.5254,
@@ -2509,6 +2802,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -2554,6 +2862,7 @@
         "workId": "https://openalex.org/W4399223503",
         "title": "Linker-defect assisted catalytic fixation of CO2 in a dual-linker metal–organic framework",
         "citationCount": 3,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.3601,
@@ -2642,6 +2951,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -2687,6 +3011,7 @@
         "workId": "https://openalex.org/W4396495166",
         "title": "Transfer learning-assisted computational screening of metal-organic frameworks and covalent-organic frameworks for the separation of Xe/Kr noble gas",
         "citationCount": 16,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.2209,
@@ -2779,6 +3104,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Engineering",
@@ -2825,6 +3165,7 @@
         "workId": "https://openalex.org/W4394818547",
         "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
         "citationCount": 41,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 4.879,
@@ -2922,6 +3263,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -2950,7 +3306,7 @@
         "paperId": "7561e9398a39786cbf047d9f615ee6cb8d744e17",
         "url": "https://www.semanticscholar.org/paper/7561e9398a39786cbf047d9f615ee6cb8d744e17",
         "title": "Leveraging Machine Learning To Predict the Atmospheric Lifetime and the Global Warming Potential of SF6 Replacement Gases.",
-        "citationCount": 15,
+        "citationCount": 16,
         "influentialCitationCount": 0,
         "referenceCount": 7,
         "fields": [
@@ -2969,6 +3325,7 @@
         "workId": "https://openalex.org/W4392796477",
         "title": "Leveraging Machine Learning To Predict the Atmospheric Lifetime and the Global Warming Potential of SF<sub>6</sub> Replacement Gases",
         "citationCount": 20,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 4.5208,
@@ -3051,6 +3408,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Environmental Science",
@@ -3097,6 +3469,7 @@
         "workId": "https://openalex.org/W4392468206",
         "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
         "citationCount": 21,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.8715,
@@ -3194,6 +3567,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Engineering",
@@ -3242,6 +3630,7 @@
         "workId": "https://openalex.org/W4390750649",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
         "citationCount": 193,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 23.1635,
@@ -3339,6 +3728,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -3385,6 +3789,7 @@
         "workId": "https://openalex.org/W4391771266",
         "title": "Synthesis and Characterization of Bimetallic ZnCo-ZIF-71 with Defect for an Efficient Catalytic CO2 Conversion",
         "citationCount": 8,
+        "year": 2024,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.971,
@@ -3482,6 +3887,21 @@
         ],
         "updatedAt": "2026-07-16T13:24:37.021932"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -3526,6 +3946,7 @@
         "workId": "https://openalex.org/W4386492211",
         "title": "High-Throughput, Multiscale Computational Screening of Metal–Organic Frameworks for Xe/Kr Separation with Machine-Learned Parameters",
         "citationCount": 14,
+        "year": 2023,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.3684,
@@ -3619,6 +4040,21 @@
         ],
         "updatedAt": "2025-11-06T03:46:38.306776"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Engineering",
@@ -3663,6 +4099,7 @@
         "workId": "https://openalex.org/W4385197734",
         "title": "Construction of Chimeric Metal–Organic Frameworks with Symmetry-Mismatched Building Blocks",
         "citationCount": 5,
+        "year": 2023,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.4644,
@@ -3764,6 +4201,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -3809,6 +4261,7 @@
         "workId": "https://openalex.org/W4377141975",
         "title": "Polyoxometalate–polymer hybrid artificial layers for ultrastable and reversible Zn metal anodes",
         "citationCount": 17,
+        "year": 2023,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.4148,
@@ -3910,6 +4363,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -3957,6 +4425,7 @@
         "workId": "https://openalex.org/W4380083772",
         "title": "SESAMI APP: An Accessible Interface for Surface AreaCalculation of Materials from Adsorption Isotherms",
         "citationCount": 7,
+        "year": 2023,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7496,
@@ -4039,6 +4508,21 @@
         ],
         "updatedAt": "2026-06-11T09:08:48.828518"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Computer Science",
         "Chemistry",
@@ -4067,6 +4551,7 @@
         "workId": "https://openalex.org/W4362636753",
         "title": "A database of ultrastable MOFs reassembled from stable fragments with machine learning models",
         "citationCount": 83,
+        "year": 2023,
         "type": "article",
         "isRetracted": false,
         "fwci": 7.3358,
@@ -4168,6 +4653,21 @@
         ],
         "updatedAt": "2026-07-03T08:13:44.112507"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "unavailable",
+          "contentUpdatedAt": null
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Inorganic Chemistry"
@@ -4209,6 +4709,7 @@
         "workId": "https://openalex.org/W4288459495",
         "title": "Effective delamination of a layered two-dimensional MCM-22 zeolite: Quantitative insights into the role of the delaminated structure on acid catalytic reactions",
         "citationCount": 17,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.0355,
@@ -4295,6 +4796,21 @@
         ],
         "updatedAt": "2026-07-16T13:24:37.021932"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -4336,6 +4852,7 @@
         "workId": "https://openalex.org/W4306177173",
         "title": "Room-temperature hydrogen storage performance of metal-organic framework/graphene oxide composites by molecular simulations",
         "citationCount": 40,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.2113,
@@ -4437,6 +4954,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -4480,6 +5012,7 @@
         "workId": "https://openalex.org/W4312639394",
         "title": "Highly efficient bromine capture and storage using N-containing porous organic cages",
         "citationCount": 32,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.0209,
@@ -4576,6 +5109,21 @@
         ],
         "updatedAt": "2026-06-30T13:55:48.251075"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -4621,6 +5169,7 @@
         "workId": "https://openalex.org/W4295450566",
         "title": "Brunauer–Emmett–Teller Areas from Nitrogen and Argon Isotherms Are Similar",
         "citationCount": 18,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.2915,
@@ -4726,6 +5275,21 @@
         ],
         "updatedAt": "2026-06-27T08:28:00.272161"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Chemistry",
@@ -4770,6 +5334,7 @@
         "workId": "https://openalex.org/W4285273682",
         "title": "Recent advances in software tools for adsorption science and engineering",
         "citationCount": 9,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.8951,
@@ -4852,6 +5417,21 @@
         ],
         "updatedAt": "2026-05-21T06:26:12.895304"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Engineering",
         "Chemistry",
@@ -4893,6 +5473,7 @@
         "workId": "https://openalex.org/W4226113201",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO <sub>2</sub> with epoxides",
         "citationCount": 114,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 6.4424,
@@ -4983,6 +5564,21 @@
         ],
         "updatedAt": "2026-07-22T07:51:19.307946"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -5029,6 +5625,7 @@
         "workId": "https://openalex.org/W4229036542",
         "title": "Discovery of High‐Performing Metal–Organic Frameworks for On‐Board Methane Storage and Delivery via LNG–ANG Coupling: High‐Throughput Screening, Machine Learning, and Experimental Validation",
         "citationCount": 43,
+        "year": 2022,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.8322,
@@ -5124,6 +5721,21 @@
         ],
         "updatedAt": "2026-07-26T07:53:14.480251"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Chemistry",
@@ -5172,6 +5784,7 @@
         "workId": "https://openalex.org/W3215668968",
         "title": "Microplasma Band Structure Engineering in Graphene Quantum Dots for Sensitive and Wide-Range pH Sensing",
         "citationCount": 55,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.1086,
@@ -5277,6 +5890,21 @@
         ],
         "updatedAt": "2026-07-22T07:51:19.307946"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -5322,6 +5950,7 @@
         "workId": "https://openalex.org/W3167789513",
         "title": "Integrated material and process evaluation of metal–organic frameworks database for energy-efficient SF <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" id=\"d1e984\" altimg=\"si10.svg\"> <mml:msub> <mml:mrow/> <mml:mrow> <mml:mn>6</mml:mn> </mml:mrow> </mml:msub> </mml:math> /N <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" id=\"d1e992\" altimg=\"si278.svg\"> <mml:msub> <mml:mrow/> <mml:mrow> <mml:mn>2</mml:mn> </mml:mrow> </mml:msub> </mml:math> separation",
         "citationCount": 34,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.3521,
@@ -5427,6 +6056,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -5470,6 +6114,7 @@
         "workId": "https://openalex.org/W3196577579",
         "title": "Limitation of model‐based estimations of the hydrogen adsorption capacities in nanoporous materials: A molecular simulation study",
         "citationCount": 2,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.1575,
@@ -5563,6 +6208,21 @@
         ],
         "updatedAt": "2026-05-21T06:26:12.895304"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -5609,6 +6269,7 @@
         "workId": "https://openalex.org/W3182756812",
         "title": "Shape‐Selective Ultramicroporous Carbon Membranes for Sub‐0.1 nm Organic Liquid Separation",
         "citationCount": 19,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.0636,
@@ -5718,6 +6379,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Chemistry",
@@ -5766,6 +6442,7 @@
         "workId": "https://openalex.org/W3149449867",
         "title": "High‐Throughput Discovery of Ni(IN)<sub>2</sub> for Ethane/Ethylene Separation",
         "citationCount": 96,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 4.839,
@@ -5875,6 +6552,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Medicine",
@@ -5919,6 +6611,7 @@
         "workId": "https://openalex.org/W3164427735",
         "title": "Unraveling the Fluorescence Quenching of Colloidal Graphene Quantum Dots for Selective Metal Ion Detection",
         "citationCount": 35,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.0836,
@@ -6028,6 +6721,21 @@
         ],
         "updatedAt": "2026-06-18T10:00:31.954636"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -6073,6 +6781,7 @@
         "workId": "https://openalex.org/W3124552578",
         "title": "Development and application of machine learning‐based prediction model for distillation column",
         "citationCount": 79,
+        "year": 2021,
         "type": "article",
         "isRetracted": false,
         "fwci": 5.6457,
@@ -6182,6 +6891,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Computer Science",
         "Chemistry",
@@ -6208,6 +6932,21 @@
       "year": 2021,
       "semanticScholar": null,
       "openAlex": null,
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "unavailable",
+          "contentUpdatedAt": null
+        },
+        "openAlex": {
+          "status": "unavailable",
+          "contentUpdatedAt": null
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [],
       "keywords": []
     },
@@ -6239,6 +6978,7 @@
         "workId": "https://openalex.org/W3033391181",
         "title": "Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method",
         "citationCount": 66,
+        "year": 2020,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.7106,
@@ -6352,6 +7092,21 @@
         ],
         "updatedAt": "2026-07-25T15:57:00.446498"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -6396,6 +7151,7 @@
         "workId": "https://openalex.org/W3103016121",
         "title": "Development of Machine Learning Model for Predicting Distillation Column Temperature",
         "citationCount": 2,
+        "year": 2020,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.2979,
@@ -6469,6 +7225,21 @@
         ],
         "updatedAt": "2026-06-11T09:08:48.828518"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Computer Science",
         "Engineering",
@@ -6507,6 +7278,7 @@
         "workId": "https://openalex.org/W2979442982",
         "title": "CO2 absorption characteristics of amino group functionalized imidazolium-based amino acid ionic liquids",
         "citationCount": 81,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.3389,
@@ -6620,6 +7392,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Engineering",
@@ -6662,6 +7449,7 @@
         "workId": "https://openalex.org/W2949111628",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
         "citationCount": 154,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 8.2409,
@@ -6775,6 +7563,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -6818,6 +7621,7 @@
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
         "citationCount": 883,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 22.2438,
@@ -6925,6 +7729,21 @@
         ],
         "updatedAt": "2026-07-25T15:57:00.446498"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Computer Science",
@@ -6972,6 +7791,7 @@
         "workId": "https://openalex.org/W2969079402",
         "title": "The role of molecular modelling and simulation in the discovery and deployment of metal-organic frameworks for gas storage and separation",
         "citationCount": 132,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 6.3239,
@@ -7089,6 +7909,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Medicine",
@@ -7136,6 +7971,7 @@
         "workId": "https://openalex.org/W2964788817",
         "title": "The Origin of <i>p</i>-Xylene Selectivity in a DABCO Pillar-Layered Metal–Organic Framework: A Combined Experimental and Computational Investigation",
         "citationCount": 36,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 1.2186,
@@ -7249,6 +8085,21 @@
         ],
         "updatedAt": "2026-07-22T07:51:19.307946"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Materials Science",
@@ -7292,6 +8143,7 @@
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
         "citationCount": 353,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 6.5524,
@@ -7405,6 +8257,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -7448,6 +8315,7 @@
         "workId": "https://openalex.org/W2947902713",
         "title": "Development of a General Evaluation Metric for Rapid Screening of Adsorbent Materials for Postcombustion CO<sub>2</sub> Capture",
         "citationCount": 113,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 4.3425,
@@ -7565,6 +8433,21 @@
         ],
         "updatedAt": "2026-07-16T13:24:37.021932"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Environmental Science",
@@ -7610,6 +8493,7 @@
         "workId": "https://openalex.org/W2933575515",
         "title": "Elucidation of flexible metal-organic frameworks: Research progresses and recent developments",
         "citationCount": 243,
+        "year": 2019,
         "type": "article",
         "isRetracted": false,
         "fwci": 9.7491,
@@ -7702,6 +8586,21 @@
         ],
         "updatedAt": "2026-07-22T07:51:19.307946"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -7741,6 +8640,7 @@
         "workId": "https://openalex.org/W2802215741",
         "title": "Two dimensional Zn-stilbenedicarboxylic acid (SDC) metal-organic frameworks for cyclic carbonate synthesis from CO2 and epoxides",
         "citationCount": 10,
+        "year": 2018,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7788,
@@ -7846,6 +8746,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -7888,6 +8803,7 @@
         "workId": "https://openalex.org/W3139985601",
         "title": "Cycloaddition of CO 2 with epoxides by using an amino-acid-based Cu(II)–tryptophan MOF catalyst",
         "citationCount": 68,
+        "year": 2018,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.4238,
@@ -8009,6 +8925,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Chemical Engineering",
@@ -8055,6 +8986,7 @@
         "workId": "https://openalex.org/W2774131705",
         "title": "High-Throughput Computational Screening of Multivariate Metal–Organic Frameworks (MTV-MOFs) for CO<sub>2</sub> Capture",
         "citationCount": 131,
+        "year": 2017,
         "type": "article",
         "isRetracted": false,
         "fwci": 3.2574,
@@ -8176,6 +9108,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Medicine",
@@ -8220,6 +9167,7 @@
         "workId": "https://openalex.org/W2727106778",
         "title": "Computational Screening of Nanoporous Materials for Hexane and Heptane Isomer Separation",
         "citationCount": 80,
+        "year": 2017,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.818,
@@ -8345,6 +9293,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -8387,6 +9350,7 @@
         "workId": "https://openalex.org/W2766752025",
         "title": "The Role of Partial Atomic Charge Assignment Methods on the Computational Screening of Metal‐Organic Frameworks for CO <sub>2</sub> Capture under Humid Conditions",
         "citationCount": 28,
+        "year": 2017,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7926,
@@ -8508,6 +9472,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Environmental Science",
@@ -8550,6 +9529,7 @@
         "workId": "https://openalex.org/W2549466574",
         "title": "Large-Scale Refinement of Metal−Organic Framework Structures Using Density Functional Theory",
         "citationCount": 136,
+        "year": 2016,
         "type": "article",
         "isRetracted": false,
         "fwci": 7.729,
@@ -8683,6 +9663,21 @@
         ],
         "updatedAt": "2026-07-15T18:14:33.161393"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Chemistry",
@@ -8724,6 +9719,7 @@
         "workId": "https://openalex.org/W2560308276",
         "title": "Catalytic performance of zeolitic imidazolate framework ZIF-95 for the solventless synthesis of cyclic carbonates from CO 2 and epoxides",
         "citationCount": 86,
+        "year": 2016,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.254,
@@ -8849,6 +9845,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Chemical Engineering",
@@ -8896,6 +9907,7 @@
         "workId": "https://openalex.org/W2530805533",
         "title": "In silico discovery of metal-organic frameworks for precombustion CO <sub>2</sub> capture using a genetic algorithm",
         "citationCount": 318,
+        "year": 2016,
         "type": "article",
         "isRetracted": false,
         "fwci": 11.8594,
@@ -9020,6 +10032,21 @@
         ],
         "updatedAt": "2026-05-22T06:13:13.366637"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Computer Science",
@@ -9069,6 +10096,7 @@
         "workId": "https://openalex.org/W2519634887",
         "title": "High-Throughput Screening of Metal–Organic Frameworks for CO<sub>2</sub> Capture in the Presence of Water",
         "citationCount": 168,
+        "year": 2016,
         "type": "article",
         "isRetracted": false,
         "fwci": 7.3848,
@@ -9198,6 +10226,21 @@
         ],
         "updatedAt": "2026-07-29T09:40:50.615796"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Medicine",
         "Chemistry",
@@ -9245,6 +10288,7 @@
         "workId": "https://openalex.org/W1873284219",
         "title": "Water stabilization of Zr <sub>6</sub> -based metal–organic frameworks via solvent-assisted ligand incorporation",
         "citationCount": 132,
+        "year": 2015,
         "type": "article",
         "isRetracted": false,
         "fwci": 4.7648,
@@ -9373,6 +10417,21 @@
         ],
         "updatedAt": "2026-07-27T08:26:11.824852"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Medicine",
@@ -9401,7 +10460,7 @@
         "paperId": "32f329457a1f08d5715895b3017fe5649f132f29",
         "url": "https://www.semanticscholar.org/paper/32f329457a1f08d5715895b3017fe5649f132f29",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 265,
+        "citationCount": 266,
         "influentialCitationCount": 3,
         "referenceCount": 72,
         "fields": [
@@ -9416,6 +10475,7 @@
         "workId": "https://openalex.org/W2148931917",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
         "citationCount": 383,
+        "year": 2015,
         "type": "article",
         "isRetracted": false,
         "fwci": 15.3459,
@@ -9529,6 +10589,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Engineering",
         "Materials Science",
@@ -9569,6 +10644,7 @@
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
         "citationCount": 751,
+        "year": 2014,
         "type": "article",
         "isRetracted": false,
         "fwci": 12.8863,
@@ -9706,6 +10782,21 @@
         ],
         "updatedAt": "2026-07-28T07:46:37.118299"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Chemistry",
         "Materials Science",
@@ -9748,6 +10839,7 @@
         "workId": "https://openalex.org/W2116879925",
         "title": "Atomic mobility in strained glassy polymers: The role of fold catastrophes on the potential energy surface",
         "citationCount": 17,
+        "year": 2012,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.4064,
@@ -9869,6 +10961,21 @@
         ],
         "updatedAt": "2026-07-23T08:03:31.855105"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Physics",
@@ -9915,6 +11022,7 @@
         "workId": "https://openalex.org/W2312596155",
         "title": "Atomic Mobility in a Polymer Glass after Shear and Thermal Cycles",
         "citationCount": 15,
+        "year": 2012,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7552,
@@ -10028,6 +11136,21 @@
         ],
         "updatedAt": "2026-06-15T08:34:33.830935"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Medicine",
@@ -10072,6 +11195,7 @@
         "workId": "https://openalex.org/W2322021528",
         "title": "How Deformation Enhances Mobility in a Polymer Glass",
         "citationCount": 43,
+        "year": 2012,
         "type": "article",
         "isRetracted": false,
         "fwci": 2.2636,
@@ -10209,6 +11333,21 @@
         ],
         "updatedAt": "2026-06-30T13:55:48.251075"
       },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
+      },
       "fields": [
         "Materials Science",
         "Physics",
@@ -10254,6 +11393,7 @@
         "workId": "https://openalex.org/W2070379915",
         "title": "Sheared polymer glass and the question of mechanical rejuvenation",
         "citationCount": 24,
+        "year": 2012,
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7552,
@@ -10378,6 +11518,21 @@
           }
         ],
         "updatedAt": "2026-06-26T08:34:08.712188"
+      },
+      "sourceFreshness": {
+        "semanticScholar": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+        },
+        "openAlex": {
+          "status": "observed",
+          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+        },
+        "googleScholar": {
+          "status": "unavailable",
+          "reason": "unconfigured",
+          "contentUpdatedAt": null
+        }
       },
       "fields": [
         "Medicine",
