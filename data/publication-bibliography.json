@@ -5,7 +5,7 @@
     "10.1002/ijch.70028": {
       "doi": "10.1002/ijch.70028",
       "type": "article",
-      "title": "Hunting Structural Demons in Digital Reticular Chemistry: Lessons From Metal?Organic Frameworks",
+      "title": "Hunting Structural Demons in Digital Reticular Chemistry: Lessons From Metal‐Organic Frameworks",
       "authors": [
         {
           "given": "Yongchul G.",
@@ -126,7 +126,7 @@
     "10.1002/aenm.202504672": {
       "doi": "10.1002/aenm.202504672",
       "type": "article",
-      "title": "Bridging the Gap Between Materials and Engineering: Large?Scale Screening of Metal?Organic Frameworks for Adsorption Cooling From Device Level",
+      "title": "Bridging the Gap Between Materials and Engineering: Large‐Scale Screening of Metal–Organic Frameworks for Adsorption Cooling From Device Level",
       "authors": [
         {
           "given": "Yiqi",
@@ -249,7 +249,7 @@
       "year": 2026,
       "volume": "11",
       "issue": "2",
-      "pages": "181?194",
+      "pages": "181–194",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -284,7 +284,7 @@
       "year": 2025,
       "volume": "64",
       "issue": "52",
-      "pages": "25017?25033",
+      "pages": "25017–25033",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -321,7 +321,7 @@
       "year": 2025,
       "volume": "41",
       "issue": "44",
-      "pages": "29851?29858",
+      "pages": "29851–29858",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -374,7 +374,7 @@
     "10.1021/jacs.5c10126": {
       "doi": "10.1021/jacs.5c10126",
       "type": "article",
-      "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal?Organic Frameworks",
+      "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal–Organic Frameworks",
       "authors": [
         {
           "given": "Guobin",
@@ -396,7 +396,7 @@
       "year": 2025,
       "volume": "147",
       "issue": "37",
-      "pages": "33343?33349",
+      "pages": "33343–33349",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -533,7 +533,7 @@
           "family": "Zoubritzky"
         },
         {
-          "given": "Fran?ois-Xavier",
+          "given": "François-Xavier",
           "family": "Coudert"
         },
         {
@@ -581,7 +581,7 @@
     "10.1016/j.cej.2025.160517": {
       "doi": "10.1016/j.cej.2025.160517",
       "type": "article",
-      "title": "Modeling, screening, and techno-economic evaluation of metal?organic frameworks for boil-off gas capture during intercontinental transportation of LNG",
+      "title": "Modeling, screening, and techno-economic evaluation of metal–organic frameworks for boil-off gas capture during intercontinental transportation of LNG",
       "authors": [
         {
           "given": "Sunghyun",
@@ -705,7 +705,7 @@
           "family": "Chung"
         },
         {
-          "given": "Ling?Xuan",
+          "given": "Ling‐Xuan",
           "family": "Li"
         },
         {
@@ -786,7 +786,7 @@
       "year": 2024,
       "volume": "16",
       "issue": "45",
-      "pages": "61995?62009",
+      "pages": "61995–62009",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -844,7 +844,7 @@
       "year": 2024,
       "volume": "20",
       "issue": "12",
-      "pages": "5368?5380",
+      "pages": "5368–5380",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -854,7 +854,7 @@
     "10.1007/s11144-024-02656-4": {
       "doi": "10.1007/s11144-024-02656-4",
       "type": "article",
-      "title": "Linker-defect assisted catalytic fixation of CO2 in a dual-linker metal?organic framework",
+      "title": "Linker-defect assisted catalytic fixation of CO2 in a dual-linker metal–organic framework",
       "authors": [
         {
           "given": "Yunjang",
@@ -882,7 +882,7 @@
       "year": 2024,
       "volume": "137",
       "issue": "4",
-      "pages": "2197?2213",
+      "pages": "2197–2213",
       "publisher": "Springer Science and Business Media LLC",
       "source": {
         "provider": "crossref",
@@ -934,7 +934,7 @@
     "10.1002/adma.202401739": {
       "doi": "10.1002/adma.202401739",
       "type": "article",
-      "title": "High Hydrogen Storage in Trigonal Prismatic Monomer?Based Highly Porous Aromatic Frameworks",
+      "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
       "authors": [
         {
           "given": "Dae Won",
@@ -1010,7 +1010,7 @@
       "year": 2024,
       "volume": "128",
       "issue": "12",
-      "pages": "2399?2408",
+      "pages": "2399–2408",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1052,7 +1052,7 @@
       "journal": "Journal of Energy Chemistry",
       "year": 2024,
       "volume": "94",
-      "pages": "646?655",
+      "pages": "646–655",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -1062,7 +1062,7 @@
     "10.1038/s41560-023-01417-2": {
       "doi": "10.1038/s41560-023-01417-2",
       "type": "article",
-      "title": "Progress toward the computational discovery of new metal?organic framework adsorbents for energy applications",
+      "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
       "authors": [
         {
           "given": "Peyman Z.",
@@ -1084,7 +1084,7 @@
       "year": 2024,
       "volume": "9",
       "issue": "2",
-      "pages": "121?133",
+      "pages": "121–133",
       "publisher": "Springer Science and Business Media LLC",
       "source": {
         "provider": "crossref",
@@ -1126,7 +1126,7 @@
       "year": 2024,
       "volume": "41",
       "issue": "3",
-      "pages": "749?761",
+      "pages": "749–761",
       "publisher": "Springer Science and Business Media LLC",
       "source": {
         "provider": "crossref",
@@ -1136,7 +1136,7 @@
     "10.1021/acs.iecr.3c02211": {
       "doi": "10.1021/acs.iecr.3c02211",
       "type": "article",
-      "title": "High-Throughput, Multiscale Computational Screening of Metal?Organic Frameworks for Xe/Kr Separation with Machine-Learned Parameters",
+      "title": "High-Throughput, Multiscale Computational Screening of Metal–Organic Frameworks for Xe/Kr Separation with Machine-Learned Parameters",
       "authors": [
         {
           "given": "Guobin",
@@ -1158,7 +1158,7 @@
       "year": 2023,
       "volume": "62",
       "issue": "37",
-      "pages": "15176?15189",
+      "pages": "15176–15189",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1168,7 +1168,7 @@
     "10.1021/acs.chemmater.3c00694": {
       "doi": "10.1021/acs.chemmater.3c00694",
       "type": "article",
-      "title": "Construction of Chimeric Metal?Organic Frameworks with Symmetry-Mismatched Building Blocks",
+      "title": "Construction of Chimeric Metal–Organic Frameworks with Symmetry-Mismatched Building Blocks",
       "authors": [
         {
           "given": "Seungwan",
@@ -1229,7 +1229,7 @@
       "year": 2023,
       "volume": "35",
       "issue": "15",
-      "pages": "5903?5913",
+      "pages": "5903–5913",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1239,7 +1239,7 @@
     "10.1016/j.cej.2023.143644": {
       "doi": "10.1016/j.cej.2023.143644",
       "type": "article",
-      "title": "Polyoxometalate?polymer hybrid artificial layers for ultrastable and reversible Zn metal anodes",
+      "title": "Polyoxometalate–polymer hybrid artificial layers for ultrastable and reversible Zn metal anodes",
       "authors": [
         {
           "given": "Sang Ha",
@@ -1372,7 +1372,7 @@
       "year": 2023,
       "volume": "6",
       "issue": "5",
-      "pages": "1585?1603",
+      "pages": "1585–1603",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -1481,7 +1481,7 @@
       "year": 2022,
       "volume": "47",
       "issue": "97",
-      "pages": "41055?41068",
+      "pages": "41055–41068",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -1528,7 +1528,7 @@
       "year": 2022,
       "volume": "10",
       "issue": "46",
-      "pages": "24802?24812",
+      "pages": "24802–24812",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -1538,7 +1538,7 @@
     "10.1021/acs.langmuir.2c01390": {
       "doi": "10.1021/acs.langmuir.2c01390",
       "type": "article",
-      "title": "Brunauer?Emmett?Teller Areas from Nitrogen and Argon Isotherms Are Similar",
+      "title": "Brunauer–Emmett–Teller Areas from Nitrogen and Argon Isotherms Are Similar",
       "authors": [
         {
           "given": "Archit",
@@ -1563,7 +1563,7 @@
       "year": 2022,
       "volume": "38",
       "issue": "38",
-      "pages": "11631?11640",
+      "pages": "11631–11640",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1589,7 +1589,7 @@
       "year": 2022,
       "volume": "7",
       "issue": "7",
-      "pages": "686?701",
+      "pages": "686–701",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -1633,7 +1633,7 @@
       "year": 2022,
       "volume": "10",
       "issue": "18",
-      "pages": "10051?10061",
+      "pages": "10051–10061",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -1643,10 +1643,10 @@
     "10.1002/advs.202201559": {
       "doi": "10.1002/advs.202201559",
       "type": "article",
-      "title": "Discovery of High?Performing Metal?Organic Frameworks for On?Board Methane Storage and Delivery via LNG?ANG Coupling: High?Throughput Screening, Machine Learning, and Experimental Validation",
+      "title": "Discovery of High‐Performing Metal–Organic Frameworks for On‐Board Methane Storage and Delivery via LNG–ANG Coupling: High‐Throughput Screening, Machine Learning, and Experimental Validation",
       "authors": [
         {
-          "given": "Seo?Yul",
+          "given": "Seo‐Yul",
           "family": "Kim"
         },
         {
@@ -1682,7 +1682,7 @@
           "family": "Chung"
         },
         {
-          "given": "Youn?Sang",
+          "given": "Youn‐Sang",
           "family": "Bae",
           "orcid": "https://orcid.org/0000-0002-3447-4058"
         }
@@ -1736,7 +1736,7 @@
       "year": 2022,
       "volume": "14",
       "issue": "1",
-      "pages": "1670?1683",
+      "pages": "1670–1683",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1746,7 +1746,7 @@
     "10.1016/j.cej.2021.131787": {
       "doi": "10.1016/j.cej.2021.131787",
       "type": "article",
-      "title": "Integrated material and process evaluation of metal?organic frameworks database for energy-efficient SF 6 /N 2 separation",
+      "title": "Integrated material and process evaluation of metal–organic frameworks database for energy-efficient SF 6 /N 2 separation",
       "authors": [
         {
           "given": "Jaehoon",
@@ -1788,7 +1788,7 @@
     "10.1002/bkcs.12380": {
       "doi": "10.1002/bkcs.12380",
       "type": "article",
-      "title": "Limitation of model?based estimations of the hydrogen adsorption capacities in nanoporous materials: A molecular simulation study",
+      "title": "Limitation of model‐based estimations of the hydrogen adsorption capacities in nanoporous materials: A molecular simulation study",
       "authors": [
         {
           "given": "Sunghyun",
@@ -1803,7 +1803,7 @@
       "year": 2021,
       "volume": "42",
       "issue": "11",
-      "pages": "1539?1548",
+      "pages": "1539–1548",
       "publisher": "Wiley",
       "source": {
         "provider": "crossref",
@@ -1813,7 +1813,7 @@
     "10.1002/advs.202004999": {
       "doi": "10.1002/advs.202004999",
       "type": "article",
-      "title": "Shape?Selective Ultramicroporous Carbon Membranes for Sub?0.1 nm Organic Liquid Separation",
+      "title": "Shape‐Selective Ultramicroporous Carbon Membranes for Sub‐0.1 nm Organic Liquid Separation",
       "authors": [
         {
           "given": "Hyeokjun",
@@ -1832,7 +1832,7 @@
           "family": "Chung"
         },
         {
-          "given": "Dong?Yeun",
+          "given": "Dong‐Yeun",
           "family": "Koh",
           "orcid": "https://orcid.org/0000-0002-6049-9371"
         }
@@ -1851,7 +1851,7 @@
     "10.1002/advs.202004940": {
       "doi": "10.1002/advs.202004940",
       "type": "article",
-      "title": "High?Throughput Discovery of Ni(IN)2 for Ethane/Ethylene Separation",
+      "title": "High‐Throughput Discovery of Ni(IN)2 for Ethane/Ethylene Separation",
       "authors": [
         {
           "given": "Minjung",
@@ -1938,7 +1938,7 @@
       "year": 2021,
       "volume": "4",
       "issue": "6",
-      "pages": "5636?5642",
+      "pages": "5636–5642",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -1948,7 +1948,7 @@
     "10.1002/int.22368": {
       "doi": "10.1002/int.22368",
       "type": "article",
-      "title": "Development and application of machine learning?based prediction model for distillation column",
+      "title": "Development and application of machine learning‐based prediction model for distillation column",
       "authors": [
         {
           "given": "Hyukwon",
@@ -1980,7 +1980,7 @@
       "year": 2021,
       "volume": "36",
       "issue": "5",
-      "pages": "1970?1997",
+      "pages": "1970–1997",
       "publisher": "Wiley",
       "source": {
         "provider": "crossref",
@@ -2017,8 +2017,8 @@
       "year": 2021,
       "volume": "27",
       "issue": "4",
-      "pages": "341?349",
-      "publisher": "????????",
+      "pages": "341–349",
+      "publisher": "한국청정기술학회",
       "source": {
         "provider": "doi-csl",
         "retrievedAt": "2026-07-30T05:18:45.289Z"
@@ -2049,7 +2049,7 @@
       "year": 2020,
       "volume": "11",
       "issue": "14",
-      "pages": "5412?5417",
+      "pages": "5412–5417",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2086,8 +2086,8 @@
       "year": 2020,
       "volume": "31",
       "issue": "5",
-      "pages": "520?525",
-      "publisher": "???????",
+      "pages": "520–525",
+      "publisher": "한국공업화학회",
       "source": {
         "provider": "doi-csl",
         "retrievedAt": "2026-07-30T05:18:45.289Z"
@@ -2167,7 +2167,7 @@
     "10.1021/acs.jced.9b00835": {
       "doi": "10.1021/acs.jced.9b00835",
       "type": "article",
-      "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal?Organic Framework Database: CoRE MOF 2019",
+      "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
       "authors": [
         {
           "given": "Yongchul G.",
@@ -2237,7 +2237,7 @@
       "year": 2019,
       "volume": "64",
       "issue": "12",
-      "pages": "5985?5998",
+      "pages": "5985–5998",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2283,7 +2283,7 @@
         },
         {
           "given": "Yamil J.",
-          "family": "Col?n"
+          "family": "Colón"
         },
         {
           "given": "Yongchul G.",
@@ -2302,7 +2302,7 @@
       "year": 2019,
       "volume": "45",
       "issue": "14-15",
-      "pages": "1082?1121",
+      "pages": "1082–1121",
       "publisher": "Informa UK Limited",
       "source": {
         "provider": "crossref",
@@ -2312,7 +2312,7 @@
     "10.1021/acsami.9b11343": {
       "doi": "10.1021/acsami.9b11343",
       "type": "article",
-      "title": "The Origin of p-Xylene Selectivity in a DABCO Pillar-Layered Metal?Organic Framework: A Combined Experimental and Computational Investigation",
+      "title": "The Origin of p-Xylene Selectivity in a DABCO Pillar-Layered Metal–Organic Framework: A Combined Experimental and Computational Investigation",
       "authors": [
         {
           "given": "Seung-Ik",
@@ -2337,7 +2337,7 @@
       "year": 2019,
       "volume": "11",
       "issue": "34",
-      "pages": "31227?31236",
+      "pages": "31227–31236",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2347,7 +2347,7 @@
     "10.1021/acs.jpcc.9b02116": {
       "doi": "10.1021/acs.jpcc.9b02116",
       "type": "article",
-      "title": "Surface Area Determination of Porous Materials Using the Brunauer?Emmett?Teller (BET) Method: Limitations and Improvements",
+      "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
       "authors": [
         {
           "given": "Priya",
@@ -2380,7 +2380,7 @@
       "year": 2019,
       "volume": "123",
       "issue": "33",
-      "pages": "20195?20209",
+      "pages": "20195–20209",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2415,7 +2415,7 @@
       "year": 2019,
       "volume": "7",
       "issue": "13",
-      "pages": "11529?11539",
+      "pages": "11529–11539",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2448,7 +2448,7 @@
       "journal": "Coordination Chemistry Reviews",
       "year": 2019,
       "volume": "389",
-      "pages": "161?188",
+      "pages": "161–188",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -2481,7 +2481,7 @@
       "year": 2018,
       "volume": "35",
       "issue": "6",
-      "pages": "1373?1379",
+      "pages": "1373–1379",
       "publisher": "Springer Science and Business Media LLC",
       "source": {
         "provider": "crossref",
@@ -2491,7 +2491,7 @@
     "10.1016/s1872-2067(17)62916-4": {
       "doi": "10.1016/s1872-2067(17)62916-4",
       "type": "article",
-      "title": "Cycloaddition of CO 2 with epoxides by using an amino-acid-based Cu(II)?tryptophan MOF catalyst",
+      "title": "Cycloaddition of CO 2 with epoxides by using an amino-acid-based Cu(II)–tryptophan MOF catalyst",
       "authors": [
         {
           "given": "Gyeong Seon",
@@ -2518,7 +2518,7 @@
       "year": 2018,
       "volume": "39",
       "issue": "1",
-      "pages": "63?70",
+      "pages": "63–70",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -2528,7 +2528,7 @@
     "10.1021/acs.jpclett.7b02700": {
       "doi": "10.1021/acs.jpclett.7b02700",
       "type": "article",
-      "title": "High-Throughput Computational Screening of Multivariate Metal?Organic Frameworks (MTV-MOFs) for CO2 Capture",
+      "title": "High-Throughput Computational Screening of Multivariate Metal–Organic Frameworks (MTV-MOFs) for CO2 Capture",
       "authors": [
         {
           "given": "Song",
@@ -2553,7 +2553,7 @@
       "year": 2017,
       "volume": "8",
       "issue": "24",
-      "pages": "6135?6141",
+      "pages": "6135–6141",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2630,7 +2630,7 @@
       "year": 2017,
       "volume": "29",
       "issue": "15",
-      "pages": "6315?6328",
+      "pages": "6315–6328",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2640,7 +2640,7 @@
     "10.1002/slct.201701934": {
       "doi": "10.1002/slct.201701934",
       "type": "article",
-      "title": "The Role of Partial Atomic Charge Assignment Methods on the Computational Screening of Metal?Organic Frameworks for CO 2 Capture under Humid Conditions",
+      "title": "The Role of Partial Atomic Charge Assignment Methods on the Computational Screening of Metal‐Organic Frameworks for CO 2 Capture under Humid Conditions",
       "authors": [
         {
           "given": "Wei",
@@ -2664,7 +2664,7 @@
       "year": 2017,
       "volume": "2",
       "issue": "29",
-      "pages": "9458?9465",
+      "pages": "9458–9465",
       "publisher": "Wiley",
       "source": {
         "provider": "crossref",
@@ -2674,7 +2674,7 @@
     "10.1021/acs.chemmater.6b04226": {
       "doi": "10.1021/acs.chemmater.6b04226",
       "type": "article",
-      "title": "Large-Scale Refinement of Metal?Organic Framework Structures Using Density Functional Theory",
+      "title": "Large-Scale Refinement of Metal−Organic Framework Structures Using Density Functional Theory",
       "authors": [
         {
           "given": "Dalar",
@@ -2703,7 +2703,7 @@
       "year": 2017,
       "volume": "29",
       "issue": "6",
-      "pages": "2521?2528",
+      "pages": "2521–2528",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2743,7 +2743,7 @@
       "journal": "Journal of CO2 Utilization",
       "year": 2017,
       "volume": "17",
-      "pages": "112?118",
+      "pages": "112–118",
       "publisher": "Elsevier BV",
       "source": {
         "provider": "crossref",
@@ -2761,7 +2761,7 @@
         },
         {
           "given": "Diego A.",
-          "family": "G?mez-Gualdr?n"
+          "family": "Gómez-Gualdrón"
         },
         {
           "given": "Peng",
@@ -2823,7 +2823,7 @@
     "10.1021/acs.langmuir.6b02803": {
       "doi": "10.1021/acs.langmuir.6b02803",
       "type": "article",
-      "title": "High-Throughput Screening of Metal?Organic Frameworks for CO2 Capture in the Presence of Water",
+      "title": "High-Throughput Screening of Metal–Organic Frameworks for CO2 Capture in the Presence of Water",
       "authors": [
         {
           "given": "Song",
@@ -2842,7 +2842,7 @@
       "year": 2016,
       "volume": "32",
       "issue": "40",
-      "pages": "10368?10376",
+      "pages": "10368–10376",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -2852,7 +2852,7 @@
     "10.1039/c5sc01784j": {
       "doi": "10.1039/c5sc01784j",
       "type": "article",
-      "title": "Water stabilization of Zr 6 -based metal?organic frameworks via solvent-assisted ligand incorporation",
+      "title": "Water stabilization of Zr 6 -based metal–organic frameworks via solvent-assisted ligand incorporation",
       "authors": [
         {
           "given": "Pravas",
@@ -2881,7 +2881,7 @@
       "year": 2015,
       "volume": "6",
       "issue": "9",
-      "pages": "5172?5176",
+      "pages": "5172–5176",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -2950,7 +2950,7 @@
       "year": 2015,
       "volume": "8",
       "issue": "4",
-      "pages": "1190?1199",
+      "pages": "1190–1199",
       "publisher": "Royal Society of Chemistry (RSC)",
       "source": {
         "provider": "crossref",
@@ -2960,7 +2960,7 @@
     "10.1021/cm502594j": {
       "doi": "10.1021/cm502594j",
       "type": "article",
-      "title": "Computation-Ready, Experimental Metal?Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
+      "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
       "authors": [
         {
           "given": "Yongchul G.",
@@ -3007,7 +3007,7 @@
       "year": 2014,
       "volume": "26",
       "issue": "21",
-      "pages": "6185?6192",
+      "pages": "6185–6192",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -3032,7 +3032,7 @@
       "year": 2012,
       "volume": "50",
       "issue": "24",
-      "pages": "1733?1739",
+      "pages": "1733–1739",
       "publisher": "Wiley",
       "source": {
         "provider": "crossref",
@@ -3057,7 +3057,7 @@
       "year": 2012,
       "volume": "116",
       "issue": "48",
-      "pages": "14201?14205",
+      "pages": "14201–14205",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",
@@ -3082,7 +3082,7 @@
       "year": 2012,
       "volume": "45",
       "issue": "10",
-      "pages": "4416?4421",
+      "pages": "4416–4421",
       "publisher": "American Chemical Society (ACS)",
       "source": {
         "provider": "crossref",

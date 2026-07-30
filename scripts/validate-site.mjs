@@ -430,7 +430,7 @@ if (/<script\b[^>]*\bdata-props=["'][^"']*\bscholarCitations\b[^"']*["']/i.test(
 if (!publicationsHtml.includes("data-graphical-abstract") || !publicationsHtml.includes("data-graphical-abstract-image")) {
   errors.push("Publications page must expose lazy, collapsible graphical abstracts.");
 }
-if (!publicationsHtml.includes("Not the publisher?s official graphical abstract")) {
+if (!publicationsHtml.includes("Not the publisher’s official graphical abstract")) {
   errors.push("Generated graphical abstracts must be clearly distinguished from publisher artwork.");
 }
 if (!feedHtml.includes("graphicalAbstractPath") || !feedHtml.includes("p.graphicalAbstract")) {
@@ -487,7 +487,7 @@ for (const color of ["#B4235A", "#A43E55", "#873E6E", "#6F4A58", "#4E2A84"]) {
 for (const displayName of ["Xylene Isomer", "Alkane Isomer", "Noble Gases", "Organic Liquids", "Hydrogen", "Methane"]) {
   if (!publicationsHtml.includes(`'${displayName}'`)) errors.push(`Concise application filter name is missing: ${displayName}`);
 }
-if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University ??????? ?????")) {
+if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
   errors.push("Graduate program and education data are not normalized.");
 }
 if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAAJ&hl=en")) {

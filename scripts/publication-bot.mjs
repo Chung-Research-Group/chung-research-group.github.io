@@ -486,7 +486,7 @@ export async function classifyCandidate(candidate, options = {}) {
 }
 
 function topicList(value) {
-  return value.split(/[,?]/).map(item => item.trim()).filter(Boolean).map(item => {
+  return value.split(/[,，]/).map(item => item.trim()).filter(Boolean).map(item => {
     const topic = TOPIC_LOOKUP.get(item.toLowerCase());
     if (!topic) throw new Error(`Unknown publication label: ${item}`);
     return topic;
@@ -506,17 +506,17 @@ export function applyInstructions(base, messages) {
     try {
       for (const line of text.split(/\n+/).map(value => value.trim()).filter(Boolean)) {
         let match;
-        if (/^(??|approve)$/i.test(line)) approved = true;
-        else if (/^(??|??|reject)$/i.test(line)) excluded = true;
-        else if ((match = line.match(/^(?:??\s*??|add\s*labels?)\s*:\s*(.+)$/i))) {
+        if (/^(승인|approve)$/i.test(line)) approved = true;
+        else if (/^(제외|무시|reject)$/i.test(line)) excluded = true;
+        else if ((match = line.match(/^(?:라벨\s*추가|add\s*labels?)\s*:\s*(.+)$/i))) {
           candidate.topics.push(...topicList(match[1]));
-        } else if ((match = line.match(/^(?:??\s*??|remove\s*labels?)\s*:\s*(.+)$/i))) {
+        } else if ((match = line.match(/^(?:라벨\s*제거|remove\s*labels?)\s*:\s*(.+)$/i))) {
           const remove = new Set(topicList(match[1]));
           candidate.topics = candidate.topics.filter(topic => !remove.has(topic));
-        } else if ((match = line.match(/^(??|title)\s*:\s*(.+)$/i))) candidate.title = match[2].trim();
-        else if ((match = line.match(/^(??|journal)\s*:\s*(.+)$/i))) candidate.journal = match[2].trim();
-        else if ((match = line.match(/^(??|authors?)\s*:\s*(.+)$/i))) candidate.authors = match[2].trim();
-        else if ((match = line.match(/^(??|meta)\s*:\s*(.+)$/i))) candidate.meta = match[2].trim();
+        } else if ((match = line.match(/^(제목|title)\s*:\s*(.+)$/i))) candidate.title = match[2].trim();
+        else if ((match = line.match(/^(저널|journal)\s*:\s*(.+)$/i))) candidate.journal = match[2].trim();
+        else if ((match = line.match(/^(저자|authors?)\s*:\s*(.+)$/i))) candidate.authors = match[2].trim();
+        else if ((match = line.match(/^(서지|meta)\s*:\s*(.+)$/i))) candidate.meta = match[2].trim();
       }
     } catch (error) {
       errors.push(error.message);
@@ -531,7 +531,7 @@ export const APPROVAL_REACTION = 'white_check_mark';
 export const EXCLUSION_REACTION = 'no_entry_sign';
 
 export function isCandidateRoot(message, botUser) {
-  return Boolean(/^(?:??|:page_facing_up:)\s*?? ?? ??/.test(message?.text || '')
+  return Boolean(/^(?:📄|:page_facing_up:)\s*신규 논문 후보/.test(message?.text || '')
     && (message.user === botUser || message.bot_id));
 }
 
@@ -701,21 +701,21 @@ async function crossrefWorks(orcid, mailto) {
 }
 
 export function classificationFromCandidateMessage(text = '') {
-  const labelLine = String(text).match(/^?? ??:\s*(.+)$/m)?.[1]?.trim();
+  const labelLine = String(text).match(/^추천 라벨:\s*(.+)$/m)?.[1]?.trim();
   if (!labelLine) return null;
   let labels = [];
-  if (!/^\((?:??|?? ???)\)$/.test(labelLine)) {
-    const items = labelLine.split(/[,?]/).map(item => item.trim()).filter(Boolean);
+  if (!/^\((?:없음|라벨 미지정)\)$/.test(labelLine)) {
+    const items = labelLine.split(/[,，]/).map(item => item.trim()).filter(Boolean);
     labels = allowedLabels(items);
     if (labels.length !== items.length) return null;
   }
 
-  const methodLine = String(text).match(/^?? ??:\s*(.+)$/m)?.[1]?.trim() || '?? ??';
-  const providerMatch = methodLine.match(/^(OpenAI|Gemini)\s*?\s*(.+)$/i);
+  const methodLine = String(text).match(/^분류 방식:\s*(.+)$/m)?.[1]?.trim() || '규칙 기반';
+  const providerMatch = methodLine.match(/^(OpenAI|Gemini)\s*·\s*(.+)$/i);
   const provider = providerMatch?.[1]?.toLowerCase() || null;
   const model = providerMatch?.[2]?.trim() || null;
   const proposedTopics = [];
-  const proposalPattern = /^?\s*(.+?)\s*?\s*(Computation|Physics|Materials|Systems|Applications)\s*?\s*(.+)$/gm;
+  const proposalPattern = /^•\s*(.+?)\s*·\s*(Computation|Physics|Materials|Systems|Applications)\s*—\s*(.+)$/gm;
   for (const match of String(text).matchAll(proposalPattern)) {
     proposedTopics.push({ name: match[1], group: match[2], rationale: match[3] });
   }
@@ -728,34 +728,34 @@ export function classificationFromCandidateMessage(text = '') {
 
 export function candidateMessage(candidate) {
   const classification = candidate.classification || deterministicClassification(candidate);
-  const labels = classification.labels.length ? classification.labels.join(', ') : '(?? ???)';
+  const labels = classification.labels.length ? classification.labels.join(', ') : '(라벨 미지정)';
   const method = classification.method === 'llm'
-    ? `${classification.provider === 'gemini' ? 'Gemini' : 'OpenAI'} ? ${classification.model}`
-    : `?? ??${classification.warning ? ` ? ${classification.warning}` : ''}`;
+    ? `${classification.provider === 'gemini' ? 'Gemini' : 'OpenAI'} · ${classification.model}`
+    : `규칙 기반${classification.warning ? ` · ${classification.warning}` : ''}`;
   const proposals = classification.proposedTopics.length
     ? [
         '',
-        '?? ?? ??? ?? ? ?? ?? (?? ?? ? ?)',
+        '⚠️ 기존 분류에 없는 새 주제 후보 (자동 반영 안 됨)',
         ...classification.proposedTopics.map(topic => (
-          `? ${escapeSlackText(topic.name)} ? ${topic.group} ? ${escapeSlackText(topic.rationale)}`
+          `• ${escapeSlackText(topic.name)} · ${topic.group} — ${escapeSlackText(topic.rationale)}`
         ))
       ]
     : [];
   return [
-    '?? ?? ?? ??',
+    '📄 신규 논문 후보',
     `*${escapeSlackText(candidate.title)}*`,
-    `??: ${escapeSlackText(candidate.authors)}`,
-    `??: ${escapeSlackText(candidate.journal)}${escapeSlackText(candidate.meta)}`,
+    `저자: ${escapeSlackText(candidate.authors)}`,
+    `저널: ${escapeSlackText(candidate.journal)}${escapeSlackText(candidate.meta)}`,
     `DOI: ${escapeSlackText(candidate.doi)}`,
     '',
-    `?? ??: ${escapeSlackText(method)}`,
-    `?? ??: ${labels}`,
+    `분류 방식: ${escapeSlackText(method)}`,
+    `추천 라벨: ${labels}`,
     ...proposals,
     '',
-    '?? ??: ? ?? ? ?? ??',
-    '?? ??? ??? ??? ???? ????.',
-    '? ?? ??? taxonomy(???)? ????? ?? ???? ????.',
-    '?? ????? ??? ?? ? ???? GitHub PR?? ? ? ????.'
+    '바로 처리: ✅ 승인 · 🚫 제외',
+    '✅와 🚫을 동시에 누르면 처리하지 않습니다.',
+    '새 주제 후보는 taxonomy(분류표)나 웹사이트에 자동 추가되지 않습니다.',
+    '세부 라벨·서지 수정은 승인 후 생성되는 GitHub PR에서 할 수 있습니다.'
   ].join('\n');
 }
 
@@ -1156,7 +1156,7 @@ async function run() {
       await slack('chat.postMessage', {
         channel,
         thread_ts: root.ts,
-        text: `? ?? ??? ??? ${marker}? ??????: ${pr.html_url}\nCI ?? ? ?? ?????.`
+        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
       });
     }
     if (baseUpdated) continue;
@@ -1167,7 +1167,7 @@ async function run() {
       commitTitle: `Add publication: ${candidate.title}`
     });
     if (merged.merged) {
-        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `?? ${marker} CI ?? ? main ?? ??: ${pr.html_url}` });
+        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}` });
     }
   }
 }

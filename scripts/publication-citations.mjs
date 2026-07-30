@@ -19,17 +19,17 @@ const ENTITY_MAP = new Map([
   ['lt', '<'],
   ['nbsp', ' '],
   ['quot', '"'],
-  ['ndash', '?'],
-  ['mdash', '?'],
-  ['minus', '?'],
-  ['middot', '?'],
-  ['hellip', '?'],
-  ['times', '?'],
-  ['alpha', '?'],
-  ['beta', '?'],
-  ['gamma', '?'],
-  ['delta', '?'],
-  ['mu', '?']
+  ['ndash', '–'],
+  ['mdash', '—'],
+  ['minus', '−'],
+  ['middot', '·'],
+  ['hellip', '…'],
+  ['times', '×'],
+  ['alpha', 'α'],
+  ['beta', 'β'],
+  ['gamma', 'γ'],
+  ['delta', 'δ'],
+  ['mu', 'μ']
 ]);
 
 function decodeEntities(value) {
@@ -137,7 +137,7 @@ function normalizeAuthor(author) {
 
 function normalizePages(value) {
   const text = optionalText(value);
-  return text ? text.replace(/\s*[-?????]\s*/g, '?') : undefined;
+  return text ? text.replace(/\s*[-‐‑‒–—]\s*/g, '–') : undefined;
 }
 
 /**
@@ -536,7 +536,7 @@ function cffAuthorLines(lines, author, indent) {
 function pageRange(record) {
   const value = optionalText(record.pages);
   if (!value) return record.articleNumber ? { start: record.articleNumber } : {};
-  const pieces = value.split(/\s*[??]\s*/, 2);
+  const pieces = value.split(/\s*[–—]\s*/, 2);
   return pieces.length === 2
     ? { start: pieces[0], end: pieces[1] }
     : { start: value };

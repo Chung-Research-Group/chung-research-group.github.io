@@ -137,7 +137,7 @@ test('graphical abstracts are generated locally and loaded only when expanded', 
   await expect.poll(() => image.evaluate((node) => node.naturalWidth)).toBeGreaterThan(0);
   expect(graphicRequests).toHaveLength(1);
   await expect(first.locator('[data-graphical-abstract-fallback]')).toBeHidden();
-  await expect(first.getByText(/Not the publisher?s official graphical abstract/)).toBeVisible();
+  await expect(first.getByText(/Not the publisher’s official graphical abstract/)).toBeVisible();
 });
 
 test('every published page has metadata and renders its heading', async ({ page }) => {
@@ -162,39 +162,39 @@ test('publication topic filters and search work', async ({ page }) => {
   const reviewGroup = page.locator('[data-filter-group="Review"]');
 
   // Only the first major category is expanded initially.
-  await expect(page.getByText(/^Machine Learning\s*?/).first()).toBeVisible();
-  await expect(page.getByText(/^Reticular Materials\s*?/)).toHaveCount(0);
+  await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
+  await expect(page.getByText(/^Reticular Materials\s*×/)).toHaveCount(0);
   const computationLabels = computationGroup.locator('.publication-filter-items > span');
-  await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo ? 27');
+  await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo × 27');
 
   // Major categories can be expanded and selected as aggregate filters.
   await physicsGroup.getByRole('button', { name: 'Expand Physics' }).click();
-  await expect(page.getByText(/^Machine Learning\s*?/)).toHaveCount(0);
-  await expect(page.getByText(/^Adsorption\s*?\s*41$/)).toBeVisible();
+  await expect(page.getByText(/^Machine Learning\s*×/)).toHaveCount(0);
+  await expect(page.getByText(/^Adsorption\s*×\s*41$/)).toBeVisible();
   await expect(page.getByText(/publications found/)).toBeVisible();
   await physicsGroup.getByRole('button', { name: 'Collapse Physics' }).click();
 
   // A major category opens all of its middle and detailed categories at once.
   await applicationGroup.getByRole('button', { name: 'Expand Applications' }).click();
-  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['?Separation', '?Catalysis', '?Energy Storage', '?Other']);
-  await expect(applicationGroup.getByText(/^Xylene Isomer\s*?\s*1$/)).toBeVisible();
-  await expect(applicationGroup.getByText(/^Hydrogen\s*?\s*4$/)).toBeVisible();
+  await expect(applicationGroup.locator('.publication-filter-section-title')).toHaveText(['−Separation', '−Catalysis', '−Energy Storage', '−Other']);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
+  await expect(applicationGroup.getByText(/^Hydrogen\s*×\s*4$/)).toBeVisible();
   const separationSection = applicationGroup.locator('[data-filter-section="Separation"]');
   await separationSection.getByRole('button', { name: 'Collapse Separation' }).click();
-  await expect(applicationGroup.getByText(/^Xylene Isomer\s*?/)).toHaveCount(0);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×/)).toHaveCount(0);
   await separationSection.getByRole('button', { name: 'Expand Separation' }).click();
-  await expect(applicationGroup.getByText(/^Xylene Isomer\s*?\s*1$/)).toBeVisible();
-  await expect(applicationGroup.getByText(/^Catalysis\s*?/)).toHaveCount(0);
+  await expect(applicationGroup.getByText(/^Xylene Isomer\s*×\s*1$/)).toBeVisible();
+  await expect(applicationGroup.getByText(/^Catalysis\s*×/)).toHaveCount(0);
   await expect(page.getByText(/publications found/)).toBeVisible();
   await separationSection.getByRole('button', { name: 'Collapse Separation' }).click();
 
-  // Review has no redundant Review ? 6 label; its topic filters appear on expand.
-  await expect(reviewGroup.getByText(/^Review\s*?/)).toHaveCount(0);
+  // Review has no redundant Review × 6 label; its topic filters appear on expand.
+  await expect(reviewGroup.getByText(/^Review\s*×/)).toHaveCount(0);
   await reviewGroup.getByRole('button', { name: 'Expand Review' }).click();
-  await expect(reviewGroup.getByText(/^Applications\s*?\s*2$/)).toBeVisible();
+  await expect(reviewGroup.getByText(/^Applications\s*×\s*2$/)).toBeVisible();
 
   await computationGroup.getByRole('button', { name: 'Expand Computation' }).click();
-  const dft = page.getByText(/^Density Functional Theory\s*?/).first();
+  const dft = page.getByText(/^Density Functional Theory\s*×/).first();
   await expect(dft).toBeVisible();
   const scholarLink = page.getByTitle('Google Scholar');
   const publicationSearch = page.getByPlaceholder(/Search publications/);
@@ -208,7 +208,7 @@ test('publication topic filters and search work', async ({ page }) => {
 
 test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
-  await expect(page.getByText('Latest publications ? ?? ??', { exact: true })).toBeVisible();
+  await expect(page.getByText('Latest publications · 최신 논문', { exact: true })).toBeVisible();
   await expect(page.locator('[data-home-publication]')).toHaveCount(6);
 });
 
@@ -216,14 +216,14 @@ test('graduate program data is rendered without duplicate education text', async
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   await expect(page.getByText('B.S./M.S. Program', { exact: true })).toBeVisible();
   await expect(page.getByText("Master's Program, Graduate School of Data Science", { exact: true })).toBeVisible();
-  await expect(page.getByText('Graduate School of Data Science, Pusan National University ??????? ?????')).toHaveCount(0);
+  await expect(page.getByText('Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원')).toHaveCount(0);
 });
 
 test('Hyunji Kim is listed as a current undergraduate researcher', async ({ page }) => {
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const profile = page.locator('#m-kim-hyunji');
   await expect(profile.locator('h4').getByText('Kim, Hyunji', { exact: true })).toBeVisible();
-  await expect(profile.locator('h4').getByText('???', { exact: true })).toBeVisible();
+  await expect(profile.locator('h4').getByText('김현지', { exact: true })).toBeVisible();
   await expect(profile.locator('a[href="https://github.com/Kimhyunji4"]')).toBeVisible();
   await expect(profile.locator('a[href="https://www.linkedin.com/in/hyunji-kim-051743359"]')).toBeVisible();
   await expect(profile.getByText('Modeling & Optimization', { exact: true })).toBeVisible();
@@ -233,14 +233,14 @@ test('undergraduate recruiting is open', async ({ page }) => {
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'load' });
   const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
   await expect(undergraduateOpening.getByText('Open', { exact: true })).toBeVisible();
-  await expect(page.getByText(/?????? ?? ?????/)).toBeVisible();
-  await expect(page.getByText(/????? ??? ????? 63?? 2/)).toBeVisible();
-  await expect(page.getByText('?? ??? ? ?7??? 302?', { exact: true })).toBeVisible();
-  const professorOfficeAddress = page.getByText('?? ??? ? ?7??? ????? 201?', { exact: true });
+  await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
+  await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
+  await expect(page.getByText('학생 오피스 · 제7공학관 302호', { exact: true })).toBeVisible();
+  const professorOfficeAddress = page.getByText('교수 오피스 · 제7공학관 부속연구동 201호', { exact: true });
   await expect(professorOfficeAddress).toBeVisible();
   await expect(professorOfficeAddress.locator('xpath=ancestor::a')).toHaveCount(0);
-  await expect(page.getByText('?? ??? ? +82 51 510 3757', { exact: true })).toBeVisible();
-  await expect(page.getByText('?? ??? ? +82 51 510 3082', { exact: true })).toBeVisible();
+  await expect(page.getByText('교수 오피스 · +82 51 510 3757', { exact: true })).toBeVisible();
+  await expect(page.getByText('학생 오피스 · +82 51 510 3082', { exact: true })).toBeVisible();
   await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
   await expect(page.getByText('Email Prof. Chung', { exact: true })).toBeVisible();
   await expect(page.locator('[data-prof-email]')).toHaveCount(2);
@@ -254,8 +254,8 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
   }
-  await expect(page.getByText(/????? ?????/)).toBeVisible();
-  await expect(page.getByText(/????????? ??? ??/)).toBeVisible();
+  await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
+  await expect(page.getByText(/에너지·환경·산업 분야의 응용/)).toBeVisible();
 
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');

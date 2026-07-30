@@ -91,10 +91,10 @@ test('BibTeX and CFF exports are deterministic, complete, ordered, and LF termin
 test('normalization strips JATS/MathML, decodes entities, preserves Unicode mononyms, and escapes output', () => {
   const record = normalizeCanonicalRecord({
     DOI: 'https://doi.org/10.5555/EXAMPLE_1',
-    title: ['A <jats:italic>caf?</jats:italic> &amp; CO<sub>2</sub>_test {100%}'],
+    title: ['A <jats:italic>café</jats:italic> &amp; CO<sub>2</sub>_test {100%}'],
     author: [
       { family: 'Prerna' },
-      { given: 'Zo?', family: 'O?Neil', ORCID: '0000-0002-1825-0097' }
+      { given: 'Zoë', family: 'O’Neil', ORCID: '0000-0002-1825-0097' }
     ],
     'container-title': ['Journal &amp; Tests'],
     issued: { 'date-parts': [[2024, 5, 1]] },
@@ -106,11 +106,11 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
     retrievedAt: '2024-06-01T00:00:00.000Z'
   });
   assert.equal(record.doi, '10.5555/example_1');
-  assert.equal(record.title, 'A caf? & CO2_test {100%}');
+  assert.equal(record.title, 'A café & CO2_test {100%}');
   assert.deepEqual(record.authors[0], { literal: 'Prerna' });
   assert.deepEqual(record.authors[1], {
-    given: 'Zo?',
-    family: 'O?Neil',
+    given: 'Zoë',
+    family: 'O’Neil',
     orcid: 'https://orcid.org/0000-0002-1825-0097'
   });
 
@@ -121,8 +121,8 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
   };
   const bibtex = generateBibtex(snapshot, [record.doi]);
   const cff = generateCff(snapshot, [record.doi]);
-  assert.match(bibtex, /title = \{\{A caf? \\& CO2\\_test \\{100\\%\\}\}\}/);
-  assert.match(bibtex, /author = \{\{Prerna\} and O?Neil, Zo?\}/);
+  assert.match(bibtex, /title = \{\{A café \\& CO2\\_test \\{100\\%\\}\}\}/);
+  assert.match(bibtex, /author = \{\{Prerna\} and O’Neil, Zoë\}/);
   assert.doesNotMatch(bibtex, /\\\{Prerna\\\}/);
   assert.match(cff, /- name: "Prerna"/);
   assert.match(cff, /start: "e17"/);
