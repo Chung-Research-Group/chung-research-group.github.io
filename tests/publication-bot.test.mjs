@@ -321,6 +321,27 @@ test('accepts strict OpenAI structured output and preserves a novel-topic propos
   assert.deepEqual(result.proposedTopics.map(topic => topic.name), ['Tritium Processing']);
 });
 
+test('uses the pinned default OpenAI classifier model when the variable is empty', async () => {
+  let requestedModel = '';
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'openai',
+    apiKey: 'test-key',
+    model: '',
+    timeoutMs: 1000,
+    fetchImpl: async (_url, options) => {
+      requestedModel = JSON.parse(options.body).model;
+      return openAiResponse({
+        labels: ['Adsorption'],
+        proposedTopics: [],
+        confidence: 0.8,
+        summary: 'The publication concerns adsorption.'
+      });
+    }
+  });
+  assert.equal(requestedModel, 'gpt-5.4-nano-2026-03-17');
+  assert.equal(result.method, 'llm');
+});
+
 test('accepts Gemini structured output through the same classifier contract', async () => {
   let calls = 0;
   const result = await classifyCandidate(publicationCandidate(), {
@@ -390,6 +411,25 @@ test('falls back deterministically on rate limits, malformed output, and refusal
       assert.ok(result.warning);
     });
   }
+});
+
+test('retries a non-JSON transient provider error before deterministic fallback', async () => {
+  let calls = 0;
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'openai',
+    apiKey: 'test-key',
+    model: 'test-model',
+    timeoutMs: 1000,
+    retryDelays: [0, 0],
+    sleep: async () => {},
+    fetchImpl: async () => {
+      calls += 1;
+      return new Response('service unavailable', { status: 503 });
+    }
+  });
+  assert.equal(calls, 3);
+  assert.equal(result.method, 'deterministic');
+  assert.match(result.warning, /HTTP 503/);
 });
 
 test('preserves reviewed labels between a Slack candidate message and reaction approval', () => {

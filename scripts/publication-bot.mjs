@@ -302,16 +302,6 @@ class LlmRequestError extends Error {
   }
 }
 
-async function parseResponseJson(response) {
-  const text = await response.text();
-  if (!text) return {};
-  try {
-    return JSON.parse(text);
-  } catch {
-    throw new LlmRequestError('invalid_json_response');
-  }
-}
-
 async function llmJsonRequest(url, request, options) {
   const fetchImpl = options.fetchImpl || globalThis.fetch;
   const sleep = options.sleep || (milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds)));
@@ -324,7 +314,15 @@ async function llmJsonRequest(url, request, options) {
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const response = await fetchImpl(url, { ...request, signal: controller.signal });
-      const data = await parseResponseJson(response);
+      const text = await response.text();
+      let data = {};
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          if (response.ok) throw new LlmRequestError('invalid_json_response');
+        }
+      }
       if (!response.ok) {
         const code = data?.error?.code || data?.error?.status || `http_${response.status}`;
         const exhausted = /credit|spend|usage.?limit/i.test(String(code));
