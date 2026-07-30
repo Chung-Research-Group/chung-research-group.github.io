@@ -677,7 +677,7 @@ function yamlLine(lines, indent, key, value) {
 function cffAuthorLines(lines, author, indent) {
   lines.push(`${' '.repeat(indent)}- ${author.literal ? `name: ${yamlString(author.literal)}` : `family-names: ${yamlString(author.family)}`}`);
   if (!author.literal && author.given) yamlLine(lines, indent + 2, 'given-names', author.given);
-  if (author.orcid) yamlLine(lines, indent + 2, 'orcid', author.orcid);
+  if (!author.literal && author.orcid) yamlLine(lines, indent + 2, 'orcid', author.orcid);
 }
 
 function pageRange(record) {

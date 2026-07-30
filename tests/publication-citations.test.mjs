@@ -199,6 +199,26 @@ test('publication year ignores Crossref record creation time and prefers bibliog
   assert.equal(creationOnly.year, undefined);
 });
 
+test('CFF omits ORCID from entity-form authors', () => {
+  const record = normalizeCanonicalRecord({
+    DOI: '10.5555/entity-author',
+    title: ['Entity author'],
+    author: [{
+      literal: 'Example Research Consortium',
+      ORCID: 'https://orcid.org/0000-0002-1825-0097'
+    }],
+    'container-title': ['Journal of Tests'],
+    issued: { 'date-parts': [[2024]] }
+  });
+  const cff = generateCff({
+    schemaVersion: 1,
+    snapshotUpdatedAt: '2024-06-01T00:00:00.000Z',
+    publications: { [record.doi]: record }
+  }, [record.doi]);
+  assert.match(cff, /- name: "Example Research Consortium"/);
+  assert.doesNotMatch(cff, /orcid:/);
+});
+
 test('accepts legacy DOI suffix punctuation without truncating the identifier', () => {
   const legacyDoi = '10.1002/(SICI)1521-3951(199911)216:1<135::AID-PSSB135>3.0.CO;2-#';
   const encodedDoi = '10.1234/A+B%2FC';
