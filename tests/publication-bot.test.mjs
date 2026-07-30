@@ -7,6 +7,7 @@ import {
   HttpRequestError,
   addCandidateToBibliography,
   addCandidateToFeed,
+  advanceOpenPublicationPr,
   applyInstructions,
   candidateFromCrossref,
   candidateFromMetadataSources,
@@ -22,6 +23,7 @@ import {
   isChemRxivDoi,
   isCandidateRoot,
   mergePublicationPrIfReady,
+  nextOpenPublicationPr,
   normalizeDoi,
   normalizeTitle,
   parsePublicationBibliography,
@@ -254,6 +256,45 @@ test('ignores reactions from other messages and unsupported emoji', () => {
     reactionDecision(items, 'C123', '123.456'),
     { approved: false, excluded: false, conflict: false }
   );
+});
+
+test('selects the oldest trusted publication PR without relying on recent Slack roots', () => {
+  const repository = 'Chung-Research-Group/site';
+  const trusted = (number, doi, overrides = {}) => ({
+    number,
+    title: `Add publication: ${doi}`,
+    body: `## Publication\n\n- **DOI:** https://doi.org/${doi}`,
+    base: { ref: 'main' },
+    head: {
+      ref: `publication/${doi.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`,
+      repo: { full_name: repository },
+      sha: `head-${number}`
+    },
+    ...overrides
+  });
+
+  const selected = nextOpenPublicationPr([
+    trusted(52, '10.1000/newer'),
+    trusted(41, '10.1000/aged-out'),
+    trusted(12, '10.1000/fork', {
+      head: {
+        ref: 'publication/10-1000-fork',
+        repo: { full_name: 'untrusted/fork' },
+        sha: 'fork-head'
+      }
+    }),
+    trusted(13, '10.1000/wrong-base', { base: { ref: 'preview' } }),
+    trusted(14, '10.1000/mismatch', {
+      head: {
+        ref: 'publication/not-the-doi-slug',
+        repo: { full_name: repository },
+        sha: 'mismatch-head'
+      }
+    })
+  ], repository);
+
+  assert.equal(selected.pr.number, 41);
+  assert.equal(selected.doi, '10.1000/aged-out');
 });
 
 test('suggests labels from title and abstract keywords', () => {
@@ -943,6 +984,101 @@ test('updates a diverged publication branch before allowing a new CI decision', 
     method: 'PUT',
     body: { expected_head_sha: 'publication-head' }
   });
+});
+
+test('advances an open publication PR without its Slack root', async () => {
+  const calls = [];
+  const pr = {
+    number: 41,
+    title: 'Add publication: Aged-out candidate',
+    head: { sha: 'publication-head' },
+    base: { sha: 'current-main' }
+  };
+  const github = async (path, options = {}) => {
+    const method = options.method || 'GET';
+    const body = options.body ? JSON.parse(options.body) : null;
+    calls.push({ path, method, body });
+    if (path === '/git/ref/heads/main') return { object: { sha: 'current-main' } };
+    if (path === '/compare/current-main...publication-head') return { status: 'ahead' };
+    if (path === '/pulls/41') return pr;
+    if (path === '/actions/runs?head_sha=publication-head&event=pull_request&per_page=20') {
+      return {
+        workflow_runs: [{
+          name: 'Validate and deploy website',
+          status: 'completed',
+          conclusion: 'success'
+        }]
+      };
+    }
+    if (path === '/pulls/41/merge' && method === 'PUT') return { merged: true };
+    throw new Error(`Unexpected GitHub call: ${method} ${path}`);
+  };
+
+  const result = await advanceOpenPublicationPr(github, pr);
+  assert.equal(result.merged, true);
+  assert.deepEqual(calls.at(-1), {
+    path: '/pulls/41/merge',
+    method: 'PUT',
+    body: {
+      sha: 'publication-head',
+      merge_method: 'squash',
+      commit_title: pr.title
+    }
+  });
+});
+
+test('updates an aged open publication PR before checking CI', async () => {
+  const calls = [];
+  const pr = {
+    number: 42,
+    title: 'Add publication: Behind candidate',
+    head: { sha: 'publication-head' }
+  };
+  const github = async (path, options = {}) => {
+    const method = options.method || 'GET';
+    const body = options.body ? JSON.parse(options.body) : null;
+    calls.push({ path, method, body });
+    if (path === '/git/ref/heads/main') return { object: { sha: 'current-main' } };
+    if (path === '/compare/current-main...publication-head') return { status: 'behind' };
+    if (path === '/pulls/42/update-branch' && method === 'PUT') {
+      return { message: 'Updating pull request branch.' };
+    }
+    throw new Error(`Unexpected GitHub call: ${method} ${path}`);
+  };
+
+  const result = await advanceOpenPublicationPr(github, pr);
+  assert.deepEqual(result, { merged: false, reason: 'base_updated' });
+  assert.deepEqual(calls.at(-1), {
+    path: '/pulls/42/update-branch',
+    method: 'PUT',
+    body: { expected_head_sha: 'publication-head' }
+  });
+  assert.equal(calls.some(call => call.path.includes('/actions/runs')), false);
+  assert.equal(calls.some(call => call.path.endsWith('/merge')), false);
+});
+
+test('keeps an aged open publication PR pending while CI is incomplete', async () => {
+  const calls = [];
+  const pr = {
+    number: 43,
+    title: 'Add publication: Pending candidate',
+    head: { sha: 'publication-head' },
+    base: { sha: 'current-main' }
+  };
+  const github = async (path, options = {}) => {
+    calls.push({ path, method: options.method || 'GET' });
+    if (path === '/git/ref/heads/main') return { object: { sha: 'current-main' } };
+    if (path === '/compare/current-main...publication-head') return { status: 'ahead' };
+    if (path === '/pulls/43') return pr;
+    if (path === '/actions/runs?head_sha=publication-head&event=pull_request&per_page=20') {
+      return { workflow_runs: [] };
+    }
+    throw new Error(`Unexpected GitHub call: ${path}`);
+  };
+
+  const result = await advanceOpenPublicationPr(github, pr);
+  assert.deepEqual(result, { merged: false, reason: 'checks_pending' });
+  assert.equal(calls.some(call => call.path.endsWith('/merge')), false);
 });
 
 test('blocks auto-merge when main moves after the expected publication commit', async () => {

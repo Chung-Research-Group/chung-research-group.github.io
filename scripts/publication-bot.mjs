@@ -763,6 +763,21 @@ function doiFromMessage(text) {
   return normalizeDoi(text.match(/DOI:\s*([^\s>]+)/i)?.[1]);
 }
 
+export function nextOpenPublicationPr(pulls, repository) {
+  return (pulls || [])
+    .map(pr => {
+      const doi = normalizeDoi(
+        String(pr?.body || '').match(/https?:\/\/(?:dx\.)?doi\.org\/([^\s<>)\]]+)/i)?.[1]
+      );
+      return { pr, doi };
+    })
+    .filter(({ pr, doi }) => doi
+      && pr?.base?.ref === 'main'
+      && pr?.head?.repo?.full_name === repository
+      && pr?.head?.ref === `publication/${slugForDoi(doi)}`)
+    .sort((left, right) => Number(left.pr.number) - Number(right.pr.number))[0] || null;
+}
+
 async function getRepositoryText(github, path, ref) {
   const file = await github(`/contents/${path}?ref=${encodeURIComponent(ref)}`);
   return Buffer.from(file.content, 'base64').toString('utf8');
@@ -1035,6 +1050,26 @@ export async function mergePublicationPrIfReady(github, prNumber, expected) {
   });
 }
 
+export async function advanceOpenPublicationPr(github, pr) {
+  const mainRef = await github('/git/ref/heads/main');
+  const baseSha = mainRef.object.sha;
+  const headSha = pr.head.sha;
+  const baseUpdate = await ensurePublicationPrIncludesBase(
+    github,
+    pr.number,
+    baseSha,
+    headSha
+  );
+  if (baseUpdate.updated) {
+    return { merged: false, reason: 'base_updated' };
+  }
+  return mergePublicationPrIfReady(github, pr.number, {
+    baseSha,
+    headSha,
+    commitTitle: pr.title
+  });
+}
+
 async function ensureControlReactions(slack, channel, message, botUser) {
   const controls = [APPROVAL_REACTION, EXCLUSION_REACTION];
   for (const name of controls) {
@@ -1116,19 +1151,60 @@ async function run() {
 
   const authorizedReactions = await listAuthorizedReactions(slack, approvers);
   const openPublicationPrs = await github('/pulls?state=open&per_page=100');
-  const openPublicationBranches = new Set(
-    openPublicationPrs
-      .map(pr => pr?.head?.ref)
-      .filter(ref => typeof ref === 'string' && ref.startsWith('publication/'))
-  );
+  const openPublication = nextOpenPublicationPr(openPublicationPrs, repository);
   let processedApproval = false;
+
+  const advancePublicationCandidate = async (candidate, root = null) => {
+    const {
+      pr,
+      created,
+      baseSha,
+      expectedHeadSha,
+      baseUpdated
+    } = await createOrUpdatePr(github, repository, candidate);
+    processedApproval = true;
+    if (!pr) return;
+    const marker = `PR #${pr.number}`;
+    if (created) {
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
+      });
+    }
+    if (baseUpdated) return;
+
+    const merged = await mergePublicationPrIfReady(github, pr.number, {
+      baseSha,
+      headSha: expectedHeadSha,
+      commitTitle: `Add publication: ${candidate.title}`
+    });
+    if (merged.merged) {
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}`
+      });
+    }
+  };
+
+  if (openPublication) {
+    const merged = await advanceOpenPublicationPr(github, openPublication.pr);
+    if (merged.merged) {
+      const root = candidateRoots.find(message => doiFromMessage(message.text) === openPublication.doi);
+      await slack('chat.postMessage', {
+        channel,
+        ...(root?.ts ? { thread_ts: root.ts } : {}),
+        text: `🚀 PR #${openPublication.pr.number} CI 통과 및 main 병합 완료: ${openPublication.pr.html_url}`
+      });
+    }
+    return;
+  }
 
   for (const root of candidateRoots) {
     if (processedApproval) break;
     const doi = doiFromMessage(root.text);
     if (!doi || known.has(doi)) continue;
-    const branch = `publication/${slugForDoi(doi)}`;
-    if (openPublicationBranches.size && !openPublicationBranches.has(branch)) continue;
     const reactions = reactionDecision(authorizedReactions, channel, root.ts);
     if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 
@@ -1142,33 +1218,7 @@ async function run() {
       candidate.classification = deterministicClassification(candidate, 'legacy Slack candidate');
       candidate.topics = candidate.classification.labels;
     }
-    const {
-      pr,
-      created,
-      baseSha,
-      expectedHeadSha,
-      baseUpdated
-    } = await createOrUpdatePr(github, repository, candidate);
-    processedApproval = true;
-    if (!pr) continue;
-    const marker = `PR #${pr.number}`;
-    if (created) {
-      await slack('chat.postMessage', {
-        channel,
-        thread_ts: root.ts,
-        text: `✅ 승인 내용을 반영한 ${marker}을 생성했습니다: ${pr.html_url}\nCI 통과 후 자동 병합합니다.`
-      });
-    }
-    if (baseUpdated) continue;
-
-    const merged = await mergePublicationPrIfReady(github, pr.number, {
-      baseSha,
-      headSha: expectedHeadSha,
-      commitTitle: `Add publication: ${candidate.title}`
-    });
-    if (merged.merged) {
-        await slack('chat.postMessage', { channel, thread_ts: root.ts, text: `🚀 ${marker} CI 통과 및 main 병합 완료: ${pr.html_url}` });
-    }
+    await advancePublicationCandidate(candidate, root);
   }
 }
 
