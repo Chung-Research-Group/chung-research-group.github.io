@@ -1,9 +1,15 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
+import {
+  parsePublicationBibliography,
+  publicationJournalKey,
+  synchronizePublicationFiles
+} from "../scripts/publication-bot.mjs";
 import {
   ALLOWED_RIGHTS_BASES,
   AVAILABILITY_STATUSES,
@@ -21,6 +27,8 @@ import {
   validateReviewedVisualMetadata,
   validateSafeSvg
 } from "../scripts/publication-visual.mjs";
+
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 test("creates stable bounded paths for original journal title cards", () => {
   assert.equal(journalCardPath("jcp"), "images/publications/journal-cards/jcp.svg");
@@ -311,4 +319,89 @@ test("generates one safe runtime fallback card for every feed journal", async ()
   const first = generated[0];
   const content = await readFile(path.join(outputRoot, ...first.path.split("/")), "utf8");
   assert.equal(validateSafeSvg(content.trim()), true);
+});
+
+test("Slack-approved future DOI reaches bibliography, visual validation, and neutral-card build", async () => {
+  const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), "future-publication-visual-"));
+  try {
+    const [feed, bibliography] = await Promise.all([
+      readFile(path.join(repositoryRoot, "feed.js"), "utf8"),
+      readFile(path.join(repositoryRoot, "data/publication-bibliography.json"), "utf8")
+    ]);
+    const candidate = {
+      doi: "10.5555/future.visual.2027",
+      title: "A synthetic future publication for visual automation validation",
+      authors: "Chung, Y.G.",
+      journal: "Future Journal of Molecular Systems",
+      meta: ", 1, 100001 (2027)",
+      year: "2027",
+      abstract: "Synthetic test metadata; no publisher image is supplied.",
+      topics: ["Molecular Dynamics"],
+      bibliography: {
+        doi: "10.5555/future.visual.2027",
+        type: "article",
+        title: "A synthetic future publication for visual automation validation",
+        authors: [{ given: "Yongchul G.", family: "Chung" }],
+        journal: "Future Journal of Molecular Systems",
+        year: 2027,
+        volume: "1",
+        articleNumber: "100001",
+        publisher: "Synthetic Test Publisher",
+        source: { provider: "crossref" }
+      }
+    };
+    const expectedJournalKey = publicationJournalKey(feed, candidate);
+    const synchronized = synchronizePublicationFiles(
+      feed,
+      bibliography,
+      candidate,
+      "2027-01-02T03:04:05.000Z"
+    );
+    const feedPath = path.join(temporaryRoot, "feed.mjs");
+    const bibliographyPath = path.join(temporaryRoot, "publication-bibliography.json");
+    const outputRoot = path.join(temporaryRoot, "dist");
+    await Promise.all([
+      writeFile(feedPath, synchronized.feed, "utf8"),
+      writeFile(bibliographyPath, synchronized.bibliography, "utf8")
+    ]);
+
+    assert.equal(synchronized.changed, true);
+    assert.match(expectedJournalKey, /^doi-future-journal-of-molecular-syst-[a-f0-9]{20}$/);
+    assert.doesNotMatch(synchronized.feed, /'auto'/);
+    assert.ok(
+      parsePublicationBibliography(await readFile(bibliographyPath, "utf8"))
+        .publications[candidate.doi]
+    );
+
+    const visualsPath = path.join(repositoryRoot, "publication-visuals.js");
+    const state = await validatePublicationVisuals({
+      repository: repositoryRoot,
+      visualsPath,
+      feedPath
+    });
+    const publication = state.publications.find((item) => item.doi === candidate.doi);
+    const doiUrl = `https://doi.org/${candidate.doi}`;
+    assert.equal(publication.journalKey, expectedJournalKey);
+    assert.equal(publication.publicationVisual.kind, "journal-title-card");
+    assert.equal(publication.publicationVisual.availabilityStatus, "neutral-original-title-card");
+    assert.equal(publication.publicationVisual.sourcePage, doiUrl);
+    assert.equal(publication.publicationVisual.fallbackSourcePage, doiUrl);
+
+    const generated = await generateJournalTitleCards({
+      outputRoot,
+      visualsPath,
+      feedPath
+    });
+    const generatedFallback = generated.find((item) => item.journalKey === expectedJournalKey);
+    assert.ok(generatedFallback);
+    const svg = await readFile(
+      path.join(outputRoot, ...generatedFallback.path.split("/")),
+      "utf8"
+    );
+    assert.match(svg, /Future Journal of Molecular Systems/);
+    assert.match(svg, /https:\/\/doi\.org\/10\.5555\/future\.visual\.2027/);
+    assert.equal(validateSafeSvg(svg.trim()), true);
+  } finally {
+    await rm(temporaryRoot, { recursive: true, force: true });
+  }
 });

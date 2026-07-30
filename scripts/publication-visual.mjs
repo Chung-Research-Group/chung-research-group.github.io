@@ -252,6 +252,8 @@ export function inspectRasterAsset(buffer, extension, location = "publication vi
   };
 }
 
+let publicationVisualLoadSequence = 0;
+
 export async function loadPublicationVisualState({
   visualsPath = path.join(repositoryRoot, "publication-visuals.js"),
   feedPath = path.join(repositoryRoot, "feed.js")
@@ -259,8 +261,9 @@ export async function loadPublicationVisualState({
   const previousWindow = globalThis.window;
   globalThis.window = {};
   try {
-    await import(`${pathToFileURL(visualsPath).href}?visuals=${Date.now()}`);
-    await import(`${pathToFileURL(feedPath).href}?feed=${Date.now()}`);
+    const loadId = `${Date.now()}-${++publicationVisualLoadSequence}`;
+    await import(`${pathToFileURL(visualsPath).href}?visuals=${loadId}`);
+    await import(`${pathToFileURL(feedPath).href}?feed=${loadId}`);
     return {
       manifest: globalThis.window.MTAP_PUBLICATION_VISUALS,
       publications: (globalThis.window.MTAP_FEED?.PUBS || []).map((publication) => ({
@@ -381,6 +384,32 @@ export async function validatePublicationVisuals({
   }
 
   const journalKeys = new Set(publications.map((publication) => publication.journalKey));
+  const journalIdentityByKey = new Map();
+  const journalKeyByFallbackPath = new Map();
+  for (const publication of publications) {
+    const identity = cleanText(publication.journal)
+      .toLowerCase()
+      .replace(/^the\s+/, "")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+    const existingIdentity = journalIdentityByKey.get(publication.journalKey);
+    if (existingIdentity && existingIdentity !== identity) {
+      throw new Error(
+        `Journal key ${publication.journalKey} is shared by different publication venues.`
+      );
+    }
+    journalIdentityByKey.set(publication.journalKey, identity);
+
+    const fallbackPath = journalCardPath(publication.journalKey);
+    const existingKey = journalKeyByFallbackPath.get(fallbackPath);
+    if (existingKey && existingKey !== publication.journalKey) {
+      throw new Error(
+        `Journal keys ${existingKey} and ${publication.journalKey} resolve to the same fallback card.`
+      );
+    }
+    journalKeyByFallbackPath.set(fallbackPath, publication.journalKey);
+  }
   for (const [journalKey, visual] of Object.entries(manifest.byJournal || {})) {
     if (!journalKeys.has(journalKey)) {
       throw new Error(`Reviewed journal visual has an unknown journal key: ${journalKey}`);
@@ -439,6 +468,10 @@ export async function validatePublicationVisuals({
     ) {
       throw new Error(`Publication ${publication.no} does not define a safe local title-card fallback.`);
     }
+    requireHttpsUrl(
+      visual.fallbackSourcePage,
+      `Publication ${publication.no} fallbackSourcePage`
+    );
 
     availabilityByDoi[doi] = Object.freeze({
       publicationNumber: publication.no,
@@ -485,11 +518,13 @@ export async function generateJournalTitleCards({
   });
   const fallbackJournals = new Map();
   for (const publication of publications) {
-    fallbackJournals.set(publication.journalKey, {
-      journalKey: publication.journalKey,
-      journal: publication.journal,
-      journalUrl: publication.publicationVisual.fallbackSourcePage
-    });
+    if (!fallbackJournals.has(publication.journalKey)) {
+      fallbackJournals.set(publication.journalKey, {
+        journalKey: publication.journalKey,
+        journal: publication.journal,
+        journalUrl: publication.publicationVisual.fallbackSourcePage
+      });
+    }
   }
 
   const generated = [];

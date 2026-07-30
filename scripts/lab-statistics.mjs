@@ -22,6 +22,7 @@ const CURRENT_TEAM_GROUPS = Object.freeze([
 ]);
 const JOURNAL_STANDING_YEAR_BASIS =
   'Previous-year JCR: publication year Y uses JCR year Y-1.';
+const PUBLICATION_JCR_BANDS_SCHEMA_VERSION = 1;
 const JOURNAL_STANDING_BANDS = Object.freeze([
   Object.freeze({ id: 'top1', label: 'Top 1%' }),
   Object.freeze({ id: 'top5', label: 'Top 5%' }),
@@ -1070,37 +1071,12 @@ function assertOnlyInputKeys(value, expectedKeys, label) {
   }
 }
 
-function deriveJournalStanding(publications, dataset) {
-  if (!dataset) return unavailableJournalStanding(publications.length);
-  if (dataset.aggregateRankingDisplayAuthorized !== true) {
-    return unavailableJournalStanding(
-      publications.length,
-      dataset,
-      'Public display of previous-year JCR ranking aggregates is not explicitly authorized. No ranking bands are published, and publication-year or current JCR data are not substituted.'
-    );
-  }
-
-  const authorizationProvenance = rankingAuthorizationProvenance(dataset);
-  if (dataset.rankingsByDoi === undefined || dataset.rankingsByDoi === null) {
-    return unavailableJournalStanding(
-      publications.length,
-      dataset,
-      'No previous-year JCR ranking records are configured. Publication-year or current JCR data are not substituted.'
-    );
-  }
+function validatePreviousYearRankingBands(publications, dataset) {
   const rankingsByDoi = assertObject(
     dataset.rankingsByDoi,
     'impactFactorJson.rankingsByDoi'
   );
   const rankingEntries = Object.entries(rankingsByDoi);
-  if (rankingEntries.length === 0) {
-    return unavailableJournalStanding(
-      publications.length,
-      dataset,
-      'No previous-year JCR ranking records are configured. Publication-year or current JCR data are not substituted.'
-    );
-  }
-
   const publicationsByDoi = new Map();
   for (const [index, publication] of publications.entries()) {
     const doi = normalizeDoi(publication.doi, `publications[${index}].doi`);
@@ -1113,9 +1089,7 @@ function deriveJournalStanding(publications, dataset) {
   }
 
   const normalizedRankingDois = new Set();
-  const bandCounts = new Map(
-    JOURNAL_STANDING_BANDS.map(band => [band.id, 0])
-  );
+  const bandsByDoi = new Map();
   for (const [rawDoi, rawRanking] of rankingEntries) {
     const doi = normalizeDoi(rawDoi, `impactFactorJson.rankingsByDoi key ${rawDoi}`);
     if (normalizedRankingDois.has(doi)) {
@@ -1230,10 +1204,43 @@ function deriveJournalStanding(publications, dataset) {
       bestPercentile = Math.max(bestPercentile, category.jifPercentile);
     }
     const bandId = journalStandingBand(bestPercentile);
+    bandsByDoi.set(doi, bandId);
+  }
+  return bandsByDoi;
+}
+
+function deriveJournalStanding(publications, dataset) {
+  if (!dataset) return unavailableJournalStanding(publications.length);
+  if (dataset.aggregateRankingDisplayAuthorized !== true) {
+    return unavailableJournalStanding(
+      publications.length,
+      dataset,
+      'Public display of previous-year JCR ranking aggregates is not explicitly authorized. No ranking bands are published, and publication-year or current JCR data are not substituted.'
+    );
+  }
+
+  const authorizationProvenance = rankingAuthorizationProvenance(dataset);
+  if (dataset.rankingsByDoi === undefined || dataset.rankingsByDoi === null
+      || Object.keys(assertObject(
+        dataset.rankingsByDoi,
+        'impactFactorJson.rankingsByDoi'
+      )).length === 0) {
+    return unavailableJournalStanding(
+      publications.length,
+      dataset,
+      'No previous-year JCR ranking records are configured. Publication-year or current JCR data are not substituted.'
+    );
+  }
+
+  const bandsByDoi = validatePreviousYearRankingBands(publications, dataset);
+  const bandCounts = new Map(
+    JOURNAL_STANDING_BANDS.map(band => [band.id, 0])
+  );
+  for (const bandId of bandsByDoi.values()) {
     bandCounts.set(bandId, bandCounts.get(bandId) + 1);
   }
 
-  const coveredPublications = normalizedRankingDois.size;
+  const coveredPublications = bandsByDoi.size;
   const unavailablePublications = publications.length - coveredPublications;
   bandCounts.set('unavailable', unavailablePublications);
   const complete = unavailablePublications === 0;
@@ -1253,6 +1260,104 @@ function deriveJournalStanding(publications, dataset) {
     reason: complete
       ? null
       : `Partial coverage: ${coveredPublications} of ${publications.length} catalogue publications have an authorized previous-year JCR ranking; ${unavailablePublications} ${unavailablePublications === 1 ? 'is' : 'are'} unavailable and no publication-year or current JCR data are substituted.`
+  };
+}
+
+function perPublicationRankingAuthorization(dataset) {
+  if (!dataset || dataset.perPublicationRankingDisplayAuthorized !== true) return;
+  const reference = nullableText(dataset.perPublicationRankingAuthorizationReference);
+  if (!reference) {
+    throw new TypeError(
+      'impactFactorJson.perPublicationRankingAuthorizationReference must be non-empty text when perPublicationRankingDisplayAuthorized is true.'
+    );
+  }
+  const authorizationDate = nullableText(dataset.perPublicationRankingAuthorizationDate);
+  if (!isIsoCalendarDate(authorizationDate)) {
+    throw new TypeError(
+      'impactFactorJson.perPublicationRankingAuthorizationDate must be a valid YYYY-MM-DD date when perPublicationRankingDisplayAuthorized is true.'
+    );
+  }
+}
+
+function unavailablePublicationJcrBands(
+  publicationTotal,
+  displayAuthorized = false,
+  reason = null
+) {
+  return {
+    schemaVersion: PUBLICATION_JCR_BANDS_SCHEMA_VERSION,
+    status: 'unavailable',
+    displayAuthorized,
+    publicationTotal,
+    coveredPublications: 0,
+    yearBasis: JOURNAL_STANDING_YEAR_BASIS,
+    bandsByDoi: {},
+    reason: reason || (
+      displayAuthorized
+        ? 'No exact previous-year JCR ranking records are available for public per-publication display.'
+        : 'Public per-publication JCR band display is not explicitly authorized.'
+    )
+  };
+}
+
+/**
+ * Derive the smallest public per-publication JCR snapshot needed by publication
+ * cards. The private source categories, ranks, totals, percentiles, quartiles,
+ * JIF values, edition, and authorization evidence are intentionally omitted.
+ */
+export function derivePublicationJcrBands({
+  publications,
+  impactFactorJson = null
+}) {
+  if (!Array.isArray(publications)) {
+    throw new TypeError('publications must be an array.');
+  }
+  const dataset = validateImpactFactorDataset(
+    parseImpactFactorJson(impactFactorJson)
+  );
+  if (!dataset) {
+    return unavailablePublicationJcrBands(
+      publications.length,
+      false,
+      'No licensed JCR input is configured; publication cards do not show a JCR band.'
+    );
+  }
+  if (dataset.perPublicationRankingDisplayAuthorized !== true) {
+    return unavailablePublicationJcrBands(publications.length);
+  }
+
+  perPublicationRankingAuthorization(dataset);
+  if (dataset.rankingsByDoi === undefined || dataset.rankingsByDoi === null
+      || Object.keys(assertObject(
+        dataset.rankingsByDoi,
+        'impactFactorJson.rankingsByDoi'
+      )).length === 0) {
+    return unavailablePublicationJcrBands(
+      publications.length,
+      true,
+      'No exact previous-year JCR ranking records are configured for public per-publication display.'
+    );
+  }
+
+  const validatedBands = validatePreviousYearRankingBands(publications, dataset);
+  const bandsByDoi = {};
+  for (const [index, publication] of publications.entries()) {
+    const doi = normalizeDoi(publication.doi, `publications[${index}].doi`);
+    const band = validatedBands.get(doi);
+    if (band) bandsByDoi[doi] = band;
+  }
+  const coveredPublications = Object.keys(bandsByDoi).length;
+  return {
+    schemaVersion: PUBLICATION_JCR_BANDS_SCHEMA_VERSION,
+    status: coveredPublications === publications.length ? 'ok' : 'partial',
+    displayAuthorized: true,
+    publicationTotal: publications.length,
+    coveredPublications,
+    yearBasis: JOURNAL_STANDING_YEAR_BASIS,
+    bandsByDoi,
+    reason: coveredPublications === publications.length
+      ? null
+      : `Partial coverage: ${coveredPublications} of ${publications.length} catalogue publications have an exact previous-year JCR band authorized for public per-publication display.`
   };
 }
 
@@ -1372,4 +1477,32 @@ export async function generateLabStatisticsFile({
   await fs.mkdir(dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, serialized, 'utf8');
   return statistics;
+}
+
+export async function generatePublicationJcrBandsFile({
+  feedPath,
+  outputPath,
+  impactFactorJson = null
+}) {
+  for (const [label, value] of Object.entries({ feedPath, outputPath })) {
+    if (typeof value !== 'string' || !value.trim()) {
+      throw new TypeError(`${label} must be a non-empty path.`);
+    }
+  }
+  const publications = await loadBrowserDataScript(
+    feedPath,
+    'window.MTAP_FEED && window.MTAP_FEED.PUBS',
+    'feed.js'
+  );
+  const snapshot = derivePublicationJcrBands({
+    publications,
+    impactFactorJson
+  });
+  await fs.mkdir(dirname(outputPath), { recursive: true });
+  await fs.writeFile(
+    outputPath,
+    `${JSON.stringify(snapshot, null, 2)}\n`,
+    'utf8'
+  );
+  return snapshot;
 }

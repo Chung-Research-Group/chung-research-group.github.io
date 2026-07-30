@@ -8,6 +8,7 @@ import vm from "node:vm";
 
 import {
   generatedLabStatisticsFile,
+  generatedPublicationJcrBandsFile,
   generatedPublicationCitationFiles,
   requiredPages,
   requiredRuntimeFiles,
@@ -35,7 +36,8 @@ const errors = [];
 const generatedCitationFileSet = new Set(generatedPublicationCitationFiles);
 const generatedBuildFileSet = new Set([
   ...generatedPublicationCitationFiles,
-  generatedLabStatisticsFile
+  generatedLabStatisticsFile,
+  generatedPublicationJcrBandsFile
 ]);
 
 async function exists(file) {
@@ -1276,6 +1278,112 @@ function validateLabStatistics(
   }
 }
 
+function validatePublicationJcrBands(
+  snapshot,
+  expectedPublicationCount,
+  expectedDoiSet
+) {
+  const label = "Publication JCR band snapshot";
+  if (!snapshot || typeof snapshot !== "object" || Array.isArray(snapshot)) {
+    errors.push(`${label} must be an object.`);
+    return;
+  }
+  const expectedKeys = [
+    "schemaVersion",
+    "status",
+    "displayAuthorized",
+    "publicationTotal",
+    "coveredPublications",
+    "yearBasis",
+    "bandsByDoi",
+    "reason"
+  ];
+  const unexpected = Object.keys(snapshot).filter((key) => !expectedKeys.includes(key));
+  const missing = expectedKeys.filter((key) => !Object.hasOwn(snapshot, key));
+  if (unexpected.length) errors.push(`${label} contains unexpected fields: ${unexpected.join(", ")}.`);
+  if (missing.length) errors.push(`${label} is missing required fields: ${missing.join(", ")}.`);
+
+  if (snapshot.schemaVersion !== 1) {
+    errors.push(`${label}.schemaVersion must equal 1.`);
+  }
+  if (!["ok", "partial", "unavailable"].includes(snapshot.status)) {
+    errors.push(`${label}.status must be ok, partial, or unavailable.`);
+  }
+  if (typeof snapshot.displayAuthorized !== "boolean") {
+    errors.push(`${label}.displayAuthorized must be boolean.`);
+  }
+  if (snapshot.publicationTotal !== expectedPublicationCount) {
+    errors.push(`${label}.publicationTotal must equal feed.js count ${expectedPublicationCount}.`);
+  }
+  if (!Number.isInteger(snapshot.coveredPublications)
+      || snapshot.coveredPublications < 0
+      || snapshot.coveredPublications > expectedPublicationCount) {
+    errors.push(`${label}.coveredPublications must be within the catalogue size.`);
+  }
+  if (snapshot.yearBasis !== "Previous-year JCR: publication year Y uses JCR year Y-1.") {
+    errors.push(`${label} must use the exact previous-year JCR basis.`);
+  }
+  if (snapshot.reason !== null
+      && (typeof snapshot.reason !== "string" || !snapshot.reason.trim())) {
+    errors.push(`${label}.reason must be null or nonempty text.`);
+  }
+  if (!snapshot.bandsByDoi
+      || typeof snapshot.bandsByDoi !== "object"
+      || Array.isArray(snapshot.bandsByDoi)) {
+    errors.push(`${label}.bandsByDoi must be an object.`);
+    return;
+  }
+
+  const allowedBands = new Set(["top1", "top5", "top10", "otherQ1", "q2", "q3", "q4"]);
+  const entries = Object.entries(snapshot.bandsByDoi);
+  for (const [doi, band] of entries) {
+    if (doi !== normalizeDoi(doi) || !expectedDoiSet.has(doi)) {
+      errors.push(`${label} contains a non-catalogue or non-normalized DOI key: ${doi}.`);
+    }
+    if (!allowedBands.has(band)) {
+      errors.push(`${label} DOI ${doi} has an invalid derived band.`);
+    }
+  }
+  if (entries.length !== snapshot.coveredPublications) {
+    errors.push(`${label}.coveredPublications must equal the number of derived DOI bands.`);
+  }
+
+  if (snapshot.displayAuthorized !== true) {
+    if (snapshot.status !== "unavailable"
+        || snapshot.coveredPublications !== 0
+        || entries.length !== 0
+        || typeof snapshot.reason !== "string"
+        || !snapshot.reason.trim()) {
+      errors.push(`${label} must publish no DOI bands when per-publication display is unauthorized.`);
+    }
+  } else if (snapshot.status === "unavailable") {
+    if (snapshot.coveredPublications !== 0
+        || entries.length !== 0
+        || typeof snapshot.reason !== "string"
+        || !snapshot.reason.trim()) {
+      errors.push(`${label} unavailable state must contain no DOI bands and explain why.`);
+    }
+  } else if (snapshot.status === "partial") {
+    if (snapshot.coveredPublications <= 0
+        || snapshot.coveredPublications >= expectedPublicationCount
+        || typeof snapshot.reason !== "string"
+        || !snapshot.reason.trim()) {
+      errors.push(`${label} partial state must have positive incomplete coverage and a reason.`);
+    }
+  } else if (snapshot.status === "ok") {
+    if (snapshot.coveredPublications !== expectedPublicationCount
+        || snapshot.reason !== null) {
+      errors.push(`${label} ok state must cover the full catalogue and have no reason.`);
+    }
+  }
+
+  if (/rankingsByDoi|jcrYear|categor(?:y|ies)|categoryTotal|jifPercentile|impactFactor|"(?:rank|quartile|jif)"\s*:/i.test(
+    JSON.stringify(snapshot)
+  )) {
+    errors.push(`${label} must not expose raw category, rank, percentile, quartile, or JIF values.`);
+  }
+}
+
 for (const file of [...requiredPages, ...requiredRuntimeFiles]) {
   if (!await exists(path.join(siteRoot, file))) errors.push(`Missing required file: ${file}`);
 }
@@ -1616,6 +1724,9 @@ if (await exists(publicationBibliographyPath)) {
 if (!publicationsHtml.includes("data/publication-metadata.json")) {
   errors.push("Publications page must load the static publication metadata snapshot.");
 }
+if (!publicationsHtml.includes("data/publication-jcr-bands.json")) {
+  errors.push("Publications page must load the build-generated public per-publication JCR band snapshot.");
+}
 for (const [file, label] of [
   ["exports/publications/publications.bib", "BibTeX"],
   ["exports/publications/CITATION.cff", "CFF"]
@@ -1673,6 +1784,11 @@ if (!publicationsHtml.includes("enrichment?.googleScholar?.citationCount")
 }
 if (!publicationsHtml.includes("data-publication-visual") || !publicationsHtml.includes("data-publication-visual-image")) {
   errors.push("Publications page must place a reviewed visual between the publication number and bibliography.");
+}
+if (!publicationsHtml.includes("data-publication-jcr-band")
+    || !publicationsHtml.includes("snapshot.displayAuthorized !== true")
+    || !publicationsHtml.includes("jcrBandsByDoi")) {
+  errors.push("Publication cards must fail closed and render only explicitly authorized derived JCR bands.");
 }
 if (!publicationsHtml.includes("publication-number")
     || !publicationsHtml.includes("publication-visual")
@@ -1792,6 +1908,27 @@ if (compareRoot || labStatisticsExists) {
       );
     } catch (error) {
       errors.push(`Lab statistics snapshot is not valid JSON: ${error.message}`);
+    }
+  }
+}
+
+const publicationJcrBandsPath = path.join(siteRoot, generatedPublicationJcrBandsFile);
+const publicationJcrBandsExists = await exists(publicationJcrBandsPath);
+if (siteRoot === repositoryRoot && publicationJcrBandsExists) {
+  errors.push(`${generatedPublicationJcrBandsFile} is build-generated and must not be committed as source.`);
+}
+if (compareRoot || publicationJcrBandsExists) {
+  if (!publicationJcrBandsExists) {
+    errors.push(`Missing generated publication JCR band snapshot: ${generatedPublicationJcrBandsFile}`);
+  } else {
+    try {
+      validatePublicationJcrBands(
+        JSON.parse(await readFile(publicationJcrBandsPath, "utf8")),
+        expectedPublicationFacts.total,
+        publicationDoiSet
+      );
+    } catch (error) {
+      errors.push(`Publication JCR band snapshot is not valid JSON: ${error.message}`);
     }
   }
 }

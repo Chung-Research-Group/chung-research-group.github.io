@@ -28,6 +28,7 @@ export const requiredPages = [
 
 export const requiredRuntimeFiles = [
   "support.js",
+  "force-layout.js",
   "publication-visuals.js",
   "feed.js",
   "people-data.js",
@@ -44,3 +45,4 @@ export const generatedPublicationCitationFiles = [
 ];
 
 export const generatedLabStatisticsFile = "data/lab-statistics.json";
+export const generatedPublicationJcrBandsFile = "data/publication-jcr-bands.json";

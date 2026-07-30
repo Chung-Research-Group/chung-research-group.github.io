@@ -618,11 +618,68 @@ function js(value) {
   return `'${String(value || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, ' ')}'`;
 }
 
+function feedStringValue(value = '') {
+  return String(value).replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+}
+
+function journalIdentity(value = '') {
+  return cleanText(value)
+    .normalize('NFKD')
+    .replace(/\p{M}+/gu, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function existingManualJournalKeys(feed, journal) {
+  const literal = String.raw`'((?:\\.|[^'\\])*)'`;
+  const pattern = new RegExp(
+    String.raw`F\(\s*${literal}\s*,\s*${literal}\s*,\s*${literal}\s*,\s*${literal}\s*,\s*${literal}`,
+    'g'
+  );
+  const identity = journalIdentity(journal);
+  const keys = new Set();
+  for (const match of String(feed).matchAll(pattern)) {
+    const key = feedStringValue(match[4]);
+    const existingJournal = feedStringValue(match[5]);
+    if (
+      identity
+      && journalIdentity(existingJournal) === identity
+      && key
+      && !key.startsWith('doi-')
+    ) {
+      keys.add(key);
+    }
+  }
+  return keys;
+}
+
+/**
+ * Reuse a single manually curated journal key when the publication venue is
+ * already known. This preserves reviewed journal-mark priority. New venues use
+ * a DOI-specific, hashed key so unrelated future papers can never collapse
+ * onto a shared "auto" title card.
+ */
+export function publicationJournalKey(feed, candidate) {
+  const existingKeys = existingManualJournalKeys(feed, candidate?.journal);
+  if (existingKeys.size === 1) return [...existingKeys][0];
+
+  const doi = normalizeDoi(candidate?.doi);
+  if (!doi) throw new Error('Publication candidate DOI is required to derive its visual identity.');
+  const identity = journalIdentity(candidate?.journal);
+  const journalSlug = (identity || 'journal').replace(/\s+/g, '-').slice(0, 32);
+  const digest = createHash('sha256').update(`doi:${doi}`).digest('hex').slice(0, 20);
+  return `doi-${journalSlug}-${digest}`;
+}
+
 export function addCandidateToFeed(feed, candidate) {
   if (existingDois(feed).has(normalizeDoi(candidate.doi))) return feed;
   const numbers = [...feed.matchAll(/F\('(\d+)'/g)].map(match => Number(match[1]));
   const no = String(Math.max(0, ...numbers) + 1).padStart(2, '0');
-  const article = `  F(${js(no)}, ${js(candidate.title)}, ${js(candidate.authors)}, 'auto', ${js(candidate.journal)}, ${js(candidate.meta)}, null, ${js(candidate.doi)}),\n`;
+  const journalKey = publicationJournalKey(feed, candidate);
+  const article = `  F(${js(no)}, ${js(candidate.title)}, ${js(candidate.authors)}, ${js(journalKey)}, ${js(candidate.journal)}, ${js(candidate.meta)}, null, ${js(candidate.doi)}),\n`;
   const topics = `  ${js(no)}: [${candidate.topics.map(js).join(', ')}],\n`;
   let next = feed.replace('const PUBS = [\n', `const PUBS = [\n${article}`);
   next = next.replace('const PUB_TOPICS = {\n', `const PUB_TOPICS = {\n${topics}`);

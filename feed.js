@@ -242,7 +242,7 @@ PUBS.forEach(p => {
     height: 540,
     label: 'Journal',
     alt: 'Journal title card for ' + p.journal + '.',
-    sourcePage: JU[p.journalKey],
+    sourcePage: JU[p.journalKey] || (p.doi ? DOI_URL(p.doi) : p.jurl || p.html),
     credit: 'Chung Research Group journal title card; not publisher artwork.',
     attribution: 'Original journal title card',
     rightsBasis: 'original-site-fallback',

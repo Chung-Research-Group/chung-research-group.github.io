@@ -56,6 +56,8 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-citation-downloads{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .publication-citation-download{display:inline-flex;align-items:center;min-height:42px;padding:0 12px;border:1px solid var(--color-accent);font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:800;text-decoration:none;color:var(--color-accent-700);background:var(--color-bg);transition:background .12s ease,color .12s ease}
 .publication-citation-download:hover,.publication-citation-download:focus-visible{color:#fff;background:var(--color-accent)}
+.publication-jcr-band{display:inline-flex;align-items:center;gap:5px;padding:2px 7px;border:1px solid #00396d;font-size:15px;line-height:20px;letter-spacing:.04em;font-weight:800;color:#fff;background:#00396d}
+.publication-jcr-band::before{content:"";width:7px;height:7px;background:#a9cceb}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -188,6 +190,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                 <div class="publication-bibliography">
                   <p style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:29px;margin:0"><a href="{{ p.html }}" style="color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></p>
                   <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0">
+                    <sc-if value="{{ p.jcrBand }}" hint-placeholder-val="{{ false }}"><span class="publication-jcr-band" data-publication-jcr-band data-jcr-band="{{ p.jcrBand.id }}" title="{{ p.jcrBand.title }}">JCR {{ p.jcrBand.label }}</span></sc-if>
                     <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
                   </div>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
@@ -228,7 +231,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], metadata: null, metadataError: false };
+  state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], metadata: null, metadataError: false, jcrBands: null };
   normalizeDoi(value) {
     return String(value || '').trim().replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').toLowerCase();
   }
@@ -241,6 +244,36 @@ class Component extends DCLogic {
       this.setState({ metadata, metadataError: false });
     } catch (error) {
       this.setState({ metadata: null, metadataError: true });
+    }
+  }
+  async loadPublicationJcrBands() {
+    try {
+      const response = await fetch('data/publication-jcr-bands.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Publication JCR bands unavailable');
+      const snapshot = await response.json();
+      const allowedBands = new Set(['top1', 'top5', 'top10', 'otherQ1', 'q2', 'q3', 'q4']);
+      const catalogueDois = new Set((this._feed?.PUBS || []).map(publication => this.normalizeDoi(publication.doi)));
+      const bandEntries = snapshot?.bandsByDoi && !Array.isArray(snapshot.bandsByDoi)
+        ? Object.entries(snapshot.bandsByDoi)
+        : [];
+      if (!snapshot
+          || snapshot.schemaVersion !== 1
+          || !['ok', 'partial'].includes(snapshot.status)
+          || snapshot.displayAuthorized !== true
+          || snapshot.yearBasis !== 'Previous-year JCR: publication year Y uses JCR year Y-1.'
+          || snapshot.publicationTotal !== catalogueDois.size
+          || snapshot.coveredPublications !== bandEntries.length
+          || !snapshot.bandsByDoi
+          || Array.isArray(snapshot.bandsByDoi)
+          || bandEntries.some(([doi, value]) =>
+            doi !== this.normalizeDoi(doi)
+            || !catalogueDois.has(doi)
+            || !allowedBands.has(value))) {
+        throw new Error('Publication JCR bands invalid or unauthorized');
+      }
+      this.setState({ jcrBands: snapshot });
+    } catch (error) {
+      this.setState({ jcrBands: null });
     }
   }
   refreshBadges() {
@@ -313,7 +346,7 @@ class Component extends DCLogic {
     figure.setAttribute('data-visual-load-state', 'fallback');
     image.src = fallbackSrc;
   }
-  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); } else { setTimeout(t, 50); } }; t(); }
+  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); this.loadPublicationJcrBands(); } else { setTimeout(t, 50); } }; t(); }
   componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
     const FEED = this._feed;
@@ -357,6 +390,18 @@ class Component extends DCLogic {
     full.forEach(p => { p.hcp = HCP.includes(p.no); });
     const metadata = this.state.metadata;
     const metadataPublications = metadata?.publications || {};
+    const jcrBandLabels = {
+      top1: 'Top 1%',
+      top5: 'Top 5%',
+      top10: 'Top 10%',
+      otherQ1: 'Q1',
+      q2: 'Q2',
+      q3: 'Q3',
+      q4: 'Q4'
+    };
+    const jcrBandsByDoi = this.state.jcrBands?.displayAuthorized === true
+      ? this.state.jcrBands.bandsByDoi
+      : {};
     full.forEach(p => {
       const enrichment = metadataPublications[this.normalizeDoi(p.doi)] || null;
       p.enrichment = enrichment;
@@ -380,6 +425,15 @@ class Component extends DCLogic {
         .slice(0, 3);
       p.metadataSearch = [...(enrichment?.fields || []), ...(enrichment?.keywords || [])].join(' ');
       p.hasEnrichment = !!p.citeText || p.discoveryTerms.length > 0;
+      const jcrBandId = jcrBandsByDoi[this.normalizeDoi(p.doi)];
+      const jcrBandLabel = jcrBandLabels[jcrBandId];
+      p.jcrBand = jcrBandLabel
+        ? {
+          id: jcrBandId,
+          label: jcrBandLabel,
+          title: 'JCR ' + jcrBandLabel + ' \u00b7 publication year Y evaluated with JCR year Y\u22121'
+        }
+        : null;
     });
     const q = this.state.q.trim().toLowerCase();
     const activeTheme = this.state.theme;

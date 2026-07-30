@@ -13,6 +13,7 @@
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
+<script src="./force-layout.js"></script>
 </head>
 <body id="top">
 <x-dc>
@@ -88,14 +89,14 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
 .statistics-metric-link{display:inline-block;margin-top:10px;font-family:var(--font-heading);font-size:14px;line-height:21px;font-weight:800}
 .statistics-unavailable{margin:18px 0 0;padding:16px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:15px;line-height:23px}
 .statistics-network{position:relative;width:100%;margin:0;overflow:hidden}
-.statistics-network-canvas{position:relative;width:100%;aspect-ratio:1000/680;overflow:hidden}
-.statistics-network-line{position:absolute;z-index:1;left:var(--edge-left);top:var(--edge-top);width:var(--edge-length);height:var(--edge-width);background:color-mix(in srgb,var(--color-text) 27%,transparent);transform:translateY(-50%) rotate(var(--edge-angle));transform-origin:0 50%}
-.statistics-network-node-wrap{position:absolute;z-index:2;left:var(--node-left);top:var(--node-top);display:flex;flex-direction:column;align-items:center;gap:4px;transform:translate(-50%,-50%)}
-.statistics-network-node{display:flex;align-items:center;justify-content:center;width:var(--node-size);aspect-ratio:1;border-radius:50%;background:var(--color-accent-200);border:2px solid var(--color-accent-700)}
-.statistics-network-node[data-focal="true"]{background:var(--color-accent);border-color:var(--color-accent-900);border-width:3px}
-.statistics-network-initials{font-family:var(--font-heading);font-size:12px;line-height:1;font-weight:800;color:var(--color-accent-900)}
-.statistics-network-node[data-focal="true"] .statistics-network-initials{color:#ffffff}
-.statistics-network-label{max-width:154px;font-family:var(--font-heading);font-size:12px;line-height:16px;font-weight:800;text-align:center;color:var(--color-text);white-space:nowrap}
+.statistics-network-canvas{display:block;width:100%;height:auto;aspect-ratio:1000/680;overflow:hidden}
+.statistics-network-line{stroke:color-mix(in srgb,var(--color-text) 27%,transparent);stroke-linecap:round;vector-effect:non-scaling-stroke}
+.statistics-network-node{fill:var(--color-accent-200);stroke:var(--color-accent-700);stroke-width:2;vector-effect:non-scaling-stroke}
+.statistics-network-node[data-focal="true"]{fill:var(--color-accent);stroke:var(--color-accent-900);stroke-width:3}
+.statistics-network-initials-box,.statistics-network-label-box{overflow:visible;pointer-events:none}
+.statistics-network-initials{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--font-heading);font-size:12px;line-height:1;font-weight:800;color:var(--color-accent-900)}
+.statistics-network-node-group[data-focal="true"] .statistics-network-initials{color:#ffffff}
+.statistics-network-label{width:100%;overflow:hidden;font-family:var(--font-heading);font-size:12px;line-height:16px;font-weight:800;text-align:center;color:var(--color-text);white-space:nowrap;text-overflow:ellipsis}
 .statistics-network-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 22px;margin:12px 0 0;padding:0;list-style:none;font-size:13px;line-height:20px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
 .statistics-network-legend li{display:inline-flex;align-items:center;gap:7px}
 .statistics-network-swatch{display:inline-block;width:13px;height:13px;border-radius:50%;background:var(--color-accent-200);border:2px solid var(--color-accent-700)}
@@ -502,19 +503,24 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         </div>
         <sc-if value="{{ coauthorNetworkAvailable }}" hint-placeholder-val="{{ true }}">
           <figure class="statistics-network">
-            <div class="statistics-network-canvas" role="img" aria-labelledby="coauthor-network-visual-title coauthor-network-visual-desc">
-              <span class="sr-only" id="coauthor-network-visual-title">Selected coauthor network from the public publication catalog</span>
-              <span class="sr-only" id="coauthor-network-visual-desc">The principal investigator is centered. Node size represents publications in this catalog, and line width represents shared publications. A complete text table for the displayed network follows.</span>
+            <svg class="statistics-network-canvas" viewBox="0 0 1000 680" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="coauthor-network-visual-title coauthor-network-visual-desc" data-force-layout="{{ coauthorLayoutMethod }}" data-force-seed="{{ coauthorLayoutSeed }}">
+              <title id="coauthor-network-visual-title">Selected coauthor network from the public publication catalog</title>
+              <desc id="coauthor-network-visual-desc">A deterministic force-directed layout. The principal investigator is anchored at the center for orientation. Link attraction, author repulsion, collision avoidance, and a center force position every other author. Node size represents publications in this catalog, and line width represents shared publications. A complete text table for the displayed network follows.</desc>
               <sc-for list="{{ coauthorEdges }}" as="edge" hint-placeholder-count="16">
-                <span class="statistics-network-line" aria-hidden="true" style="--edge-left:{{ edge.left }}%;--edge-top:{{ edge.top }}%;--edge-length:{{ edge.length }}%;--edge-angle:{{ edge.angle }}deg;--edge-width:{{ edge.strokeWidth }}px"></span>
+                <line class="statistics-network-line" aria-hidden="true" x1="{{ edge.x1 }}" y1="{{ edge.y1 }}" x2="{{ edge.x2 }}" y2="{{ edge.y2 }}" strokeWidth="{{ edge.strokeWidth }}"></line>
               </sc-for>
               <sc-for list="{{ coauthorNodes }}" as="node" hint-placeholder-count="12">
-                <span class="statistics-network-node-wrap" aria-hidden="true" style="--node-left:{{ node.left }}%;--node-top:{{ node.top }}%;--node-size:{{ node.size }}%">
-                  <span class="statistics-network-node" data-focal="{{ node.focal }}"><span class="statistics-network-initials">{{ node.initials }}</span></span>
-                  <span class="statistics-network-label">{{ node.displayLabel }}</span>
-                </span>
+                <g class="statistics-network-node-group" aria-hidden="true" data-node-id="{{ node.id }}" data-node-x="{{ node.x }}" data-node-y="{{ node.y }}" data-node-radius="{{ node.radius }}" data-label-y="{{ node.labelY }}" data-focal="{{ node.focal }}" transform="translate({{ node.x }} {{ node.y }})">
+                  <circle class="statistics-network-node" data-focal="{{ node.focal }}" r="{{ node.radius }}"></circle>
+                  <foreignObject class="statistics-network-initials-box" x="-24" y="-12" width="48" height="24">
+                    <div class="statistics-network-initials">{{ node.initials }}</div>
+                  </foreignObject>
+                  <foreignObject class="statistics-network-label-box" x="-77" y="{{ node.labelY }}" width="154" height="18">
+                    <div class="statistics-network-label">{{ node.displayLabel }}</div>
+                  </foreignObject>
+                </g>
               </sc-for>
-            </div>
+            </svg>
             <div class="statistics-mobile-collaborators" data-top-collaborators>
               <p class="statistics-collaborator-intro">Top collaborators ranked by publications shared directly with the principal investigator in this catalogue.</p>
               <ol class="statistics-bars" aria-label="Top collaborators by publications shared with the principal investigator">
@@ -724,6 +730,10 @@ class Component extends DCLogic {
   }
 
   coauthorNetwork(rawNodes, rawEdges) {
+    const cached = this.coauthorNetworkCache;
+    if (cached && cached.rawNodes === rawNodes && cached.rawEdges === rawEdges) {
+      return cached.value;
+    }
     const normalizedNodes = (Array.isArray(rawNodes) ? rawNodes : [])
       .filter(node => node && typeof node.id === 'string' && typeof node.label === 'string')
       .map(node => ({
@@ -732,50 +742,25 @@ class Component extends DCLogic {
         publicationCount: Math.max(0, Number(node.publicationCount) || 0),
         isPrincipalInvestigator: node.isPrincipalInvestigator === true
       }));
-    if (!normalizedNodes.length) return { nodes: [], edges: [], topCollaborators: [] };
+    if (!normalizedNodes.length) {
+      const empty = { nodes: [], edges: [], topCollaborators: [] };
+      this.coauthorNetworkCache = { rawNodes, rawEdges, value: empty };
+      return empty;
+    }
 
     const focal = normalizedNodes.find(node => node.isPrincipalInvestigator) || normalizedNodes[0];
     const collaborators = normalizedNodes
       .filter(node => node.id !== focal.id)
       .sort((left, right) => right.publicationCount - left.publicationCount || left.label.localeCompare(right.label));
-    const positioned = new Map();
-    const center = { x: 500, y: 340 };
-    positioned.set(focal.id, center);
-    const innerCount = Math.min(8, collaborators.length);
-    const rings = [
-      { nodes: collaborators.slice(0, innerCount), radius: 170, offset: -Math.PI / 2 },
-      { nodes: collaborators.slice(innerCount), radius: 280, offset: -Math.PI / 2 + Math.PI / 14 }
-    ];
-    for (const ring of rings) {
-      const count = ring.nodes.length;
-      ring.nodes.forEach((node, index) => {
-        const angle = ring.offset + (Math.PI * 2 * index / Math.max(1, count));
-        positioned.set(node.id, {
-          x: center.x + Math.cos(angle) * ring.radius,
-          y: center.y + Math.sin(angle) * ring.radius
-        });
-      });
-    }
-
     const maxNodeCount = Math.max(1, ...normalizedNodes.map(node => node.publicationCount));
-    const nodes = [...collaborators, focal].map(node => {
-      const position = positioned.get(node.id) || center;
+    const networkNodes = [...collaborators, focal].map(node => {
       const radius = 12 + Math.sqrt(node.publicationCount / maxNodeCount) * 15;
       return {
         ...node,
-        focal: node.id === focal.id ? 'true' : 'false',
-        radius: radius.toFixed(2),
-        labelY: (radius + 19).toFixed(2),
-        left: (position.x / 1000 * 100).toFixed(3),
-        top: (position.y / 680 * 100).toFixed(3),
-        size: (radius * 2 / 1000 * 100).toFixed(3),
-        initials: this.authorInitials(node.label),
-        displayLabel: this.shortAuthorLabel(node.label),
-        role: node.id === focal.id ? 'Principal investigator' : 'Coauthor'
+        radius
       };
     });
-
-    const nodeById = new Map(nodes.map(node => [node.id, node]));
+    const nodeById = new Map(networkNodes.map(node => [node.id, node]));
     const edgeSource = (Array.isArray(rawEdges) ? rawEdges : [])
       .filter(edge => edge && nodeById.has(edge.source) && nodeById.has(edge.target) && edge.source !== edge.target)
       .map(edge => ({
@@ -784,20 +769,48 @@ class Component extends DCLogic {
         publicationCount: Math.max(0, Number(edge.publicationCount) || 0)
       }))
       .filter(edge => edge.publicationCount > 0);
+    const layoutEngine = globalThis.MTAP_FORCE_LAYOUT;
+    if (!layoutEngine || typeof layoutEngine.layoutForceGraph !== 'function') {
+      throw new Error('Deterministic coauthor force layout is unavailable');
+    }
+    const layout = layoutEngine.layoutForceGraph(networkNodes, edgeSource, {
+      focalId: focal.id,
+      seed: 'chung-research-group-coauthors-v1',
+      width: 1000,
+      height: 680
+    });
+    const positioned = new Map(layout.nodes.map(node => [node.id, node]));
+    const nodes = networkNodes.map(node => {
+      const position = positioned.get(node.id);
+      if (!position) throw new Error('Coauthor force layout omitted node ' + node.id);
+      return {
+        ...node,
+        focal: node.id === focal.id ? 'true' : 'false',
+        radius: node.radius.toFixed(2),
+        labelY: (
+          position.y < 340 && node.id !== focal.id
+            ? -(node.radius + 22)
+            : node.radius + 7
+        ).toFixed(2),
+        x: position.x.toFixed(3),
+        y: position.y.toFixed(3),
+        initials: this.authorInitials(node.label),
+        displayLabel: this.shortAuthorLabel(node.label),
+        role: node.id === focal.id ? 'Principal investigator' : 'Coauthor'
+      };
+    });
     const maxEdgeCount = Math.max(1, ...edgeSource.map(edge => edge.publicationCount));
     const edges = edgeSource.map(edge => {
       const sourceNode = nodeById.get(edge.source);
       const targetNode = nodeById.get(edge.target);
-      const sourcePosition = positioned.get(edge.source) || center;
-      const targetPosition = positioned.get(edge.target) || center;
-      const deltaX = targetPosition.x - sourcePosition.x;
-      const deltaY = targetPosition.y - sourcePosition.y;
+      const sourcePosition = positioned.get(edge.source);
+      const targetPosition = positioned.get(edge.target);
       return {
         ...edge,
-        left: (sourcePosition.x / 1000 * 100).toFixed(3),
-        top: (sourcePosition.y / 680 * 100).toFixed(3),
-        length: (Math.hypot(deltaX, deltaY) / 1000 * 100).toFixed(3),
-        angle: (Math.atan2(deltaY, deltaX) * 180 / Math.PI).toFixed(3),
+        x1: sourcePosition.x.toFixed(3),
+        y1: sourcePosition.y.toFixed(3),
+        x2: targetPosition.x.toFixed(3),
+        y2: targetPosition.y.toFixed(3),
         strokeWidth: (1 + edge.publicationCount / maxEdgeCount * 4).toFixed(2),
         label: sourceNode.label + ' — ' + targetNode.label
       };
@@ -822,7 +835,15 @@ class Component extends DCLogic {
       percent: Math.max(1.5, row.count / collaboratorMax * 100).toFixed(2),
       aria: (index + 1) + '. ' + row.name + ': ' + row.count + ' shared publications'
     }));
-    return { nodes, edges, topCollaborators };
+    const value = {
+      nodes,
+      edges,
+      topCollaborators,
+      layoutMethod: layout.method,
+      layoutSeed: String(layout.seed)
+    };
+    this.coauthorNetworkCache = { rawNodes, rawEdges, value };
+    return value;
   }
 
   yearRows(points, options = {}) {
@@ -1487,6 +1508,8 @@ class Component extends DCLogic {
       coauthorNodes: coauthorView.nodes,
       coauthorEdges: coauthorView.edges,
       topCollaborators: coauthorView.topCollaborators,
+      coauthorLayoutMethod: coauthorView.layoutMethod || '',
+      coauthorLayoutSeed: coauthorView.layoutSeed || '',
       coauthorNetworkSummary,
       coauthorNetworkAvailable: coauthorView.nodes.length > 0,
       coauthorNetworkUnavailable: coauthorView.nodes.length === 0,

@@ -8,7 +8,9 @@ import vm from 'node:vm';
 
 import {
   deriveLabStatistics,
-  generateLabStatisticsFile
+  derivePublicationJcrBands,
+  generateLabStatisticsFile,
+  generatePublicationJcrBandsFile
 } from '../scripts/lab-statistics.mjs';
 import { TOPIC_GROUPS } from '../scripts/publication-bot.mjs';
 
@@ -1843,6 +1845,140 @@ test('derives only authorized previous-year JCR standing bands from the best cat
       expectedError
     );
   });
+});
+
+test('publishes per-paper JCR bands only with separate authorization and exact previous-year data', () => {
+  const publications = [
+    {
+      no: '02',
+      doi: '10.1000/card-2026',
+      year: 2026,
+      journal: 'Journal A',
+      topics: ['Adsorption']
+    },
+    {
+      no: '01',
+      doi: '10.1000/card-2025',
+      year: 2025,
+      journal: 'Journal B',
+      topics: ['Diffusion']
+    }
+  ];
+  const baseDataset = {
+    metric: 'Journal Impact Factor',
+    provider: 'Clarivate Journal Citation Reports',
+    licenseConfirmed: true,
+    aggregatePublicationAuthorized: true,
+    aggregateRankingDisplayAuthorized: true,
+    rankingAuthorizationReference: 'Aggregate permission 2026-001',
+    rankingAuthorizationDate: '2026-01-04',
+    updatedAt: '2026-01-03T00:00:00.000Z',
+    edition: 'Historical JCR data through 2025',
+    rankingsByDoi: {
+      '10.1000/card-2026': {
+        jcrYear: 2025,
+        categories: [{
+          category: 'Example category',
+          rank: 1,
+          categoryTotal: 100,
+          quartile: 'Q1',
+          jifPercentile: 99.5
+        }]
+      }
+    }
+  };
+
+  const unauthorized = derivePublicationJcrBands({
+    publications,
+    impactFactorJson: baseDataset
+  });
+  assert.deepEqual(unauthorized, {
+    schemaVersion: 1,
+    status: 'unavailable',
+    displayAuthorized: false,
+    publicationTotal: 2,
+    coveredPublications: 0,
+    yearBasis: 'Previous-year JCR: publication year Y uses JCR year Y-1.',
+    bandsByDoi: {},
+    reason: 'Public per-publication JCR band display is not explicitly authorized.'
+  });
+
+  const authorizedDataset = {
+    ...baseDataset,
+    perPublicationRankingDisplayAuthorized: true,
+    perPublicationRankingAuthorizationReference: 'Per-publication display permission 2026-002',
+    perPublicationRankingAuthorizationDate: '2026-01-05'
+  };
+  const authorized = derivePublicationJcrBands({
+    publications,
+    impactFactorJson: authorizedDataset
+  });
+  assert.deepEqual(authorized, {
+    schemaVersion: 1,
+    status: 'partial',
+    displayAuthorized: true,
+    publicationTotal: 2,
+    coveredPublications: 1,
+    yearBasis: 'Previous-year JCR: publication year Y uses JCR year Y-1.',
+    bandsByDoi: {
+      '10.1000/card-2026': 'top1'
+    },
+    reason: 'Partial coverage: 1 of 2 catalogue publications have an exact previous-year JCR band authorized for public per-publication display.'
+  });
+  assert.doesNotMatch(
+    JSON.stringify(authorized),
+    /jcrYear|categor(?:y|ies)|categoryTotal|jifPercentile|impactFactor|"(?:rank|quartile|jif)"\s*:/i
+  );
+
+  assert.throws(
+    () => derivePublicationJcrBands({
+      publications,
+      impactFactorJson: {
+        ...authorizedDataset,
+        rankingsByDoi: {
+          ...authorizedDataset.rankingsByDoi,
+          '10.1000/card-2026': {
+            ...authorizedDataset.rankingsByDoi['10.1000/card-2026'],
+            jcrYear: 2026
+          }
+        }
+      }
+    }),
+    /must equal previous-year JCR year 2025 for feed publication year 2026/
+  );
+  assert.throws(
+    () => derivePublicationJcrBands({
+      publications,
+      impactFactorJson: {
+        ...authorizedDataset,
+        perPublicationRankingAuthorizationReference: ''
+      }
+    }),
+    /perPublicationRankingAuthorizationReference/
+  );
+});
+
+test('writes a fail-closed unavailable per-publication JCR snapshot without licensed input', async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'publication-jcr-bands-'));
+  const outputPath = path.join(directory, 'publication-jcr-bands.json');
+  try {
+    const snapshot = await generatePublicationJcrBandsFile({
+      feedPath: FEED_PATH,
+      outputPath
+    });
+    const written = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+    assert.deepEqual(written, snapshot);
+    assert.equal(written.status, 'unavailable');
+    assert.equal(written.displayAuthorized, false);
+    assert.equal(written.coveredPublications, 0);
+    assert.deepEqual(written.bandsByDoi, {});
+    assert.doesNotMatch(
+      JSON.stringify(written),
+      /rankingsByDoi|jcrYear|categor(?:y|ies)|categoryTotal|jifPercentile|impactFactor|"(?:rank|quartile|jif)"\s*:/i
+    );
+  } finally {
+    await fs.rm(directory, { recursive: true, force: true });
+  }
 });
 
 test('rejects malformed inputs with actionable errors', () => {

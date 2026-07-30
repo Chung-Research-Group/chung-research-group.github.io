@@ -80,6 +80,14 @@ deterministically to exactly one recorded outcome:
 - `reviewed-journal-mark`; or
 - `neutral-original-title-card`.
 
+When an authorized Slack approval adds a publication, the bot reuses an
+existing manually curated journal key only when the journal identity matches
+unambiguously. That keeps an already reviewed journal mark in the priority
+chain. A previously unseen or ambiguous venue receives a stable DOI-specific
+hashed key, a unique local neutral card, and the DOI resolver URL as its source
+page. The approval commit updates only publication metadata: it does not fetch,
+copy, hotlink, or publish publisher artwork.
+
 The neutral card path is also embedded as the local runtime fallback for every
 publication. If a reviewed raster or journal mark cannot load or decode, the
 browser replaces it with that original title card, updates the visible label,
@@ -93,6 +101,10 @@ never publish an image automatically. A reviewer must verify that the image is
 the correct paper's explicit graphical abstract and that the recorded reuse
 basis is appropriate. Generic `og:image`, the first article figure, journal
 covers, and logos discovered by crawling are not accepted as substitutes.
+After that human review, an explicitly licensed or author-provided DOI visual
+may be added to `publication-visuals.js`; it then supersedes the neutral card.
+Until the reviewed proposal is merged, the automatically generated neutral card
+remains the public outcome.
 
 Author reuse is recorded only when the site owner is an author of the paper and
 the publisher's current policy permits authors to reuse their own figures with

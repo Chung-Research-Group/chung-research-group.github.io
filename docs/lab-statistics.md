@@ -89,6 +89,17 @@ different researchers with the same name can still affect identity resolution.
 Node and edge weights count distinct catalogue publications, not all-time
 collaboration outside this website.
 
+The browser lays out this bounded graph with the local, dependency-free
+`force-layout.js` solver. It uses deterministic seeded initialization followed
+by link attraction, charge repulsion, node collision avoidance, and a weak
+center force. The principal investigator is deliberately anchored at the
+center as a stable orientation reference; collaborators are not assigned to
+fixed rings. Every iteration clamps nodes and their labels within the
+`1000 × 680` SVG viewBox, and the same graph data and seed produce byte-stable
+coordinates on repeated renders. At tablet and mobile widths, the existing
+ranked text alternative replaces the dense visual while preserving the full
+accessible author and edge tables.
+
 ## h-index
 
 The h-index card always identifies its source, method, coverage, and update
@@ -232,6 +243,55 @@ reason. It never contains a DOI, journal, category, rank, category denominator,
 quartile, or percentile row. With no JCR secret—or without explicit aggregate
 ranking display permission—the dashboard renders an honest unavailable message
 and no ranking bars.
+
+### Per-publication JCR bands
+
+The Publications page has a separate, stricter authorization gate because a
+band shown beside one paper is a per-publication disclosure rather than an
+aggregate. Aggregate authorization does not enable publication-card badges.
+To enable a badge for any paper, the private licensed input must additionally
+contain all of the following:
+
+- `perPublicationRankingDisplayAuthorized`: `true`, set only after confirming
+  permission for public DOI-level display of the derived band;
+- `perPublicationRankingAuthorizationReference`: a nonempty internal permission
+  reference; and
+- `perPublicationRankingAuthorizationDate`: the permission date in
+  `YYYY-MM-DD` format.
+
+These fields authorize the display type, but a badge is still generated only
+for a `rankingsByDoi` record whose `jcrYear` is exactly the publication year
+minus one. For example, a 2026 paper needs a 2025 record. Missing history,
+current-year data, or the latest available edition is never substituted.
+
+The build writes a separate public file,
+`data/publication-jcr-bands.json`. Its `bandsByDoi` values are only the derived
+identifiers `top1`, `top5`, `top10`, `otherQ1`, `q2`, `q3`, or `q4`. The page
+renders those as `JCR Top 1%`, `JCR Top 5%`, `JCR Top 10%`, `JCR Q1`,
+`JCR Q2`, `JCR Q3`, or `JCR Q4`. The public file does not contain categories,
+ranks, category totals, percentiles, quartiles, JIF values, licensed edition
+details, or authorization evidence.
+
+When the separate authorization is absent, the generated file deliberately
+contains no DOI bands:
+
+```json
+{
+  "schemaVersion": 1,
+  "status": "unavailable",
+  "displayAuthorized": false,
+  "publicationTotal": 72,
+  "coveredPublications": 0,
+  "yearBasis": "Previous-year JCR: publication year Y uses JCR year Y-1.",
+  "bandsByDoi": {},
+  "reason": "Public per-publication JCR band display is not explicitly authorized."
+}
+```
+
+The Publications page treats a missing, malformed, unavailable, or unauthorized
+snapshot identically: it renders no JCR badge and leaves the bibliography
+available. This fail-closed behavior is independent of the aggregate dashboard,
+which continues to use `aggregateRankingDisplayAuthorized`.
 
 Clarivate documents the JIF percentile calculation in
 [Many flavors of the Journal Impact Factor](https://clarivate.com/academia-government/blog/many-flavors-journal-impact-factor/)

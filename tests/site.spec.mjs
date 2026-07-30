@@ -144,6 +144,78 @@ test('publication citation exports are linked and served as complete files', asy
   await expect(page.locator('[data-publication-no]')).toHaveCount(bibtexCount);
 });
 
+test('publication cards fail closed without per-publication JCR display authorization', async ({ page, request }) => {
+  const snapshotResponse = await request.get('/data/publication-jcr-bands.json');
+  expect(snapshotResponse.ok()).toBe(true);
+  const snapshot = await snapshotResponse.json();
+  expect(snapshot.schemaVersion).toBe(1);
+  expect(snapshot.status).toBe('unavailable');
+  expect(snapshot.displayAuthorized).toBe(false);
+  expect(snapshot.coveredPublications).toBe(0);
+  expect(snapshot.bandsByDoi).toEqual({});
+  expect(JSON.stringify(snapshot)).not.toMatch(
+    /rankingsByDoi|jcrYear|categor(?:y|ies)|categoryTotal|jifPercentile|impactFactor|"(?:rank|quartile|jif)"\s*:/i
+  );
+
+  const responsePromise = page.waitForResponse(
+    response => response.url().includes('/data/publication-jcr-bands.json')
+  );
+  await page.goto('/Publications.dc.html');
+  await responsePromise;
+  await expect(page.locator('[data-publication-no]').first()).toBeVisible();
+  await expect(page.locator('[data-publication-jcr-band]')).toHaveCount(0);
+});
+
+test('publication card renders only an authorized derived previous-year JCR band', async ({ page, request }) => {
+  const publications = await readFeedPublications(request);
+  const bandCases = [
+    ['top1', 'Top 1%'],
+    ['top5', 'Top 5%'],
+    ['top10', 'Top 10%'],
+    ['otherQ1', 'Q1'],
+    ['q2', 'Q2'],
+    ['q3', 'Q3'],
+    ['q4', 'Q4']
+  ];
+  const targets = publications.slice(0, bandCases.length);
+  const bandsByDoi = Object.fromEntries(
+    targets.map((publication, index) => [
+      String(publication.doi).toLowerCase(),
+      bandCases[index][0]
+    ])
+  );
+  await page.route('**/data/publication-jcr-bands.json*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      schemaVersion: 1,
+      status: 'partial',
+      displayAuthorized: true,
+      publicationTotal: publications.length,
+      coveredPublications: targets.length,
+      yearBasis: 'Previous-year JCR: publication year Y uses JCR year Y-1.',
+      bandsByDoi,
+      reason: `Partial coverage: ${targets.length} of ${publications.length} catalogue publications have an exact previous-year JCR band authorized for public per-publication display.`
+    })
+  }));
+
+  await page.goto('/Publications.dc.html');
+  for (const [index, target] of targets.entries()) {
+    const [bandId, label] = bandCases[index];
+    const targetCard = page.locator(`[data-publication-no="${target.no}"]`);
+    const badge = targetCard.locator('[data-publication-jcr-band]');
+    await expect(badge).toHaveCount(1);
+    await expect(badge).toHaveText(`JCR ${label}`);
+    await expect(badge).toHaveAttribute('data-jcr-band', bandId);
+    await expect(badge).toHaveAttribute(
+      'title',
+      /publication year Y evaluated with JCR year Y−1/
+    );
+    await expect(targetCard).not.toContainText(/jifPercentile|categoryTotal|quartile/i);
+  }
+  await expect(page.locator('[data-publication-jcr-band]')).toHaveCount(bandCases.length);
+});
+
 test('Google Scholar aggregate is rendered from the static snapshot', async ({ page }) => {
   await page.route('**/data/publication-metadata.json*', route => route.fulfill({
     status: 200,
@@ -649,6 +721,83 @@ test('lab statistics render from the local snapshot and remain usable through ta
     ).toBeLessThanOrEqual(0);
   }
   expect(externalDataRequests).toEqual([]);
+});
+
+test('coauthor network uses stable bounded force-directed coordinates instead of fixed rings', async ({ page, request }) => {
+  const snapshotResponse = await request.get('/data/lab-statistics.json');
+  expect(snapshotResponse.ok()).toBe(true);
+  const snapshot = await snapshotResponse.json();
+
+  await page.goto('/Statistics.dc.html', { waitUntil: 'load' });
+  const network = page.locator('[data-coauthor-network] .statistics-network-canvas');
+  await expect(network).toBeVisible();
+  await expect(network).toHaveAttribute('viewBox', '0 0 1000 680');
+  await expect(network).toHaveAttribute('data-force-layout', 'deterministic-force-v1');
+
+  const readCoordinates = () => page.locator(
+    '[data-coauthor-network] .statistics-network-node-group'
+  ).evaluateAll(groups => groups.map(group => ({
+    id: group.getAttribute('data-node-id'),
+    x: Number(group.getAttribute('data-node-x')),
+    y: Number(group.getAttribute('data-node-y')),
+    radius: Number(group.getAttribute('data-node-radius')),
+    labelY: Number(group.getAttribute('data-label-y')),
+    focal: group.getAttribute('data-focal') === 'true'
+  })));
+
+  const firstCoordinates = await readCoordinates();
+  expect(firstCoordinates).toHaveLength(snapshot.coauthors.nodes.length);
+  const focal = firstCoordinates.find(node => node.focal);
+  expect(focal).toMatchObject({ x: 500, y: 340 });
+
+  for (const node of firstCoordinates) {
+    expect(node.x - 77).toBeGreaterThanOrEqual(0);
+    expect(node.x + 77).toBeLessThanOrEqual(1000);
+    expect(node.y - node.radius).toBeGreaterThanOrEqual(0);
+    expect(node.y + node.radius).toBeLessThanOrEqual(680);
+    expect(node.y + node.labelY).toBeGreaterThanOrEqual(0);
+    expect(node.y + node.labelY + 18).toBeLessThanOrEqual(680);
+  }
+  const collaboratorRadii = firstCoordinates
+    .filter(node => !node.focal)
+    .map(node => Math.hypot(node.x - focal.x, node.y - focal.y));
+  expect(new Set(collaboratorRadii.map(radius => Math.round(radius))).size).toBeGreaterThan(2);
+  expect(
+    collaboratorRadii.every(radius =>
+      Math.abs(radius - 170) < 0.5 || Math.abs(radius - 280) < 0.5
+    )
+  ).toBe(false);
+
+  const edgeCoordinates = await page.locator(
+    '[data-coauthor-network] .statistics-network-line'
+  ).evaluateAll(lines => lines.map(line =>
+    ['x1', 'y1', 'x2', 'y2'].map(attribute => Number(line.getAttribute(attribute)))
+  ));
+  expect(edgeCoordinates).toHaveLength(snapshot.coauthors.edges.length);
+  for (const coordinates of edgeCoordinates) {
+    expect(coordinates.every(Number.isFinite)).toBe(true);
+    expect(coordinates[0]).toBeGreaterThanOrEqual(0);
+    expect(coordinates[0]).toBeLessThanOrEqual(1000);
+    expect(coordinates[1]).toBeGreaterThanOrEqual(0);
+    expect(coordinates[1]).toBeLessThanOrEqual(680);
+    expect(coordinates[2]).toBeGreaterThanOrEqual(0);
+    expect(coordinates[2]).toBeLessThanOrEqual(1000);
+    expect(coordinates[3]).toBeGreaterThanOrEqual(0);
+    expect(coordinates[3]).toBeLessThanOrEqual(680);
+  }
+
+  await page.reload({ waitUntil: 'load' });
+  await expect(page.locator(
+    '[data-coauthor-network] .statistics-network-node-group'
+  )).toHaveCount(firstCoordinates.length);
+  expect(await readCoordinates()).toEqual(firstCoordinates);
+
+  await page.setViewportSize({ width: 320, height: 900 });
+  await expect(network).toBeHidden();
+  await expect(page.locator('[data-coauthor-network] [data-top-collaborators]')).toBeVisible();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+  ).toBeLessThanOrEqual(0);
 });
 
 test('lab statistics disclose an unassigned provider-year delta without moving it into a chart year', async ({ page, request }) => {
