@@ -3,6 +3,7 @@ export const rootFilePatterns = [/\.html$/i, /\.js$/i];
 export const staticDirectories = [
   "_ds",
   "assets",
+  "data",
   "ds",
   "images",
   "uploads",
@@ -29,6 +30,7 @@ export const requiredRuntimeFiles = [
   "feed.js",
   "people-data.js",
   "image-slot.js",
+  "data/publication-metadata.json",
   "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css",
   "ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"
 ];

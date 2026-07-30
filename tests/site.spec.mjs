@@ -14,6 +14,51 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
+test('publications use the static metadata snapshot without external API fan-out', async ({ page }) => {
+  const externalMetadataRequests = [];
+  page.on('request', request => {
+    if (/api\.crossref\.org|api\.semanticscholar\.org|api\.openalex\.org/i.test(request.url())) {
+      externalMetadataRequests.push(request.url());
+    }
+  });
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  const status = page.locator('[data-publication-metadata-status]');
+  await expect(status).toBeVisible();
+  await expect(status).toContainText(/updated/i);
+  await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toBeVisible();
+  await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-publication-enrichment]').first()).toBeVisible();
+  expect(externalMetadataRequests).toEqual([]);
+});
+
+test('publication search includes a rendered metadata field or keyword', async ({ page }) => {
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  const term = page.locator('[data-metadata-term]').first();
+  await expect(term).toBeVisible();
+  const query = (await term.textContent())?.trim();
+  expect(query).toBeTruthy();
+  const publication = term.locator('xpath=ancestor::*[@data-publication-no][1]');
+  const publicationNo = await publication.getAttribute('data-publication-no');
+
+  await page.getByPlaceholder(/Search publications/).fill(query);
+  await expect(page.locator(`[data-publication-no="${publicationNo}"]`)).toBeVisible();
+});
+
+test('publications remain usable when the metadata snapshot is unavailable', async ({ page }) => {
+  await page.route('**/data/publication-metadata.json*', route => route.fulfill({
+    status: 404,
+    contentType: 'application/json',
+    body: '{}'
+  }));
+
+  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('[data-publication-no]').first()).toBeVisible();
+  const publicationSearch = page.getByPlaceholder(/Search publications/);
+  await publicationSearch.fill('PACMAN');
+  await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
+});
+
 test('every published page has metadata and renders its heading', async ({ page }) => {
   for (const route of pages) {
     const response = await page.goto(`/${route}`, { waitUntil: 'domcontentloaded' });
