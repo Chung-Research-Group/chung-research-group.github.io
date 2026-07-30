@@ -20,6 +20,7 @@ import {
   ensurePublicationPrIncludesBase,
   existingDois,
   existingTitles,
+  guardedPublicationFileState,
   isChemRxivDoi,
   isCandidateRoot,
   mergePublicationPrIfReady,
@@ -842,6 +843,22 @@ test('adds structured metadata and repairs a one-sided feed/bibliography state',
     false
   );
   assert.equal(shouldIgnoreCandidate(synchronized.feed, candidate), true);
+});
+
+test('malformed main publication data alerts once and stops safely', async () => {
+  const malformedFeed = String.raw`const PUBS = [
+  F('01', 'Broken', 'Authors', 'j', 'Journal', ' (2026)', null, '10.1234/a\u12')
+];`;
+  const alerts = [];
+  const state = await guardedPublicationFileState(
+    malformedFeed,
+    bibliographyJson(),
+    error => alerts.push(error.message)
+  );
+
+  assert.equal(state, null);
+  assert.equal(alerts.length, 1);
+  assert.match(alerts[0], /invalid Unicode escape/i);
 });
 
 test('creates one atomic Git commit containing both publication files', async () => {

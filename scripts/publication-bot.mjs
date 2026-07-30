@@ -622,6 +622,15 @@ export function publicationFileState(feed, bibliographyText) {
   };
 }
 
+export async function guardedPublicationFileState(feed, bibliographyText, onError = async () => {}) {
+  try {
+    return publicationFileState(feed, bibliographyText);
+  } catch (error) {
+    await onError(error);
+    return null;
+  }
+}
+
 function bibliographyForCandidate(candidate) {
   const record = candidate?.bibliography
     ? canonicalBibliographyFromWork(candidate.bibliography, candidate.bibliography.source?.provider)
@@ -1200,11 +1209,23 @@ async function run() {
   const roots = history.messages || [];
   const mainFiles = await getPublicationFiles(github, 'main');
   const feed = { content: mainFiles.feed };
+  const fileState = await guardedPublicationFileState(
+    mainFiles.feed,
+    mainFiles.bibliography,
+    async error => {
+      const detail = escapeSlackText(cleanText(error?.message || 'Unknown parse error')).slice(0, 300);
+      await slack('chat.postMessage', {
+        channel,
+        text: `⚠️ Publication automation stopped safely because the main publication data could not be parsed: ${detail}`
+      });
+    }
+  );
+  if (!fileState) return;
   const {
     completeDois: known,
     feedOnlyDois,
     bibliographyOnlyDois
-  } = publicationFileState(mainFiles.feed, mainFiles.bibliography);
+  } = fileState;
   const repairDois = new Set([...feedOnlyDois, ...bibliographyOnlyDois]);
   const announced = new Set(roots.map(message => doiFromMessage(message.text)).filter(Boolean));
   const candidateRoots = roots.filter(message => isCandidateRoot(message, botUser));
