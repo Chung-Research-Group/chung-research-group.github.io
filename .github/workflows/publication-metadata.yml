@@ -35,10 +35,12 @@ jobs:
       - name: Install test dependencies
         run: npm ci
 
-      - name: Refresh Semantic Scholar and OpenAlex data
+      - name: Refresh publication research metadata
         env:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+          GOOGLE_SCHOLAR_AUTHOR_ID: 'q-UUrywAAAAJ'
         run: node scripts/refresh-publication-metadata.mjs
 
       - name: Test metadata refresh logic
@@ -60,5 +62,5 @@ jobs:
           git config user.name "Publication Metadata Bot"
           git config user.email "publication-bot@users.noreply.github.com"
           git add data/publication-metadata.json
-          git commit -m "Update Semantic Scholar and OpenAlex metadata"
+          git commit -m "Update publication research metadata"
           git push origin HEAD:main

@@ -6,6 +6,7 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const defaultOutput = path.join(repositoryRoot, "data", "publication-metadata.json");
+const nonRetryableRequestError = Symbol("nonRetryableRequestError");
 
 export function normalizeDoi(value = "") {
   return String(value)
@@ -26,31 +27,47 @@ function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-async function requestJson(url, options = {}, fetchImpl = fetch) {
+function redactedRequestUrl(value) {
+  try {
+    const url = new URL(value);
+    for (const name of ["api_key", "apikey", "key", "token", "access_token"]) {
+      if (url.searchParams.has(name)) url.searchParams.set(name, "[REDACTED]");
+    }
+    return url.toString();
+  } catch {
+    return String(value).replace(
+      /([?&](?:api_?key|key|token|access_token)=)[^&\s]+/gi,
+      "$1[REDACTED]"
+    );
+  }
+}
+
+async function requestJson(url, options = {}, fetchImpl = fetch, { maxAttempts = 5 } = {}) {
   let lastError;
-  for (let attempt = 0; attempt < 5; attempt++) {
+  const safeUrl = redactedRequestUrl(url);
+  const attempts = Math.max(1, Number(maxAttempts) || 1);
+  for (let attempt = 0; attempt < attempts; attempt++) {
     let wait = Math.min(8000, 750 * (2 ** attempt));
     try {
       const response = await fetchImpl(url, options);
       if (response.ok) return await response.json();
-      const body = await response.text();
       if (response.status !== 429 && response.status < 500) {
-        const error = new Error(`${options.method || "GET"} ${url}: ${response.status} ${body}`);
-        error.nonRetryable = true;
+        const error = new Error(`${options.method || "GET"} ${safeUrl}: HTTP ${response.status}`);
+        error[nonRetryableRequestError] = true;
         throw error;
       }
       const retryAfter = Number(response.headers?.get?.("retry-after"));
       wait = Number.isFinite(retryAfter) && retryAfter > 0
         ? retryAfter * 1000
         : wait;
-      lastError = new Error(`${options.method || "GET"} ${url}: ${response.status} ${body}`);
+      lastError = new Error(`${options.method || "GET"} ${safeUrl}: HTTP ${response.status}`);
     } catch (error) {
-      if (error?.nonRetryable) throw error;
-      lastError = error;
+      if (error?.[nonRetryableRequestError]) throw error;
+      lastError = new Error(`${options.method || "GET"} ${safeUrl}: network request failed`);
     }
-    if (attempt < 4) await delay(wait);
+    if (attempt < attempts - 1) await delay(wait);
   }
-  throw lastError || new Error(`Request failed: ${url}`);
+  throw lastError || new Error(`Request failed: ${safeUrl}`);
 }
 
 export async function loadFeedPublications(feedPath = path.join(repositoryRoot, "feed.js")) {
@@ -184,6 +201,105 @@ export async function fetchOpenAlex(dois, {
   return result;
 }
 
+function scholarMetric(table, key) {
+  const row = (table || []).find((entry) => entry && typeof entry === "object" && entry[key]);
+  const metric = row?.[key] || {};
+  const all = Number(metric.all);
+  const sinceEntry = Object.entries(metric)
+    .find(([name]) => name !== "all" && /^since_|^depuis_/i.test(name));
+  const sinceYear = Number((sinceEntry?.[0].match(/(\d{4})/) || [])[1]);
+  return {
+    all: Number.isFinite(all) && all >= 0 ? all : null,
+    since: Number.isFinite(Number(sinceEntry?.[1])) && Number(sinceEntry?.[1]) >= 0
+      ? Number(sinceEntry[1])
+      : null,
+    sinceYear: Number.isInteger(sinceYear) ? sinceYear : null
+  };
+}
+
+export async function fetchGoogleScholarProfile({
+  authorId,
+  apiKey,
+  fetchImpl = fetch,
+  maxAttempts = 5
+} = {}) {
+  const normalizedAuthorId = String(authorId || "").trim();
+  const normalizedApiKey = String(apiKey || "").trim();
+  if (!normalizedAuthorId) throw new Error("Google Scholar author ID is required.");
+  if (!normalizedApiKey) throw new Error("SerpApi API key is required.");
+
+  const params = new URLSearchParams({
+    engine: "google_scholar_author",
+    author_id: normalizedAuthorId,
+    hl: "en",
+    num: "100",
+    api_key: normalizedApiKey
+  });
+  const payload = await requestJson(
+    `https://serpapi.com/search.json?${params}`,
+    {},
+    fetchImpl,
+    { maxAttempts }
+  );
+  if (payload?.error) throw new Error("SerpApi Google Scholar request returned an error.");
+  if (payload?.search_parameters?.author_id !== normalizedAuthorId) {
+    throw new Error("SerpApi Google Scholar response did not match the configured author profile.");
+  }
+
+  const table = payload?.cited_by?.table || [];
+  const citations = scholarMetric(table, "citations");
+  const hIndex = scholarMetric(table, "h_index");
+  const i10Index = scholarMetric(table, "i10_index");
+  if (!Number.isFinite(citations.all)) {
+    throw new Error("SerpApi Google Scholar response did not include a total citation count.");
+  }
+
+  return {
+    profileId: normalizedAuthorId,
+    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(normalizedAuthorId)}&hl=en`,
+    name: payload?.author?.name || null,
+    affiliations: payload?.author?.affiliations || null,
+    citations,
+    hIndex,
+    i10Index,
+    countsByYear: (payload?.cited_by?.graph || [])
+      .map((item) => ({
+        year: Number(item?.year),
+        citationCount: Number(item?.citations)
+      }))
+      .filter((item) => Number.isInteger(item.year)
+        && item.year >= 1900
+        && Number.isFinite(item.citationCount)
+        && item.citationCount >= 0)
+      .sort((left, right) => left.year - right.year),
+    provider: "SerpApi Google Scholar Author API"
+  };
+}
+
+export function guardGoogleScholarProfile({
+  profile,
+  previous = {},
+  minimumCitationRatio = 0.8
+}) {
+  const current = Number(profile?.citations?.all);
+  const prior = Number(previous?.googleScholar?.citations?.all);
+  if (!Number.isFinite(current) || current < 0) {
+    return { profile: null, status: "stale", reason: "invalid-response" };
+  }
+  if (Number.isFinite(prior)
+      && prior > 0
+      && current < Math.floor(prior * minimumCitationRatio)) {
+    return {
+      profile: null,
+      status: "stale",
+      reason: "citation-collapse",
+      observedCitations: current,
+      minimumCitations: Math.floor(prior * minimumCitationRatio)
+    };
+  }
+  return { profile, status: "ok", reason: null };
+}
+
 function sourceProperty(sourceName) {
   if (sourceName === "semanticScholar") return "semanticScholar";
   if (sourceName === "openAlex") return "openAlex";
@@ -256,14 +372,30 @@ export function buildMetadata({
   publications,
   semanticScholar = {},
   openAlex = {},
+  googleScholar = null,
   semanticScholarStatus = "ok",
   openAlexStatus = "ok",
+  googleScholarStatus = "stale",
   semanticScholarReason = null,
   openAlexReason = null,
+  googleScholarReason = "unconfigured",
   previous = {},
   now = new Date().toISOString()
 }) {
   const previousPublications = previous.publications || {};
+  const priorGoogleScholar = previous.googleScholar || null;
+  const fallbackAuthorId = process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ";
+  const retainedGoogleScholar = googleScholar || priorGoogleScholar || {
+    profileId: fallbackAuthorId,
+    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(fallbackAuthorId)}&hl=en`,
+    name: null,
+    affiliations: null,
+    citations: { all: 0, since: null, sinceYear: null },
+    hIndex: { all: null, since: null, sinceYear: null },
+    i10Index: { all: null, since: null, sinceYear: null },
+    countsByYear: [],
+    provider: "Unconfigured"
+  };
   const entries = {};
 
   for (const publication of publications) {
@@ -300,6 +432,7 @@ export function buildMetadata({
   const openAlexProjection = sourceProjection(entries, "openAlex");
   const previousSemanticProjection = sourceProjection(previousPublications, "semanticScholar");
   const previousOpenAlexProjection = sourceProjection(previousPublications, "openAlex");
+  const googleScholarChanged = JSON.stringify(retainedGoogleScholar) !== JSON.stringify(priorGoogleScholar);
   const metadata = {
     schemaVersion: 2,
     snapshotUpdatedAt: now,
@@ -319,7 +452,18 @@ export function buildMetadata({
         Object.keys(openAlexProjection).length,
         now,
         JSON.stringify(openAlexProjection) !== JSON.stringify(previousOpenAlexProjection)
-      )
+      ),
+      googleScholar: {
+        status: googleScholarStatus,
+        reason: googleScholarStatus === "stale" ? (googleScholarReason || "request-failed") : null,
+        profileId: retainedGoogleScholar?.profileId || previous.sources?.googleScholar?.profileId || null,
+        provider: retainedGoogleScholar?.provider
+          || previous.sources?.googleScholar?.provider
+          || "SerpApi Google Scholar Author API",
+        contentUpdatedAt: googleScholarChanged
+          ? now
+          : (previous.sources?.googleScholar?.contentUpdatedAt || null)
+      }
     },
     totals: {
       publications: values.length,
@@ -330,8 +474,10 @@ export function buildMetadata({
       openAlexCitations: values.reduce(
         (sum, item) => sum + Number(item.openAlex?.citationCount || 0),
         0
-      )
+      ),
+      googleScholarCitations: Number(retainedGoogleScholar?.citations?.all || 0)
     },
+    googleScholar: retainedGoogleScholar,
     publications: entries
   };
   if (Number(previous.schemaVersion) === metadata.schemaVersion
@@ -355,6 +501,7 @@ export function comparableMetadata(metadata) {
       ])
     ),
     totals: metadata.totals,
+    googleScholar: metadata.googleScholar,
     publications: metadata.publications
   };
 }
@@ -393,6 +540,48 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
       errors.push(`${sourceName} contentUpdatedAt must be null or an ISO timestamp`);
     }
   }
+  const googleScholarSource = metadata?.sources?.googleScholar;
+  if (!googleScholarSource || !["ok", "stale"].includes(googleScholarSource.status)) {
+    errors.push("googleScholar status must be ok or stale");
+  }
+  if (googleScholarSource?.status === "stale" && !googleScholarSource.reason) {
+    errors.push("googleScholar stale status must include a reason");
+  }
+  if (googleScholarSource?.contentUpdatedAt !== null
+      && !Number.isFinite(Date.parse(googleScholarSource?.contentUpdatedAt || ""))) {
+    errors.push("googleScholar contentUpdatedAt must be null or an ISO timestamp");
+  }
+  const googleScholar = metadata?.googleScholar;
+  if (!googleScholar || typeof googleScholar !== "object") {
+    errors.push("googleScholar profile metrics must be present");
+  } else {
+    if (!googleScholar.profileId) errors.push("googleScholar profileId must be present");
+    for (const metricName of ["citations", "hIndex", "i10Index"]) {
+      for (const period of ["all", "since"]) {
+        const value = googleScholar?.[metricName]?.[period];
+        if (value !== null && (!Number.isFinite(value) || value < 0)) {
+          errors.push(`googleScholar ${metricName}.${period} must be null or a nonnegative number`);
+        }
+      }
+      const sinceYear = googleScholar?.[metricName]?.sinceYear;
+      if (sinceYear !== null && (!Number.isInteger(sinceYear) || sinceYear < 1900)) {
+        errors.push(`googleScholar ${metricName}.sinceYear must be null or a valid year`);
+      }
+    }
+    for (const annual of googleScholar.countsByYear || []) {
+      if (!Number.isInteger(annual?.year)
+          || !Number.isFinite(annual?.citationCount)
+          || annual.citationCount < 0) {
+        errors.push("googleScholar annual citation counts must contain a year and nonnegative count");
+      }
+    }
+  }
+  const expectedGoogleScholarId = process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ";
+  if (googleScholar?.profileId !== expectedGoogleScholarId
+      || googleScholarSource?.profileId !== expectedGoogleScholarId
+      || googleScholar?.profileId !== googleScholarSource?.profileId) {
+    errors.push(`googleScholar profile identity must match ${expectedGoogleScholarId}`);
+  }
   if (metadata?.totals?.publications !== Object.keys(entries).length) {
     errors.push("totals.publications does not match the DOI record count");
   }
@@ -406,6 +595,9 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
         errors.push(`${doi} has an invalid ${sourceName} citation count`);
       }
     }
+  }
+  if (metadata?.totals?.googleScholarCitations !== metadata?.googleScholar?.citations?.all) {
+    errors.push("totals.googleScholarCitations must match googleScholar citations.all");
   }
   if (errors.length) throw new Error(`Invalid publication metadata snapshot:\n- ${errors.join("\n- ")}`);
   return true;
@@ -437,6 +629,10 @@ async function main() {
     },
     openAlex: {
       apiKey: process.env.OPENALEX_API_KEY || ""
+    },
+    googleScholar: {
+      authorId: process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ",
+      apiKey: process.env.SERPAPI_API_KEY || ""
     }
   };
 
@@ -460,6 +656,19 @@ async function main() {
       expectedCount: dois.length
     })
     : { records: {}, status: "stale", reason: "request-failed" };
+  let googleScholarCoverage = {
+    profile: null,
+    status: "stale",
+    reason: options.googleScholar.apiKey ? "request-failed" : "unconfigured"
+  };
+  if (options.googleScholar.apiKey) {
+    try {
+      const profile = await fetchGoogleScholarProfile(options.googleScholar);
+      googleScholarCoverage = guardGoogleScholarProfile({ profile, previous });
+    } catch (error) {
+      console.warn(`Google Scholar refresh failed; preserving previous values: ${error?.message}`);
+    }
+  }
   if (semanticOutcome.status === "rejected") {
     console.warn(`Semantic Scholar refresh failed; preserving previous values: ${semanticOutcome.reason?.message}`);
   } else if (semanticCoverage.status === "stale") {
@@ -476,6 +685,14 @@ async function main() {
       + `(minimum ${openAlexCoverage.minimumMatched}); preserving the previous snapshot.`
     );
   }
+  if (googleScholarCoverage.reason === "citation-collapse") {
+    console.warn(
+      `Google Scholar citations unexpectedly fell to ${googleScholarCoverage.observedCitations} `
+      + `(minimum ${googleScholarCoverage.minimumCitations}); preserving the previous snapshot.`
+    );
+  } else if (!options.googleScholar.apiKey) {
+    console.warn("SERPAPI_API_KEY is not configured; preserving the previous Google Scholar snapshot.");
+  }
   if (!Object.keys(semanticCoverage.records).length
       && !Object.keys(openAlexCoverage.records).length
       && !Object.keys(previous.publications || {}).length) {
@@ -486,10 +703,13 @@ async function main() {
     publications,
     semanticScholar: semanticCoverage.records,
     openAlex: openAlexCoverage.records,
+    googleScholar: googleScholarCoverage.profile,
     semanticScholarStatus: semanticCoverage.status,
     openAlexStatus: openAlexCoverage.status,
+    googleScholarStatus: googleScholarCoverage.status,
     semanticScholarReason: semanticCoverage.reason,
     openAlexReason: openAlexCoverage.reason,
+    googleScholarReason: googleScholarCoverage.reason,
     previous
   });
   validateMetadataSnapshot(next, dois);
@@ -503,7 +723,8 @@ async function main() {
   console.log(
     `Updated ${path.relative(repositoryRoot, outputPath)}: `
     + `${next.sources.semanticScholar.matched} Semantic Scholar matches, `
-    + `${next.sources.openAlex.matched} OpenAlex matches.`
+    + `${next.sources.openAlex.matched} OpenAlex matches, `
+    + `${next.totals.googleScholarCitations} Google Scholar profile citations.`
   );
 }
 

@@ -208,7 +208,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;scholarCitations&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6355, &quot;min&quot;: 0, &quot;max&quot;: 100000, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Stats&quot;}}">
+<script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { q: '', theme: null, openGroups: ['Computation'], openSections: [], metadata: null, metadataError: false };
   normalizeDoi(value) {
@@ -329,7 +329,7 @@ class Component extends DCLogic {
     groups.forEach(g => { g.count = g.items.length; });
     const openAlexCites = Number(metadata?.totals?.openAlexCitations || 0);
     const semanticScholarCites = Number(metadata?.totals?.semanticScholarCitations || 0);
-    const scholarCites = this.props.scholarCitations ?? 0;
+    const scholarCites = Number(metadata?.totals?.googleScholarCitations || 0);
     let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
     if (metadata?.snapshotUpdatedAt) {
       const date = new Date(metadata.snapshotUpdatedAt);
@@ -337,6 +337,7 @@ class Component extends DCLogic {
         ? metadata.snapshotUpdatedAt
         : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       const sourceStates = [
+        metadata.sources?.googleScholar?.status === 'stale' ? 'Google Scholar using last snapshot' : '',
         metadata.sources?.openAlex?.status === 'stale' ? 'OpenAlex using last snapshot' : '',
         metadata.sources?.semanticScholar?.status === 'stale' ? 'Semantic Scholar using last snapshot' : ''
       ].filter(Boolean);
@@ -460,4 +461,3 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
-

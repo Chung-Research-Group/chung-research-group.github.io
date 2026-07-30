@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "snapshotUpdatedAt": "2026-07-30T04:39:40.956Z",
+  "snapshotUpdatedAt": "2026-07-30T03:44:56.492Z",
   "sources": {
     "semanticScholar": {
       "status": "stale",
@@ -13,12 +13,43 @@
       "reason": null,
       "matched": 71,
       "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+    },
+    "googleScholar": {
+      "status": "stale",
+      "reason": "awaiting-provider-refresh",
+      "profileId": "q-UUrywAAAAJ",
+      "provider": "Legacy manual Google Scholar profile snapshot",
+      "contentUpdatedAt": null
     }
   },
   "totals": {
     "publications": 72,
     "semanticScholarCitations": 4421,
-    "openAlexCitations": 5700
+    "openAlexCitations": 5700,
+    "googleScholarCitations": 6355
+  },
+  "googleScholar": {
+    "profileId": "q-UUrywAAAAJ",
+    "profileUrl": "https://scholar.google.com/citations?user=q-UUrywAAAAJ&hl=en",
+    "name": null,
+    "affiliations": null,
+    "citations": {
+      "all": 6355,
+      "since": null,
+      "sinceYear": null
+    },
+    "hIndex": {
+      "all": null,
+      "since": null,
+      "sinceYear": null
+    },
+    "i10Index": {
+      "all": null,
+      "since": null,
+      "sinceYear": null
+    },
+    "countsByYear": [],
+    "provider": "Legacy manual Google Scholar profile snapshot"
   },
   "publications": {
     "10.1002/ijch.70028": {

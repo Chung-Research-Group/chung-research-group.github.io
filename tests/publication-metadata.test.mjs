@@ -4,8 +4,10 @@ import test from "node:test";
 import {
   buildMetadata,
   comparableMetadata,
+  fetchGoogleScholarProfile,
   fetchOpenAlex,
   fetchSemanticScholar,
+  guardGoogleScholarProfile,
   guardSourceCoverage,
   metadataContentEquals,
   normalizeDoi,
@@ -75,6 +77,131 @@ test("maps OpenAlex topics and scored keywords", async () => {
   assert.deepEqual(result["10.1000/test"].keywords.map((item) => item.name), ["Adsorption"]);
 });
 
+test("maps Google Scholar author metrics without exposing the API key", async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(url);
+    assert.equal(parsed.searchParams.get("engine"), "google_scholar_author");
+    assert.equal(parsed.searchParams.get("author_id"), "q-UUrywAAAAJ");
+    assert.equal(parsed.searchParams.get("api_key"), "private-key");
+    return {
+      ok: true,
+      json: async () => ({
+        search_parameters: { author_id: "q-UUrywAAAAJ" },
+        author: {
+          name: "Yongchul G. Chung",
+          affiliations: "Pusan National University"
+        },
+        cited_by: {
+          table: [
+            { citations: { all: 6426, since_2021: 4012 } },
+            { h_index: { all: 33, since_2021: 27 } },
+            { i10_index: { all: 53, since_2021: 47 } }
+          ],
+          graph: [
+            { year: 2025, citations: "911" },
+            { year: 2026, citations: "438" }
+          ]
+        }
+      })
+    };
+  };
+  const profile = await fetchGoogleScholarProfile({
+    authorId: "q-UUrywAAAAJ",
+    apiKey: "private-key",
+    fetchImpl
+  });
+  assert.equal(profile.citations.all, 6426);
+  assert.equal(profile.citations.sinceYear, 2021);
+  assert.equal(profile.hIndex.all, 33);
+  assert.equal(profile.i10Index.since, 47);
+  assert.deepEqual(profile.countsByYear, [
+    { year: 2025, citationCount: 911 },
+    { year: 2026, citationCount: 438 }
+  ]);
+
+  const failingFetch = async () => ({
+    ok: false,
+    status: 401,
+    text: async () => "invalid API key"
+  });
+  await assert.rejects(
+    fetchGoogleScholarProfile({
+      authorId: "q-UUrywAAAAJ",
+      apiKey: "private-key",
+      fetchImpl: failingFetch
+    }),
+    (error) => !error.message.includes("private-key") && /401/.test(error.message)
+  );
+
+  const leakingFetch = async () => {
+    throw new Error("request failed for https://serpapi.com/?api_key=private-key");
+  };
+  await assert.rejects(
+    fetchGoogleScholarProfile({
+      authorId: "q-UUrywAAAAJ",
+      apiKey: "private-key",
+      fetchImpl: leakingFetch,
+      maxAttempts: 1
+    }),
+    (error) => !error.message.includes("private-key") && /network request failed/.test(error.message)
+  );
+
+  const providerErrorFetch = async () => ({
+    ok: true,
+    json: async () => ({ error: "invalid private-key" })
+  });
+  await assert.rejects(
+    fetchGoogleScholarProfile({
+      authorId: "q-UUrywAAAAJ",
+      apiKey: "private-key",
+      fetchImpl: providerErrorFetch
+    }),
+    (error) => !error.message.includes("private-key") && /returned an error/.test(error.message)
+  );
+});
+
+test("rejects a Google Scholar response for a different author profile", async () => {
+  const fetchImpl = async () => ({
+    ok: true,
+    json: async () => ({
+      search_parameters: { author_id: "another-profile" },
+      cited_by: {
+        table: [{ citations: { all: 9999 } }]
+      }
+    })
+  });
+  await assert.rejects(
+    fetchGoogleScholarProfile({
+      authorId: "q-UUrywAAAAJ",
+      apiKey: "private-key",
+      fetchImpl
+    }),
+    /did not match the configured author profile/
+  );
+});
+
+test("rejects an implausible Google Scholar citation collapse", () => {
+  const previous = {
+    googleScholar: {
+      citations: { all: 6400 }
+    }
+  };
+  const guarded = guardGoogleScholarProfile({
+    profile: { citations: { all: 1200 } },
+    previous
+  });
+  assert.equal(guarded.status, "stale");
+  assert.equal(guarded.reason, "citation-collapse");
+  assert.equal(guarded.profile, null);
+
+  const accepted = guardGoogleScholarProfile({
+    profile: { citations: { all: 6390 } },
+    previous
+  });
+  assert.equal(accepted.status, "ok");
+  assert.equal(accepted.profile.citations.all, 6390);
+});
+
 test("does not retry a non-retryable API client error", async () => {
   let requests = 0;
   const fetchImpl = async () => {
@@ -87,7 +214,7 @@ test("does not retry a non-retryable API client error", async () => {
   };
   await assert.rejects(
     fetchOpenAlex(["10.1000/test"], { fetchImpl }),
-    /400 invalid filter/
+    /HTTP 400/
   );
   assert.equal(requests, 1);
 });
@@ -202,4 +329,11 @@ test("repeated total outages do not churn snapshot timestamps", () => {
   assert.equal(metadataContentEquals(repeated, initial), true);
   assert.deepEqual(comparableMetadata(repeated), comparableMetadata(initial));
   assert.equal(validateMetadataSnapshot(repeated, ["10.1000/test"]), true);
+
+  const mismatchedProfile = structuredClone(repeated);
+  mismatchedProfile.sources.googleScholar.profileId = "another-profile";
+  assert.throws(
+    () => validateMetadataSnapshot(mismatchedProfile, ["10.1000/test"]),
+    /profile identity/
+  );
 });
