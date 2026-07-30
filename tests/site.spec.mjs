@@ -43,8 +43,13 @@ test('publication citation exports are linked and served as complete files', asy
   ]);
   expect(bibtexResponse.ok()).toBe(true);
   expect(cffResponse.ok()).toBe(true);
-  expect((await bibtexResponse.text()).match(/^@article\{/gm)).toHaveLength(72);
-  expect((await cffResponse.text()).match(/^  - type: "article"$/gm)).toHaveLength(72);
+  const bibtexCount = ((await bibtexResponse.text()).match(/^@article\{/gm) ?? []).length;
+  const cffCount = ((await cffResponse.text()).match(/^  - type: "article"$/gm) ?? []).length;
+  await expect(page.locator('[data-publication-no]').first()).toBeVisible();
+  const publicationCount = await page.locator('[data-publication-no]').count();
+  expect(bibtexCount).toBe(publicationCount);
+  expect(cffCount).toBe(publicationCount);
+  expect(publicationCount).toBeGreaterThan(0);
 });
 
 test('Google Scholar aggregate is rendered from the static snapshot', async ({ page }) => {
@@ -124,7 +129,9 @@ test('graphical abstracts are generated locally and loaded only when expanded', 
 
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   const panels = page.locator('[data-graphical-abstract]');
-  await expect(panels).toHaveCount(72);
+  const publications = page.locator('[data-publication-no]');
+  await expect(publications.first()).toBeVisible();
+  await expect(panels).toHaveCount(await publications.count());
   expect(graphicRequests).toEqual([]);
 
   const first = panels.first();

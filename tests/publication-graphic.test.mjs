@@ -77,7 +77,8 @@ test("writes a generated graphic under the bounded publication asset path", asyn
 
 test("loads every current DOI and its reviewed topic labels from feed.js", async () => {
   const publications = await loadFeedForGraphics();
-  assert.equal(publications.length, 72);
+  assert.ok(publications.length > 0);
+  assert.equal(new Set(publications.map(item => item.doi)).size, publications.length);
   assert.equal(publications.every((item) => item.doi && item.title && item.topics.length), true);
 });
 

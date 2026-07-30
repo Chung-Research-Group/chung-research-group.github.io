@@ -30,10 +30,10 @@ async function fixture() {
   };
 }
 
-test('committed bibliography has the exact 72-DOI feed set and complete structured records', async () => {
+test('committed bibliography has the exact feed DOI set and complete structured records', async () => {
   const { feedDois, snapshot } = await fixture();
-  assert.equal(feedDois.length, 72);
-  assert.equal(new Set(feedDois).size, 72);
+  assert.ok(feedDois.length > 0);
+  assert.equal(new Set(feedDois).size, feedDois.length);
   assert.deepEqual(Object.keys(snapshot.publications), feedDois);
 
   const result = validateBibliography(snapshot, feedDois);
@@ -109,9 +109,9 @@ test('BibTeX and CFF exports are deterministic, complete, ordered, and LF termin
 
   assert.equal(firstBibtex, secondBibtex);
   assert.equal(firstCff, secondCff);
-  assert.equal((firstBibtex.match(/^@article\{/gm) ?? []).length, 72);
-  assert.equal((firstCff.match(/^  - type: "article"$/gm) ?? []).length, 72);
-  assert.equal((firstCff.match(/^    doi: /gm) ?? []).length, 72);
+  assert.equal((firstBibtex.match(/^@article\{/gm) ?? []).length, feedDois.length);
+  assert.equal((firstCff.match(/^  - type: "article"$/gm) ?? []).length, feedDois.length);
+  assert.equal((firstCff.match(/^    doi: /gm) ?? []).length, feedDois.length);
   assert.ok(firstBibtex.endsWith('\n'));
   assert.ok(firstCff.endsWith('\n'));
   assert.doesNotMatch(firstBibtex, /\r/);
@@ -262,18 +262,19 @@ test('validator rejects DOI drift and abbreviated/UI-only authors', async () => 
 test('file generator writes the two network-free catalogue artifacts', async () => {
   const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), 'publication-citations-'));
   try {
+    const { feedDois } = await fixture();
     const result = await generatePublicationCitationFiles({
       feedPath: FEED_PATH,
       bibliographyPath: BIBLIOGRAPHY_PATH,
       outputRoot: temporaryRoot
     });
-    assert.equal(result.publicationCount, 72);
+    assert.equal(result.publicationCount, feedDois.length);
     const [bibtex, cff] = await Promise.all([
       readFile(result.bibtexPath, 'utf8'),
       readFile(result.cffPath, 'utf8')
     ]);
-    assert.equal((bibtex.match(/^@article\{/gm) ?? []).length, 72);
-    assert.equal((cff.match(/^  - type: "article"$/gm) ?? []).length, 72);
+    assert.equal((bibtex.match(/^@article\{/gm) ?? []).length, feedDois.length);
+    assert.equal((cff.match(/^  - type: "article"$/gm) ?? []).length, feedDois.length);
   } finally {
     await rm(temporaryRoot, { recursive: true, force: true });
   }
