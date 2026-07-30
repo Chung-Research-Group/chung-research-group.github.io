@@ -4,8 +4,10 @@ import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 
 import {
+  generatedLabStatisticsFile,
   generatedPublicationCitationFiles,
   requiredPages,
   requiredRuntimeFiles,
@@ -13,9 +15,10 @@ import {
   staticDirectories
 } from "./site-files.mjs";
 import {
-  graphicPathForDoi,
-  validateGraphicalAbstractSvg
-} from "./publication-graphic.mjs";
+  journalCardPath,
+  validatePublicationVisuals,
+  validateSafeSvg
+} from "./publication-visual.mjs";
 import {
   parseFeedDois,
   parseGeneratedBibtexDois
@@ -30,7 +33,10 @@ const siteRoot = path.resolve(repositoryRoot, rootFlag >= 0 ? args[rootFlag + 1]
 const compareRoot = compareFlag >= 0 ? path.resolve(repositoryRoot, args[compareFlag + 1]) : null;
 const errors = [];
 const generatedCitationFileSet = new Set(generatedPublicationCitationFiles);
-const generatedBuildFileSet = new Set(generatedPublicationCitationFiles);
+const generatedBuildFileSet = new Set([
+  ...generatedPublicationCitationFiles,
+  generatedLabStatisticsFile
+]);
 
 async function exists(file) {
   try {
@@ -117,6 +123,1159 @@ function validatePublicationCitationExports(bibtex, cff, expectedDoiSet) {
   reportDoiSetDifference("CFF export", cffDois, expectedDoiSet);
 }
 
+function normalizePublicAuthorNamePart(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/\b([A-Za-z][A-Za-z'-]+)\.([A-Z])\./g, "$1 $2.")
+    .replace(/\s+([,.;:])/g, "$1");
+}
+
+function publicBibliographyAuthorLabels(bibliography) {
+  const labels = new Set();
+  const records = bibliography?.publications;
+  if (!records || typeof records !== "object" || Array.isArray(records)) return labels;
+  for (const record of Object.values(records)) {
+    if (!Array.isArray(record?.authors)) continue;
+    for (const author of record.authors) {
+      const given = normalizePublicAuthorNamePart(author?.given);
+      const family = normalizePublicAuthorNamePart(author?.family);
+      const structured = [given, family].filter(Boolean).join(" ").trim();
+      const label = structured || normalizePublicAuthorNamePart(author?.literal);
+      if (label) labels.add(label);
+    }
+  }
+  return labels;
+}
+
+function comparePublicText(left, right) {
+  const leftKey = String(left).normalize("NFKD").toLowerCase();
+  const rightKey = String(right).normalize("NFKD").toLowerCase();
+  if (leftKey < rightKey) return -1;
+  if (leftKey > rightKey) return 1;
+  return String(left) < String(right) ? -1 : String(left) > String(right) ? 1 : 0;
+}
+
+function evaluateFeedPublications(source, label) {
+  try {
+    const sandbox = Object.create(null);
+    sandbox.window = Object.create(null);
+    const context = vm.createContext(sandbox, {
+      name: `site-validator:${label}`,
+      codeGeneration: { strings: false, wasm: false }
+    });
+    new vm.Script(source, { filename: label }).runInContext(context, { timeout: 1_000 });
+    const publications = new vm.Script(
+      "window.MTAP_FEED && window.MTAP_FEED.PUBS",
+      { filename: `${label}:extract` }
+    ).runInContext(context, { timeout: 1_000 });
+    const plainPublications = JSON.parse(JSON.stringify(publications));
+    if (!Array.isArray(plainPublications) || plainPublications.length === 0) {
+      errors.push(`${label} must expose a nonempty window.MTAP_FEED.PUBS array.`);
+      return null;
+    }
+    return plainPublications;
+  } catch (error) {
+    errors.push(`${label} could not be evaluated for independent statistics validation: ${error.message}`);
+    return null;
+  }
+}
+
+function deriveFeedPublicationFacts(publications, currentYear) {
+  if (!Array.isArray(publications) || publications.length === 0) return null;
+  const yearCounts = new Map();
+  const journals = new Map();
+  let reviews = 0;
+
+  for (const [index, publication] of publications.entries()) {
+    const year = Number(publication?.year);
+    if (!Number.isInteger(year) || year < 1 || year > 9999) {
+      errors.push(`feed.js publication ${index + 1} has an invalid year.`);
+      return null;
+    }
+    yearCounts.set(year, (yearCounts.get(year) || 0) + 1);
+    if (Array.isArray(publication?.topics) && publication.topics.includes("Review")) reviews += 1;
+
+    const journal = String(publication?.journal || "").normalize("NFC").replace(/\s+/g, " ").trim();
+    if (!journal) {
+      errors.push(`feed.js publication ${index + 1} has no journal for statistics validation.`);
+      return null;
+    }
+    const key = journal.toLocaleLowerCase("en-US").replace(/^the\s+/, "");
+    const entry = journals.get(key) || { labels: new Map(), count: 0 };
+    entry.labels.set(journal, (entry.labels.get(journal) || 0) + 1);
+    entry.count += 1;
+    journals.set(key, entry);
+  }
+
+  const firstPublicationYear = Math.min(...yearCounts.keys());
+  const firstYear = Math.min(firstPublicationYear, currentYear);
+  const lastPublicationYear = Math.max(...yearCounts.keys());
+  const lastYear = Math.max(lastPublicationYear, currentYear);
+  const byYear = [];
+  for (let year = firstYear; year <= lastYear; year += 1) {
+    byYear.push({ year, count: yearCounts.get(year) || 0, partial: year === currentYear });
+  }
+  const journalGroups = [...journals.values()]
+    .map((entry) => ({
+      name: [...entry.labels.entries()]
+        .sort((left, right) => right[1] - left[1] || comparePublicText(left[0], right[0]))[0][0],
+      count: entry.count
+    }))
+    .sort((left, right) => right.count - left.count || comparePublicText(left.name, right.name));
+
+  return {
+    total: publications.length,
+    articles: publications.length - reviews,
+    reviews,
+    firstYear,
+    lastPublicationYear,
+    lastYear,
+    currentYearPartial: true,
+    byYear,
+    journals: journalGroups
+  };
+}
+
+function validateLabStatistics(
+  stats,
+  expectedPublicationFacts,
+  publicationBibliography
+) {
+  if (!expectedPublicationFacts) {
+    errors.push("Lab statistics could not be compared with independently evaluated feed.js data.");
+    return;
+  }
+  const expectedPublicationCount = expectedPublicationFacts.total;
+  const expectedReviewCount = expectedPublicationFacts.reviews;
+  const nonnegativeInteger = (value) => Number.isInteger(value) && value >= 0;
+  const validIsoCalendarDate = (value) => {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const date = new Date(`${value}T00:00:00.000Z`);
+    return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+  };
+  const allowedKeys = (value, keys, label) => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      errors.push(`${label} must be an object.`);
+      return false;
+    }
+    const unexpected = Object.keys(value).filter((key) => !keys.includes(key));
+    if (unexpected.length) errors.push(`${label} contains unexpected fields: ${unexpected.join(", ")}.`);
+    return true;
+  };
+  const requireKeys = (value, keys, label) => {
+    const missing = keys.filter((key) => !Object.hasOwn(value, key));
+    if (missing.length) errors.push(`${label} is missing required fields: ${missing.join(", ")}.`);
+  };
+  const uniqueBy = (items, key) => new Set(items.map((item) => item?.[key])).size === items.length;
+  const expectedRootKeys = [
+    "schemaVersion",
+    "dataAsOf",
+    "publications",
+    "journals",
+    "coauthors",
+    "researchAreas",
+    "citations",
+    "metrics",
+    "impactFactors",
+    "journalStanding",
+    "team"
+  ];
+  if (!allowedKeys(stats, expectedRootKeys, "Lab statistics root")) return;
+  const missingRootKeys = expectedRootKeys.filter((key) => !Object.hasOwn(stats, key));
+  if (missingRootKeys.length) {
+    errors.push(`Lab statistics root is missing required fields: ${missingRootKeys.join(", ")}.`);
+  }
+  if (stats.schemaVersion !== 4) errors.push("Lab statistics schemaVersion must be 4.");
+  if (typeof stats.dataAsOf !== "string" || !Number.isFinite(Date.parse(stats.dataAsOf))) {
+    errors.push("Lab statistics dataAsOf must be an ISO date-time.");
+  }
+
+  const publicationStats = stats.publications;
+  if (allowedKeys(
+    publicationStats,
+    [
+      "total",
+      "articles",
+      "reviews",
+      "firstYear",
+      "lastPublicationYear",
+      "lastYear",
+      "currentYearPartial",
+      "byYear"
+    ],
+    "Lab statistics publications"
+  )) {
+    for (const field of [
+      "total",
+      "articles",
+      "reviews",
+      "firstYear",
+      "lastPublicationYear",
+      "lastYear"
+    ]) {
+      if (!nonnegativeInteger(publicationStats[field])) {
+        errors.push(`Lab statistics publications.${field} must be a nonnegative integer.`);
+      }
+    }
+    if (publicationStats.total !== expectedPublicationCount) {
+      errors.push(`Lab statistics publication total must equal feed.js count ${expectedPublicationCount}.`);
+    }
+    if (publicationStats.total !== publicationStats.articles + publicationStats.reviews) {
+      errors.push("Lab statistics publication total must equal articles plus reviews.");
+    }
+    if (publicationStats.reviews !== expectedReviewCount) {
+      errors.push(`Lab statistics review count must equal feed.js count ${expectedReviewCount}.`);
+    }
+    for (const field of [
+      "articles",
+      "firstYear",
+      "lastPublicationYear",
+      "lastYear",
+      "currentYearPartial"
+    ]) {
+      if (publicationStats[field] !== expectedPublicationFacts[field]) {
+        errors.push(
+          `Lab statistics publications.${field} must equal the value independently derived from feed.js.`
+        );
+      }
+    }
+    if (typeof publicationStats.currentYearPartial !== "boolean") {
+      errors.push("Lab statistics publications.currentYearPartial must be boolean.");
+    }
+    if (!Array.isArray(publicationStats.byYear) || publicationStats.byYear.length === 0) {
+      errors.push("Lab statistics publications.byYear must be a nonempty array.");
+    } else {
+      let annualTotal = 0;
+      for (const [index, row] of publicationStats.byYear.entries()) {
+        if (!allowedKeys(row, ["year", "count", "partial"], `Lab statistics year row ${index + 1}`)) continue;
+        if (!Number.isInteger(row.year) || !nonnegativeInteger(row.count) || typeof row.partial !== "boolean") {
+          errors.push(`Lab statistics year row ${index + 1} has invalid year, count, or partial flag.`);
+        }
+        if (index > 0 && row.year !== publicationStats.byYear[index - 1].year + 1) {
+          errors.push("Lab statistics publication years must be continuous.");
+        }
+        if (row.partial && row.year !== new Date().getUTCFullYear()) {
+          errors.push("Only the current UTC year may be marked partial.");
+        }
+        annualTotal += Number.isInteger(row.count) ? row.count : 0;
+      }
+      const firstRow = publicationStats.byYear[0];
+      const lastRow = publicationStats.byYear.at(-1);
+      if (publicationStats.firstYear !== firstRow.year || publicationStats.lastYear !== lastRow.year) {
+        errors.push("Lab statistics firstYear and lastYear must match the continuous year rows.");
+      }
+      const currentYear = new Date().getUTCFullYear();
+      const currentYearRow = publicationStats.byYear.find((row) => row?.year === currentYear);
+      if (!currentYearRow || currentYearRow.partial !== true) {
+        errors.push(`Lab statistics must include UTC year ${currentYear} and mark it as YTD.`);
+      }
+      if (publicationStats.currentYearPartial !== currentYearRow?.partial) {
+        errors.push("Lab statistics currentYearPartial must match the current UTC year row.");
+      }
+      if (lastRow.year !== expectedPublicationFacts.lastYear) {
+        errors.push("The final lab statistics publication row must match the derived display range end.");
+      }
+      if (annualTotal !== publicationStats.total) {
+        errors.push("Lab statistics yearly publication counts must sum to the publication total.");
+      }
+      if (JSON.stringify(publicationStats.byYear) !== JSON.stringify(expectedPublicationFacts.byYear)) {
+        errors.push("Lab statistics publication year rows must exactly match counts independently derived from feed.js.");
+      }
+    }
+  }
+
+  const journalStats = stats.journals;
+  if (allowedKeys(
+    journalStats,
+    ["publicationTotal", "distinctCount", "countingMethod", "groups"],
+    "Lab statistics journals"
+  )) {
+    if (journalStats.publicationTotal !== expectedPublicationCount) {
+      errors.push(`Lab statistics journals.publicationTotal must equal feed.js count ${expectedPublicationCount}.`);
+    }
+    if (!nonnegativeInteger(journalStats.distinctCount)) {
+      errors.push("Lab statistics journals.distinctCount must be a nonnegative integer.");
+    }
+    if (typeof journalStats.countingMethod !== "string" || !journalStats.countingMethod.trim()) {
+      errors.push("Lab statistics journals.countingMethod must explain how publications are counted.");
+    }
+    if (!Array.isArray(journalStats.groups) || journalStats.groups.length === 0) {
+      errors.push("Lab statistics journals.groups must be a nonempty array.");
+    } else {
+      const normalizedJournalNames = journalStats.groups.map((group) =>
+        typeof group?.name === "string" ? group.name.trim().toLocaleLowerCase("en-US") : ""
+      );
+      if (new Set(normalizedJournalNames).size !== journalStats.groups.length) {
+        errors.push("Lab statistics journal names must be unique case-insensitively.");
+      }
+      let journalTotal = 0;
+      journalStats.groups.forEach((group, index) => {
+        if (!allowedKeys(group, ["name", "count"], `Lab statistics journal ${index + 1}`)) return;
+        if (typeof group.name !== "string" || !group.name.trim()
+            || !Number.isInteger(group.count) || group.count <= 0) {
+          errors.push(`Lab statistics journal ${index + 1} must have a nonempty name and positive integer count.`);
+        }
+        journalTotal += Number.isInteger(group.count) ? group.count : 0;
+      });
+      if (journalStats.distinctCount !== journalStats.groups.length) {
+        errors.push("Lab statistics journals.distinctCount must equal the number of journal groups.");
+      }
+      if (journalStats.distinctCount !== expectedPublicationFacts.journals.length) {
+        errors.push("Lab statistics journal distinct count must match journals independently derived from feed.js.");
+      }
+      if (journalTotal !== expectedPublicationCount) {
+        errors.push("Lab statistics journal counts must sum to the publication total.");
+      }
+      if (JSON.stringify(journalStats.groups) !== JSON.stringify(expectedPublicationFacts.journals)) {
+        errors.push("Lab statistics journal groups must exactly match counts independently derived from feed.js.");
+      }
+    }
+  }
+
+  const coauthorStats = stats.coauthors;
+  if (allowedKeys(
+    coauthorStats,
+    [
+      "totalAuthors",
+      "totalCollaborators",
+      "displayedAuthors",
+      "countingMethod",
+      "bounded",
+      "maxNodes",
+      "maxEdges",
+      "nodes",
+      "edges"
+    ],
+    "Lab statistics coauthors"
+  )) {
+    for (const field of ["totalAuthors", "totalCollaborators", "displayedAuthors", "maxNodes", "maxEdges"]) {
+      if (!nonnegativeInteger(coauthorStats[field])) {
+        errors.push(`Lab statistics coauthors.${field} must be a nonnegative integer.`);
+      }
+    }
+    if (coauthorStats.totalCollaborators !== coauthorStats.totalAuthors - 1) {
+      errors.push("Lab statistics coauthors.totalCollaborators must exclude exactly one principal investigator.");
+    }
+    if (typeof coauthorStats.countingMethod !== "string" || !coauthorStats.countingMethod.trim()) {
+      errors.push("Lab statistics coauthors.countingMethod must explain the bounded graph.");
+    }
+    if (coauthorStats.bounded !== true) {
+      errors.push("Lab statistics coauthor network must declare that it is bounded.");
+    }
+    if (coauthorStats.maxNodes !== 25 || coauthorStats.maxEdges !== 80) {
+      errors.push("Lab statistics coauthor network bounds must remain at 25 nodes and 80 edges.");
+    }
+    if (!Array.isArray(coauthorStats.nodes) || coauthorStats.nodes.length === 0) {
+      errors.push("Lab statistics coauthors.nodes must be a nonempty array.");
+    }
+    if (!Array.isArray(coauthorStats.edges)) {
+      errors.push("Lab statistics coauthors.edges must be an array.");
+    }
+
+    const nodes = Array.isArray(coauthorStats.nodes) ? coauthorStats.nodes : [];
+    const edges = Array.isArray(coauthorStats.edges) ? coauthorStats.edges : [];
+    if (nodes.length > coauthorStats.maxNodes || edges.length > coauthorStats.maxEdges) {
+      errors.push("Lab statistics coauthor graph exceeds its declared node or edge bound.");
+    }
+    if (coauthorStats.displayedAuthors !== nodes.length) {
+      errors.push("Lab statistics coauthors.displayedAuthors must equal the number of graph nodes.");
+    }
+    if (coauthorStats.totalAuthors < nodes.length) {
+      errors.push("Lab statistics coauthors.totalAuthors cannot be smaller than displayedAuthors.");
+    }
+
+    const bibliographyLabels = publicBibliographyAuthorLabels(publicationBibliography);
+    const nodeIds = new Set();
+    let principalInvestigatorCount = 0;
+    for (const [index, node] of nodes.entries()) {
+      if (!allowedKeys(
+        node,
+        ["id", "label", "publicationCount", "isPrincipalInvestigator"],
+        `Lab statistics coauthor node ${index + 1}`
+      )) continue;
+      if (typeof node.id !== "string" || !node.id.trim()) {
+        errors.push(`Lab statistics coauthor node ${index + 1} must have a nonempty id.`);
+      } else if (nodeIds.has(node.id)) {
+        errors.push(`Lab statistics coauthor node ids must be unique: ${node.id}.`);
+      } else {
+        nodeIds.add(node.id);
+      }
+      if (typeof node.label !== "string" || !node.label.trim()) {
+        errors.push(`Lab statistics coauthor node ${index + 1} must have a nonempty public label.`);
+      } else if (!bibliographyLabels.has(node.label)) {
+        errors.push(`Lab statistics coauthor label is not derived from the public bibliography: ${node.label}.`);
+      }
+      if (/https?:\/\/|mailto:|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/i.test(String(node.label || ""))) {
+        errors.push(`Lab statistics coauthor node ${index + 1} must not expose a URL or email address.`);
+      }
+      if (!Number.isInteger(node.publicationCount)
+          || node.publicationCount <= 0
+          || node.publicationCount > expectedPublicationCount) {
+        errors.push(`Lab statistics coauthor node ${index + 1} has an invalid publicationCount.`);
+      }
+      if (typeof node.isPrincipalInvestigator !== "boolean") {
+        errors.push(`Lab statistics coauthor node ${index + 1} must have a boolean PI flag.`);
+      }
+      if (node.isPrincipalInvestigator === true) principalInvestigatorCount += 1;
+    }
+    if (principalInvestigatorCount !== 1) {
+      errors.push("Lab statistics coauthor graph must identify exactly one principal investigator.");
+    }
+
+    const edgePairs = new Set();
+    for (const [index, edge] of edges.entries()) {
+      if (!allowedKeys(
+        edge,
+        ["source", "target", "publicationCount"],
+        `Lab statistics coauthor edge ${index + 1}`
+      )) continue;
+      if (!nodeIds.has(edge.source) || !nodeIds.has(edge.target)) {
+        errors.push(`Lab statistics coauthor edge ${index + 1} references a missing node.`);
+      }
+      if (edge.source === edge.target) {
+        errors.push(`Lab statistics coauthor edge ${index + 1} must not be a self-edge.`);
+      }
+      const pair = [edge.source, edge.target].sort().join("\u0000");
+      if (edgePairs.has(pair)) {
+        errors.push(`Lab statistics coauthor edges must be unique: ${edge.source} / ${edge.target}.`);
+      }
+      edgePairs.add(pair);
+      if (!Number.isInteger(edge.publicationCount)
+          || edge.publicationCount <= 0
+          || edge.publicationCount > expectedPublicationCount) {
+        errors.push(`Lab statistics coauthor edge ${index + 1} has an invalid publicationCount.`);
+      }
+    }
+    if (/https?:\/\/|mailto:|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/i.test(JSON.stringify(coauthorStats))) {
+      errors.push("Lab statistics coauthor network must not contain contact URLs or email addresses.");
+    }
+  }
+
+  const researchAreas = stats.researchAreas;
+  if (allowedKeys(
+    researchAreas,
+    ["overlap", "countingMethod", "groups"],
+    "Lab statistics researchAreas"
+  )) {
+    if (researchAreas.overlap !== true) {
+      errors.push("Lab statistics research areas must declare overlapping counts.");
+    }
+    if (typeof researchAreas.countingMethod !== "string" || !researchAreas.countingMethod.trim()) {
+      errors.push("Lab statistics researchAreas.countingMethod must explain the overlap.");
+    }
+    if (!Array.isArray(researchAreas.groups) || researchAreas.groups.length === 0) {
+      errors.push("Lab statistics researchAreas.groups must be a nonempty array.");
+    } else {
+      if (!uniqueBy(researchAreas.groups, "id") || !uniqueBy(researchAreas.groups, "name")) {
+        errors.push("Lab statistics research-area ids and names must be unique.");
+      }
+      researchAreas.groups.forEach((group, index) => {
+        if (!allowedKeys(
+          group,
+          ["id", "name", "count", "articleCount", "reviewCount"],
+          `Lab statistics research area ${index + 1}`
+        )) return;
+        if (typeof group.id !== "string" || !group.id
+            || typeof group.name !== "string" || !group.name
+            || !nonnegativeInteger(group.count)
+            || !nonnegativeInteger(group.articleCount)
+            || !nonnegativeInteger(group.reviewCount)
+            || group.count > expectedPublicationCount
+            || group.articleCount > publicationStats?.articles
+            || group.reviewCount > publicationStats?.reviews) {
+          errors.push(`Lab statistics research area ${index + 1} has invalid aggregate data.`);
+        }
+        if (group.count !== group.articleCount + group.reviewCount) {
+          errors.push(`Lab statistics research area ${index + 1} count must equal articleCount plus reviewCount.`);
+        }
+      });
+    }
+  }
+
+  const citationStats = stats.citations;
+  if (allowedKeys(citationStats, ["sources"], "Lab statistics citations")) {
+    if (!Array.isArray(citationStats.sources) || citationStats.sources.length === 0) {
+      errors.push("Lab statistics citations.sources must be a nonempty array.");
+    } else {
+      if (!uniqueBy(citationStats.sources, "id")) {
+        errors.push("Lab statistics citation source ids must be unique.");
+      }
+      const expectedCitationSources = ["googleScholar", "openAlex", "semanticScholar"];
+      const actualCitationSources = citationStats.sources.map((source) => source?.id).sort();
+      if (JSON.stringify(actualCitationSources) !== JSON.stringify(expectedCitationSources.sort())) {
+        errors.push("Lab statistics must keep Google Scholar, OpenAlex, and Semantic Scholar as separate sources.");
+      }
+      citationStats.sources.forEach((source, index) => {
+        if (!allowedKeys(
+          source,
+          [
+            "id",
+            "label",
+            "status",
+            "total",
+            "provider",
+            "reason",
+            "matched",
+            "publicationTotal",
+            "updatedAt",
+            "profileUrl",
+            "countsByYear",
+            "cumulativeCountsByYear",
+            "history"
+          ],
+          `Lab statistics citation source ${index + 1}`
+        )) return;
+        requireKeys(source, [
+          "id",
+          "label",
+          "status",
+          "total",
+          "provider",
+          "reason",
+          "matched",
+          "publicationTotal",
+          "updatedAt",
+          "countsByYear",
+          "cumulativeCountsByYear",
+          "history"
+        ], `Lab statistics citation source ${index + 1}`);
+        if (typeof source.id !== "string" || !source.id
+            || typeof source.label !== "string" || !source.label
+            || !["ok", "stale", "partial", "unavailable"].includes(source.status)) {
+          errors.push(`Lab statistics citation source ${index + 1} has invalid source metadata.`);
+        }
+        if (typeof source.provider !== "string" || !source.provider.trim()) {
+          errors.push(`Lab statistics citation source ${index + 1} must identify a nonempty provider.`);
+        }
+        if (source.reason !== null
+            && (typeof source.reason !== "string" || !source.reason.trim())) {
+          errors.push(`Lab statistics citation source ${index + 1} reason must be null or nonempty text.`);
+        }
+        if (["stale", "partial", "unavailable"].includes(source.status)
+            && (typeof source.reason !== "string" || !source.reason.trim())) {
+          errors.push(`A stale, partial, or unavailable citation source ${index + 1} must explain its status.`);
+        }
+        if (source.publicationTotal !== expectedPublicationCount) {
+          errors.push(
+            `Lab statistics citation source ${index + 1} publicationTotal must equal feed.js count ${expectedPublicationCount}.`
+          );
+        }
+        if (source.matched !== null
+            && (!nonnegativeInteger(source.matched)
+              || source.matched > source.publicationTotal)) {
+          errors.push(
+            `Lab statistics citation source ${index + 1} matched must be null or within publication coverage.`
+          );
+        }
+        if (source.status !== "unavailable"
+            && source.matched !== null
+            && source.matched < source.publicationTotal
+            && source.status !== "partial") {
+          errors.push(
+            `Citation source ${index + 1} with incomplete publication coverage must have partial status.`
+          );
+        }
+        if (source.status === "unavailable") {
+          if (source.total !== null) {
+            errors.push(`Unavailable citation source ${index + 1} must have a null total.`);
+          }
+        } else if (!nonnegativeInteger(source.total)) {
+          errors.push(`Available citation source ${index + 1} must have a nonnegative integer total.`);
+        }
+        if (source.updatedAt !== null && source.updatedAt !== undefined
+            && (typeof source.updatedAt !== "string" || !Number.isFinite(Date.parse(source.updatedAt)))) {
+          errors.push(`Lab statistics citation source ${index + 1} has an invalid updatedAt timestamp.`);
+        }
+        if (source.profileUrl !== undefined
+            && (typeof source.profileUrl !== "string" || !/^https:\/\//.test(source.profileUrl))) {
+          errors.push(`Lab statistics citation source ${index + 1} has an invalid profileUrl.`);
+        }
+        if (!Array.isArray(source.countsByYear)) {
+          errors.push(`Lab statistics citation source ${index + 1} countsByYear must be an array.`);
+        } else {
+          if (source.status === "unavailable" && source.countsByYear.length !== 0) {
+            errors.push(`Unavailable citation source ${index + 1} must have no yearly counts.`);
+          }
+          const citationYears = new Set();
+          source.countsByYear.forEach((row, rowIndex) => {
+            if (!allowedKeys(
+              row,
+              ["year", "count"],
+              `Lab statistics citation source ${index + 1} year row ${rowIndex + 1}`
+            )) return;
+            if (!Number.isInteger(row.year) || !nonnegativeInteger(row.count)) {
+              errors.push(`Lab statistics citation source ${index + 1} has an invalid yearly count.`);
+            }
+            if (citationYears.has(row.year)) {
+              errors.push(`Lab statistics citation source ${index + 1} has a duplicate yearly count.`);
+            }
+            citationYears.add(row.year);
+            if (rowIndex > 0 && row.year <= source.countsByYear[rowIndex - 1]?.year) {
+              errors.push(`Lab statistics citation source ${index + 1} yearly counts must be sorted.`);
+            }
+          });
+
+          if (!Array.isArray(source.cumulativeCountsByYear)) {
+            errors.push(`Lab statistics citation source ${index + 1} cumulativeCountsByYear must be an array.`);
+          } else {
+            const expectedCumulative = [];
+            if (source.countsByYear.length > 0) {
+              const annualCounts = new Map(
+                source.countsByYear.map(row => [row.year, row.count])
+              );
+              let cumulative = 0;
+              const firstYear = source.countsByYear[0].year;
+              const lastYear = source.countsByYear.at(-1).year;
+              for (let year = firstYear; year <= lastYear; year += 1) {
+                cumulative += annualCounts.get(year) || 0;
+                expectedCumulative.push({ year, count: cumulative });
+              }
+            }
+            source.cumulativeCountsByYear.forEach((row, rowIndex) => {
+              if (!allowedKeys(
+                row,
+                ["year", "count"],
+                `Lab statistics citation source ${index + 1} cumulative row ${rowIndex + 1}`
+              )) return;
+              if (!Number.isInteger(row.year) || !nonnegativeInteger(row.count)) {
+                errors.push(`Lab statistics citation source ${index + 1} has an invalid cumulative count.`);
+              }
+            });
+            if (JSON.stringify(source.cumulativeCountsByYear) !== JSON.stringify(expectedCumulative)) {
+              errors.push(
+                `Lab statistics citation source ${index + 1} cumulative counts must be the unmodified running sum of provider-assigned yearly counts.`
+              );
+            }
+          }
+
+          const history = source.history;
+          const historyLabel = `Lab statistics citation source ${index + 1} history`;
+          if (allowedKeys(
+            history,
+            [
+              "status",
+              "annualTotal",
+              "reportedTotal",
+              "reconciliationDelta",
+              "unassignedCount",
+              "excessAnnualCount",
+              "reason"
+            ],
+            historyLabel
+          )) {
+            requireKeys(history, [
+              "status",
+              "annualTotal",
+              "reportedTotal",
+              "reconciliationDelta",
+              "unassignedCount",
+              "excessAnnualCount",
+              "reason"
+            ], historyLabel);
+            const hasAnnualHistory = source.countsByYear.length > 0;
+            const annualTotal = source.countsByYear.reduce((sum, row) => sum + row.count, 0);
+            const delta = hasAnnualHistory && nonnegativeInteger(source.total)
+              ? source.total - annualTotal
+              : null;
+            const expectedHistoryStatus = !hasAnnualHistory
+              ? "unavailable"
+              : delta !== 0 || source.status === "partial"
+                ? "partial"
+                : source.status === "stale"
+                  ? "stale"
+                  : "ok";
+            if (!["ok", "stale", "partial", "unavailable"].includes(history?.status)) {
+              errors.push(`${historyLabel} has an invalid status.`);
+            }
+            if (history?.status !== expectedHistoryStatus) {
+              errors.push(`${historyLabel} status does not reflect availability, freshness, and reconciliation.`);
+            }
+            if (history?.reportedTotal !== source.total) {
+              errors.push(`${historyLabel} reportedTotal must equal the source current total.`);
+            }
+            if (history?.annualTotal !== (hasAnnualHistory ? annualTotal : null)) {
+              errors.push(`${historyLabel} annualTotal must equal the provider-assigned yearly sum.`);
+            }
+            if (history?.reconciliationDelta !== delta) {
+              errors.push(`${historyLabel} reconciliationDelta must equal current total minus yearly sum.`);
+            }
+            if (history?.unassignedCount !== (delta === null ? null : Math.max(0, delta))) {
+              errors.push(`${historyLabel} unassignedCount must preserve a positive provider-total delta.`);
+            }
+            if (history?.excessAnnualCount !== (delta === null ? null : Math.max(0, -delta))) {
+              errors.push(`${historyLabel} excessAnnualCount must preserve a negative provider-total delta.`);
+            }
+            if (history?.reason !== null
+                && (typeof history?.reason !== "string" || !history.reason.trim())) {
+              errors.push(`${historyLabel} reason must be null or nonempty text.`);
+            }
+            if (history?.status !== "ok"
+                && (typeof history?.reason !== "string" || !history.reason.trim())) {
+              errors.push(`${historyLabel} must explain a stale, partial, or unavailable state.`);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  const metrics = stats.metrics;
+  if (allowedKeys(metrics, ["hIndex"], "Lab statistics metrics")) {
+    if (!Object.hasOwn(metrics, "hIndex")) {
+      errors.push("Lab statistics metrics must contain hIndex.");
+    } else {
+      const hIndex = metrics.hIndex;
+      if (allowedKeys(
+        hIndex,
+        [
+          "status",
+          "value",
+          "since",
+          "sinceYear",
+          "source",
+          "provider",
+          "reason",
+          "updatedAt",
+          "matched",
+          "publicationTotal",
+          "method",
+          "profileUrl"
+        ],
+        "Lab statistics h-index"
+      )) {
+        requireKeys(hIndex, [
+          "status",
+          "value",
+          "since",
+          "sinceYear",
+          "source",
+          "provider",
+          "reason",
+          "updatedAt",
+          "matched",
+          "publicationTotal",
+          "method"
+        ], "Lab statistics h-index");
+        if (!["ok", "stale", "partial", "unavailable"].includes(hIndex.status)) {
+          errors.push("Lab statistics h-index status must be ok, stale, partial, or unavailable.");
+        }
+        const validNullableInteger = (value) => value === null || nonnegativeInteger(value);
+        if (!validNullableInteger(hIndex.value) || !validNullableInteger(hIndex.since)) {
+          errors.push("Lab statistics h-index values must be nonnegative integers or null.");
+        }
+        if (hIndex.sinceYear !== null
+            && (!Number.isInteger(hIndex.sinceYear) || hIndex.sinceYear < 1000 || hIndex.sinceYear > 9999)) {
+          errors.push("Lab statistics h-index sinceYear must be a four-digit year or null.");
+        }
+        if ((hIndex.since === null) !== (hIndex.sinceYear === null)) {
+          errors.push("Lab statistics h-index since and sinceYear must either both be present or both be null.");
+        }
+        if (nonnegativeInteger(hIndex.value)
+            && nonnegativeInteger(hIndex.since)
+            && hIndex.since > hIndex.value) {
+          errors.push("Lab statistics recent-period h-index cannot exceed the all-time h-index.");
+        }
+        if (hIndex.status === "unavailable" && hIndex.value !== null) {
+          errors.push("An unavailable h-index must have a null value.");
+        }
+        if (["ok", "stale", "partial"].includes(hIndex.status) && !nonnegativeInteger(hIndex.value)) {
+          errors.push("An available, stale, or partial h-index must have a nonnegative integer value.");
+        }
+        if (hIndex.publicationTotal !== expectedPublicationCount) {
+          errors.push(`Lab statistics h-index publicationTotal must equal feed.js count ${expectedPublicationCount}.`);
+        }
+        if (hIndex.matched !== null
+            && (!nonnegativeInteger(hIndex.matched) || hIndex.matched > hIndex.publicationTotal)) {
+          errors.push("Lab statistics h-index matched must be null or within publication coverage.");
+        }
+        if (typeof hIndex.method !== "string" || !hIndex.method.trim()) {
+          errors.push("Lab statistics h-index must disclose a nonempty method.");
+        }
+        if (hIndex.reason !== null
+            && (typeof hIndex.reason !== "string" || !hIndex.reason.trim())) {
+          errors.push("Lab statistics h-index reason must be null or nonempty text.");
+        }
+        if (hIndex.status === "unavailable"
+            && (typeof hIndex.reason !== "string" || !hIndex.reason.trim())) {
+          errors.push("An unavailable h-index must explain its status.");
+        }
+        if (hIndex.updatedAt !== null
+            && (typeof hIndex.updatedAt !== "string" || !Number.isFinite(Date.parse(hIndex.updatedAt)))) {
+          errors.push("Lab statistics h-index updatedAt must be an ISO timestamp or null.");
+        }
+        if (hIndex.profileUrl !== undefined
+            && (typeof hIndex.profileUrl !== "string" || !/^https:\/\//.test(hIndex.profileUrl))) {
+          errors.push("Lab statistics h-index profileUrl must be an HTTPS URL when present.");
+        }
+        if (hIndex.status === "unavailable") {
+          if (hIndex.source !== null || hIndex.provider !== null || hIndex.matched !== 0) {
+            errors.push("An unavailable h-index must have null source/provider and zero matched coverage.");
+          }
+        } else {
+          if (!["Google Scholar", "OpenAlex"].includes(hIndex.source)
+              || typeof hIndex.provider !== "string"
+              || !hIndex.provider.trim()) {
+            errors.push("An available h-index must identify Google Scholar or OpenAlex and its provider.");
+          }
+          if (hIndex.source === "Google Scholar") {
+            if (hIndex.matched !== null || !/Google Scholar author profile/i.test(hIndex.method)) {
+              errors.push("A Google Scholar h-index must be labelled as a reported profile metric.");
+            }
+          }
+          if (hIndex.source === "OpenAlex") {
+            if (!nonnegativeInteger(hIndex.matched)
+                || !/OpenAlex/i.test(hIndex.method)
+                || !/catalog(?:ue)?/i.test(hIndex.method)) {
+              errors.push("An OpenAlex h-index must disclose its catalogue-derived method and coverage.");
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const impactFactors = stats.impactFactors;
+  if (allowedKeys(
+    impactFactors,
+    [
+      "status",
+      "metric",
+      "total",
+      "coveredPublications",
+      "publicationTotal",
+      "source",
+      "edition",
+      "licenseConfirmed",
+      "aggregatePublicationAuthorized",
+      "updatedAt",
+      "reason"
+    ],
+    "Lab statistics impactFactors"
+  )) {
+    requireKeys(impactFactors, [
+      "status",
+      "metric",
+      "total",
+      "coveredPublications",
+      "publicationTotal",
+      "source",
+      "edition",
+      "licenseConfirmed",
+      "aggregatePublicationAuthorized",
+      "updatedAt",
+      "reason"
+    ], "Lab statistics impactFactors");
+    if (!["ok", "partial", "unavailable"].includes(impactFactors.status)) {
+      errors.push("Lab statistics impactFactors.status must be ok, partial, or unavailable.");
+    }
+    if (impactFactors.metric !== "Journal Impact Factor") {
+      errors.push("Lab statistics impactFactors.metric must be Journal Impact Factor.");
+    }
+    if (impactFactors.publicationTotal !== expectedPublicationCount) {
+      errors.push(`Lab statistics impactFactors.publicationTotal must equal feed.js count ${expectedPublicationCount}.`);
+    }
+    if (!nonnegativeInteger(impactFactors.coveredPublications)
+        || impactFactors.coveredPublications > expectedPublicationCount) {
+      errors.push("Lab statistics impactFactors.coveredPublications is invalid.");
+    }
+    if (impactFactors.updatedAt !== null
+        && (typeof impactFactors.updatedAt !== "string"
+          || !Number.isFinite(Date.parse(impactFactors.updatedAt)))) {
+      errors.push("Lab statistics impactFactors.updatedAt must be an ISO timestamp or null.");
+    }
+    if (impactFactors.reason !== null
+        && (typeof impactFactors.reason !== "string" || !impactFactors.reason.trim())) {
+      errors.push("Lab statistics impactFactors.reason must be null or nonempty text.");
+    }
+
+    if (impactFactors.status === "unavailable") {
+      if (impactFactors.total !== null
+          || impactFactors.coveredPublications !== 0) {
+        errors.push("Unavailable impact factors must have a null total and zero coverage.");
+      }
+      if (typeof impactFactors.reason !== "string" || !impactFactors.reason.trim()) {
+        errors.push("Unavailable impact factors must explain why no value is published.");
+      }
+      if (impactFactors.licenseConfirmed === false) {
+        if (impactFactors.source !== null
+            || impactFactors.edition !== null
+            || impactFactors.aggregatePublicationAuthorized !== false
+            || impactFactors.updatedAt !== null) {
+          errors.push("Unconfigured impact factors must have null provenance and false authorization flags.");
+        }
+      } else if (impactFactors.licenseConfirmed === true) {
+        if (impactFactors.aggregatePublicationAuthorized !== true
+            || typeof impactFactors.source !== "string"
+            || !/\b(?:Clarivate|Journal Citation Reports?|JCR)\b/i.test(impactFactors.source)
+            || typeof impactFactors.edition !== "string"
+            || !impactFactors.edition.trim()
+            || typeof impactFactors.updatedAt !== "string"
+            || !Number.isFinite(Date.parse(impactFactors.updatedAt))) {
+          errors.push("Configured but unavailable impact factors must retain valid licensed JCR provenance and authorization.");
+        }
+      } else {
+        errors.push("Lab statistics impactFactors.licenseConfirmed must be boolean.");
+      }
+    } else {
+      if (typeof impactFactors.total !== "number"
+          || !Number.isFinite(impactFactors.total)
+          || impactFactors.total < 0) {
+        errors.push("Available impact-factor totals must be nonnegative finite numbers.");
+      }
+      if (impactFactors.coveredPublications <= 0) {
+        errors.push("Available impact-factor totals must report positive publication coverage.");
+      }
+      if (impactFactors.status === "ok"
+          && impactFactors.coveredPublications !== impactFactors.publicationTotal) {
+        errors.push("An ok impact-factor aggregate must cover every publication.");
+      }
+      if (impactFactors.status === "partial"
+          && impactFactors.coveredPublications >= impactFactors.publicationTotal) {
+        errors.push("A partial impact-factor aggregate must disclose incomplete publication coverage.");
+      }
+      if (impactFactors.status === "partial"
+          && (typeof impactFactors.reason !== "string" || !impactFactors.reason.trim())) {
+        errors.push("A partial impact-factor aggregate must explain its incomplete coverage.");
+      }
+      if (typeof impactFactors.source !== "string"
+          || !/\b(?:Clarivate|Journal Citation Reports?|JCR)\b/i.test(impactFactors.source)) {
+        errors.push("Impact factors may only use an identified licensed Clarivate Journal Citation Reports source.");
+      }
+      if (typeof impactFactors.edition !== "string" || !impactFactors.edition.trim()) {
+        errors.push("Available impact factors must identify the licensed JCR edition.");
+      }
+      if (impactFactors.licenseConfirmed !== true
+          || impactFactors.aggregatePublicationAuthorized !== true) {
+        errors.push("Available impact factors require confirmed licensing and aggregate-publication authorization.");
+      }
+      if (typeof impactFactors.updatedAt !== "string"
+          || !Number.isFinite(Date.parse(impactFactors.updatedAt))) {
+        errors.push("Available impact factors must include an ISO source timestamp.");
+      }
+    }
+    if (typeof impactFactors.source === "string"
+        && /\b(?:OpenAlex|Semantic Scholar|Crossref|CiteScore|SJR)\b/i.test(impactFactors.source)) {
+      errors.push("Citation databases and proxy journal metrics must not be presented as Journal Impact Factors.");
+    }
+    if (/10\.\d{4,9}\/[^\s"']+/i.test(JSON.stringify(impactFactors))) {
+      errors.push("Lab statistics impactFactors must not redistribute raw per-DOI JCR data.");
+    }
+  }
+
+  const journalStanding = stats.journalStanding;
+  const journalStandingKeys = [
+    "status",
+    "publicationTotal",
+    "coveredPublications",
+    "unavailablePublications",
+    "bands",
+    "source",
+    "edition",
+    "licenseConfirmed",
+    "aggregatePublicationAuthorized",
+    "aggregateRankingDisplayAuthorized",
+    "updatedAt",
+    "authorizationReference",
+    "authorizationDate",
+    "yearBasis",
+    "reason"
+  ];
+  if (allowedKeys(
+    journalStanding,
+    journalStandingKeys,
+    "Lab statistics journalStanding"
+  )) {
+    requireKeys(journalStanding, [
+      "status",
+      "publicationTotal",
+      "coveredPublications",
+      "unavailablePublications",
+      "bands",
+      "source",
+      "edition",
+      "licenseConfirmed",
+      "aggregatePublicationAuthorized",
+      "aggregateRankingDisplayAuthorized",
+      "updatedAt",
+      "yearBasis",
+      "reason"
+    ], "Lab statistics journalStanding");
+    if (!["ok", "partial", "unavailable"].includes(journalStanding.status)) {
+      errors.push("Lab statistics journalStanding.status must be ok, partial, or unavailable.");
+    }
+    if (journalStanding.publicationTotal !== expectedPublicationCount) {
+      errors.push(`Lab statistics journalStanding.publicationTotal must equal feed.js count ${expectedPublicationCount}.`);
+    }
+    if (!nonnegativeInteger(journalStanding.coveredPublications)
+        || !nonnegativeInteger(journalStanding.unavailablePublications)
+        || journalStanding.coveredPublications + journalStanding.unavailablePublications
+          !== journalStanding.publicationTotal) {
+      errors.push("Lab statistics journalStanding coverage counts must be nonnegative and account for every publication.");
+    }
+    if (journalStanding.yearBasis
+        !== "Previous-year JCR: publication year Y uses JCR year Y-1.") {
+      errors.push("Lab statistics journalStanding must use the disclosed previous-year JCR basis.");
+    }
+    if (journalStanding.reason !== null
+        && (typeof journalStanding.reason !== "string" || !journalStanding.reason.trim())) {
+      errors.push("Lab statistics journalStanding.reason must be null or nonempty text.");
+    }
+    if (!Array.isArray(journalStanding.bands)) {
+      errors.push("Lab statistics journalStanding.bands must be an array.");
+    }
+
+    const expectedBands = [
+      ["top1", "Top 1%"],
+      ["top5", "Top 5%"],
+      ["top10", "Top 10%"],
+      ["otherQ1", "Other Q1"],
+      ["q2", "Q2"],
+      ["q3", "Q3"],
+      ["q4", "Q4"],
+      ["unavailable", "Unavailable"]
+    ];
+    const bands = Array.isArray(journalStanding.bands) ? journalStanding.bands : [];
+    if (journalStanding.status === "unavailable") {
+      if (bands.length !== 0) {
+        errors.push("Unavailable journal standing must not publish licensed band counts.");
+      }
+      if (journalStanding.coveredPublications !== 0
+          || journalStanding.unavailablePublications !== journalStanding.publicationTotal) {
+        errors.push("Unavailable journal standing must report zero coverage and the full catalogue as unavailable.");
+      }
+      if (typeof journalStanding.reason !== "string" || !journalStanding.reason.trim()) {
+        errors.push("Unavailable journal standing must explain why no bands are published.");
+      }
+    } else {
+      if (bands.length !== expectedBands.length) {
+        errors.push("Available journal standing must include all exclusive Top 1%, Top 5%, Top 10%, Other Q1, Q2, Q3, Q4, and unavailable bands.");
+      }
+      let bandTotal = 0;
+      let coveredBandTotal = 0;
+      bands.forEach((band, index) => {
+        if (!allowedKeys(
+          band,
+          ["id", "label", "count"],
+          `Lab statistics journalStanding band ${index + 1}`
+        )) return;
+        const expectedBand = expectedBands[index];
+        if (!expectedBand
+            || band.id !== expectedBand[0]
+            || band.label !== expectedBand[1]
+            || !nonnegativeInteger(band.count)) {
+          errors.push(`Lab statistics journalStanding band ${index + 1} has invalid identity, order, label, or count.`);
+        }
+        if (nonnegativeInteger(band.count)) {
+          bandTotal += band.count;
+          if (band.id !== "unavailable") coveredBandTotal += band.count;
+        }
+      });
+      if (bandTotal !== journalStanding.publicationTotal
+          || coveredBandTotal !== journalStanding.coveredPublications) {
+        errors.push("Journal standing exclusive band counts must account for covered and total publications exactly once.");
+      }
+      const unavailableBand = bands.find(band => band?.id === "unavailable");
+      if (unavailableBand?.count !== journalStanding.unavailablePublications) {
+        errors.push("Journal standing unavailable band must equal unavailable publication coverage.");
+      }
+      if (journalStanding.status === "ok") {
+        if (journalStanding.coveredPublications !== journalStanding.publicationTotal
+            || journalStanding.unavailablePublications !== 0
+            || journalStanding.reason !== null) {
+          errors.push("An ok journal-standing aggregate must cover every publication and have no availability reason.");
+        }
+      }
+      if (journalStanding.status === "partial") {
+        if (journalStanding.coveredPublications <= 0
+            || journalStanding.coveredPublications >= journalStanding.publicationTotal
+            || journalStanding.unavailablePublications <= 0
+            || typeof journalStanding.reason !== "string"
+            || !journalStanding.reason.trim()) {
+          errors.push("A partial journal-standing aggregate must disclose positive but incomplete coverage and a reason.");
+        }
+      }
+    }
+
+    const authorizationFieldsPresent =
+      Object.hasOwn(journalStanding, "authorizationReference")
+      || Object.hasOwn(journalStanding, "authorizationDate");
+    if (journalStanding.licenseConfirmed === false) {
+      if (journalStanding.source !== null
+          || journalStanding.edition !== null
+          || journalStanding.aggregatePublicationAuthorized !== false
+          || journalStanding.aggregateRankingDisplayAuthorized !== false
+          || journalStanding.updatedAt !== null
+          || authorizationFieldsPresent) {
+        errors.push("Unconfigured journal standing must have null provenance, false authorization flags, and no authorization reference.");
+      }
+    } else if (journalStanding.licenseConfirmed === true) {
+      if (journalStanding.aggregatePublicationAuthorized !== true
+          || typeof journalStanding.source !== "string"
+          || !/\b(?:Clarivate|Journal Citation Reports?|JCR)\b/i.test(journalStanding.source)
+          || typeof journalStanding.edition !== "string"
+          || !journalStanding.edition.trim()
+          || typeof journalStanding.updatedAt !== "string"
+          || !Number.isFinite(Date.parse(journalStanding.updatedAt))) {
+        errors.push("Configured journal standing must retain valid licensed JCR provenance and aggregate-publication authorization.");
+      }
+      if (typeof journalStanding.aggregateRankingDisplayAuthorized !== "boolean") {
+        errors.push("Lab statistics journalStanding.aggregateRankingDisplayAuthorized must be boolean.");
+      } else if (journalStanding.aggregateRankingDisplayAuthorized) {
+        if (typeof journalStanding.authorizationReference !== "string"
+            || !journalStanding.authorizationReference.trim()
+            || !validIsoCalendarDate(journalStanding.authorizationDate)) {
+          errors.push("Authorized journal-standing display must include a nonempty permission reference and valid permission date.");
+        }
+      } else if (authorizationFieldsPresent) {
+        errors.push("Unauthorized journal standing must not publish permission reference fields.");
+      }
+    } else {
+      errors.push("Lab statistics journalStanding.licenseConfirmed must be boolean.");
+    }
+    if (journalStanding.status !== "unavailable"
+        && journalStanding.aggregateRankingDisplayAuthorized !== true) {
+      errors.push("Available journal-standing bands require explicit aggregate ranking display authorization.");
+    }
+    if (typeof journalStanding.source === "string"
+        && /\b(?:OpenAlex|Semantic Scholar|Crossref|CiteScore|SJR)\b/i.test(journalStanding.source)) {
+      errors.push("Citation databases and proxy journal metrics must not be presented as JCR standing.");
+    }
+    if (/10\.\d{4,9}\/[^\s"']+|rankingsByDoi|jcrYear|categoryTotal|jifPercentile|"(?:category|rank|quartile)"\s*:/i.test(
+      JSON.stringify(journalStanding)
+    )) {
+      errors.push("Lab statistics journalStanding must not redistribute raw per-DOI or per-category licensed JCR records.");
+    }
+  }
+
+  const teamStats = stats.team;
+  if (allowedKeys(teamStats, ["total", "groups"], "Lab statistics team")) {
+    if (!nonnegativeInteger(teamStats.total)) {
+      errors.push("Lab statistics team.total must be a nonnegative integer.");
+    }
+    if (!Array.isArray(teamStats.groups) || teamStats.groups.length === 0) {
+      errors.push("Lab statistics team.groups must be a nonempty array.");
+    } else {
+      if (!uniqueBy(teamStats.groups, "id") || !uniqueBy(teamStats.groups, "label")) {
+        errors.push("Lab statistics team group ids and labels must be unique.");
+      }
+      let teamTotal = 0;
+      teamStats.groups.forEach((group, index) => {
+        if (!allowedKeys(group, ["id", "label", "count"], `Lab statistics team group ${index + 1}`)) return;
+        if (typeof group.id !== "string" || !group.id
+            || typeof group.label !== "string" || !group.label
+            || !nonnegativeInteger(group.count)) {
+          errors.push(`Lab statistics team group ${index + 1} has invalid aggregate data.`);
+        }
+        teamTotal += nonnegativeInteger(group.count) ? group.count : 0;
+      });
+      if (teamStats.total !== teamTotal) {
+        errors.push("Lab statistics team.total must equal the sum of aggregate role groups.");
+      }
+    }
+  }
+}
+
 for (const file of [...requiredPages, ...requiredRuntimeFiles]) {
   if (!await exists(path.join(siteRoot, file))) errors.push(`Missing required file: ${file}`);
 }
@@ -168,6 +1327,16 @@ for (const file of htmlFiles) {
       if (!isBuildGeneratedLink) errors.push(`${label}: broken local reference ${match[1]}`);
     }
   }
+
+  const primaryNav = (html.match(
+    /<nav\b[^>]*class=["'][^"']*\bnav\b[^"']*["'][^>]*>([\s\S]*?)<\/nav>/i
+  ) || [])[1] || "";
+  if ((primaryNav.match(/href=["']Statistics\.dc\.html["']/g) || []).length !== 1) {
+    errors.push(`${label}: primary navigation must contain one Statistics link.`);
+  }
+  if (!/<a\b[^>]*href=["']Publications\.dc\.html["'][^>]*>Publications<\/a>\s*<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*>Statistics<\/a>/i.test(primaryNav)) {
+    errors.push(`${label}: Statistics must immediately follow Publications in primary navigation.`);
+  }
 }
 
 for (const file of cssFiles) {
@@ -190,8 +1359,17 @@ for (const file of jsFiles) {
 
 const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
 const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
+const statisticsHtml = await readFile(path.join(siteRoot, "Statistics.dc.html"), "utf8");
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
+const feedPublications = evaluateFeedPublications(
+  feedHtml,
+  `${path.relative(repositoryRoot, siteRoot) || "."}/feed.js`
+);
+const expectedPublicationFacts = deriveFeedPublicationFacts(
+  feedPublications,
+  new Date().getUTCFullYear()
+);
 const publicationBlock = (feedHtml.match(/const PUBS = \[([\s\S]*?)\n\];/) || [])[1] || "";
 let publicationDois = [];
 try {
@@ -203,6 +1381,16 @@ const publicationDoiSet = new Set(publicationDois);
 if (publicationDoiSet.size !== publicationDois.length) {
   errors.push("feed.js contains duplicate publication DOIs.");
 }
+let publicationVisualState = { publications: [] };
+try {
+  publicationVisualState = await validatePublicationVisuals({
+    repository: siteRoot,
+    visualsPath: path.join(siteRoot, "publication-visuals.js"),
+    feedPath: path.join(siteRoot, "feed.js")
+  });
+} catch (error) {
+  errors.push(`Publication visuals are invalid: ${error.message}`);
+}
 const publicationMetadataPath = path.join(siteRoot, "data/publication-metadata.json");
 if (await exists(publicationMetadataPath)) {
   let metadata;
@@ -213,8 +1401,8 @@ if (await exists(publicationMetadataPath)) {
   }
 
   if (metadata) {
-    if (metadata.schemaVersion !== 2) {
-      errors.push(`Publication metadata schemaVersion must be 2; found ${JSON.stringify(metadata.schemaVersion)}.`);
+    if (metadata.schemaVersion !== 3) {
+      errors.push(`Publication metadata schemaVersion must be 3; found ${JSON.stringify(metadata.schemaVersion)}.`);
     }
     if (!Number.isFinite(Date.parse(metadata.snapshotUpdatedAt || ""))) {
       errors.push("Publication metadata snapshotUpdatedAt must be an ISO timestamp.");
@@ -243,7 +1431,7 @@ if (await exists(publicationMetadataPath)) {
         if (normalizeDoi(record.doi) !== normalizedKey) {
           errors.push(`Publication metadata record DOI does not match its key: ${key}`);
         }
-        for (const source of ["semanticScholar", "openAlex"]) {
+        for (const source of ["semanticScholar", "openAlex", "googleScholar"]) {
           const citationCount = record[source]?.citationCount;
           if (citationCount !== undefined && (
             typeof citationCount !== "number"
@@ -251,6 +1439,21 @@ if (await exists(publicationMetadataPath)) {
             || citationCount < 0
           )) {
             errors.push(`${key}: ${source}.citationCount must be a nonnegative finite number.`);
+          }
+        }
+        if (record.googleScholar) {
+          if (!Number.isInteger(record.googleScholar.citationCount)) {
+            errors.push(`${key}: googleScholar.citationCount must be an integer.`);
+          }
+          if (typeof record.googleScholar.title !== "string" || !record.googleScholar.title.trim()) {
+            errors.push(`${key}: googleScholar.title must be a nonempty string.`);
+          }
+          if (typeof record.googleScholar.citationId !== "string"
+              || !record.googleScholar.citationId.startsWith(`${metadata.googleScholar?.profileId}:`)) {
+            errors.push(`${key}: googleScholar.citationId must belong to the configured profile.`);
+          }
+          if (!["fresh", "stale"].includes(record.sourceFreshness?.googleScholar?.status)) {
+            errors.push(`${key}: googleScholar data must include fresh or stale sourceFreshness.`);
           }
         }
         const influentialCitationCount = record.semanticScholar?.influentialCitationCount;
@@ -291,11 +1494,16 @@ if (await exists(publicationMetadataPath)) {
       }
     }
     const scholarSource = metadata.sources?.googleScholar;
-    if (!scholarSource || !["ok", "stale"].includes(scholarSource.status)) {
-      errors.push("Publication metadata sources.googleScholar must have ok or stale status.");
+    if (!scholarSource || !["ok", "partial", "stale"].includes(scholarSource.status)) {
+      errors.push("Publication metadata sources.googleScholar must have ok, partial, or stale status.");
     }
-    if (scholarSource?.status === "stale" && !scholarSource.reason) {
-      errors.push("A stale Google Scholar source must include a reason.");
+    if (scholarSource?.status !== "ok" && !scholarSource?.reason) {
+      errors.push("A non-ok Google Scholar source must include a reason.");
+    }
+    for (const countName of ["matched", "freshMatched"]) {
+      if (!Number.isInteger(scholarSource?.[countName]) || scholarSource[countName] < 0) {
+        errors.push(`Publication metadata sources.googleScholar.${countName} must be a nonnegative integer.`);
+      }
     }
     if (!metadata.googleScholar?.profileId
         || metadata.googleScholar.profileId !== scholarSource?.profileId) {
@@ -420,6 +1628,33 @@ if (!publicationsHtml.includes("Download BibTeX file of all publications")
     || !publicationsHtml.includes("Download CFF file of all publications")) {
   errors.push("Publication citation downloads must have descriptive accessible names.");
 }
+if (!statisticsHtml.includes("fetch('data/lab-statistics.json', { cache: 'no-store' })")) {
+  errors.push("Statistics page must load the build-generated lab statistics snapshot without caching.");
+}
+for (const marker of [
+  'data-screen-label="Lab Statistics"',
+  "data-lab-statistics",
+  "data-publications-by-year",
+  "data-journal-distribution",
+  "data-journal-highlights",
+  "data-research-footprint",
+  "data-citation-source-card",
+  "data-citation-trend",
+  "data-h-index-status",
+  "data-impact-factor-status",
+  "data-impact-factor-provenance",
+  "data-coauthor-network",
+  "data-top-collaborators",
+  "data-team-composition",
+  "data-statistics-status"
+]) {
+  if (!statisticsHtml.includes(marker)) {
+    errors.push(`Statistics page is missing required rendering marker: ${marker}`);
+  }
+}
+if (!/<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*style=["'][^"']*color:var\(--color-accent\)/i.test(statisticsHtml)) {
+  errors.push("Statistics page must mark the Statistics navigation item as active.");
+}
 if (!publicationsHtml.includes("data-publication-metadata-status")) {
   errors.push("Publications page must expose citation sources and metadata freshness.");
 }
@@ -432,14 +1667,23 @@ if (!publicationsHtml.includes("data-publication-enrichment")) {
 if (/<script\b[^>]*\bdata-props=["'][^"']*\bscholarCitations\b[^"']*["']/i.test(publicationsHtml)) {
   errors.push("Publications page must read Google Scholar citations from the metadata snapshot, not a hardcoded property.");
 }
-if (!publicationsHtml.includes("data-graphical-abstract") || !publicationsHtml.includes("data-graphical-abstract-image")) {
-  errors.push("Publications page must expose lazy, collapsible graphical abstracts.");
+if (!publicationsHtml.includes("enrichment?.googleScholar?.citationCount")
+    || !/hasGoogleScholarCount[\s\S]*hasOpenAlexCount[\s\S]*hasSemanticScholarCount/.test(publicationsHtml)) {
+  errors.push("Publication cards must prefer per-paper Google Scholar citations before OpenAlex and Semantic Scholar.");
 }
-if (!publicationsHtml.includes("Not the publisher’s official graphical abstract")) {
-  errors.push("Generated graphical abstracts must be clearly distinguished from publisher artwork.");
+if (!publicationsHtml.includes("data-publication-visual") || !publicationsHtml.includes("data-publication-visual-image")) {
+  errors.push("Publications page must place a reviewed visual between the publication number and bibliography.");
 }
-if (!feedHtml.includes("graphicalAbstractPath") || !feedHtml.includes("p.graphicalAbstract")) {
-  errors.push("Publication feed must assign a deterministic graphical abstract to each DOI.");
+if (!publicationsHtml.includes("publication-number")
+    || !publicationsHtml.includes("publication-visual")
+    || !publicationsHtml.includes("publication-bibliography")) {
+  errors.push("Publication cards must expose the number, visual, and bibliography columns.");
+}
+if (!feedHtml.includes("journalCardPath") || !feedHtml.includes("p.publicationVisual")) {
+  errors.push("Publication feed must resolve each paper to reviewed artwork or a journal fallback.");
+}
+if (!publicationsHtml.includes("publication-visuals.js")) {
+  errors.push("Publications page must load the reviewed publication visual manifest before feed.js.");
 }
 for (const forbiddenRuntimeMetadata of [
   "api.crossref.org",
@@ -530,6 +1774,28 @@ for (const runtime of ["vendor/react.production.min.js", "vendor/react-dom.produ
   if (!supportJs.includes(`./${runtime}`) || !await exists(path.join(siteRoot, runtime))) errors.push(`Local browser runtime is missing: ${runtime}`);
 }
 
+const labStatisticsPath = path.join(siteRoot, generatedLabStatisticsFile);
+const labStatisticsExists = await exists(labStatisticsPath);
+if (siteRoot === repositoryRoot && labStatisticsExists) {
+  errors.push(`${generatedLabStatisticsFile} is build-generated and must not be committed as source.`);
+}
+if (compareRoot || labStatisticsExists) {
+  if (!labStatisticsExists) {
+    errors.push(`Missing generated lab statistics snapshot: ${generatedLabStatisticsFile}`);
+  } else {
+    try {
+      const labStatistics = JSON.parse(await readFile(labStatisticsPath, "utf8"));
+      validateLabStatistics(
+        labStatistics,
+        expectedPublicationFacts,
+        publicationBibliography
+      );
+    } catch (error) {
+      errors.push(`Lab statistics snapshot is not valid JSON: ${error.message}`);
+    }
+  }
+}
+
 const citationExportPresence = await Promise.all(
   generatedPublicationCitationFiles.map((file) => exists(path.join(siteRoot, file)))
 );
@@ -549,19 +1815,22 @@ if (compareRoot) {
   const sourceFiles = (await listFiles(compareRoot)).filter(publishedSourceFile);
   const builtFiles = files.filter((file) => file !== "site-manifest.json" && file !== ".nojekyll");
   const expectedFiles = sourceFiles.filter((file) => file !== ".nojekyll");
-  const generatedGraphicFiles = new Set(publicationDois.map(graphicPathForDoi));
+  const generatedJournalCardFiles = new Set(
+    publicationVisualState.publications
+      .map((publication) => journalCardPath(publication.journalKey))
+  );
   const comparableBuiltFiles = builtFiles.filter(
-    (file) => !generatedGraphicFiles.has(file) && !generatedBuildFileSet.has(file)
+    (file) => !generatedJournalCardFiles.has(file) && !generatedBuildFileSet.has(file)
   );
   if (JSON.stringify(comparableBuiltFiles) !== JSON.stringify(expectedFiles)) {
     errors.push("Built file set differs from the published source file set.");
   }
-  const unexpectedGraphics = builtFiles.filter(
-    (file) => file.startsWith("images/publications/graphical-abstracts/")
-      && !generatedGraphicFiles.has(file)
+  const unexpectedJournalCards = builtFiles.filter(
+    (file) => file.startsWith("images/publications/journal-cards/")
+      && !generatedJournalCardFiles.has(file)
   );
-  if (unexpectedGraphics.length) {
-    errors.push(`Unexpected generated publication graphics: ${unexpectedGraphics.join(", ")}`);
+  if (unexpectedJournalCards.length) {
+    errors.push(`Unexpected generated journal title cards: ${unexpectedJournalCards.join(", ")}`);
   }
   const unexpectedCitationExports = builtFiles.filter(
     (file) => file.startsWith("exports/publications/")
@@ -577,14 +1846,14 @@ if (compareRoot) {
     ]);
     if (sha256(source) !== sha256(built)) errors.push(`${file}: build changed published bytes.`);
   }
-  for (const file of generatedGraphicFiles) {
+  for (const file of generatedJournalCardFiles) {
     const absolute = path.join(siteRoot, file);
     if (!await exists(absolute)) {
-      errors.push(`Missing generated publication graphic: ${file}`);
+      errors.push(`Missing generated journal title card: ${file}`);
       continue;
     }
     try {
-      validateGraphicalAbstractSvg((await readFile(absolute, "utf8")).trim());
+      validateSafeSvg((await readFile(absolute, "utf8")).trim());
     } catch (error) {
       errors.push(`${file}: ${error.message}`);
     }

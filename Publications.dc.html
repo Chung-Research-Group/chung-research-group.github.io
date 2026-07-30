@@ -19,7 +19,8 @@
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="feed.js?v=20260730-1"></script>
+<script src="publication-visuals.js?v=20260730-3"></script>
+<script src="feed.js?v=20260730-3"></script>
 <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async src="https://badge.dimensions.ai/badge.js"></script>
 <style>
@@ -40,14 +41,16 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
 .publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 6px;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
-.publication-graphic{margin:10px 0 2px;border:1px solid color-mix(in srgb,var(--color-text) 18%,transparent);background:color-mix(in srgb,var(--color-accent) 2%,var(--color-bg))}
-.publication-graphic>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.05em;text-transform:uppercase;font-weight:800;color:var(--color-accent-700);cursor:pointer;list-style-position:inside}
-.publication-graphic-badge{display:inline-flex;align-items:center;padding:1px 6px;border:1px solid #5B6770;font-family:inherit;font-size:11px;line-height:16px;letter-spacing:.04em;color:#5B6770;background:var(--color-bg)}
-.publication-graphic figure{min-height:0;margin:0;padding:0 12px 12px}
-.publication-graphic img{display:block;width:100%;height:auto;aspect-ratio:40/21;object-fit:contain;border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);background:#F8FAFD}
-.publication-graphic figcaption{margin:7px 0 0;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
-.publication-graphic-fallback{display:none;padding:18px;font-size:14px;line-height:20px;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:color-mix(in srgb,var(--color-text) 4%,transparent)}
-.publication-graphic-fallback.is-visible{display:block}
+.publication-row{display:grid;grid-template-columns:64px clamp(150px,13vw,190px) minmax(0,1fr);gap:0 20px;padding:18px 0;border-top:1px solid color-mix(in srgb,var(--color-text) 18%,transparent)}
+.publication-number{font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:30px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent-700)}
+.publication-visual{min-width:0;margin:0;align-self:start}
+.publication-visual-link{position:relative;display:block;border:1px solid color-mix(in srgb,var(--color-text) 18%,transparent);background:#fff;text-decoration:none;overflow:hidden;box-shadow:0 4px 12px color-mix(in srgb,var(--color-text) 8%,transparent)}
+.publication-visual-link:focus-visible{outline:3px solid var(--color-accent-400);outline-offset:3px}
+.publication-visual img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#fff}
+.publication-visual-unavailable{display:grid;place-items:center;min-height:140px;padding:18px;font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:700;text-align:center;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:var(--color-accent-100)}
+.publication-visual-label{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:5px 7px;font-family:var(--font-heading);font-size:10px;line-height:14px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:#fff;background:rgba(0,42,80,.88)}
+.publication-visual-credit{display:block;margin:5px 0 0;font-size:10px;line-height:14px;color:color-mix(in srgb,var(--color-text) 64%,transparent)}
+.publication-bibliography{min-width:0}
 .publication-search-tools{display:flex;align-items:center;gap:12px 16px;flex:1 1 520px;min-width:280px;flex-wrap:wrap}
 .publication-search-input{flex:1 1 280px;width:100%;max-width:440px;min-width:0}
 .publication-citation-downloads{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -86,7 +89,10 @@ body{zoom:0.88}
   .publication-filter-section{grid-template-columns:1fr;gap:3px}
   .publication-filter-section-title{text-align:left}
   .publication-filter-section-items{justify-content:flex-start}
-  .publication-graphic figure{min-height:0 !important}
+  .publication-row{grid-template-columns:44px minmax(0,1fr)!important;gap:12px 14px}
+  .publication-number{grid-column:1;grid-row:1}
+  .publication-visual{grid-column:2;grid-row:1;width:min(240px,100%)}
+  .publication-bibliography{grid-column:2;grid-row:2}
 }
 a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
@@ -100,6 +106,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
     <a href="People.dc.html">People</a>
     <a href="Software %26 Data.dc.html">Software &amp; Data</a>
     <a href="Publications.dc.html" style="color:var(--color-accent)">Publications</a>
+    <a href="Statistics.dc.html">Statistics</a>
     <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
   </nav>
 
@@ -168,9 +175,17 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
           </div>
           <div>
             <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="6">
-              <div data-publication-no="{{ p.no }}" style="display:grid;grid-template-columns:64px 1fr;gap:0 20px;padding:18px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
-                <p style="font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:30px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent-700)">{{ p.dispNo }}</p>
-                <div>
+              <div class="publication-row" data-publication-no="{{ p.no }}">
+                <p class="publication-number">{{ p.dispNo }}</p>
+                <figure class="publication-visual" data-publication-visual data-visual-kind="{{ p.publicationVisual.kind }}" data-visual-availability="{{ p.publicationVisual.availabilityStatus }}">
+                  <a class="publication-visual-link" data-publication-visual-link href="{{ p.publicationVisual.sourcePage }}" target="_blank" rel="noopener noreferrer" title="{{ p.publicationVisual.credit }}">
+                    <img data-publication-visual-image src="{{ p.publicationVisual.src }}" width="{{ p.publicationVisual.width }}" height="{{ p.publicationVisual.height }}" alt="{{ p.publicationVisual.alt }}" loading="lazy" decoding="async" onLoad="{{ onPublicationVisualLoad }}" onError="{{ onPublicationVisualError }}" data-primary-src="{{ p.publicationVisual.src }}" data-fallback-src="{{ p.publicationVisual.fallbackSrc }}" data-fallback-width="{{ p.publicationVisual.fallbackWidth }}" data-fallback-height="{{ p.publicationVisual.fallbackHeight }}" data-fallback-alt="{{ p.publicationVisual.fallbackAlt }}" data-fallback-label="{{ p.publicationVisual.fallbackLabel }}" data-fallback-source-page="{{ p.publicationVisual.fallbackSourcePage }}" data-fallback-credit="{{ p.publicationVisual.fallbackCredit }}" data-fallback-attribution="{{ p.publicationVisual.fallbackAttribution }}" data-fallback-availability="{{ p.publicationVisual.fallbackAvailabilityStatus }}">
+                    <span class="publication-visual-unavailable" data-publication-visual-unavailable hidden>Journal image unavailable; publication details remain available.</span>
+                    <span class="publication-visual-label" data-publication-visual-label>{{ p.publicationVisual.label }}</span>
+                  </a>
+                  <figcaption class="publication-visual-credit" data-publication-visual-credit title="{{ p.publicationVisual.credit }}">{{ p.publicationVisual.attribution }}</figcaption>
+                </figure>
+                <div class="publication-bibliography">
                   <p style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:29px;margin:0"><a href="{{ p.html }}" style="color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></p>
                   <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0">
                     <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
@@ -178,12 +193,6 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)"><span style="font-weight:700">{{ p.journal }}</span><span>{{ p.meta }}</span></p>
                   <sc-if value="{{ p.note }}" hint-placeholder-val="{{ false }}"><p style="font-size:18px;line-height:25px;margin:6px 0 0;font-weight:700;color:var(--color-accent-800)">{{ p.note }}</p></sc-if>
-                  <sc-if value="{{ p.graphicalAbstract }}" hint-placeholder-val="{{ false }}">
-                    <details class="publication-graphic" data-graphical-abstract data-src="{{ p.graphicalAbstract.src }}" data-alt="{{ p.graphicalAbstract.alt }}" data-width="{{ p.graphicalAbstract.width }}" data-height="{{ p.graphicalAbstract.height }}">
-                      <summary>Graphical abstract <span class="publication-graphic-badge">Metadata-generated</span></summary>
-                      <div data-graphical-abstract-body></div>
-                    </details>
-                  </sc-if>
                   <sc-if value="{{ p.hasEnrichment }}" hint-placeholder-val="{{ false }}">
                     <div data-publication-enrichment style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin:8px 0 0">
                       <sc-if value="{{ p.citeText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;line-height:20px;font-weight:700;color:color-mix(in srgb, var(--color-text) 74%, transparent)">{{ p.citeText }}</span></sc-if>
@@ -228,7 +237,7 @@ class Component extends DCLogic {
       const response = await fetch('data/publication-metadata.json', { cache: 'no-store' });
       if (!response.ok) throw new Error('Publication metadata unavailable');
       const metadata = await response.json();
-      if (!metadata || metadata.schemaVersion !== 2 || !metadata.publications) throw new Error('Publication metadata invalid');
+      if (!metadata || metadata.schemaVersion !== 3 || !metadata.publications) throw new Error('Publication metadata invalid');
       this.setState({ metadata, metadataError: false });
     } catch (error) {
       this.setState({ metadata: null, metadataError: true });
@@ -240,6 +249,69 @@ class Component extends DCLogic {
       try { window._altmetric_embed_init && window._altmetric_embed_init(); } catch (e) {}
       try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
     }, 400);
+  }
+  handlePublicationVisualLoad(event) {
+    const image = event.currentTarget;
+    const figure = image && image.closest('[data-publication-visual]');
+    if (!image || !figure || image.getAttribute('data-fallback-applied') === 'true') return;
+    figure.setAttribute('data-visual-load-state', 'loaded');
+  }
+  handlePublicationVisualError(event) {
+    const image = event.currentTarget;
+    const figure = image && image.closest('[data-publication-visual]');
+    const link = figure && figure.querySelector('[data-publication-visual-link]');
+    if (!image || !figure || !link) return;
+
+    const currentSrc = image.getAttribute('src') || '';
+    const primarySrc = image.getAttribute('data-primary-src') || '';
+    const primaryRetryCount = Number(image.getAttribute('data-primary-retry-count') || 0);
+    const primaryIsLocal = /^images\/publications\/(?:article-graphics|journal-marks)\/[a-z0-9._-]+\.(?:png|jpe?g|webp)$/i.test(primarySrc);
+    if (primaryIsLocal && currentSrc === primarySrc && primaryRetryCount < 1) {
+      image.setAttribute('data-primary-retry-count', String(primaryRetryCount + 1));
+      figure.setAttribute('data-visual-load-state', 'retrying');
+      image.src = primarySrc + (primarySrc.includes('?') ? '&' : '?') + 'retry=1';
+      return;
+    }
+
+    const fallbackSrc = image.getAttribute('data-fallback-src') || '';
+    const fallbackApplied = image.getAttribute('data-fallback-applied') === 'true';
+    const fallbackIsLocal = /^images\/publications\/journal-cards\/[a-z0-9._-]+\.svg$/i.test(fallbackSrc);
+    if (fallbackApplied || image.getAttribute('src') === fallbackSrc || !fallbackIsLocal) {
+      image.hidden = true;
+      link.removeAttribute('href');
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+      link.setAttribute('aria-label', 'Journal image unavailable; publication details remain available.');
+      const unavailable = link.querySelector('[data-publication-visual-unavailable]');
+      if (unavailable) unavailable.hidden = false;
+      const label = link.querySelector('[data-publication-visual-label]');
+      if (label) label.textContent = 'Journal unavailable';
+      const credit = figure.querySelector('[data-publication-visual-credit]');
+      if (credit) {
+        credit.textContent = 'Local journal title card unavailable';
+        credit.title = 'The publication bibliography and DOI link remain available.';
+      }
+      figure.setAttribute('data-visual-load-state', 'unavailable');
+      return;
+    }
+
+    image.setAttribute('data-fallback-applied', 'true');
+    image.alt = image.getAttribute('data-fallback-alt') || 'Original journal title card.';
+    image.width = Number(image.getAttribute('data-fallback-width')) || 960;
+    image.height = Number(image.getAttribute('data-fallback-height')) || 540;
+    link.href = image.getAttribute('data-fallback-source-page') || '#top';
+    link.title = image.getAttribute('data-fallback-credit') || 'Original journal title card; not publisher artwork.';
+    const label = link.querySelector('[data-publication-visual-label]');
+    if (label) label.textContent = image.getAttribute('data-fallback-label') || 'Journal';
+    const credit = figure.querySelector('[data-publication-visual-credit]');
+    if (credit) {
+      credit.textContent = image.getAttribute('data-fallback-attribution') || 'Original journal title card';
+      credit.title = link.title;
+    }
+    figure.setAttribute('data-visual-kind', 'journal-title-card');
+    figure.setAttribute('data-visual-availability', image.getAttribute('data-fallback-availability') || 'neutral-original-title-card');
+    figure.setAttribute('data-visual-load-state', 'fallback');
+    image.src = fallbackSrc;
   }
   componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); } else { setTimeout(t, 50); } }; t(); }
   componentDidUpdate() { this.refreshBadges(); }
@@ -288,12 +360,18 @@ class Component extends DCLogic {
     full.forEach(p => {
       const enrichment = metadataPublications[this.normalizeDoi(p.doi)] || null;
       p.enrichment = enrichment;
+      const googleScholarCount = enrichment?.googleScholar?.citationCount;
       const openAlexCount = enrichment?.openAlex?.citationCount;
       const semanticScholarCount = enrichment?.semanticScholar?.citationCount;
+      const hasGoogleScholarCount = Number.isFinite(googleScholarCount);
       const hasOpenAlexCount = Number.isFinite(openAlexCount);
       const hasSemanticScholarCount = Number.isFinite(semanticScholarCount);
-      const citationCount = hasOpenAlexCount ? openAlexCount : (hasSemanticScholarCount ? semanticScholarCount : null);
-      const citationSource = hasOpenAlexCount ? 'OpenAlex' : (hasSemanticScholarCount ? 'Semantic Scholar' : '');
+      const citationCount = hasGoogleScholarCount
+        ? googleScholarCount
+        : (hasOpenAlexCount ? openAlexCount : (hasSemanticScholarCount ? semanticScholarCount : null));
+      const citationSource = hasGoogleScholarCount
+        ? 'Google Scholar'
+        : (hasOpenAlexCount ? 'OpenAlex' : (hasSemanticScholarCount ? 'Semantic Scholar' : ''));
       p.citeText = Number.isFinite(citationCount)
         ? ('Cited by ' + citationCount.toLocaleString('en-US') + ' \u00b7 ' + citationSource)
         : '';
@@ -352,6 +430,7 @@ class Component extends DCLogic {
         : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       const sourceStates = [
         metadata.sources?.googleScholar?.status === 'stale' ? 'Google Scholar using last snapshot' : '',
+        metadata.sources?.googleScholar?.status === 'partial' ? 'Google Scholar per-paper matches partially refreshed' : '',
         metadata.sources?.openAlex?.status === 'stale' ? 'OpenAlex using last snapshot' : '',
         metadata.sources?.semanticScholar?.status === 'stale' ? 'Semantic Scholar using last snapshot' : ''
       ].filter(Boolean);
@@ -424,6 +503,8 @@ class Component extends DCLogic {
       metadataStatus,
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
+      onPublicationVisualLoad: (event) => this.handlePublicationVisualLoad(event),
+      onPublicationVisualError: (event) => this.handlePublicationVisualError(event),
       empty: filtered.length === 0,
       searching: !!q || !!activeTheme,
       resultCount: filtered.length,
@@ -432,45 +513,6 @@ class Component extends DCLogic {
     };
   }
 }
-</script>
-<script>
-(() => {
-  const loadGraphic = (details) => {
-    if (!details?.open) return;
-    const body = details.querySelector('[data-graphical-abstract-body]');
-    if (!body || body.dataset.ready === 'true' || !details.dataset.src) return;
-    body.dataset.ready = 'true';
-    const figure = document.createElement('figure');
-    const link = document.createElement('a');
-    link.href = details.dataset.src;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    const image = document.createElement('img');
-    image.setAttribute('data-graphical-abstract-image', '');
-    image.width = Number(details.dataset.width) || 1200;
-    image.height = Number(details.dataset.height) || 630;
-    image.alt = details.dataset.alt || 'Publication graphical summary.';
-    image.loading = 'lazy';
-    image.decoding = 'async';
-    const fallback = document.createElement('span');
-    fallback.className = 'publication-graphic-fallback';
-    fallback.setAttribute('data-graphical-abstract-fallback', '');
-    fallback.textContent = 'Visual summary unavailable.';
-    const caption = document.createElement('figcaption');
-    caption.textContent = 'Generated from DOI metadata and reviewed website labels. Not the publisher’s official graphical abstract.';
-    image.addEventListener('error', () => {
-      image.hidden = true;
-      fallback.classList.add('is-visible');
-    }, { once: true });
-    link.append(image);
-    figure.append(link, fallback, caption);
-    body.append(figure);
-    image.src = details.dataset.src;
-  };
-  document.addEventListener('toggle', (event) => {
-    if (event.target.matches?.('[data-graphical-abstract]')) loadGraphic(event.target);
-  }, true);
-})();
 </script>
 </body>
 </html>

@@ -10,16 +10,40 @@ making one external API request per publication.
   reference counts, publication types, and fields of study.
 - OpenAlex Works API: citation counts, topics, field hierarchy, keywords,
   citation percentiles, and yearly citation counts.
-- Google Scholar author profile metrics through the SerpApi Google Scholar
-  Author API: total citations, h-index, i10-index, and yearly citation counts.
+- Google Scholar author-profile and per-paper metrics through the SerpApi
+  Google Scholar Author API: total citations, h-index, i10-index, yearly
+  citation counts, and article citation counts.
 
 Google Scholar does not provide a supported public API or bulk export service,
 and its help page asks automated clients to respect its access restrictions.
 The refresh job therefore does not scrape Scholar directly. SerpApi is called
-server-side once per daily refresh, while visitors only receive the committed
-static snapshot. The Google Scholar total covers the full public author profile;
-the OpenAlex and Semantic Scholar totals are sums over the curated DOI list, so
-the three values should not be compared as if they had identical coverage.
+server-side once per daily refresh, with `num=100` and `sort=pubdate`, while
+visitors only receive the committed static snapshot. No direct Scholar request
+is made by a visitor's browser.
+
+The Google Scholar total remains an author-profile aggregate and is never
+recomputed from the website's DOI list. Each DOI record can additionally carry
+a `googleScholar` article count and `sourceFreshness.googleScholar` state.
+Publication cards prefer that per-paper count, then OpenAlex, then Semantic
+Scholar. Because the profile aggregate covers publications outside the curated
+website list, it must not be compared with the OpenAlex or Semantic Scholar
+catalogue sums as if their coverage were identical.
+
+Per-paper joins are deliberately conservative and deterministic. The matching
+precedence is:
+
+1. a reviewed DOI-to-Scholar-citation-ID override;
+2. the citation ID retained by the previous snapshot;
+3. a unique exact normalized feed title with a publication year within one
+   year;
+4. a unique exact Semantic Scholar or OpenAlex title with a compatible year;
+5. a unique long title prefix with compatible year and strict length guards.
+
+Punctuation, common HTML entities, Unicode compatibility forms, case, and
+whitespace are normalized; fuzzy similarity is not used. The reviewed override
+for DOI `10.1021/acs.jpcc.9b02116` selects
+`q-UUrywAAAAJ:3fE2CSJIrl8C`, avoiding a similar zero-citation duplicate on the
+profile.
 
 The peer-reviewed DOI in `feed.js` is the canonical join key. ChemRxiv records
 remain excluded by the publication review automation.
@@ -34,6 +58,14 @@ successful response that suddenly covers less than 80% of the previous source
 coverage is also treated as stale, preventing a partial API response from
 erasing good metadata.
 
+When an otherwise accepted response omits one or more DOI records that existed
+in the previous snapshot, the job retains those records but marks the source
+stale instead of presenting the merged result as fully current. Source metadata
+records `observedMatched` and `retainedMatched` separately. Each publication
+also records whether its source record was observed in the accepted response,
+retained from the prior snapshot, or unavailable, together with the last known
+content-update time. A later complete response returns the source to `ok`.
+
 The existing `PUBLICATION_GITHUB_TOKEN` secret is used to publish changed
 metadata. Configure these source credentials:
 
@@ -41,16 +73,25 @@ metadata. Configure these source credentials:
   OpenAlex key is sufficient for this daily job.
 - `SEMANTIC_SCHOLAR_API_KEY` — optional, but recommended for a dedicated rate
   limit instead of the shared anonymous pool.
-- `SERPAPI_API_KEY` — required to refresh Google Scholar profile metrics.
+- `SERPAPI_API_KEY` — required to refresh Google Scholar profile and per-paper
+  metrics.
   SerpApi's recurring free plan currently provides substantially more requests
   than this one-profile daily job needs.
 
 OpenAlex may currently answer some anonymous requests, but that behavior is not
 a production contract. The retired `mailto` polite-pool parameter is not used.
 If the SerpApi key is absent, exhausted, or temporarily fails, the job retains
-the last Google Scholar snapshot and marks that source stale instead of
-replacing it with zero. A drop below 80% of the previous citation total is also
-rejected as a likely provider or parsing failure.
+both the previous profile aggregate and prior per-paper records and marks their
+freshness stale instead of replacing values with zero. Ambiguous current
+matches also retain prior DOI records. A drop below 80% of the previous
+citation total or below 80% of prior per-paper coverage is rejected as a likely
+provider or parsing failure. A successful but incomplete match above that
+safety threshold is marked `partial`; newly matched records are fresh and
+retained unmatched records are stale.
+
+The author profile currently fits in one 100-article request. If SerpApi reports
+that this response is truncated, the job fails closed and preserves the prior
+snapshot rather than silently publishing partial data.
 
 `snapshotUpdatedAt` records when the committed snapshot content or health last
 changed. Each source's `contentUpdatedAt` records when that source's retained

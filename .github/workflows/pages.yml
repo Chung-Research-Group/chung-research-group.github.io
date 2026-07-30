@@ -34,6 +34,8 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Validate and test website
+        env:
+          JOURNAL_IMPACT_FACTORS_JSON: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch') && secrets.JOURNAL_IMPACT_FACTORS_JSON || '' }}
         run: npm test
 
       - name: Configure GitHub Pages
