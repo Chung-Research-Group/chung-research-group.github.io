@@ -231,6 +231,33 @@ test('CFF omits ORCID from entity-form authors', () => {
   assert.doesNotMatch(cff, /orcid:/);
 });
 
+test('rejects malformed or checksum-invalid ORCIDs and never emits them in CFF', () => {
+  const record = normalizeCanonicalRecord({
+    DOI: '10.5555/invalid-orcid',
+    title: ['Invalid ORCID'],
+    author: [{ given: 'Ada', family: 'Lovelace' }],
+    'container-title': ['Journal of Tests'],
+    issued: { 'date-parts': [[2024]] }
+  });
+  record.authors[0].orcid = 'not-an-orcid';
+  const snapshot = {
+    schemaVersion: 1,
+    snapshotUpdatedAt: '2024-06-01T00:00:00.000Z',
+    publications: { [record.doi]: record }
+  };
+
+  const malformed = validateBibliography(snapshot, [record.doi]);
+  assert.equal(malformed.ok, false);
+  assert.ok(malformed.errors.some(error => error.includes('has an invalid ORCID')));
+  assert.doesNotMatch(generateCff(snapshot, [record.doi]), /orcid:/);
+
+  record.authors[0].orcid = 'https://orcid.org/0000-0002-1825-0098';
+  const invalidChecksum = validateBibliography(snapshot, [record.doi]);
+  assert.equal(invalidChecksum.ok, false);
+  assert.ok(invalidChecksum.errors.some(error => error.includes('has an invalid ORCID')));
+  assert.doesNotMatch(generateCff(snapshot, [record.doi]), /orcid:/);
+});
+
 test('accepts legacy DOI suffix punctuation without truncating the identifier', () => {
   const legacyDoi = '10.1002/(SICI)1521-3951(199911)216:1<135::AID-PSSB135>3.0.CO;2-#';
   const encodedDoi = '10.1234/A+B%2FC';
@@ -254,6 +281,40 @@ test('accepts legacy DOI suffix punctuation without truncating the identifier', 
       '10.1002/(sici)1521-3951(199911)216:1<135::aid-pssb135>3.0.co;2-#',
       '10.1234/a+b%2fc'
     ]
+  );
+});
+
+test('normalizes DOI ASCII case without changing Unicode or decoding literal entities', () => {
+  const composed = normalizeCanonicalRecord({
+    DOI: '10.1234/\u00c4',
+    title: ['Composed Unicode DOI'],
+    author: [{ literal: 'Test Collaboration' }],
+    'container-title': ['Journal of Tests'],
+    published: { 'date-parts': [[2024]] }
+  });
+  const decomposedDoi = '10.1234/e\u0301';
+  const decomposed = normalizeCanonicalRecord({
+    DOI: decomposedDoi,
+    title: ['Decomposed Unicode DOI'],
+    author: [{ literal: 'Test Collaboration' }],
+    'container-title': ['Journal of Tests'],
+    published: { 'date-parts': [[2024]] }
+  });
+  const literalEntity = normalizeCanonicalRecord({
+    DOI: '10.1234/FOO&amp;BAR',
+    title: ['Literal entity text in DOI'],
+    author: [{ literal: 'Test Collaboration' }],
+    'container-title': ['Journal of Tests'],
+    published: { 'date-parts': [[2024]] }
+  });
+
+  assert.equal(composed.doi, '10.1234/\u00c4');
+  assert.equal(decomposed.doi, decomposedDoi);
+  assert.equal([...decomposed.doi].length, [...decomposedDoi].length);
+  assert.equal(literalEntity.doi, '10.1234/foo&amp;bar');
+  assert.equal(
+    doiResolverUrl(literalEntity.doi),
+    'https://doi.org/10.1234/foo%26amp%3Bbar'
   );
 });
 

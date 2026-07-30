@@ -81,13 +81,12 @@ function optionalText(value) {
 }
 
 function normalizeDoi(value) {
-  const cleaned = decodeEntities(String(value ?? ''))
+  const cleaned = String(value ?? '')
     .replace(/[\u0000-\u001f\u007f]/g, '')
     .replace(/^doi:\s*/i, '')
     .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '')
     .trim()
-    .normalize('NFC')
-    .toLowerCase();
+    .replace(/[A-Z]/g, character => character.toLowerCase());
   const match = cleaned.match(DOI_PATTERN);
   if (!match || match[0] !== cleaned) throw new Error(`Invalid DOI: ${value}`);
   return cleaned;
@@ -106,6 +105,14 @@ function normalizeOrcid(value) {
   if (!text) return undefined;
   const identifier = text.replace(/^https?:\/\/orcid\.org\//i, '').toUpperCase();
   if (!/^\d{4}-\d{4}-\d{4}-[\dX]{4}$/.test(identifier)) return undefined;
+  const compact = identifier.replaceAll('-', '');
+  let total = 0;
+  for (const character of compact.slice(0, 15)) {
+    total = (total + Number(character)) * 2;
+  }
+  const checksumValue = (12 - (total % 11)) % 11;
+  const checksum = checksumValue === 10 ? 'X' : String(checksumValue);
+  if (compact.at(-1) !== checksum) return undefined;
   return `https://orcid.org/${identifier}`;
 }
 
@@ -611,6 +618,9 @@ export function validateBibliography(snapshot, feedDois) {
         const display = authorDisplay(author);
         if (DISALLOWED_AUTHOR_TEXT.test(display)) errors.push(`${label} contains an abbreviated/UI-only marker`);
         const orcid = normalizeOrcid(author.orcid);
+        if (optionalText(author.orcid) && !orcid) {
+          errors.push(`${label} has an invalid ORCID`);
+        }
         const given = optionalText(author.given);
         const family = optionalText(author.family);
         if (orcid && given && family) {
@@ -750,7 +760,8 @@ function yamlLine(lines, indent, key, value) {
 function cffAuthorLines(lines, author, indent) {
   lines.push(`${' '.repeat(indent)}- ${author.literal ? `name: ${yamlString(author.literal)}` : `family-names: ${yamlString(author.family)}`}`);
   if (!author.literal && author.given) yamlLine(lines, indent + 2, 'given-names', author.given);
-  if (!author.literal && author.orcid) yamlLine(lines, indent + 2, 'orcid', author.orcid);
+  const orcid = normalizeOrcid(author.orcid);
+  if (!author.literal && orcid) yamlLine(lines, indent + 2, 'orcid', orcid);
 }
 
 function pageRange(record) {
