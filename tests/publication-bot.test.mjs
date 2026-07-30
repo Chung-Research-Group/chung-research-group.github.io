@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 
 import {
   TOPICS,
@@ -90,6 +91,18 @@ const geminiResponse = value => {
     steps: [{
       type: 'model_output',
       content: [{ type: 'text', text }]
+    }]
+  });
+};
+
+const githubModelsResponse = value => {
+  const text = typeof value === 'string' ? value : JSON.stringify(value);
+  return jsonResponse({
+    choices: [{
+      message: {
+        role: 'assistant',
+        content: text
+      }
     }]
   });
 };
@@ -561,6 +574,63 @@ test('uses the pinned default OpenAI classifier model when the variable is empty
   assert.equal(result.method, 'llm');
 });
 
+test('uses GitHub Models structured output with the pinned low-tier OpenAI model', async () => {
+  let requestedModel = '';
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'github',
+    apiKey: 'job-token',
+    model: '',
+    timeoutMs: 1000,
+    fetchImpl: async (url, options) => {
+      assert.equal(String(url), 'https://models.github.ai/inference/chat/completions');
+      assert.equal(options.headers.authorization, 'Bearer job-token');
+      assert.equal(options.headers['x-github-api-version'], '2026-03-10');
+      const request = JSON.parse(options.body);
+      requestedModel = request.model;
+      assert.equal(request.response_format.type, 'json_schema');
+      assert.doesNotMatch(
+        JSON.stringify(request.response_format.json_schema.schema),
+        /"maxItems"|"maxLength"|"minimum"|"maximum"/
+      );
+      assert.match(JSON.stringify(request.messages), /Reticular Materials/);
+      return githubModelsResponse({
+        labels: ['Grand Canonical Monte Carlo', 'Adsorption', 'Reticular Materials'],
+        proposedTopics: [{
+          name: 'Tritium Processing',
+          group: 'Applications',
+          rationale: 'The isotope-processing application is central to the paper.'
+        }],
+        confidence: 0.89,
+        summary: 'GCMC is used for adsorption in reticular materials.'
+      });
+    }
+  });
+
+  assert.equal(requestedModel, 'openai/gpt-4.1-mini');
+  assert.equal(result.method, 'llm');
+  assert.equal(result.provider, 'github');
+  assert.deepEqual(
+    result.labels,
+    ['Grand Canonical Monte Carlo', 'Adsorption', 'Reticular Materials']
+  );
+  const message = candidateMessage({ ...publicationCandidate(), classification: result });
+  assert.match(message, /분류 방식: GitHub Models · openai\/gpt-4\.1-mini/);
+  assert.equal(classificationFromCandidateMessage(message).provider, 'github');
+});
+
+test('publication monitor gives the built-in job token only read and model permissions', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/publication-monitor.yml', import.meta.url),
+    'utf8'
+  );
+  assert.match(workflow, /permissions:\s*\n\s+contents: read\s*\n\s+models: read/);
+  assert.doesNotMatch(workflow, /pull-requests:\s*write|contents:\s*write|actions:\s*read/);
+  assert.match(workflow, /GITHUB_MODELS_TOKEN:\s*\$\{\{\s*github\.token\s*\}\}/);
+  assert.match(workflow, /PUBLICATION_LLM_PROVIDER:.*\|\|\s*'github'/);
+  assert.match(workflow, /PUBLICATION_LLM_MODEL:\s*\$\{\{\s*vars\.PUBLICATION_LLM_MODEL\s*\}\}/);
+  assert.doesNotMatch(workflow, /PUBLICATION_LLM_MODEL:.*\|\|/);
+});
+
 test('accepts Gemini structured output through the same classifier contract', async () => {
   let calls = 0;
   const result = await classifyCandidate(publicationCandidate(), {
@@ -630,6 +700,70 @@ test('falls back deterministically on rate limits, malformed output, and refusal
       assert.ok(result.warning);
     });
   }
+});
+
+test('does not retry a provider rate limit and opens the run-level LLM circuit', async () => {
+  let calls = 0;
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'github',
+    apiKey: 'job-token',
+    model: '',
+    timeoutMs: 1000,
+    retryDelays: [0, 0],
+    sleep: async () => {},
+    fetchImpl: async () => {
+      calls += 1;
+      return jsonResponse({ error: { code: 'rate_limit_exceeded' } }, 429);
+    }
+  });
+
+  assert.equal(calls, 1);
+  assert.equal(result.method, 'deterministic');
+  assert.equal(result.warning, 'provider quota or rate limit');
+  assert.equal(result.disableProviderForRun, true);
+});
+
+test('does not retry a quota response delivered with a transient HTTP status', async () => {
+  let calls = 0;
+  const result = await classifyCandidate(publicationCandidate(), {
+    provider: 'github',
+    apiKey: 'job-token',
+    model: '',
+    timeoutMs: 1000,
+    retryDelays: [0, 0],
+    sleep: async () => {},
+    fetchImpl: async () => {
+      calls += 1;
+      return jsonResponse({ error: { code: 'quota_exceeded' } }, 503);
+    }
+  });
+
+  assert.equal(calls, 1);
+  assert.equal(result.method, 'deterministic');
+  assert.equal(result.warning, 'provider quota or rate limit');
+  assert.equal(result.disableProviderForRun, true);
+});
+
+test('bounds GitHub Models publication input below its low-tier context allowance', async () => {
+  const candidate = publicationCandidate({ abstract: '가'.repeat(12000) });
+  await classifyCandidate(candidate, {
+    provider: 'github',
+    apiKey: 'job-token',
+    model: '',
+    timeoutMs: 1000,
+    fetchImpl: async (_url, options) => {
+      const request = JSON.parse(options.body);
+      const userMessage = request.messages.find(message => message.role === 'user');
+      const input = JSON.parse(userMessage.content);
+      assert.equal(input.abstract.length, 5000);
+      return githubModelsResponse({
+        labels: ['Adsorption'],
+        proposedTopics: [],
+        confidence: 0.8,
+        summary: 'Adsorption is the central topic.'
+      });
+    }
+  });
 });
 
 test('retries a non-JSON transient provider error before deterministic fallback', async () => {
