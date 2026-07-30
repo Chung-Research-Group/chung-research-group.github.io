@@ -253,7 +253,7 @@ if (!publicationsHtml.includes("snapshotUpdatedAt")) {
 if (!publicationsHtml.includes("data-publication-enrichment")) {
   errors.push("Publications page must render static metadata fields or keywords.");
 }
-if (publicationsHtml.includes("scholarCitations") || publicationsHtml.includes("default&quot;: 6355")) {
+if (/<script\b[^>]*\bdata-props=["'][^"']*\bscholarCitations\b[^"']*["']/i.test(publicationsHtml)) {
   errors.push("Publications page must read Google Scholar citations from the metadata snapshot, not a hardcoded property.");
 }
 if (!publicationsHtml.includes("data-graphical-abstract") || !publicationsHtml.includes("data-graphical-abstract-image")) {

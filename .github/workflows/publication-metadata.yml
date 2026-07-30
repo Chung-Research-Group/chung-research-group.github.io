@@ -20,6 +20,8 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_SCHOLAR_AUTHOR_ID: 'q-UUrywAAAAJ'
     steps:
       - name: Check out repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -40,7 +42,6 @@ jobs:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
           SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
-          GOOGLE_SCHOLAR_AUTHOR_ID: 'q-UUrywAAAAJ'
         run: node scripts/refresh-publication-metadata.mjs
 
       - name: Test metadata refresh logic

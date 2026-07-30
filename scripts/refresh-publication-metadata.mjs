@@ -7,6 +7,9 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const defaultOutput = path.join(repositoryRoot, "data", "publication-metadata.json");
 const nonRetryableRequestError = Symbol("nonRetryableRequestError");
+const googleScholarAuthorId = String(
+  process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ"
+).trim();
 
 export function normalizeDoi(value = "") {
   return String(value)
@@ -50,7 +53,15 @@ async function requestJson(url, options = {}, fetchImpl = fetch, { maxAttempts =
     let wait = Math.min(8000, 750 * (2 ** attempt));
     try {
       const response = await fetchImpl(url, options);
-      if (response.ok) return await response.json();
+      if (response.ok) {
+        try {
+          return await response.json();
+        } catch {
+          const error = new Error(`${options.method || "GET"} ${safeUrl}: invalid JSON response`);
+          error[nonRetryableRequestError] = true;
+          throw error;
+        }
+      }
       if (response.status !== 429 && response.status < 500) {
         const error = new Error(`${options.method || "GET"} ${safeUrl}: HTTP ${response.status}`);
         error[nonRetryableRequestError] = true;
@@ -232,7 +243,6 @@ export async function fetchGoogleScholarProfile({
     engine: "google_scholar_author",
     author_id: normalizedAuthorId,
     hl: "en",
-    num: "100",
     api_key: normalizedApiKey
   });
   const payload = await requestJson(
@@ -384,10 +394,9 @@ export function buildMetadata({
 }) {
   const previousPublications = previous.publications || {};
   const priorGoogleScholar = previous.googleScholar || null;
-  const fallbackAuthorId = process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ";
   const retainedGoogleScholar = googleScholar || priorGoogleScholar || {
-    profileId: fallbackAuthorId,
-    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(fallbackAuthorId)}&hl=en`,
+    profileId: googleScholarAuthorId,
+    profileUrl: `https://scholar.google.com/citations?user=${encodeURIComponent(googleScholarAuthorId)}&hl=en`,
     name: null,
     affiliations: null,
     citations: { all: 0, since: null, sinceYear: null },
@@ -568,7 +577,10 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
         errors.push(`googleScholar ${metricName}.sinceYear must be null or a valid year`);
       }
     }
-    for (const annual of googleScholar.countsByYear || []) {
+    if (googleScholar.countsByYear != null && !Array.isArray(googleScholar.countsByYear)) {
+      errors.push("googleScholar countsByYear must be an array");
+    }
+    for (const annual of Array.isArray(googleScholar.countsByYear) ? googleScholar.countsByYear : []) {
       if (!Number.isInteger(annual?.year)
           || !Number.isFinite(annual?.citationCount)
           || annual.citationCount < 0) {
@@ -576,11 +588,10 @@ export function validateMetadataSnapshot(metadata, expectedDois = []) {
       }
     }
   }
-  const expectedGoogleScholarId = process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ";
-  if (googleScholar?.profileId !== expectedGoogleScholarId
-      || googleScholarSource?.profileId !== expectedGoogleScholarId
+  if (googleScholar?.profileId !== googleScholarAuthorId
+      || googleScholarSource?.profileId !== googleScholarAuthorId
       || googleScholar?.profileId !== googleScholarSource?.profileId) {
-    errors.push(`googleScholar profile identity must match ${expectedGoogleScholarId}`);
+    errors.push(`googleScholar profile identity must match ${googleScholarAuthorId}`);
   }
   if (metadata?.totals?.publications !== Object.keys(entries).length) {
     errors.push("totals.publications does not match the DOI record count");
@@ -631,7 +642,7 @@ async function main() {
       apiKey: process.env.OPENALEX_API_KEY || ""
     },
     googleScholar: {
-      authorId: process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ",
+      authorId: googleScholarAuthorId,
       apiKey: process.env.SERPAPI_API_KEY || ""
     }
   };
@@ -661,12 +672,13 @@ async function main() {
     status: "stale",
     reason: options.googleScholar.apiKey ? "request-failed" : "unconfigured"
   };
+  let googleScholarFailureDetail = null;
   if (options.googleScholar.apiKey) {
     try {
       const profile = await fetchGoogleScholarProfile(options.googleScholar);
       googleScholarCoverage = guardGoogleScholarProfile({ profile, previous });
     } catch (error) {
-      console.warn(`Google Scholar refresh failed; preserving previous values: ${error?.message}`);
+      googleScholarFailureDetail = error?.message || "request failed";
     }
   }
   if (semanticOutcome.status === "rejected") {
@@ -692,6 +704,12 @@ async function main() {
     );
   } else if (!options.googleScholar.apiKey) {
     console.warn("SERPAPI_API_KEY is not configured; preserving the previous Google Scholar snapshot.");
+  } else if (googleScholarCoverage.status === "stale") {
+    console.warn(
+      `Google Scholar refresh is stale (${googleScholarCoverage.reason || "request-failed"})`
+      + `${googleScholarFailureDetail ? `: ${googleScholarFailureDetail}` : ""}; `
+      + "preserving the previous snapshot."
+    );
   }
   if (!Object.keys(semanticCoverage.records).length
       && !Object.keys(openAlexCoverage.records).length

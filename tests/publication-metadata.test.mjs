@@ -219,6 +219,25 @@ test("does not retry a non-retryable API client error", async () => {
   assert.equal(requests, 1);
 });
 
+test("reports invalid JSON responses without retrying or leaking response content", async () => {
+  let requests = 0;
+  const fetchImpl = async () => {
+    requests++;
+    return {
+      ok: true,
+      json: async () => {
+        throw new SyntaxError("unexpected private response");
+      }
+    };
+  };
+  await assert.rejects(
+    fetchOpenAlex(["10.1000/test"], { fetchImpl }),
+    (error) => /invalid JSON response/.test(error.message)
+      && !error.message.includes("private response")
+  );
+  assert.equal(requests, 1);
+});
+
 test("rejects a collapsed source response so prior records can be preserved", () => {
   const previousPublications = {};
   const fresh = {};
@@ -335,5 +354,12 @@ test("repeated total outages do not churn snapshot timestamps", () => {
   assert.throws(
     () => validateMetadataSnapshot(mismatchedProfile, ["10.1000/test"]),
     /profile identity/
+  );
+
+  const invalidHistory = structuredClone(repeated);
+  invalidHistory.googleScholar.countsByYear = {};
+  assert.throws(
+    () => validateMetadataSnapshot(invalidHistory, ["10.1000/test"]),
+    /countsByYear must be an array/
   );
 });
