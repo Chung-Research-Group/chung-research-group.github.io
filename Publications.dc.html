@@ -17,7 +17,7 @@
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="feed.js?v=20260717-2"></script>
+<script src="feed.js?v=20260730-1"></script>
 <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async src="https://badge.dimensions.ai/badge.js"></script>
 <style>
@@ -38,6 +38,14 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
 .publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 6px;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
+.publication-graphic{margin:10px 0 2px;border:1px solid color-mix(in srgb,var(--color-text) 18%,transparent);background:color-mix(in srgb,var(--color-accent) 2%,var(--color-bg))}
+.publication-graphic>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;font-family:var(--font-heading);font-size:14px;line-height:20px;letter-spacing:.05em;text-transform:uppercase;font-weight:800;color:var(--color-accent-700);cursor:pointer;list-style-position:inside}
+.publication-graphic-badge{display:inline-flex;align-items:center;padding:1px 6px;border:1px solid #5B6770;font-family:inherit;font-size:11px;line-height:16px;letter-spacing:.04em;color:#5B6770;background:var(--color-bg)}
+.publication-graphic figure{min-height:0;margin:0;padding:0 12px 12px}
+.publication-graphic img{display:block;width:100%;height:auto;aspect-ratio:40/21;object-fit:contain;border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);background:#F8FAFD}
+.publication-graphic figcaption{margin:7px 0 0;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
+.publication-graphic-fallback{display:none;padding:18px;font-size:14px;line-height:20px;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:color-mix(in srgb,var(--color-text) 4%,transparent)}
+.publication-graphic-fallback.is-visible{display:block}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -71,6 +79,7 @@ body{zoom:0.88}
   .publication-filter-section{grid-template-columns:1fr;gap:3px}
   .publication-filter-section-title{text-align:left}
   .publication-filter-section-items{justify-content:flex-start}
+  .publication-graphic figure{min-height:0 !important}
 }
 a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
@@ -160,6 +169,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)">{{ p.authors }}</p>
                   <p style="font-size:18.5px;line-height:26px;margin:6px 0 0;color:var(--color-text)"><span style="font-weight:700">{{ p.journal }}</span><span>{{ p.meta }}</span></p>
                   <sc-if value="{{ p.note }}" hint-placeholder-val="{{ false }}"><p style="font-size:18px;line-height:25px;margin:6px 0 0;font-weight:700;color:var(--color-accent-800)">{{ p.note }}</p></sc-if>
+                  <sc-if value="{{ p.graphicalAbstract }}" hint-placeholder-val="{{ false }}">
+                    <details class="publication-graphic" data-graphical-abstract data-src="{{ p.graphicalAbstract.src }}" data-alt="{{ p.graphicalAbstract.alt }}" data-width="{{ p.graphicalAbstract.width }}" data-height="{{ p.graphicalAbstract.height }}">
+                      <summary>Graphical abstract <span class="publication-graphic-badge">Metadata-generated</span></summary>
+                      <div data-graphical-abstract-body></div>
+                    </details>
+                  </sc-if>
                   <sc-if value="{{ p.hasEnrichment }}" hint-placeholder-val="{{ false }}">
                     <div data-publication-enrichment style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin:8px 0 0">
                       <sc-if value="{{ p.citeText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;line-height:20px;font-weight:700;color:color-mix(in srgb, var(--color-text) 74%, transparent)">{{ p.citeText }}</span></sc-if>
@@ -404,5 +419,45 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+(() => {
+  const loadGraphic = (details) => {
+    if (!details?.open) return;
+    const body = details.querySelector('[data-graphical-abstract-body]');
+    if (!body || body.dataset.ready === 'true' || !details.dataset.src) return;
+    body.dataset.ready = 'true';
+    const figure = document.createElement('figure');
+    const link = document.createElement('a');
+    link.href = details.dataset.src;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    const image = document.createElement('img');
+    image.setAttribute('data-graphical-abstract-image', '');
+    image.width = Number(details.dataset.width) || 1200;
+    image.height = Number(details.dataset.height) || 630;
+    image.alt = details.dataset.alt || 'Publication graphical summary.';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    const fallback = document.createElement('span');
+    fallback.className = 'publication-graphic-fallback';
+    fallback.setAttribute('data-graphical-abstract-fallback', '');
+    fallback.textContent = 'Visual summary unavailable.';
+    const caption = document.createElement('figcaption');
+    caption.textContent = 'Generated from DOI metadata and reviewed website labels. Not the publisher’s official graphical abstract.';
+    image.addEventListener('error', () => {
+      image.hidden = true;
+      fallback.classList.add('is-visible');
+    }, { once: true });
+    link.append(image);
+    figure.append(link, fallback, caption);
+    body.append(figure);
+    image.src = details.dataset.src;
+  };
+  document.addEventListener('toggle', (event) => {
+    if (event.target.matches?.('[data-graphical-abstract]')) loadGraphic(event.target);
+  }, true);
+})();
+</script>
 </body>
 </html>
+

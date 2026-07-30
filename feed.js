@@ -101,6 +101,11 @@ const NEWS_RAW = [
 const NEWS = NEWS_RAW.map(i => ({ year: i.y, date: MN[i.m] || i.m, month: MN[i.m] || i.m, parts: norm(i.parts) }));
 
 const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
+const graphicalAbstractPath = (doi) => 'images/publications/graphical-abstracts/' + String(doi || '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '')
+  .slice(0, 120) + '.svg';
 const REVIEW = { '72': 'Invited review', '70': 'Review', '48': 'Review', '37': 'Review', '21': 'Review', '17': 'Review' };
 const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applications', '48': 'Computation', '37': 'Computation', '21': 'Applications', '17': 'Materials' };
 const kindOf = (no, title) => REVIEW[no] || (/\breview\b/i.test(title) ? 'Review' : 'Article');
@@ -215,7 +220,19 @@ const PUB_TOPICS = {
   '06': ['Grand Canonical Monte Carlo', 'Data Curation', 'Adsorption', 'Reticular Materials', 'Methane Storage'], '05': ['Grand Canonical Monte Carlo', 'Data Curation', 'Infrastructure', 'Adsorption', 'Reticular Materials'], '04': ['Molecular Dynamics', 'Diffusion', 'Polymers'],
   '03': ['Molecular Dynamics', 'Diffusion', 'Polymers'], '02': ['Molecular Dynamics', 'Diffusion', 'Polymers'], '01': ['Molecular Dynamics', 'Diffusion', 'Polymers']
 };
-PUBS.forEach(p => { p.topics = PUB_TOPICS[p.no].slice(); });
+PUBS.forEach(p => {
+  p.topics = PUB_TOPICS[p.no].slice();
+  p.graphicalAbstract = p.doi ? {
+    schemaVersion: 1,
+    status: 'generated',
+    src: graphicalAbstractPath(p.doi),
+    width: 1200,
+    height: 630,
+    alt: 'Visual summary of ' + (p.topics.includes('Review') ? (p.reviewTopic || 'review themes') : p.topics.join(', ')) + '.',
+    caption: 'Generated from DOI metadata and reviewed website labels. Not the publisher’s official graphical abstract.'
+  } : false;
+});
 
 window.MTAP_FEED = { JU: JU, NEWS: NEWS, PUBS: PUBS };
 })(); }
+
