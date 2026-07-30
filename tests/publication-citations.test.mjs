@@ -175,6 +175,32 @@ test('normalization strips JATS/MathML, decodes entities, preserves Unicode mono
   assert.match(cff, /orcid: "https:\/\/orcid\.org\/0000-0002-1825-0097"/);
 });
 
+test('accepts legacy DOI suffix punctuation without truncating the identifier', () => {
+  const legacyDoi = '10.1002/(SICI)1521-3951(199911)216:1<135::AID-PSSB135>3.0.CO;2-#';
+  const encodedDoi = '10.1234/A+B%2FC';
+  const record = normalizeCanonicalRecord({
+    DOI: legacyDoi,
+    title: ['Legacy identifier'],
+    author: [{ literal: 'Test Collaboration' }],
+    'container-title': ['Journal of Tests'],
+    published: { 'date-parts': [[1999]] }
+  });
+  assert.equal(
+    record.doi,
+    '10.1002/(sici)1521-3951(199911)216:1<135::aid-pssb135>3.0.co;2-#'
+  );
+  assert.deepEqual(
+    parseFeedDois(
+      `const PUBS = [\n  F('02', 'Legacy', 'Authors', 'j', 'Journal', ' (1999)', null, '${legacyDoi}'),\n`
+      + `  F('01', 'Encoded', 'Authors', 'j', 'Journal', ' (1998)', null, '${encodedDoi}')\n];\n`
+    ),
+    [
+      '10.1002/(sici)1521-3951(199911)216:1<135::aid-pssb135>3.0.co;2-#',
+      '10.1234/a+b%2fc'
+    ]
+  );
+});
+
 test('refresh uses at most two requests concurrently, retries transient failures, and falls back for non-Crossref DOIs', async () => {
   const dois = ['10.5555/one', '10.5555/two', '10.5555/three'];
   const attempts = new Map();

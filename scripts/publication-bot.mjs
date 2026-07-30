@@ -760,15 +760,21 @@ export function candidateMessage(candidate) {
 }
 
 function doiFromMessage(text) {
-  return normalizeDoi(text.match(/DOI:\s*([^\s>]+)/i)?.[1]);
+  const encoded = String(text || '').match(/^DOI:\s*(\S+)\s*$/im)?.[1] || '';
+  const decoded = encoded
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&amp;/gi, '&');
+  return normalizeDoi(decoded);
 }
 
 export function nextOpenPublicationPr(pulls, repository) {
   return (pulls || [])
     .map(pr => {
-      const doi = normalizeDoi(
-        String(pr?.body || '').match(/https?:\/\/(?:dx\.)?doi\.org\/([^\s<>)\]]+)/i)?.[1]
-      );
+      const doiLine = String(pr?.body || '').match(
+        /^\s*-\s*\*\*DOI:\*\*\s+https?:\/\/(?:dx\.)?doi\.org\/(\S+)\s*$/im
+      )?.[1];
+      const doi = normalizeDoi(doiLine);
       return { pr, doi };
     })
     .filter(({ pr, doi }) => doi

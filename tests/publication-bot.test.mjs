@@ -351,6 +351,12 @@ test('selects the oldest trusted publication PR without relying on recent Slack 
 
   assert.equal(selected.pr.number, 41);
   assert.equal(selected.doi, '10.1000/aged-out');
+
+  const parenthesized = nextOpenPublicationPr([
+    trusted(53, '10.1016/s1872-2067(17)62916-4')
+  ], repository);
+  assert.equal(parenthesized.pr.number, 53);
+  assert.equal(parenthesized.doi, '10.1016/s1872-2067(17)62916-4');
 });
 
 test('suggests labels from title and abstract keywords', () => {

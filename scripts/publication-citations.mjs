@@ -9,7 +9,10 @@ const DEFAULT_FEED_PATH = path.join(REPOSITORY_ROOT, 'feed.js');
 const DEFAULT_BIBLIOGRAPHY_PATH = path.join(REPOSITORY_ROOT, 'data', 'publication-bibliography.json');
 const DEFAULT_OUTPUT_ROOT = path.join(REPOSITORY_ROOT, 'dist');
 const USER_AGENT_BASE = 'Chung-Research-Group-publication-catalogue/1.0';
-const DOI_PATTERN = /10\.\d{4,9}\/[-._;()/:a-z0-9]+/i;
+// DOI suffixes may contain Unicode graphic characters, including legacy
+// punctuation such as angle brackets. Literal whitespace is required to be
+// percent-encoded so a DOI remains one unambiguous catalogue token.
+const DOI_PATTERN = /^10\.\d{4,9}\/[\p{L}\p{M}\p{N}\p{P}\p{S}]+$/iu;
 const DISALLOWED_AUTHOR_TEXT = /(?:\bet\s+al\.?(?:\s|$)|[*#])/i;
 
 const ENTITY_MAP = new Map([
@@ -71,10 +74,12 @@ function optionalText(value) {
 }
 
 function normalizeDoi(value) {
-  const cleaned = cleanText(value)
+  const cleaned = decodeEntities(String(value ?? ''))
+    .replace(/[\u0000-\u001f\u007f]/g, '')
     .replace(/^doi:\s*/i, '')
     .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '')
     .trim()
+    .normalize('NFC')
     .toLowerCase();
   const match = cleaned.match(DOI_PATTERN);
   if (!match || match[0] !== cleaned) throw new Error(`Invalid DOI: ${value}`);
@@ -158,7 +163,7 @@ export function parseFeedDois(feedSource) {
   if (end < 0) throw new Error('feed.js publication list is not terminated');
   const publicationSection = source.slice(start, end);
   const dois = [];
-  for (const match of publicationSection.matchAll(/['"](10\.\d{4,9}\/[-._;()/:a-z0-9]+)['"]/gi)) {
+  for (const match of publicationSection.matchAll(/['"](10\.\d{4,9}\/[^'"\s]+)['"]/giu)) {
     dois.push(normalizeDoi(match[1]));
   }
   if (dois.length === 0) throw new Error('feed.js publication list does not contain any DOI');
