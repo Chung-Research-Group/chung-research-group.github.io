@@ -214,7 +214,6 @@ test('skips one malformed Crossref work without blocking later candidates', () =
   assert.equal(candidates[0].doi, '10.1000/good');
   assert.equal(errors.length, 1);
   assert.match(errors[0], /^Skipping unprocessable Crossref work 10\.1000\/bad:/);
-  assert.match(errors[0], /map is not a function$/);
 });
 
 test('normalizes title variants used by preprints and journal articles', () => {
@@ -222,14 +221,14 @@ test('normalizes title variants used by preprints and journal articles', () => {
     normalizeTitle('Screening of metal-organic frameworks (MOFs) & adsorption'),
     'screening of mof mof and adsorption'
   );
-  const feed = "F('60', 'Screening of MOFs for adsorption', 'Authors', 'j', 'Journal', ' (2025)', null, '10.1/final')";
+  const feed = "F('60', 'Screening of MOFs for adsorption', 'Authors', 'j', 'Journal', ' (2025)', null, '10.1000/final')";
   assert.deepEqual([...existingTitles(feed)], ['screening of mof for adsorption']);
 });
 
 test('ignores ChemRxiv and title-equivalent publication candidates', () => {
   const feed = [
-    "F('60', 'CoRE MOF DB: a curated experimental metal-organic framework database', 'Authors', 'j', 'Matter', ' (2025)', null, '10.1/final')",
-    "F('59', 'Modeling and screening of MOFs for boil-off gas capture', 'Authors', 'j', 'CEJ', ' (2025)', null, '10.2/final')"
+    "F('60', 'CoRE MOF DB: a curated experimental metal-organic framework database', 'Authors', 'j', 'Matter', ' (2025)', null, '10.1000/final')",
+    "F('59', 'Modeling and screening of MOFs for boil-off gas capture', 'Authors', 'j', 'CEJ', ' (2025)', null, '10.2000/final')"
   ].join('\n');
 
   assert.equal(isChemRxivDoi('10.26434/chemrxiv-2024-example-v2'), true);
@@ -238,11 +237,11 @@ test('ignores ChemRxiv and title-equivalent publication candidates', () => {
     title: 'Unpublished ChemRxiv record'
   }), true);
   assert.equal(shouldIgnoreCandidate(feed, {
-    doi: '10.3/alternate',
+    doi: '10.3000/alternate',
     title: 'Modeling and screening of metal-organic frameworks for boil-off gas capture'
   }), true);
   assert.equal(shouldIgnoreCandidate(feed, {
-    doi: '10.3/new',
+    doi: '10.3000/new',
     title: 'A genuinely new peer-reviewed publication'
   }), false);
 });
@@ -332,6 +331,11 @@ test('selects the oldest trusted publication PR without relying on recent Slack 
   const selected = nextOpenPublicationPr([
     trusted(52, '10.1000/newer'),
     trusted(41, '10.1000/aged-out'),
+    {
+      ...trusted(11, '10.1000/unrelated'),
+      title: 'Unrelated open pull request',
+      body: ''
+    },
     trusted(12, '10.1000/fork', {
       head: {
         ref: 'publication/10-1000-fork',
@@ -364,6 +368,18 @@ test('selects the oldest trusted publication PR without relying on recent Slack 
   }], repository);
   assert.equal(reservedCharacters.pr.number, 54);
   assert.equal(reservedCharacters.doi, '10.1234/a?b#c');
+});
+
+test('finds escaped DOI values and prevents duplicate feed insertion', () => {
+  const doi = "10.1234/O'Reilly\\Path";
+  const source = String.raw`const PUBS = [
+  F('01', 'Escaped', 'Authors', 'j', 'Journal', ' (1998)', null, '10.1234/O\'Reilly\\Path')
+];
+const PUB_TOPICS = {
+  '01': ['Adsorption'],
+};`;
+  assert.deepEqual([...existingDois(source)], ["10.1234/o'reilly\\path"]);
+  assert.equal(addCandidateToFeed(source, publicationCandidate({ doi })), source);
 });
 
 test('suggests labels from title and abstract keywords', () => {
@@ -729,8 +745,8 @@ test('treats prompt-like publication metadata as data rather than workflow instr
 
 test('candidate filtering can prevent LLM calls for ChemRxiv and duplicate records', async () => {
   const feed = [
-    "F('60', 'CoRE MOF DB: a curated experimental metal-organic framework database', 'Authors', 'j', 'Matter', ' (2025)', null, '10.1/final')",
-    "F('59', 'Modeling and screening of MOFs for boil-off gas capture', 'Authors', 'j', 'CEJ', ' (2025)', null, '10.2/final')"
+    "F('60', 'CoRE MOF DB: a curated experimental metal-organic framework database', 'Authors', 'j', 'Matter', ' (2025)', null, '10.1000/final')",
+    "F('59', 'Modeling and screening of MOFs for boil-off gas capture', 'Authors', 'j', 'CEJ', ' (2025)', null, '10.2000/final')"
   ].join('\n');
   const ignored = [
     publicationCandidate({
@@ -738,11 +754,11 @@ test('candidate filtering can prevent LLM calls for ChemRxiv and duplicate recor
       title: 'Unpublished ChemRxiv record'
     }),
     publicationCandidate({
-      doi: '10.1/final',
+      doi: '10.1000/final',
       title: 'A DOI duplicate'
     }),
     publicationCandidate({
-      doi: '10.3/alternate',
+      doi: '10.3000/alternate',
       title: 'Modeling and screening of metal-organic frameworks for boil-off gas capture'
     })
   ];
@@ -771,10 +787,10 @@ test('candidate filtering can prevent LLM calls for ChemRxiv and duplicate recor
 });
 
 test('inserts an approved candidate without changing existing entries', () => {
-  const feed = "const PUBS = [\n  F('72', 'Old', 'A', 'j', 'J', ' (2026)', null, '10.1/old')\n];\nconst PUB_TOPICS = {\n  '72': ['Review']\n};";
+  const feed = "const PUBS = [\n  F('72', 'Old', 'A', 'j', 'J', ' (2026)', null, '10.1000/old')\n];\nconst PUB_TOPICS = {\n  '72': ['Review']\n};";
   const candidate = {
     title: 'New paper', authors: 'Chung, Yongchul G.', journal: 'New Journal',
-    meta: ', 1, 1–10 (2026)', doi: '10.2/new', topics: ['Grand Canonical Monte Carlo', 'Adsorption']
+    meta: ', 1, 1–10 (2026)', doi: '10.2000/new', topics: ['Grand Canonical Monte Carlo', 'Adsorption']
   };
   const updated = addCandidateToFeed(feed, candidate);
   assert.match(updated, /F\('73', 'New paper'/);

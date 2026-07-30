@@ -1,7 +1,11 @@
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
-import { doiResolverUrl, normalizeCanonicalRecord } from './publication-citations.mjs';
+import {
+  doiResolverUrl,
+  normalizeCanonicalRecord,
+  parseFeedDois
+} from './publication-citations.mjs';
 
 export const TOPIC_GROUPS = Object.freeze({
   Computation: Object.freeze([
@@ -58,7 +62,16 @@ export function normalizeDoi(value = '') {
 }
 
 export function existingDois(feed) {
-  return new Set([...feed.matchAll(/'((?:10\.)[^']+)'\)/gi)].map(match => normalizeDoi(match[1])));
+  const source = String(feed);
+  const completeFeed = source.includes('const PUBS = [')
+    ? source
+    : `const PUBS = [\n${source}\n];`;
+  try {
+    return new Set(parseFeedDois(completeFeed));
+  } catch (error) {
+    if (error?.message === 'feed.js publication list does not contain any DOI') return new Set();
+    throw error;
+  }
 }
 
 function cleanText(value = '') {
@@ -862,11 +875,12 @@ export function safeCandidateFromCrossref(work, onError = message => console.err
 
 async function candidateByDoi(doi) {
   let crossrefWork = null;
+  let crossrefCandidate = null;
   let crossrefError = null;
   try {
     crossrefWork = await crossrefByDoi(doi);
-    const candidate = candidateFromMetadataSources(crossrefWork);
-    if (hasCompleteBibliography(candidate)) return candidate;
+    crossrefCandidate = candidateFromMetadataSources(crossrefWork);
+    if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
   } catch (error) {
     crossrefError = error;
   }
@@ -877,10 +891,7 @@ async function candidateByDoi(doi) {
     });
     return candidateFromMetadataSources(crossrefWork, cslWork);
   } catch (error) {
-    if (crossrefWork) {
-      const crossrefCandidate = candidateFromMetadataSources(crossrefWork);
-      if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
-    }
+    if (hasCompleteBibliography(crossrefCandidate)) return crossrefCandidate;
     throw crossrefError || error;
   }
 }

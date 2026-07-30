@@ -14,6 +14,12 @@ const USER_AGENT_BASE = 'Chung-Research-Group-publication-catalogue/1.0';
 // percent-encoded so a DOI remains one unambiguous catalogue token.
 const DOI_PATTERN = /^10\.\d{4,9}\/[\p{L}\p{M}\p{N}\p{P}\p{S}]+$/iu;
 const DISALLOWED_AUTHOR_TEXT = /(?:\bet\s+al\.?(?:\s|$)|[*#])/i;
+const CURATED_AUTHOR_ORCID_OVERRIDES = new Map([
+  [
+    '10.1002/slct.201701934\u0000wei\u0000li',
+    'https://orcid.org/0000-0002-3920-3863'
+  ]
+]);
 
 const ENTITY_MAP = new Map([
   ['amp', '&'],
@@ -159,6 +165,79 @@ function normalizePages(value) {
   return text ? text.replace(/\s*[-‐‑‒–—]\s*/g, '–') : undefined;
 }
 
+function decodeJavascriptStringLiteral(literal) {
+  const quote = literal[0];
+  if (!["'", '"'].includes(quote) || literal.at(-1) !== quote) {
+    throw new Error('feed.js DOI string is not terminated');
+  }
+  let value = '';
+  for (let index = 1; index < literal.length - 1; index += 1) {
+    const character = literal[index];
+    if (character !== '\\') {
+      value += character;
+      continue;
+    }
+    index += 1;
+    if (index >= literal.length - 1) throw new Error('feed.js DOI string has an incomplete escape');
+    const escaped = literal[index];
+    const simpleEscapes = {
+      '\\': '\\',
+      "'": "'",
+      '"': '"',
+      b: '\b',
+      f: '\f',
+      n: '\n',
+      r: '\r',
+      t: '\t',
+      v: '\v',
+      0: '\0'
+    };
+    if (Object.hasOwn(simpleEscapes, escaped)) {
+      if (escaped === '0' && /\d/.test(literal[index + 1] || '')) {
+        throw new Error('feed.js DOI string must not use a legacy octal escape');
+      }
+      value += simpleEscapes[escaped];
+      continue;
+    }
+    if (escaped === 'x') {
+      const digits = literal.slice(index + 1, index + 3);
+      if (!/^[\da-f]{2}$/i.test(digits)) throw new Error('feed.js DOI string has an invalid hexadecimal escape');
+      value += String.fromCodePoint(Number.parseInt(digits, 16));
+      index += 2;
+      continue;
+    }
+    if (escaped === 'u') {
+      if (literal[index + 1] === '{') {
+        const close = literal.indexOf('}', index + 2);
+        const digits = close < 0 ? '' : literal.slice(index + 2, close);
+        const codePoint = /^[\da-f]{1,6}$/i.test(digits) ? Number.parseInt(digits, 16) : -1;
+        if (close < 0 || codePoint < 0 || codePoint > 0x10ffff) {
+          throw new Error('feed.js DOI string has an invalid Unicode code-point escape');
+        }
+        value += String.fromCodePoint(codePoint);
+        index = close;
+        continue;
+      }
+      const digits = literal.slice(index + 1, index + 5);
+      if (!/^[\da-f]{4}$/i.test(digits)) throw new Error('feed.js DOI string has an invalid Unicode escape');
+      value += String.fromCharCode(Number.parseInt(digits, 16));
+      index += 4;
+      continue;
+    }
+    if (escaped === '\n' || escaped === '\u2028' || escaped === '\u2029') continue;
+    if (escaped === '\r') {
+      if (literal[index + 1] === '\n') index += 1;
+      continue;
+    }
+    if (/[1-9]/.test(escaped)) {
+      throw new Error('feed.js DOI string must not use a legacy octal escape');
+    }
+    // JavaScript non-escape characters such as \q evaluate to q.
+    value += escaped;
+  }
+  return value;
+}
+
 /**
  * Extract the publication DOI sequence from feed.js without executing browser code.
  * The order of the returned array is the editorial order used by the website.
@@ -173,32 +252,7 @@ export function parseFeedDois(feedSource) {
   const dois = [];
   const lastArgumentPattern = /,\s*('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")\s*\)\s*,?/g;
   for (const match of publicationSection.matchAll(lastArgumentPattern)) {
-    const literal = match[1];
-    const quote = literal[0];
-    let value = '';
-    for (let index = 1; index < literal.length - 1; index += 1) {
-      const character = literal[index];
-      if (character !== '\\') {
-        value += character;
-        continue;
-      }
-      index += 1;
-      if (index >= literal.length - 1) throw new Error('feed.js DOI string has an incomplete escape');
-      const escaped = literal[index];
-      const simpleEscapes = {
-        '\\': '\\',
-        "'": "'",
-        '"': '"',
-        b: '\b',
-        f: '\f',
-        n: '\n',
-        r: '\r',
-        t: '\t',
-        v: '\v'
-      };
-      value += Object.hasOwn(simpleEscapes, escaped) ? simpleEscapes[escaped] : escaped;
-    }
-    if (literal.at(-1) !== quote) throw new Error('feed.js DOI string is not terminated');
+    const value = decodeJavascriptStringLiteral(match[1]);
     if (/^10\./i.test(value)) dois.push(normalizeDoi(value));
   }
   if (dois.length === 0) throw new Error('feed.js publication list does not contain any DOI');
@@ -217,7 +271,16 @@ export function normalizeCanonicalRecord(rawRecord, {
   const normalizedDoi = normalizeDoi(doi ?? rawRecord.DOI ?? rawRecord.doi);
   const authors = (rawRecord.author ?? rawRecord.authors ?? [])
     .map(normalizeAuthor)
-    .filter(Boolean);
+    .filter(Boolean)
+    .map(author => {
+      const authorKey = [
+        normalizedDoi,
+        optionalText(author.given)?.toLowerCase() || '',
+        optionalText(author.family)?.toLowerCase() || ''
+      ].join('\u0000');
+      const correctedOrcid = CURATED_AUTHOR_ORCID_OVERRIDES.get(authorKey);
+      return correctedOrcid ? { ...author, orcid: correctedOrcid } : author;
+    });
   const record = {
     doi: normalizedDoi,
     type: 'article',
@@ -430,6 +493,7 @@ function orderedRecords(snapshot, feedDois) {
  */
 export function validateBibliography(snapshot, feedDois) {
   const errors = [];
+  const structuredNamesByOrcid = new Map();
   const expected = Array.isArray(feedDois) ? feedDois.map(doi => {
     try {
       return normalizeDoi(doi);
@@ -496,10 +560,48 @@ export function validateBibliography(snapshot, feedDois) {
         if (!hasLiteral && !hasFamily) errors.push(`${label} must have literal or family`);
         const display = authorDisplay(author);
         if (DISALLOWED_AUTHOR_TEXT.test(display)) errors.push(`${label} contains an abbreviated/UI-only marker`);
+        const orcid = normalizeOrcid(author.orcid);
+        const given = optionalText(author.given);
+        const family = optionalText(author.family);
+        if (orcid && given && family) {
+          const normalizeNamePart = value => normalizePlainText(value)
+            .normalize('NFKD')
+            .replace(/\p{M}/gu, '')
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}]+/gu, ' ')
+            .trim();
+          const identity = {
+            given: normalizeNamePart(given).split(' ')[0],
+            family: normalizeNamePart(family),
+            display,
+            key
+          };
+          const identities = structuredNamesByOrcid.get(orcid) || [];
+          identities.push(identity);
+          structuredNamesByOrcid.set(orcid, identities);
+        }
       });
     }
     if (!['crossref', 'doi-csl'].includes(record.source?.provider)) {
       errors.push(`${key}: source.provider must be crossref or doi-csl`);
+    }
+  }
+  const compatibleGivenNames = (left, right) =>
+    left === right
+    || (left.length === 1 && right.startsWith(left))
+    || (right.length === 1 && left.startsWith(right));
+  for (const [orcid, identities] of structuredNamesByOrcid) {
+    for (let left = 0; left < identities.length; left += 1) {
+      for (let right = left + 1; right < identities.length; right += 1) {
+        const first = identities[left];
+        const second = identities[right];
+        if (first.family === second.family
+            && !compatibleGivenNames(first.given, second.given)) {
+          errors.push(
+            `${orcid}: conflicting structured author names ${first.display} (${first.key}) and ${second.display} (${second.key})`
+          );
+        }
+      }
     }
   }
   return { ok: errors.length === 0, errors };

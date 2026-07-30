@@ -93,7 +93,8 @@ test('site validation reports duplicate feed DOIs even when the bibliography sna
       encoding: 'utf8'
     });
     const diagnostics = `${result.stdout}\n${result.stderr}`;
-    assert.notEqual(result.status, 0);
+    assert.ifError(result.error);
+    assert.equal(result.status, 1);
     assert.match(diagnostics, /Missing required file: data\/publication-bibliography\.json/);
     assert.match(diagnostics, /feed\.js contains duplicate publication DOIs\./);
   } finally {
@@ -240,6 +241,54 @@ test('decodes feed string escapes and percent-encodes reserved DOI suffix charac
     /^    url: "https:\/\/doi\.org\/10\.1234\/o'reilly%5Cpath%3F%23%2Fpart%25%3Cend%3E"$/m
   );
   assert.doesNotMatch(cff, /https:\/\/doi\.org\/10\.1234\/o'reilly\\path\?#/);
+});
+
+test('decodes valid hexadecimal and Unicode escapes in feed DOI string literals', () => {
+  assert.deepEqual(
+    parseFeedDois(String.raw`const PUBS = [
+  F('03', 'Unicode', 'Authors', 'j', 'Journal', ' (2000)', null, '10.1234/a\u0023b'),
+  F('02', 'Code point', 'Authors', 'j', 'Journal', ' (1999)', null, '10.1234/c\u{2f}d'),
+  F('01', 'Hexadecimal', 'Authors', 'j', 'Journal', ' (1998)', null, '10.1234/e\x23f')
+];`),
+    ['10.1234/a#b', '10.1234/c/d', '10.1234/e#f']
+  );
+  assert.throws(
+    () => parseFeedDois(String.raw`const PUBS = [
+  F('01', 'Broken', 'Authors', 'j', 'Journal', ' (1998)', null, '10.1234/a\u12')
+];`),
+    /invalid Unicode escape/
+  );
+});
+
+test('applies the curated Wei Li ORCID correction and rejects conflicting ORCID names', async () => {
+  const corrected = normalizeCanonicalRecord({
+    DOI: '10.1002/slct.201701934',
+    title: ['Curated ORCID correction'],
+    author: [{
+      given: 'Wei',
+      family: 'Li',
+      ORCID: 'https://orcid.org/0000-0003-3552-3250'
+    }],
+    'container-title': ['Journal of Tests'],
+    issued: { 'date-parts': [[2017]] }
+  });
+  assert.equal(corrected.authors[0].orcid, 'https://orcid.org/0000-0002-3920-3863');
+
+  const { feedDois, snapshot } = await fixture();
+  assert.equal(
+    snapshot.publications['10.1002/slct.201701934'].authors[0].orcid,
+    'https://orcid.org/0000-0002-3920-3863'
+  );
+  const altered = structuredClone(snapshot);
+  altered.publications['10.1002/slct.201701934'].authors[0].orcid =
+    'https://orcid.org/0000-0003-3552-3250';
+  const validation = validateBibliography(altered, feedDois);
+  assert.equal(validation.ok, false);
+  assert.ok(validation.errors.some(error =>
+    error.includes('conflicting structured author names')
+    && error.includes('Wei Li')
+    && error.includes('Song Li')
+  ));
 });
 
 test('refresh uses at most two requests concurrently, retries transient failures, and falls back for non-Crossref DOIs', async () => {
