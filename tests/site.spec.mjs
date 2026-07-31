@@ -357,6 +357,19 @@ test('publication rows keep a compact number-and-bibliography layout without art
   )).toBe(2);
 });
 
+test('publication cards show every author without et al abbreviations', async ({ page }) => {
+  await page.goto('/Publications.dc.html');
+
+  const publicationRows = page.locator('[data-publication-no]');
+  await expect(publicationRows).toHaveCount(72);
+  await expect(publicationRows.filter({ hasText: /\bet al\./i })).toHaveCount(0);
+
+  await expect(page.locator('[data-publication-no="60"]')).toContainText('Huang, J.');
+  await expect(page.locator('[data-publication-no="60"]')).toContainText('Kulik, H.J.');
+  await expect(page.locator('[data-publication-no="60"]')).toContainText('Snurr, R.Q.');
+  await expect(page.locator('[data-publication-no="60"]')).toContainText('Chung, Y.G.*');
+});
+
 test('every published page has metadata and renders its heading', async ({ page }) => {
   test.setTimeout(90_000);
   for (const route of pages) {
