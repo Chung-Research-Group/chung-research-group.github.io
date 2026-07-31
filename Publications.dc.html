@@ -19,7 +19,6 @@
 <helmet>
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
-<script src="publication-visuals.js?v=20260730-3"></script>
 <script src="feed.js?v=20260730-3"></script>
 <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
 <script async src="https://badge.dimensions.ai/badge.js"></script>
@@ -41,15 +40,8 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .publication-filter-section{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start;padding:5px 8px;border-left:3px solid var(--section-color);background:color-mix(in srgb,var(--section-color) 5%,transparent)}
 .publication-filter-section-title{display:flex;align-items:center;gap:5px;padding:3px 6px;border:0;background:transparent;text-align:left;font-size:13px;line-height:18px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--section-color);cursor:pointer}
 .publication-filter-section-items{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
-.publication-row{display:grid;grid-template-columns:64px clamp(150px,13vw,190px) minmax(0,1fr);gap:0 20px;padding:18px 0;border-top:1px solid color-mix(in srgb,var(--color-text) 18%,transparent)}
+.publication-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 20px;padding:18px 0;border-top:1px solid color-mix(in srgb,var(--color-text) 18%,transparent)}
 .publication-number{font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:30px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent-700)}
-.publication-visual{min-width:0;margin:0;align-self:start}
-.publication-visual-link{position:relative;display:block;border:1px solid color-mix(in srgb,var(--color-text) 18%,transparent);background:#fff;text-decoration:none;overflow:hidden;box-shadow:0 4px 12px color-mix(in srgb,var(--color-text) 8%,transparent)}
-.publication-visual-link:focus-visible{outline:3px solid var(--color-accent-400);outline-offset:3px}
-.publication-visual img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#fff}
-.publication-visual-unavailable{display:grid;place-items:center;min-height:140px;padding:18px;font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:700;text-align:center;color:color-mix(in srgb,var(--color-text) 68%,transparent);background:var(--color-accent-100)}
-.publication-visual-label{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:5px 7px;font-family:var(--font-heading);font-size:10px;line-height:14px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:#fff;background:rgba(0,42,80,.88)}
-.publication-visual-credit{display:block;margin:5px 0 0;font-size:10px;line-height:14px;color:color-mix(in srgb,var(--color-text) 64%,transparent)}
 .publication-bibliography{min-width:0}
 .publication-search-tools{display:flex;align-items:center;gap:12px 16px;flex:1 1 520px;min-width:280px;flex-wrap:wrap}
 .publication-search-input{flex:1 1 280px;width:100%;max-width:440px;min-width:0}
@@ -91,10 +83,7 @@ body{zoom:0.88}
   .publication-filter-section{grid-template-columns:1fr;gap:3px}
   .publication-filter-section-title{text-align:left}
   .publication-filter-section-items{justify-content:flex-start}
-  .publication-row{grid-template-columns:44px minmax(0,1fr)!important;gap:12px 14px}
-  .publication-number{grid-column:1;grid-row:1}
-  .publication-visual{grid-column:2;grid-row:1;width:min(240px,100%)}
-  .publication-bibliography{grid-column:2;grid-row:2}
+  .publication-row{grid-template-columns:44px minmax(0,1fr)!important;gap:0 14px}
 }
 a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
@@ -116,27 +105,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
     <header style="padding:48px 0 32px">
       <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">논문</span></h1>
       <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">*: corresponding author, #: co-first author</p>
-      <div style="display:flex;align-items:center;gap:48px;flex-wrap:wrap;margin-top:24px">
-        <div>
-          <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ totalPubs }}</p>
-          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Publications · 논문</p>
-        </div>
-        <div data-google-scholar-citations>
-          <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ scholarCitesText }}</p>
-          <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Google Scholar)</p>
-        </div>
-        <sc-if value="{{ openAlexCites }}" hint-placeholder-val="{{ false }}">
-          <div>
-            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ openAlexCitesText }}</p>
-            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (OpenAlex)</p>
-          </div>
-        </sc-if>
-        <sc-if value="{{ semanticScholarCites }}" hint-placeholder-val="{{ false }}">
-          <div>
-            <p style="font-family:var(--font-heading);font-weight:800;font-size:40px;line-height:44px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ semanticScholarCitesText }}</p>
-            <p style="font-size:17px;line-height:23px;margin:4px 0 0;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;color:var(--color-text)">Citations (Semantic Scholar)</p>
-          </div>
-        </sc-if>
+      <div style="display:flex;align-items:center;gap:18px 28px;flex-wrap:wrap;margin-top:24px">
         <div class="publication-search-tools">
           <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
           <input class="publication-search-input" aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
@@ -179,14 +148,6 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
             <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="6">
               <div class="publication-row" data-publication-no="{{ p.no }}">
                 <p class="publication-number">{{ p.dispNo }}</p>
-                <figure class="publication-visual" data-publication-visual data-visual-kind="{{ p.publicationVisual.kind }}" data-visual-availability="{{ p.publicationVisual.availabilityStatus }}">
-                  <a class="publication-visual-link" data-publication-visual-link href="{{ p.publicationVisual.sourcePage }}" target="_blank" rel="noopener noreferrer" title="{{ p.publicationVisual.credit }}">
-                    <img data-publication-visual-image src="{{ p.publicationVisual.src }}" width="{{ p.publicationVisual.width }}" height="{{ p.publicationVisual.height }}" alt="{{ p.publicationVisual.alt }}" loading="lazy" decoding="async" onLoad="{{ onPublicationVisualLoad }}" onError="{{ onPublicationVisualError }}" data-primary-src="{{ p.publicationVisual.src }}" data-fallback-src="{{ p.publicationVisual.fallbackSrc }}" data-fallback-width="{{ p.publicationVisual.fallbackWidth }}" data-fallback-height="{{ p.publicationVisual.fallbackHeight }}" data-fallback-alt="{{ p.publicationVisual.fallbackAlt }}" data-fallback-label="{{ p.publicationVisual.fallbackLabel }}" data-fallback-source-page="{{ p.publicationVisual.fallbackSourcePage }}" data-fallback-credit="{{ p.publicationVisual.fallbackCredit }}" data-fallback-attribution="{{ p.publicationVisual.fallbackAttribution }}" data-fallback-availability="{{ p.publicationVisual.fallbackAvailabilityStatus }}">
-                    <span class="publication-visual-unavailable" data-publication-visual-unavailable hidden>Journal image unavailable; publication details remain available.</span>
-                    <span class="publication-visual-label" data-publication-visual-label>{{ p.publicationVisual.label }}</span>
-                  </a>
-                  <figcaption class="publication-visual-credit" data-publication-visual-credit title="{{ p.publicationVisual.credit }}">{{ p.publicationVisual.attribution }}</figcaption>
-                </figure>
                 <div class="publication-bibliography">
                   <p style="font-family:var(--font-heading);font-weight:800;font-size:21px;line-height:29px;margin:0"><a href="{{ p.html }}" style="color:inherit;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></p>
                   <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0">
@@ -282,69 +243,6 @@ class Component extends DCLogic {
       try { window._altmetric_embed_init && window._altmetric_embed_init(); } catch (e) {}
       try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
     }, 400);
-  }
-  handlePublicationVisualLoad(event) {
-    const image = event.currentTarget;
-    const figure = image && image.closest('[data-publication-visual]');
-    if (!image || !figure || image.getAttribute('data-fallback-applied') === 'true') return;
-    figure.setAttribute('data-visual-load-state', 'loaded');
-  }
-  handlePublicationVisualError(event) {
-    const image = event.currentTarget;
-    const figure = image && image.closest('[data-publication-visual]');
-    const link = figure && figure.querySelector('[data-publication-visual-link]');
-    if (!image || !figure || !link) return;
-
-    const currentSrc = image.getAttribute('src') || '';
-    const primarySrc = image.getAttribute('data-primary-src') || '';
-    const primaryRetryCount = Number(image.getAttribute('data-primary-retry-count') || 0);
-    const primaryIsLocal = /^images\/publications\/(?:article-graphics|journal-marks)\/[a-z0-9._-]+\.(?:png|jpe?g|webp)$/i.test(primarySrc);
-    if (primaryIsLocal && currentSrc === primarySrc && primaryRetryCount < 1) {
-      image.setAttribute('data-primary-retry-count', String(primaryRetryCount + 1));
-      figure.setAttribute('data-visual-load-state', 'retrying');
-      image.src = primarySrc + (primarySrc.includes('?') ? '&' : '?') + 'retry=1';
-      return;
-    }
-
-    const fallbackSrc = image.getAttribute('data-fallback-src') || '';
-    const fallbackApplied = image.getAttribute('data-fallback-applied') === 'true';
-    const fallbackIsLocal = /^images\/publications\/journal-cards\/[a-z0-9._-]+\.svg$/i.test(fallbackSrc);
-    if (fallbackApplied || image.getAttribute('src') === fallbackSrc || !fallbackIsLocal) {
-      image.hidden = true;
-      link.removeAttribute('href');
-      link.removeAttribute('target');
-      link.removeAttribute('rel');
-      link.setAttribute('aria-label', 'Journal image unavailable; publication details remain available.');
-      const unavailable = link.querySelector('[data-publication-visual-unavailable]');
-      if (unavailable) unavailable.hidden = false;
-      const label = link.querySelector('[data-publication-visual-label]');
-      if (label) label.textContent = 'Journal unavailable';
-      const credit = figure.querySelector('[data-publication-visual-credit]');
-      if (credit) {
-        credit.textContent = 'Local journal title card unavailable';
-        credit.title = 'The publication bibliography and DOI link remain available.';
-      }
-      figure.setAttribute('data-visual-load-state', 'unavailable');
-      return;
-    }
-
-    image.setAttribute('data-fallback-applied', 'true');
-    image.alt = image.getAttribute('data-fallback-alt') || 'Original journal title card.';
-    image.width = Number(image.getAttribute('data-fallback-width')) || 960;
-    image.height = Number(image.getAttribute('data-fallback-height')) || 540;
-    link.href = image.getAttribute('data-fallback-source-page') || '#top';
-    link.title = image.getAttribute('data-fallback-credit') || 'Original journal title card; not publisher artwork.';
-    const label = link.querySelector('[data-publication-visual-label]');
-    if (label) label.textContent = image.getAttribute('data-fallback-label') || 'Journal';
-    const credit = figure.querySelector('[data-publication-visual-credit]');
-    if (credit) {
-      credit.textContent = image.getAttribute('data-fallback-attribution') || 'Original journal title card';
-      credit.title = link.title;
-    }
-    figure.setAttribute('data-visual-kind', 'journal-title-card');
-    figure.setAttribute('data-visual-availability', image.getAttribute('data-fallback-availability') || 'neutral-original-title-card');
-    figure.setAttribute('data-visual-load-state', 'fallback');
-    image.src = fallbackSrc;
   }
   componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); this.loadPublicationJcrBands(); } else { setTimeout(t, 50); } }; t(); }
   componentDidUpdate() { this.refreshBadges(); }
@@ -468,14 +366,6 @@ class Component extends DCLogic {
       g.items.push(p);
     });
     groups.forEach(g => { g.count = g.items.length; });
-    const openAlexCites = Number(metadata?.totals?.openAlexCitations || 0);
-    const semanticScholarCites = Number(metadata?.totals?.semanticScholarCitations || 0);
-    const scholarCitationValue = metadata?.totals?.googleScholarCitations;
-    const scholarCites = Number(scholarCitationValue);
-    const hasScholarCites = scholarCitationValue !== null
-      && scholarCitationValue !== undefined
-      && Number.isFinite(scholarCites)
-      && scholarCites >= 0;
     let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
     if (metadata?.snapshotUpdatedAt) {
       const date = new Date(metadata.snapshotUpdatedAt);
@@ -548,17 +438,9 @@ class Component extends DCLogic {
       return { ...base, items: allItems, hasSections: false, sections: [] };
     });
     return {
-      scholarCitesText: hasScholarCites ? scholarCites.toLocaleString('en-US') : '\u2014',
-      totalPubs: full.length,
-      openAlexCites,
-      openAlexCitesText: openAlexCites.toLocaleString('en-US'),
-      semanticScholarCites,
-      semanticScholarCitesText: semanticScholarCites.toLocaleString('en-US'),
       metadataStatus,
       hcpCount: HCP.length,
       onSearch: (e) => this.setState({ q: e.target.value }),
-      onPublicationVisualLoad: (event) => this.handlePublicationVisualLoad(event),
-      onPublicationVisualError: (event) => this.handlePublicationVisualError(event),
       empty: filtered.length === 0,
       searching: !!q || !!activeTheme,
       resultCount: filtered.length,

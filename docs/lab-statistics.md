@@ -125,6 +125,46 @@ Actions**. Its value must be the licensed aggregate-input JSON accepted by
 trusted `main` push or an explicitly dispatched workflow; pull-request checks
 receive an empty value. Do not commit the JSON or print it in build logs.
 
+Before collecting licensed values, generate the deterministic lookup manifest:
+
+```text
+npm run jcr:requirements
+```
+
+This writes the ignored local file `jcr-input-requirements.json`. It lists every
+catalogue DOI, title, journal, publication year, and the exact required
+previous-year JCR year. It contains no JIF, category, rank, quartile, or
+percentile values and is not itself the secret. Use it as a completeness
+checklist when preparing the private licensed JSON, then keep that private JSON
+outside the repository.
+
+Validate the completed private input before registering the secret:
+
+```text
+npm run jcr:validate -- .jcr-private/jcr-input.json
+```
+
+To write deterministic compact JSON for the GitHub secret without overwriting
+the working file:
+
+```text
+npm run jcr:validate -- .jcr-private/jcr-input.json --compact-output .jcr-private/jcr-secret.json
+```
+
+The validator uses the current `feed.js` as the authority, rejects unknown DOI
+keys and duplicate normalized DOI identifiers, rejects any JCR year other than
+`publication year - 1`, checks ranks, denominators, quartiles, and percentiles,
+and does not print licensed values. The compact output is created only at an
+explicitly supplied new path and the command refuses to overwrite either the
+source or an existing output. The entire `.jcr-private/` directory is ignored
+by Git.
+
+GitHub limits Actions secrets to 48 KB. The validator measures the UTF-8 bytes
+of the exact compact output and fails before writing when it exceeds 49,152
+bytes. If a complete historical dataset is larger, use GitHub's documented
+large-secret approach rather than dropping categories or substituting another
+year. See [GitHub Actions secrets limits](https://docs.github.com/en/actions/reference/security/secrets).
+
 The secret is one JSON object with these base fields:
 
 - `metric`: the literal string `Journal Impact Factor`;
@@ -134,11 +174,27 @@ The secret is one JSON object with these base fields:
 - `updatedAt`: the licensed source's ISO timestamp;
 - `edition`: the JCR metric year, edition, or historical extract description.
 
-`factorsByDoi` is optional. When supplied, it maps normalized catalogue DOI
-strings to nonnegative finite numeric JIF values. An absent or empty
-`factorsByDoi` map leaves cumulative JIF unavailable, while still allowing a
-separately authorized historical-ranking aggregate to be generated. This
-supports a ranking-only licensed extract without inventing a JIF total.
+`factorsByDoi` is optional. When supplied, it maps each normalized catalogue DOI
+to an object containing `jcrYear` and a nonnegative finite `jif` value:
+
+```json
+{
+  "factorsByDoi": {
+    "10.1000/example": {
+      "jcrYear": 2025,
+      "jif": 12.3
+    }
+  }
+}
+```
+
+The `jcrYear` must be exactly one less than the publication year in `feed.js`.
+For example, a 2026 publication must use the 2025 JIF. Publication-year,
+current/latest, or any other JIF year is rejected instead of being silently
+substituted. An absent or empty `factorsByDoi` map leaves cumulative JIF
+unavailable, while still allowing a separately authorized historical-ranking
+aggregate to be generated. This supports a ranking-only licensed extract
+without inventing a JIF total.
 
 The generated public snapshot contains only the cumulative total, publication
 coverage, metric year/edition, source provenance, and update time. It must not
@@ -147,12 +203,13 @@ enabling the secret, confirm that the applicable Clarivate/JCR license permits
 publication of those aggregate outputs. If it does not, leave the secret unset
 and the dashboard will explicitly show JIF as unavailable.
 
-The cumulative value is calculated as the sum of the licensed journal-level
-JIF assigned to each catalogue publication with an authorized DOI match. Each
-publication contributes once, so multiple catalogue publications in the same
-journal each contribute that journal's JIF. Publications without an authorized
-match are excluded rather than treated as zero, and the result is labelled
-partial whenever coverage is incomplete.
+The cumulative value is calculated as the sum of the licensed previous-year
+(`Y-1`) journal-level JIF assigned to each catalogue publication with an
+authorized DOI match. Each publication contributes once, so multiple catalogue
+publications in the same journal each contribute the JIF from the year required
+for that publication. Publications without an authorized match are excluded
+rather than treated as zero, and the result is labelled partial whenever
+coverage is incomplete.
 
 Even when licensed JCR data is configured, the cumulative sum discloses its
 source date and publication coverage. JIF describes journals rather than the

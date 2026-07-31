@@ -16,11 +16,6 @@ import {
   staticDirectories
 } from "./site-files.mjs";
 import {
-  journalCardPath,
-  validatePublicationVisuals,
-  validateSafeSvg
-} from "./publication-visual.mjs";
-import {
   parseFeedDois,
   parseGeneratedBibtexDois
 } from "./publication-citations.mjs";
@@ -1489,16 +1484,6 @@ const publicationDoiSet = new Set(publicationDois);
 if (publicationDoiSet.size !== publicationDois.length) {
   errors.push("feed.js contains duplicate publication DOIs.");
 }
-let publicationVisualState = { publications: [] };
-try {
-  publicationVisualState = await validatePublicationVisuals({
-    repository: siteRoot,
-    visualsPath: path.join(siteRoot, "publication-visuals.js"),
-    feedPath: path.join(siteRoot, "feed.js")
-  });
-} catch (error) {
-  errors.push(`Publication visuals are invalid: ${error.message}`);
-}
 const publicationMetadataPath = path.join(siteRoot, "data/publication-metadata.json");
 if (await exists(publicationMetadataPath)) {
   let metadata;
@@ -1766,8 +1751,27 @@ for (const marker of [
 if (!/<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*style=["'][^"']*color:var\(--color-accent\)/i.test(statisticsHtml)) {
   errors.push("Statistics page must mark the Statistics navigation item as active.");
 }
+if (!statisticsHtml.includes(".statistics-bar-row:hover .statistics-bar-value")
+    || !statisticsHtml.includes(".statistics-bar-row:focus-visible .statistics-bar-value")
+    || (statisticsHtml.match(/class=["'][^"']*statistics-bar-row[^"']*["'][^>]*tabindex=["']0["']/g) || []).length !== 7
+    || !statisticsHtml.includes("@media (hover:none)")) {
+  errors.push("Statistics bar values must be available as hover and keyboard-focus tooltips.");
+}
+if (!/\.statistics-network\{[^}]*width:min\(100%,760px\)[^}]*margin:0 auto/.test(statisticsHtml)) {
+  errors.push("Statistics coauthor network must use the compact centered viewport.");
+}
 if (!publicationsHtml.includes("data-publication-metadata-status")) {
   errors.push("Publications page must expose citation sources and metadata freshness.");
+}
+for (const retiredAggregateLabel of [
+  "Publications · 논문",
+  "Citations (Google Scholar)",
+  "Citations (OpenAlex)",
+  "Citations (Semantic Scholar)"
+]) {
+  if (publicationsHtml.includes(retiredAggregateLabel)) {
+    errors.push(`Publications page must leave aggregate metrics to Statistics: ${retiredAggregateLabel}`);
+  }
 }
 if (!publicationsHtml.includes("snapshotUpdatedAt")) {
   errors.push("Publications page must display freshness from metadata snapshotUpdatedAt.");
@@ -1782,8 +1786,8 @@ if (!publicationsHtml.includes("enrichment?.googleScholar?.citationCount")
     || !/hasGoogleScholarCount[\s\S]*hasOpenAlexCount[\s\S]*hasSemanticScholarCount/.test(publicationsHtml)) {
   errors.push("Publication cards must prefer per-paper Google Scholar citations before OpenAlex and Semantic Scholar.");
 }
-if (!publicationsHtml.includes("data-publication-visual") || !publicationsHtml.includes("data-publication-visual-image")) {
-  errors.push("Publications page must place a reviewed visual between the publication number and bibliography.");
+if (publicationsHtml.includes("data-publication-visual") || publicationsHtml.includes("data-publication-visual-image")) {
+  errors.push("Publications page must keep artwork out of the compact bibliography layout.");
 }
 if (!publicationsHtml.includes("data-publication-jcr-band")
     || !publicationsHtml.includes("snapshot.displayAuthorized !== true")
@@ -1791,15 +1795,18 @@ if (!publicationsHtml.includes("data-publication-jcr-band")
   errors.push("Publication cards must fail closed and render only explicitly authorized derived JCR bands.");
 }
 if (!publicationsHtml.includes("publication-number")
-    || !publicationsHtml.includes("publication-visual")
     || !publicationsHtml.includes("publication-bibliography")) {
-  errors.push("Publication cards must expose the number, visual, and bibliography columns.");
+  errors.push("Publication cards must expose the number and bibliography columns.");
 }
-if (!feedHtml.includes("journalCardPath") || !feedHtml.includes("p.publicationVisual")) {
-  errors.push("Publication feed must resolve each paper to reviewed artwork or a journal fallback.");
+if (feedHtml.includes("journalCardPath") || feedHtml.includes("p.publicationVisual")) {
+  errors.push("Publication feed must not construct retired publication artwork.");
 }
-if (!publicationsHtml.includes("publication-visuals.js")) {
-  errors.push("Publications page must load the reviewed publication visual manifest before feed.js.");
+if (publicationsHtml.includes("publication-visuals.js")) {
+  errors.push("Publications page must not load the retired publication visual manifest.");
+}
+if (await exists(path.join(siteRoot, "publication-visuals.js"))
+    || await exists(path.join(siteRoot, "images", "publications"))) {
+  errors.push("Retired publication artwork code and assets must not be deployed.");
 }
 for (const forbiddenRuntimeMetadata of [
   "api.crossref.org",
@@ -1952,22 +1959,11 @@ if (compareRoot) {
   const sourceFiles = (await listFiles(compareRoot)).filter(publishedSourceFile);
   const builtFiles = files.filter((file) => file !== "site-manifest.json" && file !== ".nojekyll");
   const expectedFiles = sourceFiles.filter((file) => file !== ".nojekyll");
-  const generatedJournalCardFiles = new Set(
-    publicationVisualState.publications
-      .map((publication) => journalCardPath(publication.journalKey))
-  );
   const comparableBuiltFiles = builtFiles.filter(
-    (file) => !generatedJournalCardFiles.has(file) && !generatedBuildFileSet.has(file)
+    (file) => !generatedBuildFileSet.has(file)
   );
   if (JSON.stringify(comparableBuiltFiles) !== JSON.stringify(expectedFiles)) {
     errors.push("Built file set differs from the published source file set.");
-  }
-  const unexpectedJournalCards = builtFiles.filter(
-    (file) => file.startsWith("images/publications/journal-cards/")
-      && !generatedJournalCardFiles.has(file)
-  );
-  if (unexpectedJournalCards.length) {
-    errors.push(`Unexpected generated journal title cards: ${unexpectedJournalCards.join(", ")}`);
   }
   const unexpectedCitationExports = builtFiles.filter(
     (file) => file.startsWith("exports/publications/")
@@ -1982,18 +1978,6 @@ if (compareRoot) {
       readFile(path.join(siteRoot, file))
     ]);
     if (sha256(source) !== sha256(built)) errors.push(`${file}: build changed published bytes.`);
-  }
-  for (const file of generatedJournalCardFiles) {
-    const absolute = path.join(siteRoot, file);
-    if (!await exists(absolute)) {
-      errors.push(`Missing generated journal title card: ${file}`);
-      continue;
-    }
-    try {
-      validateSafeSvg((await readFile(absolute, "utf8")).trim());
-    } catch (error) {
-      errors.push(`${file}: ${error.message}`);
-    }
   }
 }
 

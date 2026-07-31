@@ -108,11 +108,6 @@ const NEWS_RAW = [
 const NEWS = NEWS_RAW.map(i => ({ year: i.y, date: MN[i.m] || i.m, month: MN[i.m] || i.m, parts: norm(i.parts) }));
 
 const SC = (q) => 'https://scholar.google.com/scholar?q=%22' + encodeURIComponent(q) + '%22';
-const PUBLICATION_VISUALS = window.MTAP_PUBLICATION_VISUALS || { byDoi: {}, byJournal: {} };
-const journalCardPath = (journalKey) => 'images/publications/journal-cards/' + String(journalKey || 'journal')
-  .toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-')
-  .replace(/^-+|-+$/g, '') + '.svg';
 const REVIEW = { '72': 'Invited review', '70': 'Review', '48': 'Review', '37': 'Review', '21': 'Review', '17': 'Review' };
 const REVIEW_TOPIC = { '72': 'Materials', '70': 'Applications', '48': 'Computation', '37': 'Computation', '21': 'Applications', '17': 'Materials' };
 const kindOf = (no, title) => REVIEW[no] || (/\breview\b/i.test(title) ? 'Review' : 'Article');
@@ -229,42 +224,6 @@ const PUB_TOPICS = {
 };
 PUBS.forEach(p => {
   p.topics = PUB_TOPICS[p.no].slice();
-  const reviewed = p.doi && PUBLICATION_VISUALS.byDoi
-    ? PUBLICATION_VISUALS.byDoi[String(p.doi).toLowerCase()]
-    : false;
-  const journalMark = PUBLICATION_VISUALS.byJournal
-    ? PUBLICATION_VISUALS.byJournal[p.journalKey]
-    : false;
-  const neutralTitleCard = {
-    kind: 'journal-title-card',
-    src: journalCardPath(p.journalKey),
-    width: 960,
-    height: 540,
-    label: 'Journal',
-    alt: 'Journal title card for ' + p.journal + '.',
-    sourcePage: JU[p.journalKey] || (p.doi ? DOI_URL(p.doi) : p.jurl || p.html),
-    credit: 'Chung Research Group journal title card; not publisher artwork.',
-    attribution: 'Original journal title card',
-    rightsBasis: 'original-site-fallback',
-    availabilityStatus: 'neutral-original-title-card'
-  };
-  const selected = reviewed
-    ? { ...reviewed, availabilityStatus: 'reviewed-article-graphic' }
-    : journalMark
-      ? { ...journalMark, availabilityStatus: 'reviewed-journal-mark' }
-      : neutralTitleCard;
-  p.publicationVisual = {
-    ...selected,
-    fallbackSrc: neutralTitleCard.src,
-    fallbackWidth: neutralTitleCard.width,
-    fallbackHeight: neutralTitleCard.height,
-    fallbackLabel: neutralTitleCard.label,
-    fallbackAlt: neutralTitleCard.alt,
-    fallbackSourcePage: neutralTitleCard.sourcePage,
-    fallbackCredit: neutralTitleCard.credit,
-    fallbackAttribution: neutralTitleCard.attribution,
-    fallbackAvailabilityStatus: neutralTitleCard.availabilityStatus
-  };
 });
 
 window.MTAP_FEED = { JU: JU, NEWS: NEWS, PUBS: PUBS };

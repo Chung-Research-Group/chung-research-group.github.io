@@ -1,6 +1,7 @@
+import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import vm from 'node:vm';
 
 import { TOPIC_GROUPS } from './publication-bot.mjs';
@@ -23,6 +24,7 @@ const CURRENT_TEAM_GROUPS = Object.freeze([
 const JOURNAL_STANDING_YEAR_BASIS =
   'Previous-year JCR: publication year Y uses JCR year Y-1.';
 const PUBLICATION_JCR_BANDS_SCHEMA_VERSION = 1;
+const JCR_INPUT_REQUIREMENTS_SCHEMA_VERSION = 1;
 const JOURNAL_STANDING_BANDS = Object.freeze([
   Object.freeze({ id: 'top1', label: 'Top 1%' }),
   Object.freeze({ id: 'top5', label: 'Top 5%' }),
@@ -34,6 +36,23 @@ const JOURNAL_STANDING_BANDS = Object.freeze([
   Object.freeze({ id: 'unavailable', label: 'Unavailable' })
 ]);
 const JCR_PERCENTILE_TOLERANCE = 1;
+const GITHUB_ACTIONS_SECRET_MAX_BYTES = 48 * 1024;
+const LICENSED_JCR_INPUT_KEYS = Object.freeze([
+  'metric',
+  'provider',
+  'licenseConfirmed',
+  'aggregatePublicationAuthorized',
+  'updatedAt',
+  'edition',
+  'factorsByDoi',
+  'aggregateRankingDisplayAuthorized',
+  'rankingAuthorizationReference',
+  'rankingAuthorizationDate',
+  'rankingsByDoi',
+  'perPublicationRankingDisplayAuthorized',
+  'perPublicationRankingAuthorizationReference',
+  'perPublicationRankingAuthorizationDate'
+]);
 
 function assertObject(value, label) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -950,6 +969,7 @@ function parseImpactFactorJson(impactFactorJson) {
 
 function validateImpactFactorDataset(dataset) {
   if (!dataset) return null;
+  assertOnlyInputKeys(dataset, LICENSED_JCR_INPUT_KEYS, 'impactFactorJson');
   if (dataset.metric !== 'Journal Impact Factor') {
     throw new TypeError('impactFactorJson.metric must equal "Journal Impact Factor".');
   }
@@ -1002,28 +1022,43 @@ function deriveImpactFactors(publications, dataset) {
     );
   }
 
-  const catalogueDois = new Set(
-    publications.map((publication, index) =>
-      normalizeDoi(publication.doi, `publications[${index}].doi`)
-    )
-  );
-  if (catalogueDois.size !== publications.length) {
-    throw new TypeError('publications must contain unique DOI values when impactFactorJson is configured.');
+  const publicationsByDoi = new Map();
+  for (const [index, publication] of publications.entries()) {
+    const doi = normalizeDoi(publication.doi, `publications[${index}].doi`);
+    if (publicationsByDoi.has(doi)) {
+      throw new TypeError('publications must contain unique DOI values when impactFactorJson is configured.');
+    }
+    publicationsByDoi.set(doi, publication);
   }
 
   const normalizedFactors = new Map();
-  for (const [rawDoi, rawFactor] of factorEntries) {
+  for (const [rawDoi, rawRecord] of factorEntries) {
     const doi = normalizeDoi(rawDoi, `impactFactorJson.factorsByDoi key ${rawDoi}`);
     if (normalizedFactors.has(doi)) {
       throw new TypeError(`impactFactorJson.factorsByDoi contains duplicate normalized DOI ${doi}.`);
     }
-    if (!catalogueDois.has(doi)) {
+    const publication = publicationsByDoi.get(doi);
+    if (!publication) {
       throw new TypeError(`impactFactorJson.factorsByDoi contains DOI not present in the publication catalogue: ${doi}.`);
     }
-    if (typeof rawFactor !== 'number' || !Number.isFinite(rawFactor) || rawFactor < 0) {
-      throw new TypeError(`impactFactorJson.factorsByDoi.${rawDoi} must be a non-negative finite number.`);
+    const label = `impactFactorJson.factorsByDoi.${rawDoi}`;
+    const record = assertObject(rawRecord, label);
+    assertOnlyInputKeys(record, ['jcrYear', 'jif'], label);
+    const publicationYear = positiveYear(publication.year, `publication ${doi}.year`);
+    const jcrYear = positiveYear(record.jcrYear, `${label}.jcrYear`);
+    const expectedJcrYear = publicationYear - 1;
+    if (expectedJcrYear < 1) {
+      throw new TypeError(`publication ${doi}.year must permit a positive previous-year JCR value.`);
     }
-    normalizedFactors.set(doi, rawFactor);
+    if (jcrYear !== expectedJcrYear) {
+      throw new TypeError(
+        `${label}.jcrYear must equal previous-year JCR year ${expectedJcrYear} for feed publication year ${publicationYear}; publication-year or current JCR data cannot be substituted.`
+      );
+    }
+    if (typeof record.jif !== 'number' || !Number.isFinite(record.jif) || record.jif < 0) {
+      throw new TypeError(`${label}.jif must be a non-negative finite number.`);
+    }
+    normalizedFactors.set(doi, record.jif);
   }
 
   const total = [...normalizedFactors.values()].reduce((sum, factor) => sum + factor, 0);
@@ -1361,6 +1396,91 @@ export function derivePublicationJcrBands({
   };
 }
 
+function canonicalizeJson(value) {
+  if (Array.isArray(value)) return value.map(canonicalizeJson);
+  if (!value || typeof value !== 'object') return value;
+  return Object.fromEntries(
+    Object.keys(value)
+      .sort(compareText)
+      .map(key => [key, canonicalizeJson(value[key])])
+  );
+}
+
+/**
+ * Validate a private licensed JCR/JIF input against the publication catalogue
+ * and prepare deterministic compact bytes suitable for a GitHub Actions secret.
+ * The returned summary never contains licensed values.
+ */
+export function prepareLicensedJcrInput({
+  publications,
+  impactFactorJson,
+  maxSecretBytes = GITHUB_ACTIONS_SECRET_MAX_BYTES
+}) {
+  if (!Array.isArray(publications)) {
+    throw new TypeError('publications must be an array.');
+  }
+  if (!Number.isInteger(maxSecretBytes) || maxSecretBytes < 1) {
+    throw new TypeError('maxSecretBytes must be a positive integer.');
+  }
+  const dataset = validateImpactFactorDataset(
+    parseImpactFactorJson(impactFactorJson)
+  );
+  if (!dataset) {
+    throw new TypeError('A nonempty licensed JCR/JIF input is required.');
+  }
+
+  const factorRecords = dataset.factorsByDoi === undefined
+    ? 0
+    : Object.keys(assertObject(
+      dataset.factorsByDoi,
+      'impactFactorJson.factorsByDoi'
+    )).length;
+  const rankingRecords = dataset.rankingsByDoi === undefined
+    ? 0
+    : Object.keys(assertObject(
+      dataset.rankingsByDoi,
+      'impactFactorJson.rankingsByDoi'
+    )).length;
+  if (factorRecords === 0 && rankingRecords === 0) {
+    throw new TypeError(
+      'The licensed JCR/JIF input must contain at least one factorsByDoi or rankingsByDoi record.'
+    );
+  }
+
+  const impactFactors = deriveImpactFactors(publications, dataset);
+  if (rankingRecords > 0) {
+    validatePreviousYearRankingBands(publications, dataset);
+  }
+  const journalStanding = deriveJournalStanding(publications, dataset);
+  const publicationBands = derivePublicationJcrBands({
+    publications,
+    impactFactorJson: dataset
+  });
+
+  const compactJson = JSON.stringify(canonicalizeJson(dataset));
+  const compactBytes = Buffer.byteLength(compactJson, 'utf8');
+  if (compactBytes > maxSecretBytes) {
+    throw new RangeError(
+      `The compact licensed JCR/JIF input is ${compactBytes} bytes, exceeding the GitHub Actions secret limit of ${maxSecretBytes} bytes.`
+    );
+  }
+
+  return {
+    compactJson,
+    summary: {
+      publicationTotal: publications.length,
+      factorRecords,
+      rankingRecords,
+      compactBytes,
+      maxSecretBytes,
+      impactFactorStatus: impactFactors.status,
+      journalStandingStatus: journalStanding.status,
+      publicationBandStatus: publicationBands.status,
+      publicationBandRecords: publicationBands.coveredPublications
+    }
+  };
+}
+
 /**
  * Derive a privacy-preserving, build-time-only statistics snapshot.
  * Citation sources remain separate because their coverage and counting methods differ.
@@ -1406,6 +1526,58 @@ export function deriveLabStatistics({
   };
 }
 
+/**
+ * Produce a deterministic, non-licensed lookup manifest for preparing the
+ * private JCR/JIF input. It contains only public catalogue metadata and the
+ * required previous-year mapping; no JIF, rank, percentile, or category values.
+ */
+export function deriveJcrInputRequirements(publications) {
+  if (!Array.isArray(publications)) {
+    throw new TypeError('publications must be an array.');
+  }
+  const seenDois = new Set();
+  const records = publications.map((publication, index) => {
+    if (!publication || typeof publication !== 'object' || Array.isArray(publication)) {
+      throw new TypeError(`publications[${index}] must be an object.`);
+    }
+    const doi = normalizeDoi(publication.doi, `publications[${index}].doi`);
+    if (seenDois.has(doi)) {
+      throw new TypeError(`publications contains duplicate DOI ${doi}.`);
+    }
+    seenDois.add(doi);
+    const publicationYear = positiveYear(
+      publication.year,
+      `publications[${index}].year`
+    );
+    const requiredJcrYear = positiveYear(
+      publicationYear - 1,
+      `publications[${index}].requiredJcrYear`
+    );
+    const no = normalizeWhitespace(publication.no);
+    const title = normalizeWhitespace(publication.title);
+    const journal = normalizeWhitespace(publication.journal);
+    if (!no || !title || !journal) {
+      throw new TypeError(
+        `publications[${index}] must include nonempty no, title, and journal fields.`
+      );
+    }
+    return {
+      no,
+      doi,
+      title,
+      journal,
+      publicationYear,
+      requiredJcrYear
+    };
+  });
+  return {
+    schemaVersion: JCR_INPUT_REQUIREMENTS_SCHEMA_VERSION,
+    publicationTotal: records.length,
+    yearBasis: JOURNAL_STANDING_YEAR_BASIS,
+    records
+  };
+}
+
 async function readBoundedFile(path, maxBytes, label) {
   const stat = await fs.stat(path);
   if (!stat.isFile() || stat.size > maxBytes) {
@@ -1436,6 +1608,73 @@ async function readJson(path, label) {
   } catch (error) {
     throw new Error(`${label} is not valid JSON: ${error.message}`);
   }
+}
+
+export async function generateJcrInputRequirementsFile({
+  feedPath,
+  outputPath
+}) {
+  for (const [label, value] of Object.entries({ feedPath, outputPath })) {
+    if (typeof value !== 'string' || !value.trim()) {
+      throw new TypeError(`${label} must be a non-empty path.`);
+    }
+  }
+  const publications = await loadBrowserDataScript(
+    feedPath,
+    'window.MTAP_FEED && window.MTAP_FEED.PUBS',
+    'feed.js'
+  );
+  const requirements = deriveJcrInputRequirements(publications);
+  await fs.mkdir(dirname(outputPath), { recursive: true });
+  await fs.writeFile(
+    outputPath,
+    `${JSON.stringify(requirements, null, 2)}\n`,
+    'utf8'
+  );
+  return requirements;
+}
+
+export async function validateLicensedJcrInputFile({
+  feedPath,
+  inputPath,
+  compactOutputPath = null,
+  maxSecretBytes = GITHUB_ACTIONS_SECRET_MAX_BYTES
+}) {
+  for (const [label, value] of Object.entries({ feedPath, inputPath })) {
+    if (typeof value !== 'string' || !value.trim()) {
+      throw new TypeError(`${label} must be a non-empty path.`);
+    }
+  }
+  if (compactOutputPath !== null
+      && (typeof compactOutputPath !== 'string' || !compactOutputPath.trim())) {
+    throw new TypeError('compactOutputPath must be null or a non-empty path.');
+  }
+  if (compactOutputPath && resolve(compactOutputPath) === resolve(inputPath)) {
+    throw new TypeError('compactOutputPath must not overwrite inputPath.');
+  }
+
+  const [publications, inputSource] = await Promise.all([
+    loadBrowserDataScript(
+      feedPath,
+      'window.MTAP_FEED && window.MTAP_FEED.PUBS',
+      'feed.js'
+    ),
+    readBoundedFile(inputPath, MAX_JSON_BYTES, 'licensed JCR/JIF input')
+  ]);
+  const prepared = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: inputSource,
+    maxSecretBytes
+  });
+  if (compactOutputPath) {
+    await fs.mkdir(dirname(compactOutputPath), { recursive: true });
+    await fs.writeFile(compactOutputPath, prepared.compactJson, {
+      encoding: 'utf8',
+      mode: 0o600,
+      flag: 'wx'
+    });
+  }
+  return prepared.summary;
 }
 
 export async function generateLabStatisticsFile({

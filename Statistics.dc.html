@@ -28,7 +28,7 @@ nav.nav a{font-size:19px;transition:transform .12s ease}
 nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 button,select{font:inherit}
-select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
 .sr-only{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;white-space:nowrap !important;border:0 !important}
 .skip-link{position:fixed;z-index:100;top:12px;left:12px;padding:10px 14px;background:var(--color-text);color:var(--color-bg);font-family:var(--font-heading);font-weight:800;text-decoration:none;transform:translateY(-180%)}
 .skip-link:focus{color:var(--color-bg);transform:translateY(0)}
@@ -51,13 +51,15 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
 .statistics-card-label{display:block;margin-top:7px;font-size:17px;line-height:24px;font-weight:700}
 .statistics-card-meta{display:block;margin-top:5px;font-size:14px;line-height:21px;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
 .statistics-bars{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
-.statistics-bar-row{display:grid;grid-template-columns:minmax(104px,160px) minmax(0,1fr) minmax(44px,auto);gap:12px;align-items:center;min-height:30px}
+.statistics-bar-row{display:grid;grid-template-columns:minmax(104px,160px) minmax(0,1fr);gap:12px;align-items:center;min-height:30px;outline:none}
 .statistics-bar-label{font-family:var(--font-heading);font-size:15px;line-height:21px;font-weight:800}
-.statistics-bar-track{position:relative;height:18px;background:color-mix(in srgb,var(--color-text) 9%,transparent);overflow:hidden}
+.statistics-bar-track{position:relative;height:18px;background:color-mix(in srgb,var(--color-text) 9%,transparent);overflow:visible}
 .statistics-bar-fill{display:block;height:100%;min-width:0;background:var(--bar-color,var(--color-accent))}
-.statistics-bar-value{font-family:var(--font-heading);font-size:15px;line-height:21px;font-weight:800;text-align:right;font-feature-settings:"tnum" 1}
-.statistics-bar-breakdown{grid-column:2/4;margin:-5px 0 2px;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 67%,transparent)}
-.statistics-journal-row{grid-template-columns:minmax(160px,260px) minmax(0,1fr) minmax(44px,auto)}
+.statistics-bar-value{position:absolute;z-index:3;left:clamp(24px,var(--bar-tooltip-x),calc(100% - 24px));bottom:calc(100% + 7px);min-width:28px;padding:3px 7px;border-radius:3px;opacity:0;transform:translate(-50%,4px);pointer-events:none;font-family:var(--font-heading);font-size:14px;line-height:20px;font-weight:800;text-align:center;font-feature-settings:"tnum" 1;color:#fff;background:var(--color-accent-900);box-shadow:0 4px 12px color-mix(in srgb,var(--color-text) 18%,transparent);transition:opacity .12s ease,transform .12s ease}
+.statistics-bar-value::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--color-accent-900)}
+.statistics-bar-row:hover .statistics-bar-value,.statistics-bar-row:focus-visible .statistics-bar-value,.statistics-bar-row:focus-within .statistics-bar-value{opacity:1;transform:translate(-50%,0)}
+.statistics-bar-breakdown{grid-column:2/3;margin:-5px 0 2px;font-size:13px;line-height:19px;color:color-mix(in srgb,var(--color-text) 67%,transparent)}
+.statistics-journal-row{grid-template-columns:minmax(160px,260px) minmax(0,1fr)}
 .statistics-source-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--color-text);border-bottom:2px solid var(--color-text);margin-bottom:32px}
 .statistics-source-card{min-width:0;padding:20px;border-left:1px solid var(--color-divider)}
 .statistics-source-card:first-child{border-left:0}
@@ -88,7 +90,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
 .statistics-metric-explanation{max-width:620px;margin:9px 0 0;font-size:14px;line-height:22px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
 .statistics-metric-link{display:inline-block;margin-top:10px;font-family:var(--font-heading);font-size:14px;line-height:21px;font-weight:800}
 .statistics-unavailable{margin:18px 0 0;padding:16px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:15px;line-height:23px}
-.statistics-network{position:relative;width:100%;margin:0;overflow:hidden}
+.statistics-network{position:relative;width:min(100%,760px);margin:0 auto;overflow:hidden}
 .statistics-network-canvas{display:block;width:100%;height:auto;aspect-ratio:1000/680;overflow:hidden}
 .statistics-network-line{stroke:color-mix(in srgb,var(--color-text) 27%,transparent);stroke-linecap:round;vector-effect:non-scaling-stroke}
 .statistics-network-node{fill:var(--color-accent-200);stroke:var(--color-accent-700);stroke-width:2;vector-effect:non-scaling-stroke}
@@ -104,7 +106,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
 .statistics-network-edge-key{display:inline-block;width:28px;height:3px;background:color-mix(in srgb,var(--color-text) 38%,transparent)}
 .statistics-mobile-collaborators{display:none}
 .statistics-collaborator-intro{margin:0 0 16px;font-size:15px;line-height:23px;color:color-mix(in srgb,var(--color-text) 76%,transparent)}
-.statistics-collaborator-row{grid-template-columns:minmax(130px,220px) minmax(0,1fr) minmax(44px,auto)}
+.statistics-collaborator-row{grid-template-columns:minmax(130px,220px) minmax(0,1fr)}
 .statistics-details{margin-top:22px;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)}
 .statistics-details summary{padding:12px 4px;cursor:pointer;font-family:var(--font-heading);font-size:15px;line-height:22px;font-weight:800;color:var(--color-accent-700)}
 .statistics-table-wrap{overflow-x:auto;padding:0 0 16px}
@@ -139,9 +141,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
   .statistics-mobile-collaborators{display:block}
 }
 @media (max-width:600px){
-  .statistics-collaborator-row{grid-template-columns:minmax(0,1fr) 38px;gap:7px 8px}
-  .statistics-collaborator-row .statistics-bar-track{grid-column:1/3;grid-row:2}
-  .statistics-collaborator-row .statistics-bar-value{grid-column:2;grid-row:1}
+  .statistics-collaborator-row{grid-template-columns:minmax(0,1fr);gap:7px 8px}
   .back-to-top{display:none !important}
 }
 @media (max-width:440px){
@@ -152,12 +152,11 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
   .statistics-intro{font-size:17px;line-height:27px}
   .statistics-section{padding:34px 0}
   .statistics-section-title{font-size:26px;line-height:32px}
-  .statistics-bar-row{grid-template-columns:minmax(78px,102px) minmax(0,1fr) 38px;gap:8px}
+  .statistics-bar-row{grid-template-columns:minmax(78px,102px) minmax(0,1fr);gap:8px}
   .statistics-bar-label,.statistics-bar-value{font-size:13px;line-height:19px}
-  .statistics-bar-breakdown{grid-column:1/4;margin:0 0 4px}
-  .statistics-journal-row{grid-template-columns:minmax(0,1fr) 38px;gap:7px 8px}
-  .statistics-journal-row .statistics-bar-track{grid-column:1/3;grid-row:2}
-  .statistics-journal-row .statistics-bar-value{grid-column:2;grid-row:1}
+  .statistics-bar-breakdown{grid-column:1/3;margin:0 0 4px}
+  .statistics-journal-row{grid-template-columns:minmax(0,1fr);gap:7px 8px}
+  .statistics-journal-row .statistics-bar-track{grid-row:2}
   .statistics-summary-card,.statistics-source-card,.statistics-metric{padding:18px 14px}
   .statistics-value{font-size:39px;line-height:45px}
   .statistics-metric-value{font-size:39px;line-height:45px}
@@ -165,6 +164,11 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
   .statistics-select{width:100%}
   footer{padding-left:14px !important;padding-right:14px !important}
   .back-to-top{right:14px !important;bottom:14px !important}
+}
+@media (hover:none){
+  .statistics-bar-value{left:auto;right:3px;top:50%;bottom:auto;min-width:22px;padding:0 4px;border-radius:2px;opacity:1;transform:translateY(-50%);font-size:12px;line-height:16px;background:rgba(0,42,80,.9);box-shadow:none}
+  .statistics-bar-value::after{display:none}
+  .statistics-bar-row:hover .statistics-bar-value,.statistics-bar-row:focus-visible .statistics-bar-value,.statistics-bar-row:focus-within .statistics-bar-value{transform:translateY(-50%)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -239,10 +243,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         </div>
         <ol class="statistics-bars" aria-label="Publications by year">
           <sc-for list="{{ publicationYears }}" as="row" hint-placeholder-count="8">
-            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}" tabindex="0">
               <span class="statistics-bar-label">{{ row.label }}</span>
-              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
-              <strong class="statistics-bar-value">{{ row.count }}</strong>
+              <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
             </li>
           </sc-for>
         </ol>
@@ -280,10 +283,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         <sc-if value="{{ journalDistributionAvailable }}" hint-placeholder-val="{{ true }}">
           <ul class="statistics-bars" aria-label="Highlighted publications by journal" data-journal-highlights>
             <sc-for list="{{ journalHighlights }}" as="row" hint-placeholder-count="8">
-              <li class="statistics-bar-row statistics-journal-row" aria-label="{{ row.aria }}">
+              <li class="statistics-bar-row statistics-journal-row" aria-label="{{ row.aria }}" tabindex="0">
                 <span class="statistics-bar-label">{{ row.name }}</span>
-                <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
-                <strong class="statistics-bar-value">{{ row.count }}</strong>
+                <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
               </li>
             </sc-for>
           </ul>
@@ -322,10 +324,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         </div>
         <ul class="statistics-bars" aria-label="Publications by overlapping research area">
           <sc-for list="{{ researchAreas }}" as="row" hint-placeholder-count="5">
-            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}" tabindex="0">
               <span class="statistics-bar-label">{{ row.name }}</span>
-              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
-              <strong class="statistics-bar-value">{{ row.count }}</strong>
+              <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
               <sc-if value="{{ row.hasBreakdown }}" hint-placeholder-val="{{ false }}"><span class="statistics-bar-breakdown">{{ row.breakdown }}</span></sc-if>
             </li>
           </sc-for>
@@ -374,10 +375,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
           <sc-if value="{{ citationTrendAvailable }}" hint-placeholder-val="{{ true }}">
             <ol class="statistics-bars" aria-label="{{ citationTrendAriaLabel }}">
               <sc-for list="{{ citationYears }}" as="row" hint-placeholder-count="8">
-                <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+                <li class="statistics-bar-row" aria-label="{{ row.aria }}" tabindex="0">
                   <span class="statistics-bar-label">{{ row.label }}</span>
-                  <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent-2)"></span></span>
-                  <strong class="statistics-bar-value">{{ row.countText }}</strong>
+                  <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent-2)"></span><strong class="statistics-bar-value">{{ row.countText }}</strong></span>
                 </li>
               </sc-for>
             </ol>
@@ -470,10 +470,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         <sc-if value="{{ journalStandingAvailable }}" hint-placeholder-val="{{ false }}">
           <ol class="statistics-bars" data-journal-standing-bars aria-label="Exclusive previous-year JCR standing bands">
             <sc-for list="{{ journalStandingBands }}" as="row" hint-placeholder-count="8">
-              <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+              <li class="statistics-bar-row" aria-label="{{ row.aria }}" tabindex="0">
                 <span class="statistics-bar-label">{{ row.label }}</span>
-                <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
-                <strong class="statistics-bar-value">{{ row.count }}</strong>
+                <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
               </li>
             </sc-for>
           </ol>
@@ -525,10 +524,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
               <p class="statistics-collaborator-intro">Top collaborators ranked by publications shared directly with the principal investigator in this catalogue.</p>
               <ol class="statistics-bars" aria-label="Top collaborators by publications shared with the principal investigator">
                 <sc-for list="{{ topCollaborators }}" as="row" hint-placeholder-count="8">
-                  <li class="statistics-bar-row statistics-collaborator-row" aria-label="{{ row.aria }}">
+                  <li class="statistics-bar-row statistics-collaborator-row" aria-label="{{ row.aria }}" tabindex="0">
                     <span class="statistics-bar-label">{{ row.rank }}. {{ row.name }}</span>
-                    <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span></span>
-                    <strong class="statistics-bar-value">{{ row.count }}</strong>
+                    <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:var(--color-accent)"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
                   </li>
                 </sc-for>
               </ol>
@@ -595,10 +593,9 @@ select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var
         </div>
         <ul class="statistics-bars" aria-label="Current researchers by role">
           <sc-for list="{{ teamGroups }}" as="row" hint-placeholder-count="3">
-            <li class="statistics-bar-row" aria-label="{{ row.aria }}">
+            <li class="statistics-bar-row" aria-label="{{ row.aria }}" tabindex="0">
               <span class="statistics-bar-label">{{ row.label }}</span>
-              <span class="statistics-bar-track" aria-hidden="true"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span></span>
-              <strong class="statistics-bar-value">{{ row.count }}</strong>
+              <span class="statistics-bar-track" aria-hidden="true" style="--bar-tooltip-x:{{ row.percent }}%"><span class="statistics-bar-fill" style="width:{{ row.percent }}%;--bar-color:{{ row.color }}"></span><strong class="statistics-bar-value">{{ row.count }}</strong></span>
             </li>
           </sc-for>
         </ul>

@@ -9,6 +9,10 @@ on:
       - main
     paths:
       - feed.js
+      - .github/workflows/publication-metadata.yml
+      - scripts/refresh-publication-metadata.mjs
+      - scripts/report-publication-metadata-health.mjs
+      - tests/publication-metadata.test.mjs
 
 permissions:
   contents: read
@@ -43,6 +47,10 @@ jobs:
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
           SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
         run: node scripts/refresh-publication-metadata.mjs
+
+      - name: Summarize publication metadata source health
+        if: always()
+        run: node scripts/report-publication-metadata-health.mjs
 
       - name: Test metadata refresh logic
         run: node --test tests/publication-metadata.test.mjs

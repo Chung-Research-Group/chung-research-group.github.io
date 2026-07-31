@@ -81,26 +81,6 @@ test.beforeEach(async ({ page }) => {
   await page.route(/^https?:\/\/(?!127\.0\.0\.1(?::\d+)?\/|unpkg\.com\/)/, route => route.abort());
 });
 
-async function expectImageDecoded(image, { timeout = 30_000 } = {}) {
-  await image.scrollIntoViewIfNeeded();
-  await expect(image).toBeVisible();
-  await expect.poll(
-    () => image.evaluate(async (node) => {
-      if (!node.complete || node.naturalWidth <= 0 || node.naturalHeight <= 0) return false;
-      const decoded = await Promise.race([
-        node.decode().then(() => true, () => false),
-        new Promise(resolve => setTimeout(() => resolve(false), 1_000))
-      ]);
-      return decoded && node.naturalWidth > 0 && node.naturalHeight > 0;
-    }),
-    {
-      timeout,
-      intervals: [100, 250, 500, 1_000],
-      message: 'expected the local publication image to load and decode'
-    }
-  ).toBe(true);
-}
-
 test('publications use the static metadata snapshot without external API fan-out', async ({ page }) => {
   const externalMetadataRequests = [];
   page.on('request', request => {
@@ -113,9 +93,10 @@ test('publications use the static metadata snapshot without external API fan-out
   const status = page.locator('[data-publication-metadata-status]');
   await expect(status).toBeVisible();
   await expect(status).toContainText(/updated/i, { timeout: 30_000 });
-  await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toBeVisible();
-  await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toBeVisible();
-  await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toBeVisible();
+  await expect(page.getByText('Publications · 논문', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Citations (OpenAlex)', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Citations (Semantic Scholar)', { exact: true })).toHaveCount(0);
   await expect(page.locator('[data-publication-enrichment]').first()).toBeVisible();
   expect(externalMetadataRequests).toEqual([]);
 });
@@ -216,7 +197,7 @@ test('publication card renders only an authorized derived previous-year JCR band
   await expect(page.locator('[data-publication-jcr-band]')).toHaveCount(bandCases.length);
 });
 
-test('Google Scholar aggregate is rendered from the static snapshot', async ({ page }) => {
+test('publication aggregates stay on the Statistics page rather than the publication header', async ({ page }) => {
   await page.route('**/data/publication-metadata.json*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -251,8 +232,9 @@ test('Google Scholar aggregate is rendered from the static snapshot', async ({ p
   }));
 
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
-  const card = page.getByText('Citations (Google Scholar)', { exact: true }).locator('..');
-  await expect(card).toContainText('9,876');
+  await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('9,876', { exact: true })).toHaveCount(0);
+  await expect(page.locator('[data-publication-metadata-status]')).toContainText('updated');
 });
 
 test('publication cards prefer per-paper Google Scholar and retain source fallbacks', async ({ page }) => {
@@ -340,133 +322,39 @@ test('publications remain usable when the metadata snapshot is unavailable', asy
 
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await expect(page.locator('[data-publication-no]').first()).toBeVisible();
-  const scholarCard = page.locator('[data-google-scholar-citations]');
-  await expect(scholarCard).toBeVisible();
-  await expect(scholarCard.locator('p').first()).toHaveText('\u2014');
+  await expect(page.locator('[data-publication-metadata-status]')).toContainText('temporarily unavailable');
+  await expect(page.getByText('Citations (Google Scholar)', { exact: true })).toHaveCount(0);
   const publicationSearch = page.getByPlaceholder(/Search publications/);
   await publicationSearch.fill('PACMAN');
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
 });
 
-test('publication visuals sit between each number and bibliography with local provenance', async ({ page, request }) => {
+test('publication rows keep a compact number-and-bibliography layout without artwork', async ({ page, request }) => {
   const publicationCount = (await readFeedPublications(request)).length;
-  const jcpMarkResponse = await request.get('/images/publications/journal-marks/jcp-user-provided.png');
-  expect(jcpMarkResponse.ok()).toBe(true);
-  const jcpMarkBody = await jcpMarkResponse.body();
-  let jcpPrimaryAttempts = 0;
-  await page.route('**/images/publications/journal-marks/jcp-user-provided.png*', async (route) => {
-    const url = new URL(route.request().url());
-    if (!url.searchParams.has('retry') && jcpPrimaryAttempts++ === 0) {
-      await route.abort('connectionreset');
-      return;
-    }
-    await route.fulfill({
-      status: 200,
-      contentType: 'image/png',
-      body: jcpMarkBody
-    });
-  });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
+
   const publications = page.locator('[data-publication-no]');
-  const visuals = page.locator('[data-publication-visual]');
-  await expect(publications.first()).toBeVisible();
-  await expect.poll(async () => {
-    const [visualCount, renderedPublicationCount] = await Promise.all([
-      visuals.count(),
-      publications.count()
-    ]);
-    return visualCount > 0 && visualCount === renderedPublicationCount;
-  }).toBe(true);
-  await expect(publications).toHaveCount(publicationCount);
-  await expect(visuals).toHaveCount(publicationCount);
-
   const firstRow = publications.first();
-  const first = firstRow.locator('[data-publication-visual]');
-  await expect(first).toHaveAttribute('data-visual-kind', 'publisher-graphical-abstract');
-  await expect(first).toHaveAttribute('data-visual-availability', 'reviewed-article-graphic');
-  const image = first.locator('[data-publication-visual-image]');
-  await expectImageDecoded(image);
-  await expect(image).toHaveAttribute('src', 'images/publications/article-graphics/10-1002-ijch-70028.png');
-  await expect(first.getByText('Graphical abstract', { exact: true })).toBeVisible();
-  await expect(first.locator('a')).toHaveAttribute('href', 'https://doi.org/10.1002/ijch.70028');
-
-  expect(await firstRow.evaluate((row) => {
-    const children = [...row.children];
-    return [
-      children.findIndex((child) => child.classList.contains('publication-number')),
-      children.findIndex((child) => child.classList.contains('publication-visual')),
-      children.findIndex((child) => child.classList.contains('publication-bibliography'))
-    ];
-  })).toEqual([0, 1, 2]);
-
-  const jcp = page.locator('[data-publication-no="71"] [data-publication-visual]');
-  await expect(jcp).toHaveAttribute('data-visual-kind', 'journal-mark');
-  await expect(jcp).toHaveAttribute('data-visual-load-state', 'loaded');
-  await expect(jcp.locator('img')).toHaveAttribute(
-    'src',
-    /^images\/publications\/journal-marks\/jcp-user-provided\.png\?retry=1$/
-  );
-  await expect(jcp.getByText('Journal fallback', { exact: true })).toBeVisible();
-
-  const reviewedRsc = page.locator('[data-publication-no="67"] [data-publication-visual]');
-  await expect(reviewedRsc).toHaveAttribute('data-visual-kind', 'publisher-graphical-abstract');
-  await expect(reviewedRsc.locator('img')).toHaveAttribute(
-    'src',
-    'images/publications/article-graphics/10-1039-d5me00131e.png'
-  );
-  await expect(reviewedRsc.locator('figcaption')).toHaveText('RSC - Author reuse');
-
-  for (const reviewedVisual of [
-    {
-      number: '62',
-      kind: 'publisher-graphical-abstract',
-      src: 'images/publications/article-graphics/10-1016-j-cej-2025-164419.jpg',
-      attribution: 'Elsevier - Author reuse'
-    },
-    {
-      number: '35',
-      kind: 'publisher-graphical-abstract',
-      src: 'images/publications/article-graphics/10-1002-advs-202201559.jpg',
-      attribution: 'Wiley - CC BY 4.0'
-    },
-    {
-      number: '43',
-      kind: 'journal-mark',
-      src: 'images/publications/journal-marks/joss-cc-by-4.0.png',
-      attribution: 'JOSS - CC BY 4.0'
-    }
-  ]) {
-    const visual = page.locator(`[data-publication-no="${reviewedVisual.number}"] [data-publication-visual]`);
-    const visualImage = visual.locator('[data-publication-visual-image]');
-    await expect(visual).toHaveAttribute('data-visual-kind', reviewedVisual.kind);
-    await expectImageDecoded(visualImage);
-    await expect(visualImage).toHaveAttribute('src', reviewedVisual.src);
-    await expect(visual.locator('figcaption')).toHaveText(reviewedVisual.attribution);
-  }
-
-  await image.evaluate((node) => {
-    node.src = 'images/publications/article-graphics/forced-missing-visual.png';
-  });
-  await expect(first).toHaveAttribute('data-visual-load-state', 'fallback');
-  await expect(first).toHaveAttribute('data-visual-kind', 'journal-title-card');
-  await expect(first).toHaveAttribute('data-visual-availability', 'neutral-original-title-card');
-  await expect(image).toHaveAttribute('src', 'images/publications/journal-cards/ijc.svg');
-  await expect(image).toHaveAttribute('alt', 'Journal title card for Israel Journal of Chemistry.');
-  await expect(first.getByText('Journal', { exact: true })).toBeVisible();
-  await expect(first.locator('figcaption')).toHaveText('Original journal title card');
-  await expectImageDecoded(image);
-
-  const remoteImageCount = await page.locator('[data-publication-visual-image]').evaluateAll(
-    (images) => images.filter((imageNode) => /^https?:/i.test(imageNode.getAttribute('src') || '')).length
-  );
-  expect(remoteImageCount).toBe(0);
+  await expect(firstRow).toBeVisible();
+  await expect(publications).toHaveCount(publicationCount);
+  await expect(page.locator('[data-publication-visual]')).toHaveCount(0);
+  await expect(page.locator('[data-publication-visual-image]')).toHaveCount(0);
+  expect(await firstRow.evaluate((row) =>
+    [...row.children].map((child) => child.className)
+  )).toEqual(['publication-number', 'publication-bibliography']);
+  expect(await firstRow.evaluate((row) =>
+    getComputedStyle(row).gridTemplateColumns.split(' ').length
+  )).toBe(2);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(firstRow).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-  const mobileColumns = await firstRow.evaluate((row) => getComputedStyle(row).gridTemplateColumns.split(' ').length);
-  expect(mobileColumns).toBe(2);
+  expect(await page.evaluate(() =>
+    document.documentElement.scrollWidth <= document.documentElement.clientWidth
+  )).toBe(true);
+  expect(await firstRow.evaluate((row) =>
+    getComputedStyle(row).gridTemplateColumns.split(' ').length
+  )).toBe(2);
 });
 
 test('every published page has metadata and renders its heading', async ({ page }) => {
@@ -723,6 +611,72 @@ test('lab statistics render from the local snapshot and remain usable through ta
   expect(externalDataRequests).toEqual([]);
 });
 
+test('statistics bar values appear on hover and keyboard focus', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/Statistics.dc.html', { waitUntil: 'load' });
+
+  for (const selector of [
+    '[data-publications-by-year] .statistics-bar-row',
+    '[data-journal-distribution] .statistics-bar-row',
+    '[data-research-footprint] .statistics-bar-row',
+    '[data-citation-trend] .statistics-bar-row',
+    '[data-team-composition] .statistics-bar-row'
+  ]) {
+    const row = page.locator(selector).first();
+    await expect(row).toBeVisible();
+    await expect(row).toHaveAttribute('tabindex', '0');
+  }
+
+  const row = page.locator('[data-publications-by-year] .statistics-bar-row').first();
+  const value = row.locator('.statistics-bar-value');
+  await expect(value).not.toHaveText('');
+  expect(await value.evaluate((node) => getComputedStyle(node).opacity)).toBe('0');
+
+  await row.hover();
+  await expect.poll(
+    () => value.evaluate((node) => getComputedStyle(node).opacity)
+  ).toBe('1');
+
+  await page.mouse.move(0, 0);
+  await expect.poll(
+    () => value.evaluate((node) => getComputedStyle(node).opacity)
+  ).toBe('0');
+  await row.focus();
+  await expect.poll(
+    () => value.evaluate((node) => getComputedStyle(node).opacity)
+  ).toBe('1');
+});
+
+test.describe('touch statistics values', () => {
+  test.use({
+    hasTouch: true,
+    isMobile: true,
+    viewport: { width: 390, height: 844 }
+  });
+
+  test('bar values remain visible without hover on touch screens', async ({ page }) => {
+    await page.goto('/Statistics.dc.html', { waitUntil: 'load' });
+    for (const selector of [
+      '[data-publications-by-year] .statistics-bar-row',
+      '[data-journal-distribution] .statistics-bar-row',
+      '[data-research-footprint] .statistics-bar-row',
+      '[data-citation-trend] .statistics-bar-row',
+      '[data-team-composition] .statistics-bar-row',
+      '[data-top-collaborators] .statistics-bar-row'
+    ]) {
+      const row = page.locator(selector).first();
+      await expect(row).toBeVisible();
+      await expect(row).toHaveAttribute('tabindex', '0');
+      expect(
+        await row.locator('.statistics-bar-value').evaluate(node => getComputedStyle(node).opacity)
+      ).toBe('1');
+    }
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+    ).toBeLessThanOrEqual(0);
+  });
+});
+
 test('coauthor network uses stable bounded force-directed coordinates instead of fixed rings', async ({ page, request }) => {
   const snapshotResponse = await request.get('/data/lab-statistics.json');
   expect(snapshotResponse.ok()).toBe(true);
@@ -733,6 +687,14 @@ test('coauthor network uses stable bounded force-directed coordinates instead of
   await expect(network).toBeVisible();
   await expect(network).toHaveAttribute('viewBox', '0 0 1000 680');
   await expect(network).toHaveAttribute('data-force-layout', 'deterministic-force-v1');
+  const networkBox = await network.boundingBox();
+  const sectionBox = await page.locator('[data-coauthor-network]').boundingBox();
+  expect(networkBox).toBeTruthy();
+  expect(sectionBox).toBeTruthy();
+  expect(networkBox.width).toBeLessThanOrEqual(770);
+  expect(Math.abs(
+    (networkBox.x + networkBox.width / 2) - (sectionBox.x + sectionBox.width / 2)
+  )).toBeLessThanOrEqual(2);
 
   const readCoordinates = () => page.locator(
     '[data-coauthor-network] .statistics-network-node-group'

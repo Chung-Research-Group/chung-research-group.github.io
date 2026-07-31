@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Validated static build with reviewed publication visuals for the Chung Research Group GitHub Pages site.",
+  "description": "Validated static build and publication automation for the Chung Research Group GitHub Pages site.",
   "scripts": {
     "build": "node scripts/build-site.mjs",
     "check": "node scripts/validate-site.mjs --root . && node scripts/build-site.mjs && node scripts/validate-site.mjs --root dist --compare-source .",
+    "jcr:requirements": "node scripts/generate-jcr-requirements.mjs",
+    "jcr:validate": "node scripts/validate-jcr-input.mjs",
+    "metadata:health": "node scripts/report-publication-metadata-health.mjs",
     "test": "npm run check && npm run test:automation && npm run test:browser",
-    "test:automation": "node --test tests/publication-bot.test.mjs tests/publication-citations.test.mjs tests/publication-metadata.test.mjs tests/publication-visual.test.mjs tests/lab-statistics.test.mjs tests/force-layout.test.mjs",
+    "test:automation": "node --test tests/publication-bot.test.mjs tests/publication-citations.test.mjs tests/publication-metadata.test.mjs tests/lab-statistics.test.mjs tests/force-layout.test.mjs",
     "test:browser": "playwright test"
   },
   "engines": {

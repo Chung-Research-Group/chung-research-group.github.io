@@ -29,7 +29,6 @@ export const requiredPages = [
 export const requiredRuntimeFiles = [
   "support.js",
   "force-layout.js",
-  "publication-visuals.js",
   "feed.js",
   "people-data.js",
   "image-slot.js",
