@@ -1429,13 +1429,19 @@ export function prepareLicensedJcrInput({
     throw new TypeError('A nonempty licensed JCR/JIF input is required.');
   }
 
-  const factorRecords = dataset.factorsByDoi === undefined
+  const factorRecords = (
+    dataset.factorsByDoi === undefined
+    || dataset.factorsByDoi === null
+  )
     ? 0
     : Object.keys(assertObject(
       dataset.factorsByDoi,
       'impactFactorJson.factorsByDoi'
     )).length;
-  const rankingRecords = dataset.rankingsByDoi === undefined
+  const rankingRecords = (
+    dataset.rankingsByDoi === undefined
+    || dataset.rankingsByDoi === null
+  )
     ? 0
     : Object.keys(assertObject(
       dataset.rankingsByDoi,

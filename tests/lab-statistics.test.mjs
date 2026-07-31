@@ -1793,6 +1793,33 @@ test('validates and deterministically compacts private licensed JCR input', () =
     publicationBandRecords: 0
   });
   assert.equal(JSON.stringify(JSON.parse(first.compactJson)), first.compactJson);
+
+  const factorsOmitted = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: { ...dataset, factorsByDoi: null }
+  });
+  assert.equal(factorsOmitted.summary.factorRecords, 0);
+  assert.equal(factorsOmitted.summary.rankingRecords, 1);
+
+  const rankingsOmitted = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: { ...dataset, rankingsByDoi: null }
+  });
+  assert.equal(rankingsOmitted.summary.factorRecords, 1);
+  assert.equal(rankingsOmitted.summary.rankingRecords, 0);
+
+  assert.throws(
+    () => prepareLicensedJcrInput({
+      publications,
+      impactFactorJson: {
+        ...dataset,
+        factorsByDoi: null,
+        rankingsByDoi: null
+      }
+    }),
+    /must contain at least one factorsByDoi or rankingsByDoi record/
+  );
+
   assert.throws(
     () => prepareLicensedJcrInput({
       publications,

@@ -1,30 +1,30 @@
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 import { validateLicensedJcrInputFile } from './lab-statistics.mjs';
 
-const repositoryRoot = path.resolve(import.meta.dirname, '..');
+const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
+const repositoryRoot = path.resolve(currentDirectory, '..');
 const args = process.argv.slice(2);
 const inputArgument = args.shift();
 let compactOutputArgument = null;
+const usage =
+  'Usage: npm run jcr:validate -- <private-input.json> [--compact-output <private-output.json>]';
+
+if (!inputArgument || inputArgument.startsWith('-')) {
+  throw new TypeError(usage);
+}
 
 while (args.length) {
   const option = args.shift();
   if (option !== '--compact-output' || compactOutputArgument !== null) {
-    throw new TypeError(
-      'Usage: npm run jcr:validate -- <private-input.json> [--compact-output <private-output.json>]'
-    );
+    throw new TypeError(usage);
   }
   compactOutputArgument = args.shift();
   if (!compactOutputArgument) {
     throw new TypeError('--compact-output requires a path.');
   }
-}
-
-if (!inputArgument) {
-  throw new TypeError(
-    'Usage: npm run jcr:validate -- <private-input.json> [--compact-output <private-output.json>]'
-  );
 }
 
 const inputPath = path.resolve(process.cwd(), inputArgument);

@@ -1,9 +1,11 @@
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 import { generateJcrInputRequirementsFile } from './lab-statistics.mjs';
 
-const repositoryRoot = path.resolve(import.meta.dirname, '..');
+const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
+const repositoryRoot = path.resolve(currentDirectory, '..');
 const outputPath = path.resolve(
   repositoryRoot,
   process.argv[2] || 'jcr-input-requirements.json'

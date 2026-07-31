@@ -1397,7 +1397,9 @@ async function main() {
     );
   } else if (googleScholarCoverage.reason === "response-truncated") {
     console.warn(
-      "The Google Scholar author response exceeded the single-request 100-paper safety limit; "
+      `Google Scholar per-paper retrieval was not completed within ${googleScholarMaximumPages} `
+      + `pages of ${googleScholarArticleLimit} articles, or stopped on an empty, repeated, `
+      + "or non-progressing page; "
       + "accepting the current profile aggregate while preserving previous per-paper records."
     );
   } else if (googleScholarCoverage.status === "partial") {
