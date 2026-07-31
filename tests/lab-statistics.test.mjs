@@ -7,10 +7,14 @@ import test from 'node:test';
 import vm from 'node:vm';
 
 import {
+  deriveJcrInputRequirements,
   deriveLabStatistics,
   derivePublicationJcrBands,
+  generateJcrInputRequirementsFile,
   generateLabStatisticsFile,
-  generatePublicationJcrBandsFile
+  generatePublicationJcrBandsFile,
+  prepareLicensedJcrInput,
+  validateLicensedJcrInputFile
 } from '../scripts/lab-statistics.mjs';
 import { TOPIC_GROUPS } from '../scripts/publication-bot.mjs';
 
@@ -1020,7 +1024,10 @@ test('accepts Unicode and reserved punctuation through the canonical DOI parser'
       licenseConfirmed: true,
       aggregatePublicationAuthorized: true,
       factorsByDoi: {
-        'https://doi.org/10.1000/Über?x=1&y=2#part': 4.25
+        'https://doi.org/10.1000/Über?x=1&y=2#part': {
+          jcrYear: 2025,
+          jif: 4.25
+        }
       }
     }
   });
@@ -1530,8 +1537,8 @@ test('derives only licensed DOI-keyed Journal Impact Factor aggregates', () => {
     updatedAt: '2026-01-03T00:00:00.000Z',
     edition: '2025 edition',
     factorsByDoi: {
-      'https://doi.org/10.1000/ALPHA': 2.5,
-      'doi: 10.1000/beta': 3.75
+      'https://doi.org/10.1000/ALPHA': { jcrYear: 2024, jif: 2.5 },
+      'doi: 10.1000/beta': { jcrYear: 2024, jif: 3.75 }
     }
   };
   const common = {
@@ -1565,7 +1572,7 @@ test('derives only licensed DOI-keyed Journal Impact Factor aggregates', () => {
     ...common,
     impactFactorJson: {
       ...baseDataset,
-      factorsByDoi: { '10.1000/alpha': 2.5 }
+      factorsByDoi: { '10.1000/alpha': { jcrYear: 2024, jif: 2.5 } }
     }
   });
   assert.deepEqual(partial.impactFactors, {
@@ -1589,9 +1596,13 @@ test('derives only licensed DOI-keyed Journal Impact Factor aggregates', () => {
     [{ ...baseDataset, aggregatePublicationAuthorized: false }, /aggregatePublicationAuthorized/],
     [{ ...baseDataset, updatedAt: 'not-a-date' }, /updatedAt/],
     [{ ...baseDataset, edition: '  ' }, /edition/],
-    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': -1 } }, /non-negative finite/],
-    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': '2.5' } }, /non-negative finite/],
-    [{ ...baseDataset, factorsByDoi: { '10.1000/other': 2.5 } }, /not present/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': -1 } }, /must be an object/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': { jcrYear: 2024, jif: -1 } } }, /jif must be a non-negative finite/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': { jcrYear: 2024, jif: '2.5' } } }, /jif must be a non-negative finite/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': { jcrYear: 2025, jif: 2.5 } } }, /must equal previous-year JCR year 2024/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': { jif: 2.5 } } }, /jcrYear must be a valid year/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/alpha': { jcrYear: 2024, jif: 2.5, proxy: 'CiteScore' } } }, /unexpected fields/],
+    [{ ...baseDataset, factorsByDoi: { '10.1000/other': { jcrYear: 2024, jif: 2.5 } } }, /not present/],
     ['{not valid json', /valid JSON/]
   ];
   invalidCases.forEach(([impactFactorJson, expectedError]) => {
@@ -1618,6 +1629,273 @@ test('derives only licensed DOI-keyed Journal Impact Factor aggregates', () => {
     updatedAt: '2026-01-03T00:00:00.000Z',
     reason: 'No licensed DOI-keyed Journal Impact Factor values are configured; no proxy metric is inferred.'
   });
+});
+
+test('derives a deterministic public-only JCR input requirements manifest', () => {
+  const requirements = deriveJcrInputRequirements([
+    {
+      no: '02',
+      doi: 'https://doi.org/10.1000/ALPHA',
+      title: 'Alpha paper',
+      journal: 'Journal Alpha',
+      year: 2026
+    },
+    {
+      no: '01',
+      doi: 'doi: 10.1000/beta',
+      title: 'Beta paper',
+      journal: 'Journal Beta',
+      year: 2025
+    }
+  ]);
+  assert.deepEqual(requirements, {
+    schemaVersion: 1,
+    publicationTotal: 2,
+    yearBasis: 'Previous-year JCR: publication year Y uses JCR year Y-1.',
+    records: [
+      {
+        no: '02',
+        doi: '10.1000/alpha',
+        title: 'Alpha paper',
+        journal: 'Journal Alpha',
+        publicationYear: 2026,
+        requiredJcrYear: 2025
+      },
+      {
+        no: '01',
+        doi: '10.1000/beta',
+        title: 'Beta paper',
+        journal: 'Journal Beta',
+        publicationYear: 2025,
+        requiredJcrYear: 2024
+      }
+    ]
+  });
+  assert.doesNotMatch(
+    JSON.stringify(requirements),
+    /"jif"|"rank"|"quartile"|"categories"|"jifPercentile"/
+  );
+});
+
+test('rejects malformed JCR input requirements instead of guessing years', () => {
+  const valid = {
+    no: '01',
+    doi: '10.1000/alpha',
+    title: 'Alpha paper',
+    journal: 'Journal Alpha',
+    year: 2025
+  };
+  assert.throws(
+    () => deriveJcrInputRequirements([{ ...valid }, { ...valid }]),
+    /duplicate DOI/
+  );
+  assert.throws(
+    () => deriveJcrInputRequirements([{ ...valid, year: 'unknown' }]),
+    /must be a valid year/
+  );
+  assert.throws(
+    () => deriveJcrInputRequirements([{ ...valid, journal: ' ' }]),
+    /nonempty no, title, and journal/
+  );
+});
+
+test('writes all catalogue DOI and previous-year JCR lookup requirements', async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'jcr-requirements-'));
+  const outputPath = path.join(directory, 'requirements.json');
+  const repeatedOutputPath = path.join(directory, 'requirements-repeated.json');
+  try {
+    const requirements = await generateJcrInputRequirementsFile({
+      feedPath: FEED_PATH,
+      outputPath
+    });
+    await generateJcrInputRequirementsFile({
+      feedPath: FEED_PATH,
+      outputPath: repeatedOutputPath
+    });
+    const publications = await loadBrowserData(FEED_PATH, 'window.MTAP_FEED.PUBS');
+    assert.equal(requirements.publicationTotal, publications.length);
+    assert.equal(requirements.records.length, publications.length);
+    assert.equal(
+      new Set(requirements.records.map(record => record.doi)).size,
+      publications.length
+    );
+    requirements.records.forEach(record => {
+      assert.equal(record.requiredJcrYear, record.publicationYear - 1);
+    });
+    assert.deepEqual(
+      JSON.parse(await fs.readFile(outputPath, 'utf8')),
+      requirements
+    );
+    assert.deepEqual(
+      await fs.readFile(repeatedOutputPath),
+      await fs.readFile(outputPath)
+    );
+  } finally {
+    await fs.rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('validates and deterministically compacts private licensed JCR input', () => {
+  const publications = [{
+    no: '01',
+    doi: '10.1000/jcr-private',
+    title: 'Private input validation',
+    journal: 'Journal A',
+    year: 2026,
+    topics: ['Adsorption']
+  }];
+  const dataset = {
+    rankingsByDoi: {
+      '10.1000/jcr-private': {
+        categories: [{
+          quartile: 'Q1',
+          jifPercentile: 99.5,
+          categoryTotal: 100,
+          rank: 1,
+          category: 'Chemical Engineering'
+        }],
+        jcrYear: 2025
+      }
+    },
+    factorsByDoi: {
+      '10.1000/jcr-private': { jif: 12.3, jcrYear: 2025 }
+    },
+    edition: 'Historical JCR through 2025',
+    updatedAt: '2026-07-31T00:00:00.000Z',
+    aggregatePublicationAuthorized: true,
+    licenseConfirmed: true,
+    provider: 'Clarivate Journal Citation Reports',
+    metric: 'Journal Impact Factor',
+    aggregateRankingDisplayAuthorized: true,
+    rankingAuthorizationReference: 'Public aggregate permission 2026-001',
+    rankingAuthorizationDate: '2026-07-31'
+  };
+  const first = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: JSON.stringify(dataset, null, 2)
+  });
+  const second = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: structuredClone(dataset)
+  });
+
+  assert.equal(first.compactJson, second.compactJson);
+  assert.equal(Buffer.byteLength(first.compactJson, 'utf8'), first.summary.compactBytes);
+  assert.deepEqual(first.summary, {
+    publicationTotal: 1,
+    factorRecords: 1,
+    rankingRecords: 1,
+    compactBytes: first.summary.compactBytes,
+    maxSecretBytes: 49_152,
+    impactFactorStatus: 'ok',
+    journalStandingStatus: 'ok',
+    publicationBandStatus: 'unavailable',
+    publicationBandRecords: 0
+  });
+  assert.equal(JSON.stringify(JSON.parse(first.compactJson)), first.compactJson);
+
+  const factorsOmitted = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: { ...dataset, factorsByDoi: null }
+  });
+  assert.equal(factorsOmitted.summary.factorRecords, 0);
+  assert.equal(factorsOmitted.summary.rankingRecords, 1);
+
+  const rankingsOmitted = prepareLicensedJcrInput({
+    publications,
+    impactFactorJson: { ...dataset, rankingsByDoi: null }
+  });
+  assert.equal(rankingsOmitted.summary.factorRecords, 1);
+  assert.equal(rankingsOmitted.summary.rankingRecords, 0);
+
+  assert.throws(
+    () => prepareLicensedJcrInput({
+      publications,
+      impactFactorJson: {
+        ...dataset,
+        factorsByDoi: null,
+        rankingsByDoi: null
+      }
+    }),
+    /must contain at least one factorsByDoi or rankingsByDoi record/
+  );
+
+  assert.throws(
+    () => prepareLicensedJcrInput({
+      publications,
+      impactFactorJson: dataset,
+      maxSecretBytes: first.summary.compactBytes - 1
+    }),
+    /exceeding the GitHub Actions secret limit/
+  );
+  assert.throws(
+    () => prepareLicensedJcrInput({
+      publications,
+      impactFactorJson: { ...dataset, helperMetadata: true }
+    }),
+    /unexpected fields: helperMetadata/
+  );
+
+  const unauthorizedMalformed = structuredClone(dataset);
+  unauthorizedMalformed.aggregateRankingDisplayAuthorized = false;
+  delete unauthorizedMalformed.rankingAuthorizationReference;
+  delete unauthorizedMalformed.rankingAuthorizationDate;
+  unauthorizedMalformed.rankingsByDoi['10.1000/jcr-private'].jcrYear = 2024;
+  assert.throws(
+    () => prepareLicensedJcrInput({
+      publications,
+      impactFactorJson: unauthorizedMalformed
+    }),
+    /must equal previous-year JCR year 2025/
+  );
+});
+
+test('validates a private JCR file and writes a new compact file without overwriting', async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'jcr-private-'));
+  const inputPath = path.join(directory, 'working.json');
+  const outputPath = path.join(directory, 'secret.json');
+  const dataset = {
+    metric: 'Journal Impact Factor',
+    provider: 'Clarivate JCR licensed extract',
+    licenseConfirmed: true,
+    aggregatePublicationAuthorized: true,
+    updatedAt: '2026-07-31T00:00:00.000Z',
+    edition: 'Historical JCR',
+    factorsByDoi: {
+      '10.1002/ijch.70028': { jcrYear: 2025, jif: 1.2 }
+    }
+  };
+  try {
+    await fs.writeFile(inputPath, JSON.stringify(dataset, null, 2), 'utf8');
+    const summary = await validateLicensedJcrInputFile({
+      feedPath: FEED_PATH,
+      inputPath,
+      compactOutputPath: outputPath
+    });
+    const compactSource = await fs.readFile(outputPath, 'utf8');
+    assert.equal(summary.factorRecords, 1);
+    assert.equal(summary.rankingRecords, 0);
+    assert.equal(summary.compactBytes, Buffer.byteLength(compactSource, 'utf8'));
+    assert.equal(JSON.stringify(JSON.parse(compactSource)), compactSource);
+    await assert.rejects(
+      validateLicensedJcrInputFile({
+        feedPath: FEED_PATH,
+        inputPath,
+        compactOutputPath: outputPath
+      }),
+      /EEXIST/
+    );
+    await assert.rejects(
+      validateLicensedJcrInputFile({
+        feedPath: FEED_PATH,
+        inputPath,
+        compactOutputPath: inputPath
+      }),
+      /must not overwrite inputPath/
+    );
+  } finally {
+    await fs.rm(directory, { recursive: true, force: true });
+  }
 });
 
 test('derives only authorized previous-year JCR standing bands from the best category percentile', () => {

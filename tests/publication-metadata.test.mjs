@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import test from "node:test";
 
 import {
@@ -16,8 +18,11 @@ import {
   metadataContentEquals,
   normalizeDoi,
   normalizePublicationTitle,
+  summarizePublicationMetadataHealth,
   validateMetadataSnapshot
 } from "../scripts/refresh-publication-metadata.mjs";
+
+const ROOT = path.resolve(import.meta.dirname, "..");
 
 test("normalizes DOI identifiers from API URLs", () => {
   assert.equal(normalizeDoi("https://doi.org/10.1000/ABC"), "10.1000/abc");
@@ -167,7 +172,7 @@ test("maps Google Scholar author metrics without exposing the API key", async ()
   );
 });
 
-test("fetches profile and per-paper Scholar data in one bounded Author API request", async () => {
+test("fetches profile and per-paper Scholar data in one page when all articles fit", async () => {
   let requests = 0;
   const result = await fetchGoogleScholarAuthor({
     authorId: "q-UUrywAAAAJ",
@@ -176,6 +181,7 @@ test("fetches profile and per-paper Scholar data in one bounded Author API reque
       requests += 1;
       const parsed = new URL(url);
       assert.equal(parsed.searchParams.get("sort"), "pubdate");
+      assert.equal(parsed.searchParams.get("start"), "0");
       assert.equal(parsed.searchParams.get("num"), "100");
       return {
         ok: true,
@@ -215,7 +221,140 @@ test("fetches profile and per-paper Scholar data in one bounded Author API reque
     year: 2025
   }]);
   assert.equal(result.responseTruncated, false);
+  assert.equal(result.pageCount, 1);
   assert.doesNotMatch(JSON.stringify(result), /private-key|serpapi_link|private_field/);
+});
+
+test("paginates Scholar articles with bounded offsets and de-duplicates citation IDs", async () => {
+  const authorId = "q-UUrywAAAAJ";
+  const offsets = [];
+  const rawArticle = (index) => ({
+    title: `Article ${index}`,
+    citation_id: `${authorId}:paper-${index}`,
+    cited_by: { value: index },
+    year: "2025"
+  });
+  const result = await fetchGoogleScholarAuthor({
+    authorId,
+    apiKey: "private-key",
+    fetchImpl: async (url) => {
+      const offset = Number(new URL(url).searchParams.get("start"));
+      offsets.push(offset);
+      const articles = offset === 0
+        ? Array.from({ length: 100 }, (_, index) => rawArticle(index))
+        : [rawArticle(99), rawArticle(100), rawArticle(101)];
+      return {
+        ok: true,
+        json: async () => ({
+          search_parameters: { author_id: authorId },
+          author: { name: "Yongchul G. Chung" },
+          cited_by: {
+            table: [{ citations: { all: 6500 } }],
+            graph: []
+          },
+          articles,
+          ...(offset === 0
+            ? { serpapi_pagination: { next: "https://serpapi.com/next" } }
+            : {})
+        })
+      };
+    }
+  });
+
+  assert.deepEqual(offsets, [0, 100]);
+  assert.equal(result.pageCount, 2);
+  assert.equal(result.articles.length, 102);
+  assert.equal(new Set(result.articles.map(article => article.citationId)).size, 102);
+  assert.equal(result.responseTruncated, false);
+  assert.equal(result.profile.citations.all, 6500);
+});
+
+test("marks Scholar articles truncated when the bounded page limit is reached", async () => {
+  const authorId = "q-UUrywAAAAJ";
+  let requests = 0;
+  const result = await fetchGoogleScholarAuthor({
+    authorId,
+    apiKey: "private-key",
+    maxPages: 1,
+    fetchImpl: async () => {
+      requests += 1;
+      return {
+        ok: true,
+        json: async () => ({
+          search_parameters: { author_id: authorId },
+          author: { name: "Yongchul G. Chung" },
+          cited_by: {
+            table: [{ citations: { all: 6500 } }],
+            graph: []
+          },
+          articles: Array.from({ length: 100 }, (_, index) => ({
+            title: `Article ${index}`,
+            citation_id: `${authorId}:paper-${index}`,
+            cited_by: { value: index },
+            year: "2025"
+          })),
+          serpapi_pagination: { next: "https://serpapi.com/next" }
+        })
+      };
+    }
+  });
+
+  assert.equal(requests, 1);
+  assert.equal(result.pageCount, 1);
+  assert.equal(result.articles.length, 100);
+  assert.equal(result.responseTruncated, true);
+  await assert.rejects(
+    fetchGoogleScholarAuthor({
+      authorId,
+      apiKey: "private-key",
+      maxPages: 6,
+      fetchImpl: async () => {
+        throw new Error("must not request");
+      }
+    }),
+    /maxPages must be an integer from 1 to 5/
+  );
+});
+
+test("stops Scholar pagination when a later page repeats citation IDs", async () => {
+  const authorId = "q-UUrywAAAAJ";
+  let requests = 0;
+  const article = (index) => ({
+    title: `Article ${index}`,
+    citation_id: `${authorId}:paper-${index}`,
+    cited_by: { value: index },
+    year: "2025"
+  });
+  const result = await fetchGoogleScholarAuthor({
+    authorId,
+    apiKey: "private-key",
+    fetchImpl: async () => {
+      const firstPage = requests === 0;
+      requests += 1;
+      return {
+        ok: true,
+        json: async () => ({
+          search_parameters: { author_id: authorId },
+          author: { name: "Yongchul G. Chung" },
+          cited_by: {
+            table: [{ citations: { all: 6500 } }],
+            graph: []
+          },
+          articles: firstPage
+            ? Array.from({ length: 100 }, (_, index) => article(index))
+            : [article(98), article(99)],
+          ...(firstPage
+            ? { serpapi_pagination: { next: "https://serpapi.com/next" } }
+            : {})
+        })
+      };
+    }
+  });
+
+  assert.equal(requests, 2);
+  assert.equal(result.pageCount, 2);
+  assert.equal(result.articles.length, 100);
+  assert.equal(result.responseTruncated, true);
 });
 
 test("matches Scholar articles by reviewed deterministic precedence", () => {
@@ -359,9 +498,9 @@ test("guards Scholar profile totals and per-paper coverage independently", () =>
     previous,
     expectedCount: 20
   });
-  assert.equal(collapsed.status, "stale");
-  assert.equal(collapsed.reason, "coverage-collapse");
-  assert.equal(collapsed.profile, null);
+  assert.equal(collapsed.status, "partial");
+  assert.equal(collapsed.reason, "per-paper-coverage-collapse");
+  assert.equal(collapsed.profile, profile);
   assert.deepEqual(collapsed.records, {});
 
   const truncated = guardGoogleScholarCoverage({
@@ -371,8 +510,118 @@ test("guards Scholar profile totals and per-paper coverage independently", () =>
     expectedCount: 20,
     responseTruncated: true
   });
-  assert.equal(truncated.status, "stale");
+  assert.equal(truncated.status, "partial");
   assert.equal(truncated.reason, "response-truncated");
+  assert.equal(truncated.profile, profile);
+  assert.deepEqual(truncated.records, {});
+});
+
+test("refreshes a valid Scholar profile while retaining prior papers after article fail-closed guards", () => {
+  const authorId = "q-UUrywAAAAJ";
+  const publications = Array.from({ length: 10 }, (_, index) => ({
+    no: String(index + 1).padStart(2, "0"),
+    doi: `10.1000/scholar-${index}`,
+    title: `Scholar publication ${index}`,
+    year: 2024
+  }));
+  const profile = (citations, hIndex) => ({
+    profileId: authorId,
+    profileUrl: `https://scholar.google.com/citations?user=${authorId}&hl=en`,
+    name: "Yongchul G. Chung",
+    affiliations: "Pusan National University",
+    citations: { all: citations, since: 4100, sinceYear: 2021 },
+    hIndex: { all: hIndex, since: 28, sinceYear: 2021 },
+    i10Index: { all: 54, since: 48, sinceYear: 2021 },
+    countsByYear: [{ year: 2026, citationCount: 500 }],
+    provider: "SerpApi Google Scholar Author API"
+  });
+  const priorArticles = Object.fromEntries(publications.map((publication, index) => [
+    publication.doi,
+    {
+      title: publication.title,
+      citationId: `${authorId}:paper-${index}`,
+      citationCount: index + 1,
+      url: `https://scholar.google.com/citations?citation_for_view=${authorId}:paper-${index}`,
+      citedByUrl: null,
+      year: publication.year,
+      matchedBy: "feed-title"
+    }
+  ]));
+  const previous = buildMetadata({
+    publications,
+    googleScholar: profile(6400, 33),
+    googleScholarArticles: priorArticles,
+    googleScholarStatus: "ok",
+    googleScholarReason: null,
+    now: "2026-07-01T00:00:00.000Z"
+  });
+  const currentProfile = profile(6500, 34);
+  const scenarios = [
+    {
+      expectedReason: "per-paper-coverage-collapse",
+      coverage: guardGoogleScholarCoverage({
+        profile: currentProfile,
+        matchResult: {
+          records: {
+            [publications[0].doi]: priorArticles[publications[0].doi]
+          },
+          ambiguousDois: []
+        },
+        previous,
+        expectedCount: publications.length
+      })
+    },
+    {
+      expectedReason: "response-truncated",
+      coverage: guardGoogleScholarCoverage({
+        profile: currentProfile,
+        matchResult: { records: priorArticles, ambiguousDois: [] },
+        previous,
+        expectedCount: publications.length,
+        responseTruncated: true
+      })
+    }
+  ];
+
+  for (const { expectedReason, coverage } of scenarios) {
+    assert.equal(coverage.status, "partial");
+    assert.equal(coverage.reason, expectedReason);
+    assert.equal(coverage.profile, currentProfile);
+    assert.deepEqual(coverage.records, {});
+
+    const refreshed = buildMetadata({
+      publications,
+      googleScholar: coverage.profile,
+      googleScholarArticles: coverage.records,
+      googleScholarStatus: coverage.status,
+      googleScholarReason: coverage.reason,
+      previous,
+      now: "2026-07-30T00:00:00.000Z"
+    });
+    assert.equal(refreshed.googleScholar.citations.all, 6500);
+    assert.equal(refreshed.googleScholar.hIndex.all, 34);
+    assert.equal(refreshed.totals.googleScholarCitations, 6500);
+    assert.equal(refreshed.sources.googleScholar.status, "partial");
+    assert.equal(refreshed.sources.googleScholar.reason, expectedReason);
+    assert.equal(refreshed.sources.googleScholar.matched, publications.length);
+    assert.equal(refreshed.sources.googleScholar.freshMatched, 0);
+    assert.deepEqual(
+      refreshed.publications[publications[0].doi].googleScholar,
+      priorArticles[publications[0].doi]
+    );
+    assert.deepEqual(
+      refreshed.publications[publications[0].doi].sourceFreshness.googleScholar,
+      {
+        status: "stale",
+        reason: expectedReason,
+        contentUpdatedAt: "2026-07-01T00:00:00.000Z"
+      }
+    );
+    assert.equal(validateMetadataSnapshot(
+      refreshed,
+      publications.map((publication) => publication.doi)
+    ), true);
+  }
 });
 
 test("rejects a Google Scholar response for a different author profile", async () => {
@@ -748,4 +997,95 @@ test("repeated total outages do not churn snapshot timestamps", () => {
     () => validateMetadataSnapshot(invalidHistory, ["10.1000/test"]),
     /countsByYear must be an array/
   );
+});
+
+test("reports live Scholar profile and per-paper health independently", () => {
+  const authorId = "q-UUrywAAAAJ";
+  const publications = [{
+    no: "01",
+    doi: "10.1000/health",
+    title: "Health check",
+    year: 2026
+  }];
+  const profile = {
+    profileId: authorId,
+    profileUrl: `https://scholar.google.com/citations?user=${authorId}&hl=en`,
+    name: "Yongchul G. Chung",
+    affiliations: "Pusan National University",
+    citations: { all: 6500, since: 4100, sinceYear: 2021 },
+    hIndex: { all: 34, since: 28, sinceYear: 2021 },
+    i10Index: { all: 54, since: 48, sinceYear: 2021 },
+    countsByYear: [{ year: 2026, citationCount: 500 }],
+    provider: "SerpApi Google Scholar Author API"
+  };
+  const article = {
+    title: publications[0].title,
+    citationId: `${authorId}:health`,
+    citationCount: 12,
+    url: `https://scholar.google.com/citations?citation_for_view=${authorId}:health`,
+    citedByUrl: null,
+    year: 2026,
+    matchedBy: "feed-title"
+  };
+  const current = buildMetadata({
+    publications,
+    googleScholar: profile,
+    googleScholarArticles: { "10.1000/health": article },
+    googleScholarStatus: "ok",
+    googleScholarReason: null,
+    now: "2026-07-31T00:00:00.000Z"
+  });
+  const currentHealth = summarizePublicationMetadataHealth(current);
+  assert.equal(currentHealth.scholarProfileCurrent, true);
+  assert.equal(currentHealth.scholarPapersCurrent, true);
+  assert.deepEqual(currentHealth.warnings, []);
+
+  const profileOnly = buildMetadata({
+    publications,
+    googleScholar: { ...profile, citations: { ...profile.citations, all: 6510 } },
+    googleScholarArticles: {},
+    googleScholarStatus: "partial",
+    googleScholarReason: "response-truncated",
+    previous: current,
+    now: "2026-08-01T00:00:00.000Z"
+  });
+  const profileOnlyHealth = summarizePublicationMetadataHealth(profileOnly);
+  assert.equal(profileOnlyHealth.scholarProfileCurrent, true);
+  assert.equal(profileOnlyHealth.scholarPapersCurrent, false);
+  assert.match(profileOnlyHealth.warnings[0], /no per-paper matches are fresh/);
+
+  const unconfigured = structuredClone(current);
+  unconfigured.sources.googleScholar = {
+    ...unconfigured.sources.googleScholar,
+    status: "stale",
+    reason: "unconfigured",
+    freshMatched: 0,
+    provider: "Legacy manual Google Scholar profile snapshot",
+    contentUpdatedAt: null
+  };
+  unconfigured.googleScholar.provider = "Legacy manual Google Scholar profile snapshot";
+  const unconfiguredHealth = summarizePublicationMetadataHealth(unconfigured);
+  assert.equal(unconfiguredHealth.scholarProfileCurrent, false);
+  assert.equal(unconfiguredHealth.scholarPapersCurrent, false);
+  assert.match(unconfiguredHealth.warnings[0], /unconfigured/);
+});
+
+test("metadata workflow surfaces source health without blocking other providers", async () => {
+  const workflow = await readFile(
+    path.join(ROOT, ".github", "workflows", "publication-metadata.yml"),
+    "utf8"
+  );
+  assert.match(workflow, /SERPAPI_API_KEY:\s*\$\{\{\s*secrets\.SERPAPI_API_KEY\s*\}\}/);
+  assert.match(
+    workflow,
+    /name:\s*Summarize publication metadata source health\s+if:\s*always\(\)\s+run:\s*node scripts\/report-publication-metadata-health\.mjs/
+  );
+  for (const triggerPath of [
+    ".github/workflows/publication-metadata.yml",
+    "scripts/refresh-publication-metadata.mjs",
+    "scripts/report-publication-metadata-health.mjs",
+    "tests/publication-metadata.test.mjs"
+  ]) {
+    assert.match(workflow, new RegExp(triggerPath.replaceAll(".", "\\.")));
+  }
 });

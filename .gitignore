@@ -2,3 +2,5 @@ dist/
 node_modules/
 test-results/
 playwright-report/
+jcr-input-requirements.json
+.jcr-private/

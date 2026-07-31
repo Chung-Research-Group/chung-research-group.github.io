@@ -17,9 +17,10 @@ making one external API request per publication.
 Google Scholar does not provide a supported public API or bulk export service,
 and its help page asks automated clients to respect its access restrictions.
 The refresh job therefore does not scrape Scholar directly. SerpApi is called
-server-side once per daily refresh, with `num=100` and `sort=pubdate`, while
-visitors only receive the committed static snapshot. No direct Scholar request
-is made by a visitor's browser.
+server-side during the daily refresh, with `num=100`, `sort=pubdate`, and
+official `start` offsets when pagination is required. Visitors only receive the
+committed static snapshot; no direct Scholar request is made by a visitor's
+browser.
 
 The Google Scholar total remains an author-profile aggregate and is never
 recomputed from the website's DOI list. Each DOI record can additionally carry
@@ -58,6 +59,12 @@ successful response that suddenly covers less than 80% of the previous source
 coverage is also treated as stale, preventing a partial API response from
 erasing good metadata.
 
+Every run writes a source-health table to the GitHub Actions summary. Missing
+credentials and stale or partial providers emit warning annotations without
+blocking valid OpenAlex or Semantic Scholar updates. Run
+`npm run metadata:health` locally to inspect the committed snapshot with the
+same checks.
+
 When an otherwise accepted response omits one or more DOI records that existed
 in the previous snapshot, the job retains those records but marks the source
 stale instead of presenting the merged result as fully current. Source metadata
@@ -83,15 +90,23 @@ a production contract. The retired `mailto` polite-pool parameter is not used.
 If the SerpApi key is absent, exhausted, or temporarily fails, the job retains
 both the previous profile aggregate and prior per-paper records and marks their
 freshness stale instead of replacing values with zero. Ambiguous current
-matches also retain prior DOI records. A drop below 80% of the previous
-citation total or below 80% of prior per-paper coverage is rejected as a likely
-provider or parsing failure. A successful but incomplete match above that
-safety threshold is marked `partial`; newly matched records are fresh and
-retained unmatched records are stale.
+matches also retain prior DOI records. A profile citation total below 80% of
+the previous value rejects the complete Scholar refresh. Per-paper coverage
+below 80% rejects only the new article records; a separately valid profile
+aggregate is accepted and prior DOI records are retained as stale. A successful
+but incomplete match above that safety threshold is marked `partial`; newly
+matched records are fresh and retained unmatched records are stale.
 
-The author profile currently fits in one 100-article request. If SerpApi reports
-that this response is truncated, the job fails closed and preserves the prior
-snapshot rather than silently publishing partial data.
+The author profile currently fits within the bounded article pagination. Each
+page requests at most 100 records, the maximum documented by SerpApi, and the
+job follows `start` offsets for at most five pages while de-duplicating citation
+IDs. Empty, repeated, inconsistent, or over-limit pagination fails closed. If
+the bounded article list remains truncated, the independently reported profile
+aggregate (total citations, h-index, i10-index, and yearly counts) is accepted
+only after its own collapse checks pass. New per-paper results are rejected and
+the prior per-paper records are retained as stale. This keeps a valid profile
+update without presenting a partial article list as complete. See the
+[SerpApi Google Scholar Author API pagination parameters](https://serpapi.com/google-scholar-author-api#api-parameters-pagination).
 
 `snapshotUpdatedAt` records when the committed snapshot content or health last
 changed. Each source's `contentUpdatedAt` records when that source's retained

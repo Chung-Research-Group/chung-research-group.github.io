@@ -11,6 +11,7 @@ const googleScholarAuthorId = String(
   process.env.GOOGLE_SCHOLAR_AUTHOR_ID || "q-UUrywAAAAJ"
 ).trim();
 const googleScholarArticleLimit = 100;
+const googleScholarMaximumPages = 5;
 
 export const googleScholarCitationOverrides = Object.freeze({
   "10.1021/acs.jpcc.9b02116": "q-UUrywAAAAJ:3fE2CSJIrl8C"
@@ -345,52 +346,80 @@ export async function fetchGoogleScholarAuthor({
   authorId,
   apiKey,
   fetchImpl = fetch,
-  maxAttempts = 5
+  maxAttempts = 5,
+  maxPages = googleScholarMaximumPages
 } = {}) {
   const normalizedAuthorId = String(authorId || "").trim();
   const normalizedApiKey = String(apiKey || "").trim();
   if (!normalizedAuthorId) throw new Error("Google Scholar author ID is required.");
   if (!normalizedApiKey) throw new Error("SerpApi API key is required.");
-
-  const params = new URLSearchParams({
-    engine: "google_scholar_author",
-    author_id: normalizedAuthorId,
-    hl: "en",
-    sort: "pubdate",
-    num: String(googleScholarArticleLimit),
-    api_key: normalizedApiKey
-  });
-  const payload = await requestJson(
-    `https://serpapi.com/search.json?${params}`,
-    {},
-    fetchImpl,
-    { maxAttempts }
-  );
-  validateGoogleScholarPayload(payload, normalizedAuthorId);
+  if (!Number.isInteger(maxPages) || maxPages < 1 || maxPages > googleScholarMaximumPages) {
+    throw new Error(
+      `Google Scholar maxPages must be an integer from 1 to ${googleScholarMaximumPages}.`
+    );
+  }
 
   const articlesById = new Map();
   let discardedArticles = 0;
-  for (const rawArticle of Array.isArray(payload?.articles) ? payload.articles : []) {
-    const article = googleScholarArticleFromPayload(rawArticle, normalizedAuthorId);
-    if (!article) {
-      discardedArticles += 1;
-      continue;
+  let profile = null;
+  let pageCount = 0;
+  let responseTruncated = false;
+  for (let pageIndex = 0; pageIndex < maxPages; pageIndex += 1) {
+    const params = new URLSearchParams({
+      engine: "google_scholar_author",
+      author_id: normalizedAuthorId,
+      hl: "en",
+      sort: "pubdate",
+      start: String(pageIndex * googleScholarArticleLimit),
+      num: String(googleScholarArticleLimit),
+      api_key: normalizedApiKey
+    });
+    const payload = await requestJson(
+      `https://serpapi.com/search.json?${params}`,
+      {},
+      fetchImpl,
+      { maxAttempts }
+    );
+    validateGoogleScholarPayload(payload, normalizedAuthorId);
+    if (!profile) profile = googleScholarProfileFromPayload(payload, normalizedAuthorId);
+
+    const rawArticles = Array.isArray(payload?.articles) ? payload.articles : [];
+    const sizeBeforePage = articlesById.size;
+    for (const rawArticle of rawArticles) {
+      const article = googleScholarArticleFromPayload(rawArticle, normalizedAuthorId);
+      if (!article) {
+        discardedArticles += 1;
+        continue;
+      }
+      const prior = articlesById.get(article.citationId);
+      if (prior && JSON.stringify(prior) !== JSON.stringify(article)) {
+        throw new Error("SerpApi Google Scholar response reused a citation ID inconsistently.");
+      }
+      articlesById.set(article.citationId, article);
     }
-    const prior = articlesById.get(article.citationId);
-    if (prior && JSON.stringify(prior) !== JSON.stringify(article)) {
-      throw new Error("SerpApi Google Scholar response reused a citation ID inconsistently.");
+    pageCount += 1;
+
+    const hasNextPage = Boolean(payload?.serpapi_pagination?.next)
+      || rawArticles.length >= googleScholarArticleLimit;
+    const pageMadeProgress = articlesById.size > sizeBeforePage;
+    if (pageIndex > 0 && rawArticles.length > 0 && !pageMadeProgress) {
+      responseTruncated = true;
+      break;
     }
-    articlesById.set(article.citationId, article);
+    if (!hasNextPage) break;
+    if (rawArticles.length === 0 || !pageMadeProgress) {
+      responseTruncated = true;
+      break;
+    }
+    if (pageIndex === maxPages - 1) responseTruncated = true;
   }
 
-  const rawArticleCount = Array.isArray(payload?.articles) ? payload.articles.length : 0;
-  const responseTruncated = rawArticleCount >= googleScholarArticleLimit
-    || Boolean(payload?.serpapi_pagination?.next);
   return {
-    profile: googleScholarProfileFromPayload(payload, normalizedAuthorId),
+    profile,
     articles: [...articlesById.values()],
     responseTruncated,
-    discardedArticles
+    discardedArticles,
+    pageCount
   };
 }
 
@@ -604,9 +633,9 @@ export function guardGoogleScholarCoverage({
   }
   if (responseTruncated) {
     return {
-      profile: null,
+      profile: profileCoverage.profile,
       records: {},
-      status: "stale",
+      status: "partial",
       reason: "response-truncated",
       freshMatched: 0
     };
@@ -626,10 +655,10 @@ export function guardGoogleScholarCoverage({
     : 0;
   if (minimumMatched && freshMatched < minimumMatched) {
     return {
-      profile: null,
+      profile: profileCoverage.profile,
       records: {},
-      status: "stale",
-      reason: "coverage-collapse",
+      status: "partial",
+      reason: "per-paper-coverage-collapse",
       freshMatched: 0,
       observedMatched: freshMatched,
       minimumMatched
@@ -1004,6 +1033,66 @@ export function metadataContentEquals(left, right) {
   return JSON.stringify(comparableMetadata(left)) === JSON.stringify(comparableMetadata(right));
 }
 
+export function summarizePublicationMetadataHealth(metadata) {
+  const sourceRows = [
+    ["semanticScholar", "Semantic Scholar"],
+    ["openAlex", "OpenAlex"],
+    ["googleScholar", "Google Scholar"]
+  ].map(([id, label]) => {
+    const source = metadata?.sources?.[id] || {};
+    return {
+      id,
+      label,
+      status: String(source.status || "unavailable"),
+      reason: source.reason == null ? null : String(source.reason),
+      matched: Number.isInteger(source.matched) ? source.matched : 0,
+      freshMatched: id === "googleScholar" && Number.isInteger(source.freshMatched)
+        ? source.freshMatched
+        : null,
+      contentUpdatedAt: source.contentUpdatedAt || null,
+      provider: id === "googleScholar"
+        ? String(source.provider || metadata?.googleScholar?.provider || "")
+        : null
+    };
+  });
+  const scholarSource = sourceRows.find(source => source.id === "googleScholar");
+  const scholarProfile = metadata?.googleScholar || {};
+  const scholarProvider = scholarSource.provider;
+  const scholarProfileCurrent = ["ok", "partial"].includes(scholarSource.status)
+    && scholarProvider === "SerpApi Google Scholar Author API"
+    && scholarProfile.provider === scholarProvider
+    && Number.isFinite(scholarProfile?.citations?.all)
+    && Number.isInteger(scholarProfile?.hIndex?.all)
+    && Array.isArray(scholarProfile.countsByYear)
+    && scholarProfile.countsByYear.length > 0
+    && Number.isFinite(Date.parse(scholarSource.contentUpdatedAt || ""));
+  const scholarPapersCurrent = scholarProfileCurrent
+    && scholarSource.freshMatched > 0;
+  const warnings = [];
+  if (!scholarProfileCurrent) {
+    warnings.push(
+      `Google Scholar profile refresh is not current (${scholarSource.reason || scholarSource.status}).`
+    );
+  } else if (!scholarPapersCurrent) {
+    warnings.push(
+      `Google Scholar profile metrics are current, but no per-paper matches are fresh (${scholarSource.reason || scholarSource.status}).`
+    );
+  }
+  for (const source of sourceRows.filter(source => source.id !== "googleScholar")) {
+    if (source.status !== "ok") {
+      warnings.push(
+        `${source.label} metadata is ${source.status} (${source.reason || "unspecified"}).`
+      );
+    }
+  }
+  return {
+    sourceRows,
+    scholarProfileCurrent,
+    scholarPapersCurrent,
+    warnings
+  };
+}
+
 export function validateMetadataSnapshot(metadata, expectedDois = []) {
   const errors = [];
   if (metadata?.schemaVersion !== 3) errors.push("schemaVersion must be 3");
@@ -1300,15 +1389,18 @@ async function main() {
       `Google Scholar citations unexpectedly fell to ${googleScholarCoverage.observedCitations} `
       + `(minimum ${googleScholarCoverage.minimumCitations}); preserving the previous snapshot.`
     );
-  } else if (googleScholarCoverage.reason === "coverage-collapse") {
+  } else if (googleScholarCoverage.reason === "per-paper-coverage-collapse") {
     console.warn(
       `Google Scholar per-paper matching fell to ${googleScholarCoverage.observedMatched} DOI records `
-      + `(minimum ${googleScholarCoverage.minimumMatched}); preserving the previous snapshot.`
+      + `(minimum ${googleScholarCoverage.minimumMatched}); accepting the current profile aggregate `
+      + "while preserving previous per-paper records."
     );
   } else if (googleScholarCoverage.reason === "response-truncated") {
     console.warn(
-      "The Google Scholar author response exceeded the single-request 100-paper safety limit; "
-      + "preserving the previous snapshot."
+      `Google Scholar per-paper retrieval was not completed within ${googleScholarMaximumPages} `
+      + `pages of ${googleScholarArticleLimit} articles, or stopped on an empty, repeated, `
+      + "or non-progressing page; "
+      + "accepting the current profile aggregate while preserving previous per-paper records."
     );
   } else if (googleScholarCoverage.status === "partial") {
     console.warn(

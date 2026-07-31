@@ -4,7 +4,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { generatePublicationCitationFiles } from "./publication-citations.mjs";
-import { generateJournalTitleCards } from "./publication-visual.mjs";
 import {
   generateLabStatisticsFile,
   generatePublicationJcrBandsFile
@@ -50,12 +49,6 @@ for (const directory of staticDirectories) {
   });
 }
 
-const generatedJournalCards = await generateJournalTitleCards({
-  visualsPath: path.join(repoRoot, "publication-visuals.js"),
-  feedPath: path.join(repoRoot, "feed.js"),
-  outputRoot
-});
-
 await generatePublicationCitationFiles({
   feedPath: path.join(repoRoot, "feed.js"),
   bibliographyPath: path.join(repoRoot, "data/publication-bibliography.json"),
@@ -97,7 +90,7 @@ await writeFile(
 
 console.log(
   `Built ${Object.keys(manifest).length} site files in dist/, including `
-  + `${generatedJournalCards.length} journal title cards, citation exports, `
-  + "the lab statistics snapshot, and the public per-publication JCR band snapshot."
+  + "citation exports, the lab statistics snapshot, and the public "
+  + "per-publication JCR band snapshot."
 );
 
