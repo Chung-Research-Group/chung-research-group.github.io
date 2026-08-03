@@ -1434,11 +1434,8 @@ for (const file of htmlFiles) {
   const primaryNav = (html.match(
     /<nav\b[^>]*class=["'][^"']*\bnav\b[^"']*["'][^>]*>([\s\S]*?)<\/nav>/i
   ) || [])[1] || "";
-  if ((primaryNav.match(/href=["']Statistics\.dc\.html["']/g) || []).length !== 1) {
-    errors.push(`${label}: primary navigation must contain one Statistics link.`);
-  }
-  if (!/<a\b[^>]*href=["']Publications\.dc\.html["'][^>]*>Publications<\/a>\s*<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*>Statistics<\/a>/i.test(primaryNav)) {
-    errors.push(`${label}: Statistics must immediately follow Publications in primary navigation.`);
+  if ((primaryNav.match(/href=["']Statistics\.dc\.html["']/g) || []).length !== 0) {
+    errors.push(`${label}: primary navigation must not contain a Statistics link.`);
   }
 }
 
@@ -1747,9 +1744,6 @@ for (const marker of [
   if (!statisticsHtml.includes(marker)) {
     errors.push(`Statistics page is missing required rendering marker: ${marker}`);
   }
-}
-if (!/<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*style=["'][^"']*color:var\(--color-accent\)/i.test(statisticsHtml)) {
-  errors.push("Statistics page must mark the Statistics navigation item as active.");
 }
 if (!statisticsHtml.includes(".statistics-bar-row:hover .statistics-bar-value")
     || !statisticsHtml.includes(".statistics-bar-row:focus-visible .statistics-bar-value")
