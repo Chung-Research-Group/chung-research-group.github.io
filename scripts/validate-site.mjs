@@ -1434,7 +1434,19 @@ for (const file of htmlFiles) {
   const primaryNav = (html.match(
     /<nav\b[^>]*class=["'][^"']*\bnav\b[^"']*["'][^>]*>([\s\S]*?)<\/nav>/i
   ) || [])[1] || "";
-  if ((primaryNav.match(/href=["']Statistics\.dc\.html["']/g) || []).length !== 0) {
+  const linksToStatistics = [...primaryNav.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)]
+    .some(([, href]) => {
+      try {
+        const target = new URL(href, "https://chung-research-group.github.io/");
+        const normalizedPath = decodeURIComponent(target.pathname)
+          .replace(/\/{2,}/g, "/")
+          .toLowerCase();
+        return normalizedPath === "/statistics.dc.html";
+      } catch {
+        return false;
+      }
+    });
+  if (linksToStatistics) {
     errors.push(`${label}: primary navigation must not contain a Statistics link.`);
   }
 }

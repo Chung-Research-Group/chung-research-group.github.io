@@ -115,6 +115,53 @@ test('site validation reports duplicate feed DOIs even when the bibliography sna
   }
 });
 
+test('site validation rejects normalized Statistics navigation URLs', async () => {
+  const temporaryParent = await mkdtemp(path.join(os.tmpdir(), 'statistics-nav-validator-'));
+  const temporaryRoot = path.join(temporaryParent, 'site');
+  try {
+    const excludedRoots = ['.git', 'dist', 'node_modules', 'test-results']
+      .map(name => path.join(REPOSITORY_ROOT, name));
+    await cp(REPOSITORY_ROOT, temporaryRoot, {
+      recursive: true,
+      filter: source => !excludedRoots.some(excluded =>
+        source === excluded || source.startsWith(`${excluded}${path.sep}`)
+      )
+    });
+
+    const indexPath = path.join(temporaryRoot, 'index.html');
+    const indexSource = await readFile(indexPath, 'utf8');
+    const publicationsLink = '<a href="Publications.dc.html">Publications</a>';
+    assert.ok(indexSource.includes(publicationsLink));
+
+    for (const href of ['./Statistics.dc.html', '/Statistics.dc.html', 'Statistics.dc.html#section']) {
+      const statisticsLink = `<a href="${href}">Statistics</a>`;
+      await writeFile(
+        indexPath,
+        indexSource.replace(publicationsLink, `${publicationsLink}\n    ${statisticsLink}`),
+        'utf8'
+      );
+      const result = spawnSync(process.execPath, [
+        path.join(REPOSITORY_ROOT, 'scripts', 'validate-site.mjs'),
+        '--root',
+        temporaryRoot
+      ], {
+        cwd: REPOSITORY_ROOT,
+        encoding: 'utf8'
+      });
+      const diagnostics = `${result.stdout}\n${result.stderr}`;
+      assert.ifError(result.error);
+      assert.equal(result.status, 1, href);
+      assert.match(
+        diagnostics,
+        /index\.html: primary navigation must not contain a Statistics link\./,
+        href
+      );
+    }
+  } finally {
+    await rm(temporaryParent, { recursive: true, force: true });
+  }
+});
+
 test('BibTeX and CFF exports are deterministic, complete, ordered, and LF terminated', async () => {
   const { feedDois, snapshot } = await fixture();
   const firstBibtex = generateBibtex(snapshot, feedDois);
