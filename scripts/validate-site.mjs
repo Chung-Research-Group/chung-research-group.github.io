@@ -1434,11 +1434,20 @@ for (const file of htmlFiles) {
   const primaryNav = (html.match(
     /<nav\b[^>]*class=["'][^"']*\bnav\b[^"']*["'][^>]*>([\s\S]*?)<\/nav>/i
   ) || [])[1] || "";
-  if ((primaryNav.match(/href=["']Statistics\.dc\.html["']/g) || []).length !== 1) {
-    errors.push(`${label}: primary navigation must contain one Statistics link.`);
-  }
-  if (!/<a\b[^>]*href=["']Publications\.dc\.html["'][^>]*>Publications<\/a>\s*<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*>Statistics<\/a>/i.test(primaryNav)) {
-    errors.push(`${label}: Statistics must immediately follow Publications in primary navigation.`);
+  const linksToStatistics = [...primaryNav.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)]
+    .some(([, href]) => {
+      try {
+        const target = new URL(href, "https://chung-research-group.github.io/");
+        const normalizedPath = decodeURIComponent(target.pathname)
+          .replace(/\/{2,}/g, "/")
+          .toLowerCase();
+        return normalizedPath === "/statistics.dc.html";
+      } catch {
+        return false;
+      }
+    });
+  if (linksToStatistics) {
+    errors.push(`${label}: primary navigation must not contain a Statistics link.`);
   }
 }
 
@@ -1747,9 +1756,6 @@ for (const marker of [
   if (!statisticsHtml.includes(marker)) {
     errors.push(`Statistics page is missing required rendering marker: ${marker}`);
   }
-}
-if (!/<a\b[^>]*href=["']Statistics\.dc\.html["'][^>]*style=["'][^"']*color:var\(--color-accent\)/i.test(statisticsHtml)) {
-  errors.push("Statistics page must mark the Statistics navigation item as active.");
 }
 if (!statisticsHtml.includes(".statistics-bar-row:hover .statistics-bar-value")
     || !statisticsHtml.includes(".statistics-bar-row:focus-visible .statistics-bar-value")
