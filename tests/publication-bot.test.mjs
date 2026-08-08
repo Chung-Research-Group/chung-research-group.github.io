@@ -24,6 +24,7 @@ import {
   guardedPublicationFileState,
   isChemRxivDoi,
   isCandidateRoot,
+  loadApprovedCandidate,
   mergePublicationPrIfReady,
   nextOpenPublicationPr,
   normalizeDoi,
@@ -259,6 +260,45 @@ test('ignores ChemRxiv and title-equivalent publication candidates', () => {
     doi: '10.3000/new',
     title: 'A genuinely new peer-reviewed publication'
   }), false);
+});
+
+test('approved ChemRxiv candidates are rejected before metadata resolution', async () => {
+  let metadataCalls = 0;
+  const errors = [];
+  const candidate = await loadApprovedCandidate(
+    '10.26434/chemrxiv-2024-nvmnr-v2',
+    '',
+    {
+      candidateLoader: async () => {
+        metadataCalls += 1;
+        throw new Error('metadata resolution must not run');
+      },
+      onError: message => errors.push(message)
+    }
+  );
+
+  assert.equal(candidate, null);
+  assert.equal(metadataCalls, 0);
+  assert.deepEqual(errors, []);
+});
+
+test('an unresolvable approved candidate does not abort the monitor pass', async () => {
+  const errors = [];
+  const candidate = await loadApprovedCandidate(
+    '10.1000/incomplete',
+    '',
+    {
+      candidateLoader: async () => {
+        throw new Error('Publication metadata is incomplete');
+      },
+      onError: message => errors.push(message)
+    }
+  );
+
+  assert.equal(candidate, null);
+  assert.deepEqual(errors, [
+    'Skipping approved publication candidate 10.1000/incomplete: Publication metadata is incomplete'
+  ]);
 });
 
 test('applies Korean review instructions deterministically', () => {
