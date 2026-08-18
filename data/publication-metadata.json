@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-17T04:08:00.299Z",
+  "snapshotUpdatedAt": "2026-08-18T04:03:05.710Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
+      "contentUpdatedAt": "2026-08-18T04:03:05.710Z"
     },
     "openAlex": {
       "status": "ok",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4476,
+    "semanticScholarCitations": 4475,
     "openAlexCitations": 5756,
     "googleScholarCitations": 6355
   },
@@ -7962,7 +7962,7 @@
         "paperId": "fd74232cd983c8ecf1135cf72702b3169e491b30",
         "url": "https://www.semanticscholar.org/paper/fd74232cd983c8ecf1135cf72702b3169e491b30",
         "title": "The Origin of p-Xylene Selectivity in a DABCO Pillar-Layered Metal-Organic Framework: a Combined Experimental and Computational Investigation.",
-        "citationCount": 28,
+        "citationCount": 27,
         "influentialCitationCount": 0,
         "referenceCount": 55,
         "fields": [
@@ -8097,7 +8097,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
+          "contentUpdatedAt": "2026-08-18T04:03:05.710Z"
         },
         "openAlex": {
           "status": "observed",
