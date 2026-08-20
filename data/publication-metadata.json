@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-19T04:03:52.001Z",
+  "snapshotUpdatedAt": "2026-08-20T04:03:31.189Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+      "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+      "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4479,
-    "openAlexCitations": 5763,
+    "semanticScholarCitations": 4483,
+    "openAlexCitations": 5765,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1811,7 +1811,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 89,
+        "citationCount": 91,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -1829,12 +1829,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4410091570",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 90,
+        "citationCount": 91,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 24.4497,
-        "citationPercentile": 0.99855312,
+        "fwci": 24.6298,
+        "citationPercentile": 0.9986564,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1895,23 +1895,23 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 55
+            "citationCount": 56
           },
           {
             "year": 2025,
             "citationCount": 35
           }
         ],
-        "updatedAt": "2026-08-18T07:49:30.821534"
+        "updatedAt": "2026-08-19T15:00:24.278416"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5480,12 +5480,12 @@
       },
       "openAlex": {
         "workId": "https://openalex.org/W4226113201",
-        "title": "Defect-engineered MOF-801 for cycloaddition of CO <sub>2</sub> with epoxides",
+        "title": "Defect-engineered MOF-801 for cycloaddition of CO 2 with epoxides",
         "citationCount": 117,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.4507,
+        "fwci": 6.4509,
         "citationPercentile": 0.98584475,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
@@ -5571,7 +5571,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-08-18T07:49:30.821534"
+        "updatedAt": "2026-08-19T15:00:24.278416"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5580,7 +5580,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7614,7 +7614,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 719,
+        "citationCount": 720,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7629,12 +7629,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 894,
+        "citationCount": 895,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 22.2582,
-        "citationPercentile": 0.99847498,
+        "fwci": 22.2522,
+        "citationPercentile": 0.99847418,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7705,7 +7705,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 107
+            "citationCount": 108
           },
           {
             "year": 2025,
@@ -7736,16 +7736,16 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-08-18T07:49:30.821534"
+        "updatedAt": "2026-08-19T15:00:24.278416"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8137,7 +8137,7 @@
         "paperId": "ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "url": "https://www.semanticscholar.org/paper/ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 292,
+        "citationCount": 293,
         "influentialCitationCount": 6,
         "referenceCount": 51,
         "fields": [
@@ -8269,7 +8269,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
           "status": "observed",
