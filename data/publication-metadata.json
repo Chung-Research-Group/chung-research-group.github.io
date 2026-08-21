@@ -1,13 +1,13 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-20T04:03:31.189Z",
+  "snapshotUpdatedAt": "2026-08-21T04:06:40.456Z",
   "sources": {
     "semanticScholar": {
-      "status": "ok",
-      "reason": null,
+      "status": "stale",
+      "reason": "request-failed",
       "matched": 70,
-      "observedMatched": 70,
-      "retainedMatched": 0,
+      "observedMatched": 0,
+      "retainedMatched": 70,
       "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
     },
     "openAlex": {
@@ -163,7 +163,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -311,7 +311,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -459,7 +459,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -594,7 +594,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -745,7 +745,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-05T06:04:09.643Z"
         },
         "openAlex": {
@@ -877,7 +877,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
         },
         "openAlex": {
@@ -1013,7 +1013,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -1150,7 +1150,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-31T02:58:24.458Z"
         },
         "openAlex": {
@@ -1305,7 +1305,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -1462,7 +1462,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -1619,7 +1619,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-04T06:08:01.570Z"
         },
         "openAlex": {
@@ -1770,7 +1770,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -1906,7 +1906,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
@@ -2035,7 +2035,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -2190,7 +2190,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -2345,7 +2345,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -2501,7 +2501,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -2651,7 +2651,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
         },
         "openAlex": {
@@ -2809,7 +2809,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -2958,7 +2958,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3111,7 +3111,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3270,7 +3270,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3415,7 +3415,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
         },
         "openAlex": {
@@ -3574,7 +3574,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
         },
         "openAlex": {
@@ -3735,7 +3735,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -3894,7 +3894,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-05T06:04:09.643Z"
         },
         "openAlex": {
@@ -4051,7 +4051,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -4212,7 +4212,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4374,7 +4374,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4519,7 +4519,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4807,7 +4807,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4965,7 +4965,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5120,7 +5120,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5286,7 +5286,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5428,7 +5428,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5575,7 +5575,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -5732,7 +5732,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -5901,7 +5901,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6067,7 +6067,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6219,7 +6219,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6390,7 +6390,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6563,7 +6563,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -6732,7 +6732,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6902,7 +6902,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7103,7 +7103,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
         },
         "openAlex": {
@@ -7236,7 +7236,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7403,7 +7403,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7574,7 +7574,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7740,7 +7740,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
@@ -7920,7 +7920,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -8096,7 +8096,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-18T04:03:05.710Z"
         },
         "openAlex": {
@@ -8268,7 +8268,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
@@ -8444,7 +8444,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -8597,7 +8597,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -8757,7 +8757,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -8936,7 +8936,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -9119,7 +9119,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -9304,7 +9304,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -9483,7 +9483,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-04T06:08:01.570Z"
         },
         "openAlex": {
@@ -9674,7 +9674,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -9856,7 +9856,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-12T05:10:07.097Z"
         },
         "openAlex": {
@@ -10043,7 +10043,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -10237,7 +10237,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -10428,7 +10428,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -10600,7 +10600,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -10793,7 +10793,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -10972,7 +10972,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11147,7 +11147,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11344,7 +11344,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11530,7 +11530,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "observed",
+          "status": "retained",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
