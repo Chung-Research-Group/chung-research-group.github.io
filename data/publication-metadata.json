@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-22T04:00:33.504Z",
+  "snapshotUpdatedAt": "2026-08-23T04:06:24.769Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+      "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+      "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4485,
-    "openAlexCitations": 5768,
+    "semanticScholarCitations": 4489,
+    "openAlexCitations": 5772,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -657,8 +657,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.7011,
-        "citationPercentile": 0.90834948,
+        "fwci": 2.6909,
+        "citationPercentile": 0.90794631,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -741,7 +741,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-22T07:34:49.880490"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -750,7 +750,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1505,7 +1505,7 @@
         "paperId": "9e0c08158e904694412318259f797245df0aed1e",
         "url": "https://www.semanticscholar.org/paper/9e0c08158e904694412318259f797245df0aed1e",
         "title": "Accelerated discovery of high-performance MOFs for water adsorption chillers through molecular simulation and machine learning",
-        "citationCount": 7,
+        "citationCount": 8,
         "influentialCitationCount": 0,
         "referenceCount": 61,
         "fields": [
@@ -1522,12 +1522,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4411079963",
         "title": "Accelerated discovery of high-performance MOFs for water adsorption chillers through molecular simulation and machine learning",
-        "citationCount": 7,
+        "citationCount": 8,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.3635,
-        "citationPercentile": 0.88194438,
+        "fwci": 2.6909,
+        "citationPercentile": 0.90165099,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -1608,23 +1608,23 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 4
+            "citationCount": 5
           },
           {
             "year": 2025,
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-22T07:34:49.880490"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-04T06:08:01.570Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3473,12 +3473,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4392468206",
         "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
-        "citationCount": 22,
+        "citationCount": 23,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.9046,
-        "citationPercentile": 0.8592767,
+        "fwci": 1.9871,
+        "citationPercentile": 0.86772327,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3559,7 +3559,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 4
+            "citationCount": 5
           },
           {
             "year": 2025,
@@ -3570,7 +3570,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-22T07:34:49.880490"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3579,7 +3579,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3615,7 +3615,7 @@
         "paperId": "cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "url": "https://www.semanticscholar.org/paper/cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 174,
+        "citationCount": 175,
         "influentialCitationCount": 1,
         "referenceCount": 110,
         "fields": [
@@ -3736,7 +3736,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
           "status": "observed",
@@ -4563,8 +4563,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.7412,
-        "citationPercentile": 0.98203378,
+        "fwci": 6.7335,
+        "citationPercentile": 0.98202624,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4660,7 +4660,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-22T07:34:49.880490"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4669,7 +4669,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7614,7 +7614,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 720,
+        "citationCount": 721,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7629,12 +7629,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 895,
+        "citationCount": 897,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 25.307,
-        "citationPercentile": 0.99865841,
+        "fwci": 25.3147,
+        "citationPercentile": 0.99865806,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7705,7 +7705,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 108
+            "citationCount": 110
           },
           {
             "year": 2025,
@@ -7736,16 +7736,16 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-22T07:34:49.880490"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10469,7 +10469,7 @@
         "paperId": "32f329457a1f08d5715895b3017fe5649f132f29",
         "url": "https://www.semanticscholar.org/paper/32f329457a1f08d5715895b3017fe5649f132f29",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 268,
+        "citationCount": 269,
         "influentialCitationCount": 3,
         "referenceCount": 72,
         "fields": [
@@ -10601,7 +10601,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
+          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
           "status": "observed",
