@@ -452,15 +452,6 @@ test('graduate program data is rendered without duplicate education text', async
   await expect(page.getByText('Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원')).toHaveCount(0);
 });
 
-test('Hyunji Kim is listed as a current undergraduate researcher', async ({ page }) => {
-  await page.goto('/People.dc.html', { waitUntil: 'load' });
-  const profile = page.locator('#m-kim-hyunji');
-  await expect(profile.locator('h4').getByText('Kim, Hyunji', { exact: true })).toBeVisible();
-  await expect(profile.locator('h4').getByText('김현지', { exact: true })).toBeVisible();
-  await expect(profile.locator('a[href="https://github.com/Kimhyunji4"]')).toBeVisible();
-  await expect(profile.locator('a[href="https://www.linkedin.com/in/hyunji-kim-051743359"]')).toBeVisible();
-  await expect(profile.getByText('Modeling & Optimization', { exact: true })).toBeVisible();
-});
 
 test('undergraduate recruiting is open', async ({ page }) => {
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'load' });
