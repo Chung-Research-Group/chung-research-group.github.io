@@ -102,6 +102,11 @@ export function isChemRxivDoi(value = '') {
   return /^10\.26434\/chemrxiv-/i.test(normalizeDoi(value));
 }
 
+export function shouldProcessApprovedDoi(value, knownDois = new Set()) {
+  const doi = normalizeDoi(value);
+  return Boolean(doi && !knownDois.has(doi) && !isChemRxivDoi(doi));
+}
+
 export function shouldIgnoreCandidate(feed, candidate, { repairDois = new Set() } = {}) {
   const doi = normalizeDoi(candidate?.doi);
   const title = normalizeTitle(candidate?.title);
@@ -1300,7 +1305,7 @@ async function run() {
 
   for (const root of candidateRoots) {
     const doi = doiFromMessage(root.text);
-    if (doi && !known.has(doi) && !isChemRxivDoi(doi)) {
+    if (shouldProcessApprovedDoi(doi, known)) {
       await ensureControlReactions(slack, channel, root, botUser);
     }
   }
@@ -1385,7 +1390,7 @@ async function run() {
   for (const root of candidateRoots) {
     if (processedApproval) break;
     const doi = doiFromMessage(root.text);
-    if (!doi || known.has(doi)) continue;
+    if (!shouldProcessApprovedDoi(doi, known)) continue;
     const reactions = reactionDecision(authorizedReactions, channel, root.ts);
     if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 

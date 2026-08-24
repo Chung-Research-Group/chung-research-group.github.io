@@ -34,6 +34,7 @@ import {
   safeCandidateFromCrossref,
   sanitizeClassification,
   shouldIgnoreCandidate,
+  shouldProcessApprovedDoi,
   synchronizePublicationFiles,
   suggestTopics
 } from '../scripts/publication-bot.mjs';
@@ -238,6 +239,17 @@ test('normalizes title variants used by preprints and journal articles', () => {
   );
   const feed = "F('60', 'Screening of MOFs for adsorption', 'Authors', 'j', 'Journal', ' (2025)', null, '10.1000/final')";
   assert.deepEqual([...existingTitles(feed)], ['screening of mof for adsorption']);
+});
+
+test('skips stale approved ChemRxiv roots before requesting DOI metadata', () => {
+  const known = new Set(['10.1000/already-published']);
+
+  assert.equal(
+    shouldProcessApprovedDoi('10.26434/chemrxiv-2024-nvmnr-v2', known),
+    false
+  );
+  assert.equal(shouldProcessApprovedDoi('10.1000/already-published', known), false);
+  assert.equal(shouldProcessApprovedDoi('10.1000/new-publication', known), true);
 });
 
 test('ignores ChemRxiv and title-equivalent publication candidates', () => {
