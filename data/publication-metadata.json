@@ -1,14 +1,14 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-24T04:11:34.102Z",
+  "snapshotUpdatedAt": "2026-08-25T04:04:59.987Z",
   "sources": {
     "semanticScholar": {
-      "status": "stale",
-      "reason": "request-failed",
+      "status": "ok",
+      "reason": null,
       "matched": 70,
-      "observedMatched": 0,
-      "retainedMatched": 70,
-      "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+      "observedMatched": 70,
+      "retainedMatched": 0,
+      "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-24T04:11:34.102Z"
+      "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4489,
-    "openAlexCitations": 5773,
+    "semanticScholarCitations": 4491,
+    "openAlexCitations": 5775,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -163,7 +163,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -311,7 +311,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -459,7 +459,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -594,7 +594,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -745,7 +745,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-05T06:04:09.643Z"
         },
         "openAlex": {
@@ -877,7 +877,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
         },
         "openAlex": {
@@ -1013,7 +1013,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -1150,7 +1150,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-31T02:58:24.458Z"
         },
         "openAlex": {
@@ -1212,8 +1212,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6189,
-        "citationPercentile": 0.64342674,
+        "fwci": 0.6142,
+        "citationPercentile": 0.6413966,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1301,16 +1301,16 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1346,7 +1346,7 @@
         "paperId": "229d8fa4d000a52dd2f73cfbb8a7026bf01e4eb0",
         "url": "https://www.semanticscholar.org/paper/229d8fa4d000a52dd2f73cfbb8a7026bf01e4eb0",
         "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal-Organic Frameworks.",
-        "citationCount": 14,
+        "citationCount": 15,
         "influentialCitationCount": 0,
         "referenceCount": 7,
         "fields": [
@@ -1462,8 +1462,8 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "status": "observed",
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "openAlex": {
           "status": "observed",
@@ -1619,7 +1619,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
@@ -1770,7 +1770,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -1906,7 +1906,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
         },
         "openAlex": {
@@ -2035,7 +2035,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2945,
-        "citationPercentile": 0.7879257,
+        "fwci": 1.2938,
+        "citationPercentile": 0.78790122,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,16 +2186,16 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-23T07:36:19.812096"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-24T04:11:34.102Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2345,7 +2345,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
         },
         "openAlex": {
@@ -2404,12 +2404,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4403922784",
         "title": "Computational Exploration of Adsorption-Based Hydrogen Storage in Mg-Alkoxide Functionalized Covalent-Organic Frameworks (COFs): Force-Field and Machine Learning Models",
-        "citationCount": 20,
+        "citationCount": 21,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.3357,
-        "citationPercentile": 0.88776123,
+        "fwci": 2.4446,
+        "citationPercentile": 0.89504994,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2490,23 +2490,23 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 8
+            "citationCount": 9
           },
           {
             "year": 2025,
             "citationCount": 12
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2651,7 +2651,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
         },
         "openAlex": {
@@ -2809,7 +2809,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -2958,7 +2958,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3111,7 +3111,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3270,7 +3270,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -3415,7 +3415,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
         },
         "openAlex": {
@@ -3473,12 +3473,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4392468206",
         "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
-        "citationCount": 23,
+        "citationCount": 24,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.9871,
-        "citationPercentile": 0.86772327,
+        "fwci": 2.0701,
+        "citationPercentile": 0.87393177,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3559,7 +3559,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
@@ -3570,16 +3570,16 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-08-22T07:34:49.880490"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3735,7 +3735,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
@@ -3894,7 +3894,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-05T06:04:09.643Z"
         },
         "openAlex": {
@@ -4051,7 +4051,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -4212,7 +4212,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4374,7 +4374,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4519,7 +4519,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4563,8 +4563,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.7335,
-        "citationPercentile": 0.98202624,
+        "fwci": 6.7258,
+        "citationPercentile": 0.98196741,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4660,7 +4660,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-08-22T07:34:49.880490"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4669,7 +4669,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4807,7 +4807,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -4965,7 +4965,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5120,7 +5120,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5286,7 +5286,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5428,7 +5428,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -5575,7 +5575,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -5732,7 +5732,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -5901,7 +5901,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6067,7 +6067,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6219,7 +6219,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6390,7 +6390,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6563,7 +6563,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -6732,7 +6732,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -6902,7 +6902,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7103,7 +7103,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
         },
         "openAlex": {
@@ -7236,7 +7236,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7403,7 +7403,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7574,7 +7574,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -7614,7 +7614,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 721,
+        "citationCount": 722,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7628,13 +7628,13 @@
       },
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
-        "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
+        "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal?Organic Framework Database: CoRE MOF 2019",
         "citationCount": 897,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 25.3147,
-        "citationPercentile": 0.99865806,
+        "fwci": 25.2947,
+        "citationPercentile": 0.99865779,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7736,16 +7736,16 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-08-22T07:34:49.880490"
+        "updatedAt": "2026-08-24T07:32:12.397491"
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "status": "observed",
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7920,7 +7920,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
         },
         "openAlex": {
@@ -8096,7 +8096,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-18T04:03:05.710Z"
         },
         "openAlex": {
@@ -8268,7 +8268,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
         },
         "openAlex": {
@@ -8444,7 +8444,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -8597,7 +8597,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -8757,7 +8757,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -8936,7 +8936,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -9119,7 +9119,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -9304,7 +9304,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -9483,7 +9483,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-04T06:08:01.570Z"
         },
         "openAlex": {
@@ -9674,7 +9674,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -9856,7 +9856,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-12T05:10:07.097Z"
         },
         "openAlex": {
@@ -10043,7 +10043,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-07T05:08:37.628Z"
         },
         "openAlex": {
@@ -10237,7 +10237,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -10428,7 +10428,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -10600,7 +10600,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
         },
         "openAlex": {
@@ -10793,7 +10793,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
         },
         "openAlex": {
@@ -10972,7 +10972,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11147,7 +11147,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11344,7 +11344,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
@@ -11530,7 +11530,7 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "retained",
+          "status": "observed",
           "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
         },
         "openAlex": {
