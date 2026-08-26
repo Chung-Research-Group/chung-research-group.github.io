@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-25T04:04:59.987Z",
+  "snapshotUpdatedAt": "2026-08-26T04:07:15.061Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+      "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 72,
     "semanticScholarCitations": 4491,
-    "openAlexCitations": 5775,
+    "openAlexCitations": 5776,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2938,
-        "citationPercentile": 0.78790122,
+        "fwci": 1.2893,
+        "citationPercentile": 0.78713005,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-24T07:32:12.397491"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3477,8 +3477,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0701,
-        "citationPercentile": 0.87393177,
+        "fwci": 2.0629,
+        "citationPercentile": 0.873323,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3570,7 +3570,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-08-24T07:32:12.397491"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3579,7 +3579,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7457,12 +7457,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2949111628",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 155,
+        "citationCount": 156,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.2786,
-        "citationPercentile": 0.98816889,
+        "fwci": 8.2456,
+        "citationPercentile": 0.98812188,
         "primaryTopic": {
           "id": "https://openalex.org/T12240",
           "name": "Nanomaterials for catalytic reactions",
@@ -7543,7 +7543,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 6
+            "citationCount": 7
           },
           {
             "year": 2025,
@@ -7570,7 +7570,7 @@
             "citationCount": 30
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7579,7 +7579,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9541,8 +9541,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.9512,
-        "citationPercentile": 0.97586711,
+        "fwci": 7.9178,
+        "citationPercentile": 0.97578511,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9670,7 +9670,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9679,7 +9679,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10108,8 +10108,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.5978,
-        "citationPercentile": 0.97401347,
+        "fwci": 7.5659,
+        "citationPercentile": 0.97392517,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10233,7 +10233,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10242,7 +10242,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10851,8 +10851,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.4064,
-        "citationPercentile": 0.58860218,
+        "fwci": 0.4062,
+        "citationPercentile": 0.5885054,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -10932,6 +10932,10 @@
         ],
         "countsByYear": [
           {
+            "year": 2026,
+            "citationCount": 1
+          },
+          {
             "year": 2022,
             "citationCount": 1
           },
@@ -10957,7 +10961,7 @@
           },
           {
             "year": 2016,
-            "citationCount": 4
+            "citationCount": 3
           },
           {
             "year": 2015,
@@ -10968,7 +10972,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-07-23T08:03:31.855105"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10977,7 +10981,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -11207,8 +11211,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.037,
-        "citationPercentile": 0.87578143,
+        "fwci": 2.0311,
+        "citationPercentile": 0.87542642,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -11289,7 +11293,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 1
+            "citationCount": 2
           },
           {
             "year": 2025,
@@ -11321,7 +11325,7 @@
           },
           {
             "year": 2016,
-            "citationCount": 13
+            "citationCount": 12
           },
           {
             "year": 2015,
@@ -11340,7 +11344,7 @@
             "citationCount": 4
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-25T07:29:55.448023"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -11349,7 +11353,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
         },
         "googleScholar": {
           "status": "unavailable",
