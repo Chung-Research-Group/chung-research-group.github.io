@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-26T04:07:15.061Z",
+  "snapshotUpdatedAt": "2026-08-27T14:20:58.566Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+      "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
+      "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4491,
+    "semanticScholarCitations": 4494,
     "openAlexCitations": 5776,
     "googleScholarCitations": 6355
   },
@@ -227,8 +227,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.1501,
-        "citationPercentile": 0.84718997,
+        "fwci": 2.0562,
+        "citationPercentile": 0.84022253,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -307,7 +307,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -316,7 +316,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -657,8 +657,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.6909,
-        "citationPercentile": 0.90794631,
+        "fwci": 2.6309,
+        "citationPercentile": 0.90529847,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -741,7 +741,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-22T07:34:49.880490"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -750,7 +750,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -808,8 +808,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6698,
-        "citationPercentile": 0.66191683,
+        "fwci": 0.6577,
+        "citationPercentile": 0.65832566,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -873,7 +873,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-18T07:49:30.821534"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -882,7 +882,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1212,8 +1212,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6142,
-        "citationPercentile": 0.6413966,
+        "fwci": 0.6039,
+        "citationPercentile": 0.63636576,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1301,7 +1301,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-24T07:32:12.397491"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1310,7 +1310,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1369,8 +1369,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.8646,
-        "citationPercentile": 0.94704281,
+        "fwci": 3.7804,
+        "citationPercentile": 0.94546599,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -1458,7 +1458,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1467,7 +1467,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2893,
-        "citationPercentile": 0.78713005,
+        "fwci": 1.2875,
+        "citationPercentile": 0.78680237,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-25T07:29:55.448023"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2386,7 +2386,7 @@
         "paperId": "b2c33705cd487f0fd79782db57247e8e107745e0",
         "url": "https://www.semanticscholar.org/paper/b2c33705cd487f0fd79782db57247e8e107745e0",
         "title": "Computational Exploration of Adsorption-Based Hydrogen Storage in Mg-Alkoxide Functionalized Covalent-Organic Frameworks (COFs): Force-Field and Machine Learning Models.",
-        "citationCount": 16,
+        "citationCount": 17,
         "influentialCitationCount": 0,
         "referenceCount": 49,
         "fields": [
@@ -2502,7 +2502,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "openAlex": {
           "status": "observed",
@@ -3456,7 +3456,7 @@
         "paperId": "70af761398bd91c3298324e08f9e8aac91edfe22",
         "url": "https://www.semanticscholar.org/paper/70af761398bd91c3298324e08f9e8aac91edfe22",
         "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
-        "citationCount": 22,
+        "citationCount": 24,
         "influentialCitationCount": 0,
         "referenceCount": 47,
         "fields": [
@@ -3575,7 +3575,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-19T04:03:52.001Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "openAlex": {
           "status": "observed",
@@ -5796,8 +5796,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.1281,
-        "citationPercentile": 0.93073943,
+        "fwci": 3.1091,
+        "citationPercentile": 0.93032173,
         "primaryTopic": {
           "id": "https://openalex.org/T11342",
           "name": "Carbon and Quantum Dots Applications",
@@ -5897,7 +5897,7 @@
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-08-26T07:47:46.906454"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5906,7 +5906,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
         },
         "googleScholar": {
           "status": "unavailable",
