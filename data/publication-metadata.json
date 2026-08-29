@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-28T15:30:03.985Z",
+  "snapshotUpdatedAt": "2026-08-29T10:14:18.263Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
+      "contentUpdatedAt": "2026-08-29T10:14:18.263Z"
     },
     "openAlex": {
       "status": "ok",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4494,
+    "semanticScholarCitations": 4495,
     "openAlexCitations": 5777,
     "googleScholarCitations": 6355
   },
@@ -6259,7 +6259,7 @@
         "paperId": "d6f23826364aed5f90053682d78d5e9e0662bb44",
         "url": "https://www.semanticscholar.org/paper/d6f23826364aed5f90053682d78d5e9e0662bb44",
         "title": "Shape‐Selective Ultramicroporous Carbon Membranes for Sub‐0.1 nm Organic Liquid Separation",
-        "citationCount": 15,
+        "citationCount": 16,
         "influentialCitationCount": 0,
         "referenceCount": 65,
         "fields": [
@@ -6391,7 +6391,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-08-29T10:14:18.263Z"
         },
         "openAlex": {
           "status": "observed",
