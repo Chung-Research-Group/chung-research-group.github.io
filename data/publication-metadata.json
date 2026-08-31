@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-30T09:21:14.764Z",
+  "snapshotUpdatedAt": "2026-08-31T09:55:24.415Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+      "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+      "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4497,
+    "semanticScholarCitations": 4499,
     "openAlexCitations": 5780,
     "googleScholarCitations": 6355
   },
@@ -204,8 +204,8 @@
         "paperId": "8aa2861fcee6c70157b215bc6061a79c5cd270ab",
         "url": "https://www.semanticscholar.org/paper/8aa2861fcee6c70157b215bc6061a79c5cd270ab",
         "title": "Data-driven prediction of ionic conductivity in solid-state electrolytes with machine learning and large language models.",
-        "citationCount": 1,
-        "influentialCitationCount": 0,
+        "citationCount": 2,
+        "influentialCitationCount": 1,
         "referenceCount": 51,
         "fields": [
           "Physics",
@@ -312,7 +312,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3666,
-        "citationPercentile": 0.79982447,
+        "fwci": 1.3655,
+        "citationPercentile": 0.79981777,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-30T07:30:35.949966"
+        "updatedAt": "2026-08-31T07:19:18.363097"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+          "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7614,7 +7614,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 722,
+        "citationCount": 723,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7741,7 +7741,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-25T04:04:59.987Z"
+          "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
         },
         "openAlex": {
           "status": "observed",
