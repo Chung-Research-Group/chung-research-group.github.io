@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-08-31T09:55:24.415Z",
+  "snapshotUpdatedAt": "2026-09-01T08:46:27.555Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
+      "contentUpdatedAt": "2026-09-01T08:46:27.555Z"
     },
     "openAlex": {
       "status": "ok",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4499,
+    "semanticScholarCitations": 4500,
     "openAlexCitations": 5780,
     "googleScholarCitations": 6355
   },
@@ -10638,7 +10638,7 @@
         "paperId": "6efacf8930daa62031b27237227bdccbfb0c20b4",
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 644,
+        "citationCount": 645,
         "influentialCitationCount": 10,
         "referenceCount": 35,
         "fields": [
@@ -10794,7 +10794,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-01T08:46:27.555Z"
         },
         "openAlex": {
           "status": "observed",
