@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-01T08:46:27.555Z",
+  "snapshotUpdatedAt": "2026-09-02T08:00:00.688Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
+      "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 72,
     "semanticScholarCitations": 4500,
-    "openAlexCitations": 5780,
+    "openAlexCitations": 5783,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -371,12 +371,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W7135218082",
         "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
-        "citationCount": 4,
+        "citationCount": 5,
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 10.9776,
-        "citationPercentile": 0.98611243,
+        "fwci": 12.6227,
+        "citationPercentile": 0.98946736,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -452,10 +452,10 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 4
+            "citationCount": 5
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-01T08:31:24.195828"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -464,7 +464,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3655,
-        "citationPercentile": 0.79981777,
+        "fwci": 1.3616,
+        "citationPercentile": 0.79949376,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-31T07:19:18.363097"
+        "updatedAt": "2026-09-01T08:31:24.195828"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
+          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7629,11 +7629,11 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal?Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 897,
+        "citationCount": 898,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 25.4213,
+        "fwci": 25.4261,
         "citationPercentile": 0.99866427,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
@@ -7705,7 +7705,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 110
+            "citationCount": 111
           },
           {
             "year": 2025,
@@ -7736,7 +7736,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-08-29T07:29:34.045763"
+        "updatedAt": "2026-09-01T08:31:24.195828"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7745,7 +7745,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10104,12 +10104,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2519634887",
         "title": "High-Throughput Screening of Metal–Organic Frameworks for CO2 Capture in the Presence of Water",
-        "citationCount": 169,
+        "citationCount": 170,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.5659,
-        "citationPercentile": 0.97392517,
+        "fwci": 7.5955,
+        "citationPercentile": 0.9740556,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10190,7 +10190,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 11
+            "citationCount": 12
           },
           {
             "year": 2025,
@@ -10233,7 +10233,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-25T07:29:55.448023"
+        "updatedAt": "2026-09-01T08:31:24.195828"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10242,7 +10242,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
+          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
