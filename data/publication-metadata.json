@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-02T08:00:00.688Z",
+  "snapshotUpdatedAt": "2026-09-03T08:09:54.353Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-01T08:46:27.555Z"
+      "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
+      "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4500,
-    "openAlexCitations": 5783,
+    "semanticScholarCitations": 4501,
+    "openAlexCitations": 5785,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1212,8 +1212,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5916,
-        "citationPercentile": 0.630407,
+        "fwci": 0.5847,
+        "citationPercentile": 0.62763172,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1301,7 +1301,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-30T07:30:35.949966"
+        "updatedAt": "2026-09-02T18:50:13.731487"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1310,7 +1310,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3616,
-        "citationPercentile": 0.79949376,
+        "fwci": 1.3581,
+        "citationPercentile": 0.79885213,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-01T08:31:24.195828"
+        "updatedAt": "2026-09-02T18:50:13.731487"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3634,12 +3634,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4390750649",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 198,
+        "citationCount": 199,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 22.8326,
-        "citationPercentile": 0.99917889,
+        "fwci": 22.7507,
+        "citationPercentile": 0.99912396,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3720,7 +3720,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 64
+            "citationCount": 65
           },
           {
             "year": 2025,
@@ -3731,7 +3731,7 @@
             "citationCount": 40
           }
         ],
-        "updatedAt": "2026-08-28T12:50:07.497085"
+        "updatedAt": "2026-09-02T07:38:04.252551"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3740,7 +3740,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-28T15:30:03.985Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5481,12 +5481,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4226113201",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO 2 with epoxides",
-        "citationCount": 117,
+        "citationCount": 118,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.4509,
-        "citationPercentile": 0.98584475,
+        "fwci": 6.4837,
+        "citationPercentile": 0.98591549,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5552,7 +5552,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 19
+            "citationCount": 20
           },
           {
             "year": 2025,
@@ -5571,7 +5571,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-08-19T15:00:24.278416"
+        "updatedAt": "2026-09-02T18:50:13.731487"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5580,7 +5580,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-20T04:03:31.189Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5796,8 +5796,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.1351,
-        "citationPercentile": 0.9308843,
+        "fwci": 3.1353,
+        "citationPercentile": 0.9308684,
         "primaryTopic": {
           "id": "https://openalex.org/T11342",
           "name": "Carbon and Quantum Dots Applications",
@@ -5897,7 +5897,7 @@
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-08-28T12:50:07.497085"
+        "updatedAt": "2026-09-02T18:50:13.731487"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5906,7 +5906,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-28T15:30:03.985Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7145,7 +7145,7 @@
         "paperId": "10a999d0191f70e726852b0457404f11414577a2",
         "url": "https://www.semanticscholar.org/paper/10a999d0191f70e726852b0457404f11414577a2",
         "title": "Development of Machine Learning Model for Predicting Distillation Column Temperature",
-        "citationCount": 1,
+        "citationCount": 2,
         "influentialCitationCount": 0,
         "referenceCount": 19,
         "fields": [
@@ -7237,7 +7237,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
         },
         "openAlex": {
           "status": "observed",
