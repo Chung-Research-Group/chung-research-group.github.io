@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-03T08:09:54.353Z",
+  "snapshotUpdatedAt": "2026-09-04T08:08:14.991Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
+      "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
+      "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4501,
+    "semanticScholarCitations": 4506,
     "openAlexCitations": 5785,
     "googleScholarCitations": 6355
   },
@@ -354,7 +354,7 @@
         "paperId": "a4af36e07cb077d4a5beac9d3b48e1e2be40af64",
         "url": "https://www.semanticscholar.org/paper/a4af36e07cb077d4a5beac9d3b48e1e2be40af64",
         "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
-        "citationCount": 3,
+        "citationCount": 4,
         "influentialCitationCount": 0,
         "referenceCount": 186,
         "fields": [
@@ -460,7 +460,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "openAlex": {
           "status": "observed",
@@ -1212,8 +1212,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5847,
-        "citationPercentile": 0.62763172,
+        "fwci": 0.583,
+        "citationPercentile": 0.62690618,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1301,7 +1301,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-02T18:50:13.731487"
+        "updatedAt": "2026-09-03T10:48:47.769340"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1310,7 +1310,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3581,
-        "citationPercentile": 0.79885213,
+        "fwci": 1.3558,
+        "citationPercentile": 0.79843233,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-02T18:50:13.731487"
+        "updatedAt": "2026-09-03T10:48:47.769340"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3615,7 +3615,7 @@
         "paperId": "cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "url": "https://www.semanticscholar.org/paper/cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 175,
+        "citationCount": 176,
         "influentialCitationCount": 1,
         "referenceCount": 110,
         "fields": [
@@ -3736,7 +3736,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "openAlex": {
           "status": "observed",
@@ -4703,7 +4703,7 @@
         "paperId": "9d69579e8f6650c9b20fc5f136877f654d50f352",
         "url": "https://www.semanticscholar.org/paper/9d69579e8f6650c9b20fc5f136877f654d50f352",
         "title": "Effective Delamination of a Layered Two-Dimensional MCM-22 Zeolite: Quantitative Insights into the Role of the Delaminated Structure on Acid Catalytic Reactions",
-        "citationCount": 14,
+        "citationCount": 15,
         "influentialCitationCount": 0,
         "referenceCount": 80,
         "fields": [
@@ -4808,7 +4808,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7614,7 +7614,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 723,
+        "citationCount": 724,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7628,13 +7628,13 @@
       },
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
-        "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal?Organic Framework Database: CoRE MOF 2019",
+        "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
         "citationCount": 898,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 25.4261,
-        "citationPercentile": 0.99866427,
+        "fwci": 25.3821,
+        "citationPercentile": 0.99866207,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7736,16 +7736,16 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-09-01T08:31:24.195828"
+        "updatedAt": "2026-09-03T10:48:47.769340"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-31T09:55:24.415Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-02T08:00:00.688Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9179,8 +9179,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.8766,
-        "citationPercentile": 0.91695679,
+        "fwci": 2.8833,
+        "citationPercentile": 0.91723627,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9300,7 +9300,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-23T07:36:19.812096"
+        "updatedAt": "2026-09-03T10:48:47.769340"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9309,7 +9309,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-24T04:11:34.102Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10086,7 +10086,7 @@
         "paperId": "830353689e68e8d68002fff4699c43557761f079",
         "url": "https://www.semanticscholar.org/paper/830353689e68e8d68002fff4699c43557761f079",
         "title": "High-Throughput Screening of Metal-Organic Frameworks for CO2 Capture in the Presence of Water.",
-        "citationCount": 19,
+        "citationCount": 20,
         "influentialCitationCount": 0,
         "referenceCount": 58,
         "fields": [
@@ -10238,7 +10238,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
         },
         "openAlex": {
           "status": "observed",
