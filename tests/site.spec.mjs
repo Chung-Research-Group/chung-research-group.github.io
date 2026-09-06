@@ -81,6 +81,14 @@ test.beforeEach(async ({ page }) => {
   await page.route(/^https?:\/\/(?!127\.0\.0\.1(?::\d+)?\/|unpkg\.com\/)/, route => route.abort());
 });
 
+test('all public pages render without Korean text', async ({ page }) => {
+  for (const path of pages) {
+    await page.goto(`/${path}`, { waitUntil: 'load' });
+    const visibleText = await page.locator('body').innerText();
+    expect(visibleText, `${path} contains Korean text`).not.toMatch(/[가-힣]/);
+  }
+});
+
 test('publications use the static metadata snapshot without external API fan-out', async ({ page }) => {
   const externalMetadataRequests = [];
   page.on('request', request => {
@@ -441,7 +449,7 @@ test('publication topic filters and search work', async ({ page }) => {
 
 test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
-  await expect(page.getByText('Latest publications · 최신 논문', { exact: true })).toBeVisible();
+  await expect(page.getByText('Latest publications', { exact: true })).toBeVisible();
   await expect(page.locator('[data-home-publication]')).toHaveCount(6);
 });
 
@@ -453,18 +461,22 @@ test('graduate program data is rendered without duplicate education text', async
 });
 
 
-test('undergraduate recruiting is open', async ({ page }) => {
+test('all recruiting categories are closed and contact details are in English', async ({ page }) => {
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'load' });
-  const undergraduateOpening = page.getByText('Undergraduate interns').locator('..');
-  await expect(undergraduateOpening.getByText('Open', { exact: true })).toBeVisible();
-  await expect(page.getByText(/학부연구생을 상시 모집합니다/)).toBeVisible();
-  await expect(page.getByText(/부산광역시 금정구 부산대학로 63번길 2/)).toBeVisible();
-  await expect(page.getByText('학생 오피스 · 제7공학관 302호', { exact: true })).toBeVisible();
-  const professorOfficeAddress = page.getByText('교수 오피스 · 제7공학관 부속연구동 201호', { exact: true });
+  for (const role of ['Graduate students', 'Postdoctoral researchers', 'Undergraduate interns']) {
+    const heading = page.getByRole('heading', { level: 4, name: new RegExp(`^${role} Closed$`) });
+    const opening = heading.locator('..');
+    await expect(heading.getByText('Closed', { exact: true })).toBeVisible();
+    await expect(opening.getByText('No openings at this time.', { exact: true })).toBeVisible();
+  }
+  await expect(page.getByText(/Applications are not being accepted/)).toBeVisible();
+  await expect(page.getByText('2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan', { exact: true })).toBeVisible();
+  await expect(page.getByText('Student office · Engineering Building 7, Room 302', { exact: true })).toBeVisible();
+  const professorOfficeAddress = page.getByText("Professor's office · Engineering Building 7 Annex, Room 201", { exact: true });
   await expect(professorOfficeAddress).toBeVisible();
   await expect(professorOfficeAddress.locator('xpath=ancestor::a')).toHaveCount(0);
-  await expect(page.getByText('교수 오피스 · +82 51 510 3757', { exact: true })).toBeVisible();
-  await expect(page.getByText('학생 오피스 · +82 51 510 3082', { exact: true })).toBeVisible();
+  await expect(page.getByText("Professor's office · +82 51 510 3757", { exact: true })).toBeVisible();
+  await expect(page.getByText('Student office · +82 51 510 3082', { exact: true })).toBeVisible();
   await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
   await expect(page.getByText('Email Prof. Chung', { exact: true })).toBeVisible();
   await expect(page.locator('[data-prof-email]')).toHaveCount(2);
@@ -478,9 +490,6 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
     await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
   }
-  await expect(page.getByText(/양자·원자 시뮬레이션/)).toBeVisible();
-  await expect(page.getByText(/에너지·환경·산업 분야의 응용/)).toBeVisible();
-
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');
   await expect(baek.getByText('AI & Data', { exact: true })).toBeVisible();
@@ -1165,7 +1174,6 @@ test('lab statistics render authorized exclusive previous-year JCR standing band
   const section = page.locator('[data-journal-standing]');
   await expect(section).toHaveAttribute('data-journal-standing-status', 'partial');
   await expect(section.getByRole('heading', { level: 2 })).toContainText('Previous-year JCR standing');
-  await expect(section.getByRole('heading', { level: 2 })).toContainText('게재연도 전년도 JCR');
   await expect(section).toContainText('a 2026 publication uses 2025 JCR');
   await expect(section).toContainText('a 2025 publication uses 2024 JCR');
   const rows = section.locator('[data-journal-standing-bars] .statistics-bar-row');

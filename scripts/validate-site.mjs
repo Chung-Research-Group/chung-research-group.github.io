@@ -1770,7 +1770,6 @@ if (!publicationsHtml.includes("data-publication-metadata-status")) {
   errors.push("Publications page must expose citation sources and metadata freshness.");
 }
 for (const retiredAggregateLabel of [
-  "Publications · 논문",
   "Citations (Google Scholar)",
   "Citations (OpenAlex)",
   "Citations (Semantic Scholar)"
@@ -1865,7 +1864,7 @@ for (const color of ["#B4235A", "#A43E55", "#873E6E", "#6F4A58", "#4E2A84"]) {
 for (const displayName of ["Xylene Isomer", "Alkane Isomer", "Noble Gases", "Organic Liquids", "Hydrogen", "Methane"]) {
   if (!publicationsHtml.includes(`'${displayName}'`)) errors.push(`Concise application filter name is missing: ${displayName}`);
 }
-if (!peopleData.includes("Master's Program, Graduate School of Data Science") || peopleData.includes("Graduate School of Data Science, Pusan National University 데이터사이언스 전문대학원")) {
+if (!peopleData.includes("Master's Program, Graduate School of Data Science")) {
   errors.push("Graduate program and education data are not normalized.");
 }
 if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAAJ&hl=en")) {
