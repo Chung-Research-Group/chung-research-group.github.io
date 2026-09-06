@@ -453,6 +453,18 @@ test('homepage shows the six latest publications from the shared feed', async ({
   await expect(page.locator('[data-home-publication]')).toHaveCount(6);
 });
 
+test('homepage research summary uses four concise pillars and two focus rows', async ({ page }) => {
+  await page.goto('/index.html', { waitUntil: 'load' });
+  const research = page.locator('[data-screen-label="Research"]');
+  await expect(research.locator('.home-research-focus-row')).toHaveCount(2);
+  await expect(research.locator('.home-research-card')).toHaveCount(4);
+  await expect(research.getByText('Molecular & Atomistic Modeling', { exact: true })).toBeVisible();
+  await expect(research.getByText('Adsorption & Separation Processes', { exact: true })).toBeVisible();
+  await expect(research.getByText('Data-Driven Materials Discovery', { exact: true })).toBeVisible();
+  await expect(research.getByText('AI-Enabled Research Automation', { exact: true })).toBeVisible();
+  await expect(research.locator('.home-research-context-card')).toHaveCount(0);
+});
+
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   await expect(page.getByText('B.S./M.S. Program', { exact: true })).toBeVisible();
