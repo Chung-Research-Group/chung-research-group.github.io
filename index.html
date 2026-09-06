@@ -31,21 +31,20 @@ a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
-.home-research-core{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.home-research-enablers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
-.home-research-card{--area-color:var(--color-accent);min-width:0;padding:22px 22px 24px;border-top:5px solid var(--area-color);background:color-mix(in srgb,var(--area-color) 6%,transparent)}
-.home-research-number{display:block;font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:18px;letter-spacing:.08em;color:var(--area-color)}
-.home-research-card h2{font-family:var(--font-heading);font-weight:800;font-size:24px;line-height:29px;letter-spacing:-.01em;margin:9px 0 0}
-.home-research-card h2 a{color:inherit;text-decoration:none}
-.home-research-card h2 a:hover{color:var(--area-color)}
-.home-research-copy{font-size:18px;line-height:28px;margin:12px 0 0;color:var(--color-text)}
-.home-research-context{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr);gap:18px;margin:0 0 26px}
-.home-research-context-card{--context-color:var(--color-accent);min-width:0;padding:24px 26px 26px;border-top:5px solid var(--context-color);background:color-mix(in srgb,var(--context-color) 6%,transparent)}
-.home-research-context-card h2{font-family:var(--font-heading);font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.015em;margin:0;color:var(--context-color)}
-.home-research-context-intro{font-size:18px;line-height:27px;margin:8px 0 0;color:var(--color-text)}
-.home-research-context-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.home-research-context-list span{display:inline-flex;align-items:center;padding:7px 10px;border:1px solid color-mix(in srgb,var(--context-color) 55%,transparent);background:var(--color-bg);font-size:15px;line-height:20px;font-weight:750;color:var(--context-color)}
-.home-research-context-card--applications .home-research-context-list span{font-size:16px;line-height:21px;padding:8px 11px}
+.home-research-header{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);gap:28px 64px;align-items:start;margin-bottom:28px}
+.home-research-lead{max-width:72ch;font-size:20px;line-height:31px;margin:0;color:var(--color-text)}
+.home-research-focus{border-top:2px solid var(--color-text);border-bottom:1px solid var(--color-divider);margin-bottom:34px}
+.home-research-focus-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:17px 0}
+.home-research-focus-row+ .home-research-focus-row{border-top:1px solid var(--color-divider)}
+.home-research-focus h2{font-family:var(--font-heading);font-size:15px;line-height:24px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;margin:0;color:var(--color-accent-700)}
+.home-research-focus p{font-size:18px;line-height:28px;margin:0;color:var(--color-text)}
+.home-research-core{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--color-text)}
+.home-research-card{display:grid;grid-template-columns:44px minmax(0,1fr);gap:18px;min-width:0;padding:26px 32px 28px 0;border-bottom:1px solid var(--color-divider)}
+.home-research-card:nth-child(even){padding-left:32px;padding-right:0;border-left:1px solid var(--color-divider)}
+.home-research-number{display:block;font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:20px;letter-spacing:.08em;color:var(--color-accent-700)}
+.home-research-card h2{font-family:var(--font-heading);font-weight:800;font-size:25px;line-height:31px;letter-spacing:-.01em;margin:0}
+.home-research-copy{font-size:17px;line-height:27px;margin:10px 0 0;color:var(--color-text)}
+.home-research-emerging{display:inline-block;font-size:12px;line-height:18px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:var(--color-accent-700);margin-bottom:4px}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -72,11 +71,14 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
-  .home-research-core,.home-research-enablers,.home-research-context{grid-template-columns:1fr}
+  .home-research-header,.home-research-focus-row,.home-research-core{grid-template-columns:1fr}
+  .home-research-header{gap:10px;margin-bottom:22px}
+  .home-research-focus-row{gap:3px;padding:14px 0}
+  .home-research-card,.home-research-card:nth-child(even){grid-template-columns:36px minmax(0,1fr);gap:12px;padding:22px 0;border-left:0}
 }
 
 @media (min-width:841px) and (max-width:1100px){
-  .home-research-core,.home-research-enablers{grid-template-columns:1fr}
+  .home-research-header{grid-template-columns:1fr;gap:10px}
 }
 
 /* Interactive hero: static MOF image + pointer-reactive particles */
@@ -247,60 +249,41 @@ body{zoom:0.88}
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
 
     <section style="padding:44px 0" data-screen-label="Research">
-      <div style="margin:0 0 28px">
+      <header class="home-research-header">
         <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Research</span>
-      </div>
-      <div class="home-research-context">
-        <article class="home-research-context-card home-research-context-card--applications" style="--context-color:#1c4fa1">
-          <h2>Engineering application domains</h2>
-          <p class="home-research-context-intro">Our modeling, data, and AI methods are developed around concrete engineering problems.</p>
-          <div class="home-research-context-list">
-            <span>Carbon Capture &amp; Gas Separations</span>
-            <span>Hydrogen &amp; Methane Storage</span>
-            <span>Electrochemical Energy Storage</span>
-            <span>Catalysis &amp; Conversion</span>
-            <span>Adsorption Cooling</span>
-          </div>
-        </article>
-        <article class="home-research-context-card" style="--context-color:#a86700">
-          <h2>Material platforms</h2>
-          <p class="home-research-context-intro">Materials classes that connect our fundamental and application-driven research.</p>
-          <div class="home-research-context-list">
-            <span>Reticular Materials</span>
-            <span>Polymers</span>
-            <span>Carbons</span>
-            <span>Oxides</span>
-            <span>Electrolytes</span>
-          </div>
-        </article>
+        <p class="home-research-lead">We connect molecular-scale modeling, materials data, and process simulation to solve practical problems in energy and separations.</p>
+      </header>
+      <div class="home-research-focus">
+        <div class="home-research-focus-row">
+          <h2>Applications</h2>
+          <p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p>
+        </div>
+        <div class="home-research-focus-row">
+          <h2>Materials</h2>
+          <p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p>
+        </div>
       </div>
       <div class="home-research-core">
-        <article class="home-research-card" style="--area-color:#1c4fa1">
+        <article class="home-research-card">
           <span class="home-research-number">01</span>
-          <h2>Quantum &amp; Atomistic Modeling</h2>
-          <p class="home-research-copy">Quantum calculations, Monte Carlo methods, molecular dynamics, and enhanced sampling for molecular-scale structure, energetics, diffusion, reaction, and electrochemical behavior.</p>
+          <div><h2>Molecular &amp; Atomistic Modeling</h2>
+          <p class="home-research-copy">Quantum chemistry, Monte Carlo, molecular dynamics, and enhanced sampling for structure, energetics, adsorption, diffusion, reaction, and electrochemical behavior.</p></div>
         </article>
-        <article class="home-research-card" style="--area-color:#00794a">
+        <article class="home-research-card">
           <span class="home-research-number">02</span>
-          <h2>Fundamentals of Adsorption, Diffusion &amp; Reaction</h2>
-          <p class="home-research-copy">Molecular-level theories and simulations of adsorption thermodynamics, molecular diffusion, and reaction mechanisms in porous and condensed materials.</p>
+          <div><h2>Adsorption &amp; Separation Processes</h2>
+          <p class="home-research-copy">Molecular adsorption and transport models linked to pressure-, vacuum-, and temperature-swing performance and techno-economic evaluation.</p></div>
         </article>
-        <article class="home-research-card" style="--area-color:#006b73">
+        <article class="home-research-card">
           <span class="home-research-number">03</span>
-          <h2>Cyclic Swing Adsorption</h2>
-          <p class="home-research-copy">End-to-end models connecting adsorption and transport to pressure-, vacuum-, and temperature-swing cycle performance and techno-economic outcomes.</p>
+          <div><h2>Data-Driven Materials Discovery</h2>
+          <p class="home-research-copy">Curated materials data, machine learning, and high-throughput screening for reproducible discovery and ranking.</p></div>
         </article>
-      </div>
-      <div class="home-research-enablers">
-        <article class="home-research-card" style="--area-color:#a86700">
+        <article class="home-research-card">
           <span class="home-research-number">04</span>
-          <h2>Data-driven &amp; Autonomous Discovery</h2>
-          <p class="home-research-copy">Curated materials data, machine-learning models, and high-throughput screening for reproducible materials discovery.</p>
-        </article>
-        <article class="home-research-card" style="--area-color:#4e2a84">
-          <span class="home-research-number">05 · Emerging direction</span>
-          <h2>AI Scientists &amp; Computational Research Automation</h2>
-          <p class="home-research-copy">LLM orchestration and tool-using agents that plan, execute, verify, and refine computational research workflows.</p>
+          <div><span class="home-research-emerging">Emerging direction</span>
+          <h2>AI-Enabled Research Automation</h2>
+          <p class="home-research-copy">LLMs and tool-using agents that plan, execute, verify, and refine computational research workflows.</p></div>
         </article>
       </div>
     </section>
