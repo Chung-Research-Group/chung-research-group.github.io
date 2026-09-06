@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-06T07:59:40.343Z",
+  "snapshotUpdatedAt": "2026-09-06T18:33:54.292Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-06T07:59:40.343Z"
+      "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -1966,8 +1966,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.9344,
-        "citationPercentile": 0.93706599,
+        "fwci": 4.2741,
+        "citationPercentile": 0.92842616,
         "primaryTopic": {
           "id": "https://openalex.org/T13200",
           "name": "Spacecraft and Cryogenic Technologies",
@@ -2031,7 +2031,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-06T09:10:53.072986"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2040,7 +2040,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5637,8 +5637,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.8495,
-        "citationPercentile": 0.91796576,
+        "fwci": 2.8506,
+        "citationPercentile": 0.91799719,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5728,7 +5728,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-09-04T10:56:28.161419"
+        "updatedAt": "2026-09-06T09:10:53.072986"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5737,7 +5737,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-05T07:45:31.978Z"
+          "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10300,8 +10300,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.7764,
-        "citationPercentile": 0.95692969,
+        "fwci": 4.8168,
+        "citationPercentile": 0.95738605,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10424,7 +10424,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-06T09:10:53.072986"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10433,7 +10433,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
         },
         "googleScholar": {
           "status": "unavailable",
