@@ -458,10 +458,11 @@ test('homepage research summary uses four concise pillars and two focus rows', a
   const research = page.locator('[data-screen-label="Research"]');
   await expect(research.locator('.home-research-focus-row')).toHaveCount(2);
   await expect(research.locator('.home-research-card')).toHaveCount(4);
-  await expect(research.getByText('Molecular & Atomistic Modeling', { exact: true })).toBeVisible();
+  await expect(research.getByText('Atomistic & Materials Modeling', { exact: true })).toBeVisible();
   await expect(research.getByText('Adsorption & Separation Processes', { exact: true })).toBeVisible();
   await expect(research.getByText('Data-Driven Materials Discovery', { exact: true })).toBeVisible();
   await expect(research.getByText('AI-Enabled Research Automation', { exact: true })).toBeVisible();
+  await expect(research.getByText('Emerging direction', { exact: true })).toHaveCount(0);
   await expect(research.locator('.home-research-context-card')).toHaveCount(0);
 });
 
