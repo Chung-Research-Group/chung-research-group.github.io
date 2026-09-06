@@ -102,12 +102,12 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 
   <div style="padding:0 64px">
     <header style="padding:48px 0 32px">
-      <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications. <span style="font-size:26px;line-height:34px;font-weight:800;color:color-mix(in srgb, var(--color-text) 72%, transparent)">논문</span></h1>
+      <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications.</h1>
       <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">*: corresponding author, #: co-first author</p>
       <div style="display:flex;align-items:center;gap:18px 28px;flex-wrap:wrap;margin-top:24px">
         <div class="publication-search-tools">
           <a href="https://scholar.google.com/citations?hl=en&amp;user=q-UUrywAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar" style="display:grid;place-items:center;flex:none;width:56px;height:56px;transition:transform .12s ease" style-hover="transform:scale(1.08)"><svg viewBox="0 0 24 24" width="48" height="48"><path fill="#4285F4" d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"></path></svg></a>
-          <input class="publication-search-input" aria-label="Search publications" placeholder="Search publications (제목·저자·저널·라벨 검색)" onInput="{{ onSearch }}" style="padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
+          <input class="publication-search-input" aria-label="Search publications" placeholder="Search publications by title, author, journal, or label" onInput="{{ onSearch }}" style="padding:10px 14px;font-size:17px;font-family:inherit;color:var(--color-text);border:2px solid var(--color-divider);background:var(--color-bg);margin:0;outline-color:var(--color-accent)">
           <div class="publication-citation-downloads" role="group" aria-label="Download publication citations">
             <a class="publication-citation-download" href="exports/publications/publications.bib" download aria-label="Download BibTeX file of all publications">Download BibTeX</a>
             <a class="publication-citation-download" href="exports/publications/CITATION.cff" download aria-label="Download CFF file of all publications">Download CFF</a>
@@ -135,7 +135,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         </div>
       </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found · 검색 결과 {{ resultCount }}편</p>
+        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found</p>
       </sc-if>
       <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
         <div style="display:grid;grid-template-columns:130px 1fr;gap:16px 48px;padding:26px 0;border-top:2px solid var(--color-text)">
@@ -176,7 +176,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         </div>
       </sc-for>
       <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">No publications match your search. 검색 결과가 없습니다.</p>
+        <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">No publications match your search.</p>
       </sc-if>
     </section>
   </div>
