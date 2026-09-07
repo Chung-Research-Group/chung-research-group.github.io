@@ -21,8 +21,6 @@
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="feed.js?v=20260730-3"></script>
-<script async="" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
-<script async="" src="https://badge.dimensions.ai/badge.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
 body{margin:0;background:var(--color-bg)}
@@ -30,19 +28,30 @@ a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
-.home-research-header{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);gap:28px 64px;align-items:start;margin-bottom:28px}
-.home-research-lead{font-size:20px;line-height:31px;margin:0;color:var(--color-text)}
-.home-research-focus{border-top:2px solid var(--color-text);border-bottom:1px solid var(--color-divider);margin-bottom:34px}
-.home-research-focus-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:17px 0}
-.home-research-focus-row+ .home-research-focus-row{border-top:1px solid var(--color-divider)}
-.home-research-focus h2{font-family:var(--font-heading);font-size:15px;line-height:24px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;margin:0;color:var(--color-accent-700)}
-.home-research-focus p{font-size:18px;line-height:28px;margin:0;color:var(--color-text)}
-.home-research-core{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--color-text)}
-.home-research-card{display:grid;grid-template-columns:44px minmax(0,1fr);gap:18px;min-width:0;padding:26px 32px 28px 0;border-bottom:1px solid var(--color-divider)}
-.home-research-card:nth-child(even){padding-left:32px;padding-right:0;border-left:1px solid var(--color-divider)}
-.home-research-number{display:block;font-family:var(--font-heading);font-weight:800;font-size:14px;line-height:20px;letter-spacing:.08em;color:var(--color-accent-700)}
-.home-research-card h2{font-family:var(--font-heading);font-weight:800;font-size:25px;line-height:31px;letter-spacing:-.01em;margin:0}
-.home-research-copy{font-size:17px;line-height:27px;margin:10px 0 0;color:var(--color-text)}
+/* A quiet hierarchy: introduction, research, tools, then recent activity. */
+.home-section{padding:44px 0;border-top:1px solid var(--color-divider)}
+.home-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px}
+.home-section-heading h2{font-family:var(--font-heading);font-size:28px;line-height:1.25;letter-spacing:-.01em;margin:0;font-weight:700}
+.home-section-heading>a{flex:none;font-size:16px;text-underline-offset:4px}
+.home-research-focus{margin-top:30px;padding-top:20px;border-top:1px solid var(--color-divider)}
+.home-research-focus-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:20px;padding:6px 0}
+.home-research-focus h3{font-size:16px;line-height:26px;font-weight:600;margin:0}
+.home-research-focus p{font-size:16px;line-height:26px;margin:0;color:#536373}
+.home-research-core{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 48px}
+.home-research-card{min-width:0}
+.home-research-card h3{font-family:var(--font-heading);font-weight:700;font-size:22px;line-height:1.35;letter-spacing:-.01em;margin:0}
+.home-research-copy{font-size:18px;line-height:1.6;margin:8px 0 0;color:#536373}
+.home-publication{padding:20px 0;border-top:1px solid var(--color-divider)}
+.home-publication:first-child{padding-top:0;border-top:0}
+.home-publication h3{font-size:21px;line-height:1.4;font-weight:600;margin:0}
+.home-publication h3 a{color:inherit;text-decoration:none}
+.home-publication h3 a:hover{text-decoration:underline;text-underline-offset:4px}
+.home-publication-meta{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-top:10px}
+.home-publication-meta p{font-size:16px;line-height:1.6;margin:0;color:#536373}
+.home-news-item{display:grid;grid-template-columns:100px minmax(0,1fr);gap:24px;padding:12px 0}
+.home-news-item time{font-size:15px;line-height:28px;color:#536373}
+.home-news-item p{font-size:18px;line-height:28px;margin:0}
+.home-news-item a{color:inherit;text-underline-offset:3px}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -69,23 +78,21 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
-  .home-research-header,.home-research-focus-row,.home-research-core{grid-template-columns:1fr}
-  .home-research-header{gap:10px;margin-bottom:22px}
-  .home-research-focus-row{gap:3px;padding:14px 0}
-  .home-research-card,.home-research-card:nth-child(even){grid-template-columns:36px minmax(0,1fr);gap:12px;padding:22px 0;border-left:0}
+  .home-research-core{grid-template-columns:1fr;gap:24px}
+  .home-research-focus-row{grid-template-columns:1fr;gap:0;padding:8px 0}
+  .home-section{padding:32px 0}
+  .home-section-heading{gap:12px;flex-wrap:wrap;margin-bottom:22px}
+  .home-section-heading h2{font-size:26px}
+  .home-news-item{grid-template-columns:1fr;gap:2px}
 }
 
-@media (min-width:841px) and (max-width:1100px){
-  .home-research-header{grid-template-columns:1fr;gap:10px}
-}
-
-/* The structure and copy occupy separate columns; prose uses the full row. */
-.home-hero{padding:36px 0 40px}
+/* The structure supports the headline; copy retains the full reading width. */
+.home-hero{padding:36px 0 44px}
 .home-hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px 48px;align-items:center}
-.home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4.4vw,72px);line-height:1.06;letter-spacing:-.025em;margin:0}
-.home-hero-intro{font-size:20px;line-height:1.6;margin:24px 0 28px}
+.home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4vw,64px);line-height:1.06;letter-spacing:-.025em;margin:0}
+.home-hero-intro{font-size:21px;line-height:1.65;margin:24px 0 0;color:#536373}
 .mof-figure{margin:0;min-width:0}
-.mof-stage{position:relative;width:100%;aspect-ratio:1.5;overflow:hidden;background:radial-gradient(ellipse at center,#edf4fb 0%,transparent 72%)}
+.mof-stage{position:relative;width:100%;aspect-ratio:1.5;overflow:hidden;background:transparent}
 .mof-stage img,.mof-stage canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .mof-stage canvas{visibility:hidden}
 .mof-figure[data-mof-ready="true"] canvas{visibility:visible}
@@ -94,10 +101,10 @@ body{zoom:0.88}
 .mof-figure figcaption a{font-weight:700;text-underline-offset:3px}
 .mof-motion{display:none;min-height:36px;padding:5px 10px;background:transparent;border:1px solid #bdcddd;color:var(--color-accent-700);font:inherit;cursor:pointer}
 .mof-figure[data-mof-ready="true"] .mof-motion{display:inline-flex}
-.resource-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0}
-.resource-card{display:flex;align-items:center;gap:18px;min-width:0;padding:20px 22px;border:1px solid #c5d5e3;border-top:3px solid var(--color-accent);border-radius:4px;background:#f0f6fb;color:var(--color-text);text-decoration:none;transition:background .18s,border-color .18s}
-.resource-card:hover,.resource-card:focus-visible{background:#e3eff9;border-color:var(--color-accent);color:var(--color-text)}
-.resource-card svg{flex:none;width:32px;height:32px;color:var(--color-accent)}
+.resource-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0}
+.resource-card{display:flex;align-items:center;gap:18px;min-width:0;padding:20px;border:1px solid #d6dfe6;border-radius:4px;background:transparent;color:var(--color-text);text-decoration:none;transition:background .18s,border-color .18s}
+.resource-card:hover,.resource-card:focus-visible{background:#f4f7fa;border-color:var(--color-accent);color:var(--color-text)}
+.resource-card svg{flex:none;width:26px;height:26px;color:var(--color-accent)}
 .resource-card strong{display:block;font-family:var(--font-heading);font-size:21px;line-height:1.3;color:var(--color-accent-700)}
 .resource-card span span{display:block;font-size:16px;line-height:1.45;margin-top:5px}
 @media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
@@ -128,10 +135,46 @@ body{zoom:0.88}
             <img class="mof-poster" src="images/irmof-1.svg" width="750" height="500" alt="MOF-5 crystal structure showing zinc–oxygen nodes connected by organic linkers and open pores.">
             <canvas aria-hidden="true"></canvas>
           </div>
-          <figcaption><span><a href="data/irmof-1.cif">MOF-5 / IRMOF-1</a> · H atoms omitted</span><button class="mof-motion" type="button" aria-pressed="false">Pause rotation</button></figcaption>
+          <figcaption><span><a href="data/irmof-1.cif">MOF-5 / IRMOF-1</a> · H atoms omitted</span><button class="mof-motion" type="button" aria-pressed="true">Resume rotation</button></figcaption>
         </figure>
       </div>
-      <p class="home-hero-intro">We study nanoporous materials, especially metal–organic frameworks, and related material platforms for energy and separations. Our work combines <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong> to connect molecular behavior with material and process performance.</p>
+      <p class="home-hero-intro">We combine atomistic simulation, materials data, and AI to understand and discover materials for energy and separations, with a focus on metal–organic frameworks.</p>
+    </section>
+
+    <section class="home-section" data-screen-label="Research">
+      <header class="home-section-heading"><h2>Research</h2></header>
+      <div class="home-research-core">
+        <article class="home-research-card">
+          <div><h3>Atomistic &amp; Materials Modeling</h3>
+          <p class="home-research-copy">Quantum and atomistic simulations to understand material structure, properties, and molecular behavior.</p></div>
+        </article>
+        <article class="home-research-card">
+          <div><h3>Adsorption &amp; Separation Processes</h3>
+          <p class="home-research-copy">Connecting molecular adsorption and transport to separation processes and their performance.</p></div>
+        </article>
+        <article class="home-research-card">
+          <div><h3>Data-Driven Materials Discovery</h3>
+          <p class="home-research-copy">Curated data, machine learning, and high-throughput screening to identify promising materials.</p></div>
+        </article>
+        <article class="home-research-card">
+          <div><h3>AI-Enabled Research Automation</h3>
+          <p class="home-research-copy">AI agents that plan, run, and verify computational research workflows.</p></div>
+        </article>
+      </div>
+      <div class="home-research-focus">
+        <div class="home-research-focus-row">
+          <h3>Applications</h3>
+          <p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p>
+        </div>
+        <div class="home-research-focus-row">
+          <h3>Materials</h3>
+          <p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section" data-screen-label="Software and data">
+      <header class="home-section-heading"><h2>Software &amp; data</h2><a href="Software%20%26%20Data.dc.html">All resources →</a></header>
       <nav class="resource-links" aria-label="Featured software and data">
         <a class="resource-card" href="CoRE%20MOF%20Database.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v7c0 4 16 4 16 0V5M4 12v7c0 4 16 4 16 0v-7"></path></svg><span><strong>CoRE MOF</strong><span>Structures &amp; materials data</span></span></a>
         <a class="resource-card" href="PACMAN.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 9h8M12 5v8M8 17h8"></path></svg><span><strong>PACMAN</strong><span>Predict atomic charges</span></span></a>
@@ -139,83 +182,29 @@ body{zoom:0.88}
       </nav>
     </section>
 
-    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
-
-    <section style="padding:44px 0" data-screen-label="Research">
-      <header class="home-research-header">
-        <span style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Research</span>
-        <p class="home-research-lead">We connect molecular-scale modeling, materials data, and process simulation to solve practical problems in energy and separations.</p>
-      </header>
-      <div class="home-research-focus">
-        <div class="home-research-focus-row">
-          <h2>Applications</h2>
-          <p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p>
-        </div>
-        <div class="home-research-focus-row">
-          <h2>Materials</h2>
-          <p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p>
-        </div>
-      </div>
-      <div class="home-research-core">
-        <article class="home-research-card">
-          <span class="home-research-number">01</span>
-          <div><h2>Atomistic &amp; Materials Modeling</h2>
-          <p class="home-research-copy">Quantum chemistry, Monte Carlo, molecular dynamics, and enhanced sampling for structure, energetics, adsorption, diffusion, reaction, and electrochemical behavior.</p></div>
-        </article>
-        <article class="home-research-card">
-          <span class="home-research-number">02</span>
-          <div><h2>Adsorption &amp; Separation Processes</h2>
-          <p class="home-research-copy">Molecular adsorption and transport models linked to pressure-, vacuum-, and temperature-swing performance and techno-economic evaluation.</p></div>
-        </article>
-        <article class="home-research-card">
-          <span class="home-research-number">03</span>
-          <div><h2>Data-Driven Materials Discovery</h2>
-          <p class="home-research-copy">Curated materials data, machine learning, and high-throughput screening for reproducible discovery and ranking.</p></div>
-        </article>
-        <article class="home-research-card">
-          <span class="home-research-number">04</span>
-          <div><h2>AI-Enabled Research Automation</h2>
-          <p class="home-research-copy">LLMs and tool-using agents that plan, execute, verify, and refine computational research workflows.</p></div>
-        </article>
+    <section class="home-section" data-screen-label="Latest publications">
+      <header class="home-section-heading"><h2>Latest publications</h2><a href="Publications.dc.html">All publications →</a></header>
+      <div>
+        <sc-for list="{{ pubs }}" as="p" hint-placeholder-count="3">
+          <article class="home-publication" data-home-publication>
+            <h3><a href="{{ p.jurl }}">{{ p.title }}</a></h3>
+            <div class="home-publication-meta">
+              <p>{{ p.journal }} · {{ p.year }}</p>
+              <sc-if value="{{ p.doi }}" hint-placeholder-val="{{ false }}"><publication-metrics data-doi="{{ p.doi }}"></publication-metrics></sc-if>
+            </div>
+          </article>
+        </sc-for>
       </div>
     </section>
 
-    <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
-
-    <section style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 64px;padding:44px 0 52px" data-screen-label="News + Publications">
-      <div>
-        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">News &amp; Highlights</span>
-        <sc-for list="{{ newsGroups }}" as="yg" hint-placeholder-count="1">
-          <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ yg.year }}</p>
-          <sc-for list="{{ yg.items }}" as="item" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:92px 1fr;gap:0 18px;padding:9px 0 9px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
-              <p style="font-family:var(--font-heading);font-weight:800;font-size:18px;line-height:28px;margin:0;color:var(--color-accent-700)">{{ item.month }}</p>
-              <p style="font-size:19px;line-height:30px;margin:0;color:var(--color-text)"><sc-for list="{{ item.parts }}" as="seg" hint-placeholder-count="2"><sc-if value="{{ seg.person }}" hint-placeholder-val="{{ false }}"><a href="{{ seg.href }}" style="font-weight:700;color:var(--color-accent-700);text-decoration:none">{{ seg.t }}</a></sc-if><sc-if value="{{ seg.journal }}" hint-placeholder-val="{{ false }}"><a href="{{ seg.href }}" style="font-weight:700;color:var(--color-text);text-decoration:none">{{ seg.t }}</a></sc-if><sc-if value="{{ seg.hl }}" hint-placeholder-val="{{ false }}"><strong style="font-weight:800;color:var(--color-accent-2-600)">{{ seg.t }}</strong></sc-if><sc-if value="{{ seg.plain }}" hint-placeholder-val="{{ true }}"><span>{{ seg.t }}</span></sc-if></sc-for></p>
-            </div>
-          </sc-for>
-        </sc-for>
-        <div style="margin-top:18px"><a class="btn btn-secondary" href="News.dc.html" style="text-decoration:none">More news</a></div>
-      </div>
-      <div>
-        <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);font-feature-settings:'tnum' 1;margin:0 0 20px">Latest publications</span>
-        <sc-for list="{{ pubGroups }}" as="pg" hint-placeholder-count="1">
-          <p style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:28px;font-feature-settings:'tnum' 1;margin:0;padding:12px 0 6px;border-top:2px solid var(--color-text);color:var(--color-accent)">{{ pg.year }}</p>
-          <sc-for list="{{ pg.items }}" as="p" hint-placeholder-count="6">
-            <div data-home-publication style="padding:9px 0 12px 18px;border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
-              <h3 style="font-weight:700;font-size:17.5px;line-height:26px;margin:0"><a href="{{ p.jurl }}" style="color:#00794a;text-decoration:none" style-hover="color:var(--color-accent)">{{ p.title }}</a></h3>
-              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 0">
-                <span style="display:inline-flex;align-items:center;gap:5px;font-size:13px;line-height:17px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ p.kc }};color:{{ p.kc }}"><span style="width:7px;height:7px;background:{{ p.kb }}"></span>{{ p.kind }}</span>
-                <p style="font-size:17px;line-height:25px;margin:0;color:var(--color-text)"><span style="font-weight:700;color:var(--color-text)">{{ p.journal }}</span></p>
-                <sc-if value="{{ p.doi }}" hint-placeholder-val="{{ false }}">
-                  <span class="__dimensions_badge_embed__" data-doi="{{ p.doi }}" data-style="small_rectangle"></span>
-                  <div class="altmetric-embed" data-badge-type="4" data-hide-no-mentions="true" data-doi="{{ p.doi }}"></div>
-                </sc-if>
-              </div>
-            </div>
-          </sc-for>
-        </sc-for>
-        <div style="margin-top:18px"><a class="btn btn-secondary" href="Publications.dc.html" style="text-decoration:none">All publications</a></div>
-      </div>
+    <section class="home-section" data-screen-label="News">
+      <header class="home-section-heading"><h2>News</h2><a href="News.dc.html">All news →</a></header>
+      <sc-for list="{{ news }}" as="item" hint-placeholder-count="3">
+        <article class="home-news-item" data-home-news>
+          <time>{{ item.month }} {{ item.year }}</time>
+          <p><sc-for list="{{ item.parts }}" as="seg" hint-placeholder-count="2"><sc-if value="{{ seg.person }}" hint-placeholder-val="{{ false }}"><a href="{{ seg.href }}">{{ seg.t }}</a></sc-if><sc-if value="{{ seg.journal }}" hint-placeholder-val="{{ false }}"><a href="{{ seg.href }}">{{ seg.t }}</a></sc-if><sc-if value="{{ seg.hl }}" hint-placeholder-val="{{ false }}"><span>{{ seg.t }}</span></sc-if><sc-if value="{{ seg.plain }}" hint-placeholder-val="{{ true }}"><span>{{ seg.t }}</span></sc-if></sc-for></p>
+        </article>
+      </sc-for>
     </section>
   </main>
 
@@ -227,57 +216,28 @@ body{zoom:0.88}
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showKorean&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Content&quot;}, &quot;newsCount&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 6, &quot;min&quot;: 3, &quot;max&quot;: 6, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Content&quot;}}">
+<script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  refreshBadges() {
-    clearTimeout(this._badgeTimer);
-    this._badgeTimer = setTimeout(() => {
-      try { window._altmetric_embed_init && window._altmetric_embed_init(); } catch (e) {}
-      try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
-    }, 400);
-  }
   componentDidMount() {
     let attempts = 0;
-    const t = () => {
+    const loadFeed = () => {
       if (window.MTAP_FEED) {
         this._feed = window.MTAP_FEED;
         this.forceUpdate();
-        this.refreshBadges();
       } else if (attempts++ < 200) {
-        setTimeout(t, 50);
-      } else {
-        console.warn("MTAP_FEED was not loaded within 10 seconds.");
+        setTimeout(loadFeed, 50);
       }
     };
-    t();
+    loadFeed();
   }
-  componentDidUpdate() { this.refreshBadges(); }
   renderVals() {
-    const kr = this.props.showKorean ?? true;
-    const count = this.props.newsCount ?? 6;
-    const FEED = this._feed;
-    const allNews = FEED ? FEED.NEWS.map(i => Object.assign({}, i)) : [];
-    const pubs = FEED ? FEED.PUBS.slice(0, 6).map(p => {
-      const isReview = /review/i.test(p.kind);
-      return { title: p.title, kind: p.kind, journal: p.journal, jurl: p.html, doi: p.doi || false, year: p.year, kc: isReview ? '#a86700' : '#1c4fa1', kb: isReview ? '#ffa500' : '#005baa' };
-    }) : [];
-    const shown = allNews.slice(0, count);
-    const newsGroups = [];
-    shown.forEach(i => {
-      let g = newsGroups.find(g0 => g0.year === i.year);
-      if (!g) { g = { year: i.year, items: [] }; newsGroups.push(g); }
-      g.items.push(i);
-    });
-    const pubGroups = [];
-    pubs.forEach(p => {
-      let g = pubGroups.find(g0 => g0.year === p.year);
-      if (!g) { g = { year: p.year, items: [] }; pubGroups.push(g); }
-      g.items.push(p);
-    });
-    return { kr, newsGroups, pubGroups };
+    const feed = this._feed;
+    const pubs = feed ? feed.PUBS.slice(0, 3).map(p => ({ title: p.title, journal: p.journal, jurl: p.html, doi: p.doi || false, year: p.year })) : [];
+    return { pubs, news: feed ? feed.NEWS.slice(0, 3) : [] };
   }
 }
 </script>
+<script src="assets/publication-badges.js"></script>
 
 <script src="assets/mof-renderer.js"></script>
 <script src="assets/mof-viewer.js"></script>

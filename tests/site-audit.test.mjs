@@ -44,7 +44,7 @@ test('all page templates have landmarks, consistent contact links, and no stale 
   assert.doesNotMatch(people, /<image-slot\b/);
   assert.match(people, /alt="{{ m.name }}"/);
   const publications = await readFile(new URL('../Publications.dc.html', import.meta.url), 'utf8');
-  assert.doesNotMatch(publications, /dimensions|altmetric|discoveryTerms|<span onClick/);
+  assert.doesNotMatch(publications, /discoveryTerms|<span onClick/);
   assert.match(publications, /aria-pressed="{{ it.active }}"/);
   const sesami = await readFile(new URL('../SESAMI-APP.dc.html', import.meta.url), 'utf8');
   assert.doesNotMatch(sesami, /sesami-web\.org|164\.125\.248\.102/);

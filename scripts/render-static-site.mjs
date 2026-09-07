@@ -68,7 +68,7 @@ export async function renderPublishedPage(source, { filename, dataRoot }) {
     for (const child of [...node.childNodes]) visit(child, scope);
   }
   const styles = [...root.querySelectorAll('helmet style, helmet link[rel="stylesheet"]')].map(n => n.outerHTML).join('\n');
-  for (const n of root.querySelectorAll('helmet, script, .publication-filter-panel, .filter-chip, input, select, canvas, .altmetric-embed, .__dimensions_badge_embed__')) n.remove();
+  for (const n of root.querySelectorAll('helmet, script, .publication-filter-panel, .filter-chip, input, select, canvas, publication-metrics, .altmetric-embed, .__dimensions_badge_embed__')) n.remove();
   visit(root, values);
   for (const n of root.querySelectorAll('button')) n.remove();
   // Keep no-JS controls honest: native links/details still work; filters require JS.

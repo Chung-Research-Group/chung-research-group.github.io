@@ -19,7 +19,7 @@
     } catch { return; }
     if (!figure.isConnected) return;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
-    let paused = motion.matches, visible = true, frame = 0, last = 0, angle = .38;
+    let paused = true, visible = true, frame = 0, last = 0, angle = .38;
     let width = 1, height = 1, destroyed = false;
     const draw = () => MofRenderer.draw(ctx, model, width, height, angle);
     function stop() { cancelAnimationFrame(frame); frame = 0; last = 0; }
@@ -40,7 +40,7 @@
       button.setAttribute('aria-pressed', String(paused));
     }
     function toggle() { paused = !paused; syncButton(); paused ? stop() : start(); }
-    function preference() { paused = motion.matches; syncButton(); paused ? stop() : start(); }
+    function preference() { if (motion.matches) { paused = true; syncButton(); stop(); } }
     function visibility() { document.hidden ? stop() : start(); }
     function resize() {
       if (!figure.isConnected) { destroy(); return; }
