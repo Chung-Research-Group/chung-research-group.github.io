@@ -56,5 +56,6 @@ test('the no-JavaScript renderer uses the same records without active scripts or
     }
     assert.match(result, /<template data-site-template><x-dc>/);
     assert.ok(result.indexOf('assets/site-template.js') < result.indexOf('./support.js'));
+    if (filename === 'People.dc.html') assert.ok(result.indexOf('src="people-data.js"') < result.indexOf('./support.js'));
   }
 });

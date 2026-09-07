@@ -74,7 +74,12 @@ export async function renderPublishedPage(source, { filename, dataRoot }) {
   const fallback = `<noscript data-static-fallback>${styles}<link rel="stylesheet" href="assets/site-common.css"><div class="static-page"><p class="service-note" style="padding:12px 24px">Static view. Enable JavaScript for search, filters, and interactive charts.</p>${root.innerHTML}</div></noscript>`
     .replaceAll('@', '&#64;');
   if (/{{|<sc-(?:for|if)\b/.test(fallback)) throw new Error(`${filename}: unresolved static template`);
+  // These data globals must exist before the runtime evaluates renderVals.
+  // Scripts cloned out of an inert template do not retain parser-blocking order.
+  const dataScripts = [...html.matchAll(/<script src="((?:\.\/)?(?:feed|people-data)\.js[^\"]*)"/g)]
+    .map(match => match[1])
+    .map(src => `<script src="${src}"></script>`).join('\n');
   return html
-    .replace('<script src="./vendor/react.production.min.js">', '<script src="assets/site-template.js"></script>\n<script src="./vendor/react.production.min.js">')
+    .replace('<script src="./vendor/react.production.min.js">', dataScripts + '\n<script src="assets/site-template.js"></script>\n<script src="./vendor/react.production.min.js">')
     .replace(/<x-dc>[\s\S]*?<\/x-dc>/, match => `<template data-site-template>${match}</template>\n${fallback}`);
 }
