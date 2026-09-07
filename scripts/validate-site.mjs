@@ -1891,11 +1891,13 @@ const designCss = await readFile(
 if (!designCss.includes("family=Archivo") || !designCss.includes('--font-heading: "Archivo"')) {
   errors.push("Typography contract changed: Archivo font wiring is missing.");
 }
-if (!indexHtml.includes("data-hero-interactive") || !indexHtml.includes("requestAnimationFrame")) {
-  errors.push("Homepage motion contract changed: interactive hero animation is missing.");
+const mofViewerPath = path.join(siteRoot, 'assets/mof-viewer.js');
+const mofViewer = await exists(mofViewerPath) ? await readFile(mofViewerPath, 'utf8') : '';
+if (!indexHtml.includes('data-mof-viewer') || !mofViewer.includes('requestAnimationFrame')) {
+  errors.push('Homepage coordinate-based MOF renderer is missing.');
 }
-if (!indexHtml.includes("prefers-reduced-motion")) {
-  errors.push("Homepage motion accessibility fallback is missing.");
+if (!mofViewer.includes('prefers-reduced-motion') || !indexHtml.includes('images/irmof-1.svg')) {
+  errors.push('Homepage motion preference or static MOF fallback is missing.');
 }
 const supportJs = await readFile(path.join(siteRoot, "support.js"), "utf8");
 for (const runtime of ["vendor/react.production.min.js", "vendor/react-dom.production.min.js"]) {

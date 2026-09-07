@@ -18,8 +18,6 @@
 <meta property="og:title" content="Chung Research Group @ PNU">
 <meta property="og:description" content="AI-driven materials and chemical discovery through atomistic simulation, statistical mechanics, and artificial intelligence.">
 <meta property="og:url" content="https://chung-research-group.github.io/index.html">
-<link rel="preload" as="image" href="images/hero-mof.webp" media="(min-width:841px)">
-<link rel="preload" as="image" href="images/hero-mof-mobile.webp" media="(max-width:840px)">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="feed.js?v=20260730-3"></script>
@@ -27,13 +25,13 @@
 <script async="" src="https://badge.dimensions.ai/badge.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
-body{margin:0;background:var(--color-bg);text-wrap:pretty}
+body{margin:0;background:var(--color-bg)}
 a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
 .home-research-header{display:grid;grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);gap:28px 64px;align-items:start;margin-bottom:28px}
-.home-research-lead{max-width:72ch;font-size:20px;line-height:31px;margin:0;color:var(--color-text)}
+.home-research-lead{font-size:20px;line-height:31px;margin:0;color:var(--color-text)}
 .home-research-focus{border-top:2px solid var(--color-text);border-bottom:1px solid var(--color-divider);margin-bottom:34px}
 .home-research-focus-row{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:17px 0}
 .home-research-focus-row+ .home-research-focus-row{border-top:1px solid var(--color-divider)}
@@ -81,143 +79,30 @@ body{zoom:0.88}
   .home-research-header{grid-template-columns:1fr;gap:10px}
 }
 
-/* Interactive hero: static MOF image + pointer-reactive particles */
-.hero-interactive {
-  --mof-x: 0px;
-  --mof-y: 0px;
-  --mof-rx: 0deg;
-  --mof-ry: 0deg;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  perspective: 1200px;
-  background: #f6f5f3;
-}
-
-.hero-interactive__image {
-  position: absolute;
-  inset: -4%;
-  z-index: 0;
-  display: block;
-  width: 108%;
-  height: 108%;
-  max-width: none;
-  background-color: #f6f5f3;
-  background-image: url("images/hero-mof.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-  user-select: none;
-  transform-origin: 76% 50%;
-  transform:
-    translate3d(var(--mof-x), var(--mof-y), 0)
-    scale(1.025)
-    rotateX(var(--mof-rx))
-    rotateY(var(--mof-ry));
-  transition: transform 180ms cubic-bezier(.2,.75,.2,1);
-  will-change: transform;
-}
-
-/* Preserve text contrast while leaving the framework visible on the right. */
-.hero-interactive::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(246,245,243,.985) 0%,
-    rgba(246,245,243,.94) 38%,
-    rgba(246,245,243,.68) 56%,
-    rgba(246,245,243,.24) 76%,
-    rgba(246,245,243,.035) 100%
-  );
-}
-
-.hero-interactive__particles {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.hero-interactive > :not(.hero-interactive__image):not(.hero-interactive__particles) {
-  position: relative;
-  z-index: 3;
-}
-
-.hero-interactive .hero-secondary {
-  background: rgba(255,255,255,.86);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-}
-
-/* Use more of the quiet center area without letting copy reach the MOF artwork. */
-.hero-interactive__copy {
-  width: min(960px, 72vw);
-  max-width: 100%;
-}
-
-.hero-interactive__copy p {
-  max-width: 90ch !important;
-}
-
-@media (max-width:840px) {
-  /* Override the older global h1 span rule for this hero explicitly. */
-  .hero-interactive h1 span {
-    font-size: inherit !important;
-    line-height: inherit !important;
-  }
-
-  .hero-interactive__image {
-    inset: -2%;
-    width: 104%;
-    height: 104%;
-    max-width: none !important;
-    background-image: url("images/hero-mof-mobile.webp");
-    background-position: 63% center;
-    opacity: .46;
-    transform: none;
-  }
-
-  .hero-interactive::before {
-    background: rgba(246,245,243,.87);
-  }
-
-  .hero-interactive__particles {
-    opacity: .56;
-  }
-
-  .hero-interactive__copy {
-    width: 100%;
-  }
-
-  footer {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
-  /* The permanently fixed button overlaps the second hero CTA on small screens. */
-  .back-to-top {
-    display: none !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-interactive__image {
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .hero-interactive__particles {
-    display: none;
-  }
-}
+/* The structure and copy occupy separate columns; prose uses the full row. */
+.home-hero{padding:36px 0 40px}
+.home-hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px 48px;align-items:center}
+.home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4.4vw,72px);line-height:1.06;letter-spacing:-.025em;margin:0}
+.home-hero-intro{font-size:20px;line-height:1.6;margin:24px 0 28px}
+.mof-figure{margin:0;min-width:0}
+.mof-stage{position:relative;width:100%;aspect-ratio:1.5;overflow:hidden;background:radial-gradient(ellipse at center,#edf4fb 0%,transparent 72%)}
+.mof-stage img,.mof-stage canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.mof-stage canvas{visibility:hidden}
+.mof-figure[data-mof-ready="true"] canvas{visibility:visible}
+.mof-figure[data-mof-ready="true"] .mof-poster{visibility:hidden}
+.mof-figure figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:#536373}
+.mof-figure figcaption a{font-weight:700;text-underline-offset:3px}
+.mof-motion{display:none;min-height:36px;padding:5px 10px;background:transparent;border:1px solid #bdcddd;color:var(--color-accent-700);font:inherit;cursor:pointer}
+.mof-figure[data-mof-ready="true"] .mof-motion{display:inline-flex}
+.resource-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0}
+.resource-card{display:flex;align-items:center;gap:18px;min-width:0;padding:20px 22px;border:1px solid #c5d5e3;border-top:3px solid var(--color-accent);border-radius:4px;background:#f0f6fb;color:var(--color-text);text-decoration:none;transition:background .18s,border-color .18s}
+.resource-card:hover,.resource-card:focus-visible{background:#e3eff9;border-color:var(--color-accent);color:var(--color-text)}
+.resource-card svg{flex:none;width:32px;height:32px;color:var(--color-accent)}
+.resource-card strong{display:block;font-family:var(--font-heading);font-size:21px;line-height:1.3;color:var(--color-accent-700)}
+.resource-card span span{display:block;font-size:16px;line-height:1.45;margin-top:5px}
+@media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
+@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(34px,7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1.7}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
+@media(prefers-reduced-motion:reduce){.resource-card{transition:none}}
 
 </style>
 </helmet>
@@ -235,17 +120,23 @@ body{zoom:0.88}
   </nav>
 
   <main id="main-content" tabindex="-1" style="padding:0 64px">
-    <section class="hero-interactive" data-hero-interactive="" style="display:block;padding:52px 0 48px" data-screen-label="Hero">
-      <div class="hero-interactive__image" aria-hidden="true"></div>
-      <canvas class="hero-interactive__particles" aria-hidden="true"></canvas>
-      <div class="hero-interactive__copy">
-        <h1 style="font-family:var(--font-heading);font-weight:800;font-size:64px;line-height:68px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">
-          <span style="display:block">AI-driven materials</span>
-          <span style="display:block;white-space:nowrap">&amp;&nbsp;chemical&nbsp;discovery.</span>
-        </h1>
-        <p style="font-size:19px;line-height:30px;max-width:74ch;margin:24px 0 0">We study nanoporous materials, especially metal–organic frameworks, and related material platforms for energy and separations. Our work combines <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong> to connect molecular behavior with material and process performance.</p>
+    <section class="home-hero" data-screen-label="Hero">
+      <div class="home-hero-top">
+        <h1>AI-driven materials &amp; chemical discovery.</h1>
+        <figure class="mof-figure" data-mof-viewer="data/irmof-1.json">
+          <div class="mof-stage">
+            <img class="mof-poster" src="images/irmof-1.svg" width="750" height="500" alt="MOF-5 crystal structure showing zinc–oxygen nodes connected by organic linkers and open pores.">
+            <canvas aria-hidden="true"></canvas>
+          </div>
+          <figcaption><span><a href="data/irmof-1.cif">MOF-5 / IRMOF-1</a> · H atoms omitted</span><button class="mof-motion" type="button" aria-pressed="false">Pause rotation</button></figcaption>
+        </figure>
       </div>
-      <p class="resource-links"><a href="CoRE%20MOF%20Database.dc.html">CoRE MOF database</a><a href="PACMAN.dc.html">PACMAN charges</a><a href="AIM.dc.html">AIM process modeling</a></p>
+      <p class="home-hero-intro">We study nanoporous materials, especially metal–organic frameworks, and related material platforms for energy and separations. Our work combines <strong>quantum and atomistic simulations</strong>, <strong>statistical mechanics</strong>, <strong>curated data</strong>, and <strong>artificial intelligence</strong> to connect molecular behavior with material and process performance.</p>
+      <nav class="resource-links" aria-label="Featured software and data">
+        <a class="resource-card" href="CoRE%20MOF%20Database.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v7c0 4 16 4 16 0V5M4 12v7c0 4 16 4 16 0v-7"></path></svg><span><strong>CoRE MOF</strong><span>Structures &amp; materials data</span></span></a>
+        <a class="resource-card" href="PACMAN.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 9h8M12 5v8M8 17h8"></path></svg><span><strong>PACMAN</strong><span>Predict atomic charges</span></span></a>
+        <a class="resource-card" href="AIM.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 3v18h18M6 17c3 0 2-10 7-10h7M6 17c5 0 5-5 14-5"></path></svg><span><strong>AIM</strong><span>Isotherms &amp; breakthrough modeling</span></span></a>
+      </nav>
     </section>
 
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
@@ -388,298 +279,8 @@ class Component extends DCLogic {
 }
 </script>
 
-<script>
-(() => {
-  "use strict";
-
-  const selector = "[data-hero-interactive]";
-  const instances = new WeakMap();
-  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-  const coarsePointer = window.matchMedia?.("(pointer: coarse)");
-  const palette = [
-    [0, 91, 170],
-    [45, 167, 224],
-    [0, 166, 81],
-    [225, 138, 0]
-  ];
-
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const smoothstep = (value) => {
-    const t = clamp(value, 0, 1);
-    return t * t * (3 - 2 * t);
-  };
-
-  function initHero(hero) {
-    if (!(hero instanceof HTMLElement) || instances.has(hero)) return;
-
-    const canvas = hero.querySelector(".hero-interactive__particles");
-    if (!(canvas instanceof HTMLCanvasElement)) return;
-
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    let width = 1;
-    let height = 1;
-    let dpr = 1;
-    let particles = [];
-    let rafId = 0;
-    let lastTime = performance.now();
-    let visible = true;
-    let destroyed = false;
-    const pointer = { x: 0, y: 0, active: false };
-
-    function desiredCount() {
-      const areaCount = Math.round((width * height) / 9500);
-      return clamp(areaCount, width < 760 ? 30 : 46, width < 760 ? 52 : 78);
-    }
-
-    function makeParticle() {
-      const rightWeighted = Math.random() < 0.82;
-      const x = rightWeighted
-        ? width * (0.34 + 0.66 * Math.pow(Math.random(), 0.68))
-        : Math.random() * width;
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 0.025 + Math.random() * 0.075;
-      const pick = Math.random();
-      const color = palette[pick < 0.60 ? 0 : pick < 0.82 ? 1 : pick < 0.92 ? 2 : 3];
-      return {
-        x,
-        y: Math.random() * height,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        radius: 1.8 + Math.random() * 2.9,
-        alpha: 0.46 + Math.random() * 0.40,
-        phase: Math.random() * Math.PI * 2,
-        color
-      };
-    }
-
-    function resize() {
-      if (destroyed || !hero.isConnected) return;
-      const rect = hero.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-      /* Do not assign canvas.style.width/height here. The page uses body{zoom},
-         and getBoundingClientRect already returns visual dimensions. */
-      canvas.width = Math.max(1, Math.round(width * dpr));
-      canvas.height = Math.max(1, Math.round(height * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      const count = desiredCount();
-      if (particles.length > count) particles.length = count;
-      while (particles.length < count) particles.push(makeParticle());
-    }
-
-    function setPointer(event) {
-      if (coarsePointer?.matches || reduceMotion?.matches) return;
-      const rect = hero.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
-      pointer.active = true;
-
-      const nx = clamp(pointer.x / width * 2 - 1, -1, 1);
-      const ny = clamp(pointer.y / height * 2 - 1, -1, 1);
-      hero.style.setProperty("--mof-x", `${(-nx * 7).toFixed(2)}px`);
-      hero.style.setProperty("--mof-y", `${(-ny * 4).toFixed(2)}px`);
-      hero.style.setProperty("--mof-rx", `${(-ny * 1.05).toFixed(3)}deg`);
-      hero.style.setProperty("--mof-ry", `${(nx * 1.35).toFixed(3)}deg`);
-    }
-
-    function clearPointer() {
-      pointer.active = false;
-      hero.style.setProperty("--mof-x", "0px");
-      hero.style.setProperty("--mof-y", "0px");
-      hero.style.setProperty("--mof-rx", "0deg");
-      hero.style.setProperty("--mof-ry", "0deg");
-    }
-
-    function updateParticle(particle, step, now) {
-      const flow = now * 0.00018 + particle.phase;
-      particle.vx += Math.cos(flow) * 0.00115 * step;
-      particle.vy += Math.sin(flow * 1.17) * 0.00100 * step;
-
-      if (pointer.active) {
-        const dx = particle.x - pointer.x;
-        const dy = particle.y - pointer.y;
-        const radius = clamp(width * 0.115, 110, 170);
-        const distanceSquared = dx * dx + dy * dy;
-        if (distanceSquared > 0.01 && distanceSquared < radius * radius) {
-          const distance = Math.sqrt(distanceSquared);
-          const q = 1 - distance / radius;
-          const force = q * q * 0.62 * step;
-          particle.vx += dx / distance * force;
-          particle.vy += dy / distance * force;
-        }
-      }
-
-      const damping = Math.pow(0.984, step);
-      particle.vx *= damping;
-      particle.vy *= damping;
-      particle.x += particle.vx * step;
-      particle.y += particle.vy * step;
-
-      const margin = 18;
-      if (particle.x < -margin) particle.x = width + margin;
-      if (particle.x > width + margin) particle.x = -margin;
-      if (particle.y < -margin) particle.y = height + margin;
-      if (particle.y > height + margin) particle.y = -margin;
-    }
-
-    function leftToRightVisibility(x) {
-      return 0.30 + 0.70 * smoothstep((x / width - 0.14) / 0.58);
-    }
-
-    function drawLinks() {
-      const maxDistance = clamp(width * 0.078, 82, 122);
-      const maxDistanceSquared = maxDistance * maxDistance;
-      ctx.lineWidth = 1.1;
-
-      for (let i = 0; i < particles.length; i += 1) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j += 1) {
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const distanceSquared = dx * dx + dy * dy;
-          if (distanceSquared >= maxDistanceSquared) continue;
-
-          const proximity = 1 - Math.sqrt(distanceSquared) / maxDistance;
-          const sideFade = Math.min(leftToRightVisibility(a.x), leftToRightVisibility(b.x));
-          const alpha = proximity * sideFade * 0.20;
-          ctx.strokeStyle = `rgba(0,91,170,${alpha.toFixed(4)})`;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    function drawParticles() {
-      for (const particle of particles) {
-        const [r, g, b] = particle.color;
-        const alpha = particle.alpha * leftToRightVisibility(particle.x);
-        ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(4)})`;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function draw(now) {
-      rafId = 0;
-      if (destroyed) return;
-      if (!hero.isConnected) {
-        destroy();
-        return;
-      }
-      if (!visible || document.hidden || reduceMotion?.matches) return;
-
-      const step = clamp((now - lastTime) / 16.667, 0.35, 2);
-      lastTime = now;
-      ctx.clearRect(0, 0, width, height);
-      for (const particle of particles) updateParticle(particle, step, now);
-      drawLinks();
-      drawParticles();
-      rafId = requestAnimationFrame(draw);
-    }
-
-    function start() {
-      if (destroyed || rafId || !visible || document.hidden || reduceMotion?.matches) return;
-      lastTime = performance.now();
-      rafId = requestAnimationFrame(draw);
-    }
-
-    function stop() {
-      if (!rafId) return;
-      cancelAnimationFrame(rafId);
-      rafId = 0;
-    }
-
-    function onMotionPreferenceChange() {
-      if (reduceMotion?.matches) {
-        stop();
-        ctx.clearRect(0, 0, width, height);
-        clearPointer();
-      } else {
-        resize();
-        start();
-      }
-    }
-
-    const resizeObserver = "ResizeObserver" in window
-      ? new ResizeObserver(() => resize())
-      : null;
-    resizeObserver?.observe(hero);
-
-    const intersectionObserver = "IntersectionObserver" in window
-      ? new IntersectionObserver(([entry]) => {
-          visible = Boolean(entry?.isIntersecting);
-          if (visible) start(); else stop();
-        }, { threshold: 0.02 })
-      : null;
-    intersectionObserver?.observe(hero);
-
-    function onVisibilityChange() {
-      if (document.hidden) stop(); else start();
-    }
-
-    function destroy() {
-      if (destroyed) return;
-      destroyed = true;
-      stop();
-      resizeObserver?.disconnect();
-      intersectionObserver?.disconnect();
-      hero.removeEventListener("pointermove", setPointer);
-      hero.removeEventListener("pointerleave", clearPointer);
-      hero.removeEventListener("pointercancel", clearPointer);
-      window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-      reduceMotion?.removeEventListener?.("change", onMotionPreferenceChange);
-      instances.delete(hero);
-    }
-
-    hero.addEventListener("pointermove", setPointer, { passive: true });
-    hero.addEventListener("pointerleave", clearPointer, { passive: true });
-    hero.addEventListener("pointercancel", clearPointer, { passive: true });
-    window.addEventListener("resize", resize, { passive: true });
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    reduceMotion?.addEventListener?.("change", onMotionPreferenceChange);
-
-    instances.set(hero, { destroy });
-    hero.dataset.heroInteractiveReady = "true";
-    resize();
-    start();
-  }
-
-  function initAll(root = document) {
-    if (root instanceof Element && root.matches(selector)) initHero(root);
-    root.querySelectorAll?.(selector).forEach(initHero);
-  }
-
-  function boot() {
-    initAll(document);
-    const observer = new MutationObserver((records) => {
-      for (const record of records) {
-        for (const node of record.addedNodes) {
-          if (node instanceof Element) initAll(node);
-        }
-      }
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot, { once: true });
-  } else {
-    boot();
-  }
-})();
-</script>
+<script src="assets/mof-renderer.js"></script>
+<script src="assets/mof-viewer.js"></script>
 
 </body>
 </html>
