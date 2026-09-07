@@ -348,7 +348,7 @@ test('publication cards prefer per-paper Google Scholar and retain source fallba
 test('metadata is searchable but automatic subject tags and third-party badges are not displayed', async ({ page }) => {
   await page.route('**/data/publication-metadata.json*', route => route.fulfill({
     status: 200, contentType: 'application/json',
-    body: JSON.stringify({ snapshotUpdatedAt: '2026-09-07T00:00:00Z',
+    body: JSON.stringify({ schemaVersion: 3, snapshotUpdatedAt: '2026-09-07T00:00:00Z',
       publications: { '10.1002/ijch.70028': { fields: ['Medicine'], keywords: ['unique-search-term'], openAlex: { citationCount: 17 } } } })
   }));
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
