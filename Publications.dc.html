@@ -163,6 +163,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                     </div>
                   </sc-if>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;align-items:center">
+                    <sc-if value="{{ p.doi }}" hint-placeholder-val="{{ false }}"><publication-metrics data-doi="{{ p.doi }}"></publication-metrics></sc-if>
                     <sc-if value="{{ p.pdf }}" hint-placeholder-val="{{ false }}"><a href="{{ p.pdf }}" class="tag tag-neutral" style="text-decoration:none">PDF</a></sc-if>
                   </div>
                 </div>
@@ -436,5 +437,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="assets/publication-badges.js"></script>
 </body>
 </html>

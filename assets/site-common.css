@@ -1,4 +1,6 @@
 /* Shared reading width and accessibility. */
+publication-metrics{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;max-width:100%;min-height:26px;vertical-align:middle}
+publication-metrics:empty{display:none}
 .site-skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#fff;color:#005baa;transform:translateY(-160%)}
 .site-skip-link:focus{transform:none}
 :focus-visible{outline:3px solid #005baa;outline-offset:4px}

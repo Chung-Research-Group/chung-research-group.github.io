@@ -401,7 +401,7 @@ test('publication cards prefer per-paper Google Scholar and retain source fallba
   await expect(page.locator('[data-publication-no="71"]')).toContainText('Cited by 40 · OpenAlex');
 });
 
-test('metadata is searchable but automatic subject tags and third-party badges are not displayed', async ({ page }) => {
+test('metadata is searchable while automatic subject tags remain hidden', async ({ page }) => {
   await page.route('**/data/publication-metadata.json*', route => route.fulfill({
     status: 200, contentType: 'application/json',
     body: JSON.stringify({ schemaVersion: 3, snapshotUpdatedAt: '2026-09-07T00:00:00Z',
@@ -409,12 +409,71 @@ test('metadata is searchable but automatic subject tags and third-party badges a
   }));
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await expect(page.locator('[data-publication-no="72"]')).toContainText('Cited by 17');
-  await expect(page.locator('[data-metadata-term], .altmetric-embed, .__dimensions_badge_embed__')).toHaveCount(0);
+  await expect(page.locator('[data-metadata-term]')).toHaveCount(0);
   await page.getByPlaceholder(/Search publications/).fill('unique-search-term');
   await expect(page.locator('[data-publication-no]')).toHaveCount(1);
   await expect(page.locator('[data-publication-no="72"]')).toBeVisible();
   await page.getByPlaceholder(/Search publications/).fill('MOFClassifier');
   await expect(page.locator('[data-publication-no]')).not.toContainText('Cited by 17');
+});
+
+test('publication badges follow the DOI through filtering and ignore late writes to old hosts', async ({ page, request }) => {
+  // Provider-shaped mocks exercise DOM mutation and asynchronous responses;
+  // citation counts themselves are owned by the external services.
+  const mockProvider = (selector, initializer) => `
+    ${initializer} = () => {
+      document.querySelectorAll('${selector}').forEach(host => {
+        if (host.dataset.requested) return;
+        host.dataset.requested = 'true';
+        const doi = host.dataset.doi;
+        setTimeout(() => {
+          const badge = document.createElement('span');
+          badge.dataset.renderedDoi = doi;
+          badge.textContent = 'Metric';
+          host.append(badge);
+        }, 60);
+      });
+    };
+  `;
+  await page.route('https://embed.altmetric.com/assets/embed.js', route => route.fulfill({
+    contentType: 'application/javascript', body: mockProvider('.altmetric-embed', 'window._altmetric_embed_init')
+  }));
+  await page.route('https://badge.dimensions.ai/static/ai/badge.js', route => route.fulfill({
+    contentType: 'application/javascript', body: 'window.__dimensions_embed = {};\n' + mockProvider('.__dimensions_badge_embed__', 'window.__dimensions_embed.addBadges')
+  }));
+  const feed = await readFeedPublications(request);
+  await page.goto('/Publications.dc.html');
+  await expect(page.locator('publication-metrics')).toHaveCount(feed.length);
+  await expect(page.locator('publication-metrics [data-rendered-doi]')).toHaveCount(feed.length * 2);
+  const matching = () => page.locator('[data-publication-no]').evaluateAll(rows => rows.map(row => ({
+    no: row.dataset.publicationNo,
+    doi: row.querySelector('publication-metrics').dataset.doi,
+    badges: [...row.querySelectorAll('[data-rendered-doi]')].map(b => b.dataset.renderedDoi)
+  })));
+  for (const row of await matching()) {
+    const doi = feed.find(p => String(p.no) === row.no).doi;
+    expect(row.doi).toBe(doi);
+    expect(row.badges).toEqual([doi, doi]);
+  }
+  await page.evaluate(() => {
+    window.oldBadgeHosts = [...document.querySelector('publication-metrics').children];
+    window.lateBadgeWriteDone = false;
+    setTimeout(() => {
+      for (const host of window.oldBadgeHosts) host.append(document.createTextNode('Stale response'));
+      window.lateBadgeWriteDone = true;
+    }, 400);
+  });
+  const target = feed[1];
+  await page.getByPlaceholder(/Search publications/).fill(target.title);
+  await expect(page.locator('[data-publication-no]')).toHaveCount(1);
+  await expect(page.locator('publication-metrics [data-rendered-doi]')).toHaveCount(2);
+  await expect.poll(() => page.evaluate(() => window.lateBadgeWriteDone)).toBe(true);
+  expect(await matching()).toEqual([{ no: String(target.no), doi: target.doi, badges: [target.doi, target.doi] }]);
+  expect(await page.evaluate(() => window.oldBadgeHosts.every(host => !host.isConnected))).toBe(true);
+  await expect(page.locator('publication-metrics')).not.toContainText('Stale response');
+  await page.getByPlaceholder(/Search publications/).fill('');
+  await expect(page.locator('publication-metrics [data-rendered-doi]')).toHaveCount(feed.length * 2);
+  for (const row of await matching()) expect(row.badges).toEqual([row.doi, row.doi]);
 });
 
 test('publications remain usable when the metadata snapshot is unavailable', async ({ page }) => {
@@ -543,10 +602,13 @@ test('publication topic filters and search work', async ({ page }) => {
   await expect(page.getByText(/PACMAN: A Robust Partial Atomic Charge/)).toBeVisible();
 });
 
-test('homepage shows the six latest publications from the shared feed', async ({ page }) => {
+test('homepage shows three latest publications and three news items', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText('Latest publications', { exact: true })).toBeVisible();
-  await expect(page.locator('[data-home-publication]')).toHaveCount(6);
+  await expect(page.locator('[data-home-publication]')).toHaveCount(3);
+  await expect(page.locator('[data-home-news]')).toHaveCount(3);
+  await expect(page.locator('[data-home-publication] publication-metrics')).toHaveCount(3);
+  await expect(page.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('homepage research summary uses four concise pillars and two focus rows', async ({ page }) => {
@@ -597,7 +659,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
   for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
-    await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
+    await expect(page.locator('.home-hero-intro')).toContainText(keyword);
   }
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');
