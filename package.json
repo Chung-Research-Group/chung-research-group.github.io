@@ -11,7 +11,7 @@
     "jcr:validate": "node scripts/validate-jcr-input.mjs",
     "metadata:health": "node scripts/report-publication-metadata-health.mjs",
     "test": "npm run check && npm run test:automation && npm run test:browser",
-    "test:automation": "node --test tests/publication-bot.test.mjs tests/publication-citations.test.mjs tests/publication-metadata.test.mjs tests/lab-statistics.test.mjs tests/force-layout.test.mjs",
+    "test:automation": "node --test tests/publication-bot.test.mjs tests/publication-citations.test.mjs tests/publication-metadata.test.mjs tests/lab-statistics.test.mjs tests/force-layout.test.mjs tests/site-audit.test.mjs",
     "test:browser": "playwright test"
   },
   "engines": {
@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
+    "linkedom": "^0.18.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }
 }
-

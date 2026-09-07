@@ -1469,9 +1469,9 @@ for (const file of jsFiles) {
   if (result.status !== 0) errors.push(`${file}: JavaScript syntax error\n${result.stderr.trim()}`);
 }
 
-const indexHtml = await readFile(path.join(siteRoot, "index.html"), "utf8");
-const publicationsHtml = await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8");
-const statisticsHtml = await readFile(path.join(siteRoot, "Statistics.dc.html"), "utf8");
+const indexHtml = (await readFile(path.join(siteRoot, "index.html"), "utf8")).replace(/<noscript data-static-fallback>[\s\S]*?<\/noscript>/g, '');
+const publicationsHtml = (await readFile(path.join(siteRoot, "Publications.dc.html"), "utf8")).replace(/<noscript data-static-fallback>[\s\S]*?<\/noscript>/g, '');
+const statisticsHtml = (await readFile(path.join(siteRoot, "Statistics.dc.html"), "utf8")).replace(/<noscript data-static-fallback>[\s\S]*?<\/noscript>/g, '');
 const feedHtml = await readFile(path.join(siteRoot, "feed.js"), "utf8");
 const peopleData = await readFile(path.join(siteRoot, "people-data.js"), "utf8");
 const feedPublications = evaluateFeedPublications(
@@ -1870,9 +1870,9 @@ if (!peopleData.includes("Master's Program, Graduate School of Data Science")) {
 if (!peopleData.includes("https://scholar.google.com/citations?user=2z24SzAAAAAJ&hl=en")) {
   errors.push("Chen Yu's Google Scholar profile is missing or incorrect.");
 }
-const joinUsHtml = await readFile(path.join(siteRoot, "Join Us.dc.html"), "utf8");
-const peopleHtml = await readFile(path.join(siteRoot, "People.dc.html"), "utf8");
-if (!joinUsHtml.includes("drygchung AT gmail DOT com")) {
+const joinUsHtml = (await readFile(path.join(siteRoot, "Join Us.dc.html"), "utf8")).replace(/<noscript data-static-fallback>[\s\S]*?<\/noscript>/g, '');
+const peopleHtml = (await readFile(path.join(siteRoot, "People.dc.html"), "utf8")).replace(/<noscript data-static-fallback>[\s\S]*?<\/noscript>/g, '');
+if (!joinUsHtml.includes("drygchung AT pusan DOT ac DOT kr")) {
   errors.push("Join Us professor email obfuscation is missing.");
 }
 if (!peopleHtml.includes("data-prof-pnu-email") || !peopleHtml.includes('href="mailto:&#100;&#114;&#121;&#103;&#99;&#104;&#117;&#110;&#103;&#64;&#112;&#117;&#115;&#97;&#110;&#46;&#97;&#99;&#46;&#107;&#114;"')) {
@@ -1982,7 +1982,10 @@ if (compareRoot) {
       readFile(path.join(compareRoot, file)),
       readFile(path.join(siteRoot, file))
     ]);
-    if (sha256(source) !== sha256(built)) errors.push(`${file}: build changed published bytes.`);
+    const expected = file.endsWith('.html')
+      ? await (await import('./render-static-site.mjs')).renderPublishedPage(source.toString('utf8'), { filename: file, dataRoot: siteRoot })
+      : source;
+    if (sha256(expected) !== sha256(built)) errors.push(`${file}: build differs from deterministic published output.`);
   }
 }
 

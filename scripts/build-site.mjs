@@ -9,6 +9,7 @@ import {
   generatePublicationJcrBandsFile
 } from "./lab-statistics.mjs";
 import { rootFilePatterns, staticDirectories } from "./site-files.mjs";
+import { renderPublishedPage } from "./render-static-site.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputRoot = path.join(repoRoot, "dist");
@@ -70,6 +71,11 @@ await generatePublicationJcrBandsFile({
   outputPath: path.join(outputRoot, "data/publication-jcr-bands.json"),
   impactFactorJson: process.env.JOURNAL_IMPACT_FACTORS_JSON || null
 });
+
+for (const filename of rootFiles.filter(file => file.endsWith('.html'))) {
+  const source = await readFile(path.join(repoRoot, filename), 'utf8');
+  await writeFile(path.join(outputRoot, filename), await renderPublishedPage(source, { filename, dataRoot: outputRoot }));
+}
 
 await writeFile(path.join(outputRoot, ".nojekyll"), "");
 

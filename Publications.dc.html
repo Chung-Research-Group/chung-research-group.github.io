@@ -13,6 +13,7 @@
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
+<link rel="stylesheet" href="assets/site-common.css">
 </head>
 <body id="top">
 <x-dc>
@@ -20,8 +21,6 @@
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="feed.js?v=20260730-3"></script>
-<script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
-<script async src="https://badge.dimensions.ai/badge.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
 body{margin:0;background:var(--color-bg);text-wrap:pretty}
@@ -89,6 +88,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
 </style>
 </helmet>
 
+<a class="site-skip-link" href="#main-content">Skip to main content</a>
 <div data-screen-label="Publications">
   <div style="height:4px;background:var(--color-accent)"></div>
   <nav class="nav" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
@@ -100,7 +100,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
     <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
   </nav>
 
-  <div style="padding:0 64px">
+  <main id="main-content" tabindex="-1" style="padding:0 64px">
     <header style="padding:48px 0 32px">
       <h1 style="display:flex;align-items:baseline;gap:16px;font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:60px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Publications.</h1>
       <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">*: corresponding author, #: co-first author</p>
@@ -115,6 +115,7 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         </div>
       </div>
       <p data-publication-metadata-status style="font-size:14px;line-height:21px;margin:14px 0 0;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ metadataStatus }}</p>
+    <p><a href="Statistics.dc.html">Lab statistics &amp; data sources →</a></p>
     </header>
 
     <hr style="height:2px;border:0;margin:0;background:var(--color-divider)">
@@ -125,23 +126,23 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         <div class="publication-filter-panel">
           <sc-for list="{{ themeGroups }}" as="group" hint-placeholder-count="4">
             <div class="publication-filter-group" data-filter-group="{{ group.title }}">
-              <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" style="color:{{ group.titleFg }};background:{{ group.titleBg }}"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button></div>
+              <div class="publication-filter-heading"><button type="button" class="publication-filter-title" onClick="{{ group.toggle }}" aria-label="{{ group.toggleLabel }}" aria-expanded="{{ group.open }}" style="color:{{ group.titleFg }};background:{{ group.titleBg }}"><span class="publication-filter-chevron">{{ group.marker }}</span>{{ group.title }}</button></div>
               <sc-if value="{{ group.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-items">
-                <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for>
-                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}" style="color:{{ section.titleFg }};background:{{ section.titleBg }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><span onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></span></sc-for></div></sc-if></div></sc-for></div></sc-if>
+                <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="8"><button type="button" class="filter-chip" aria-pressed="{{ it.active }}" onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></button></sc-for>
+                <sc-if value="{{ group.hasSections }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-sections"><sc-for list="{{ group.sections }}" as="section" hint-placeholder-count="3"><div class="publication-filter-section" data-filter-section="{{ section.title }}" style="--section-color:{{ section.c }}"><div class="publication-filter-section-heading"><button type="button" class="publication-filter-section-title" onClick="{{ section.toggle }}" aria-label="{{ section.toggleLabel }}" aria-expanded="{{ section.open }}" style="color:{{ section.titleFg }};background:{{ section.titleBg }}"><span class="publication-filter-chevron">{{ section.marker }}</span>{{ section.title }}</button></div><sc-if value="{{ section.open }}" hint-placeholder-val="{{ false }}"><div class="publication-filter-section-items"><sc-for list="{{ section.items }}" as="it" hint-placeholder-count="6"><button type="button" class="filter-chip" aria-pressed="{{ it.active }}" onClick="{{ it.click }}" style="display:inline-flex;align-items:center;gap:5px;font-size:15px;line-height:20px;letter-spacing:0.04em;font-weight:700;padding:2px 7px;border:1px solid {{ it.c }};color:{{ it.fg }};background:{{ it.bg }};cursor:pointer;user-select:none"><span style="width:7px;height:7px;background:{{ it.b }}"></span>{{ it.t }}<span style="font-feature-settings:'tnum' 1"> × {{ it.n }}</span></button></sc-for></div></sc-if></div></sc-for></div></sc-if>
               </div></sc-if>
             </div>
           </sc-for>
         </div>
       </div>
       <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} publications found</p>
+        <p style="font-size:17px;line-height:24px;margin:14px 0 0;font-weight:700;color:var(--color-accent-700)">{{ resultCount }} {{ resultLabel }} found</p>
       </sc-if>
       <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
         <div style="display:grid;grid-template-columns:130px 1fr;gap:16px 48px;padding:26px 0;border-top:2px solid var(--color-text)">
           <div>
             <h2 style="font-family:var(--font-heading);font-weight:800;font-size:38px;line-height:42px;font-feature-settings:'tnum' 1;margin:0;color:var(--color-accent)">{{ g.year }}</h2>
-            <p style="font-size:17.5px;line-height:24px;margin:6px 0 0;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ g.count }} papers</p>
+            <p style="font-size:17.5px;line-height:24px;margin:6px 0 0;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ g.count }} {{ g.paperLabel }}</p>
           </div>
           <div>
             <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="6">
@@ -159,15 +160,10 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
                   <sc-if value="{{ p.hasEnrichment }}" hint-placeholder-val="{{ false }}">
                     <div data-publication-enrichment style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin:8px 0 0">
                       <sc-if value="{{ p.citeText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;line-height:20px;font-weight:700;color:color-mix(in srgb, var(--color-text) 74%, transparent)">{{ p.citeText }}</span></sc-if>
-                      <sc-for list="{{ p.discoveryTerms }}" as="term" hint-placeholder-count="2"><span data-metadata-term="{{ term }}" style="display:inline-flex;align-items:center;font-size:13px;line-height:18px;padding:1px 6px;border:1px solid color-mix(in srgb, var(--color-text) 22%, transparent);color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ term }}</span></sc-for>
                     </div>
                   </sc-if>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;align-items:center">
                     <sc-if value="{{ p.pdf }}" hint-placeholder-val="{{ false }}"><a href="{{ p.pdf }}" class="tag tag-neutral" style="text-decoration:none">PDF</a></sc-if>
-                    <sc-if value="{{ p.doi }}" hint-placeholder-val="{{ false }}">
-                      <span class="__dimensions_badge_embed__" data-doi="{{ p.doi }}" data-style="medium_rectangle"></span>
-                      <div class="altmetric-embed" data-badge-type="medium-donut" data-hide-no-mentions="true" data-doi="{{ p.doi }}"></div>
-                    </sc-if>
                   </div>
                 </div>
               </div>
@@ -179,13 +175,13 @@ a.icn{color:var(--color-text)}a.icn:hover{color:var(--color-accent)}
         <p style="font-size:18px;line-height:26px;margin:10px 0 0;color:var(--color-text)">No publications match your search.</p>
       </sc-if>
     </section>
-  </div>
+  </main>
 
   <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:14px;line-height:23px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
-    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved.</span>
   </footer>
 </div>
 </x-dc>
@@ -236,15 +232,7 @@ class Component extends DCLogic {
       this.setState({ jcrBands: null });
     }
   }
-  refreshBadges() {
-    clearTimeout(this._badgeTimer);
-    this._badgeTimer = setTimeout(() => {
-      try { window._altmetric_embed_init && window._altmetric_embed_init(); } catch (e) {}
-      try { window.__dimensions_embed && window.__dimensions_embed.addBadges(); } catch (e) {}
-    }, 400);
-  }
-  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.refreshBadges(); this.loadPublicationMetadata(); this.loadPublicationJcrBands(); } else { setTimeout(t, 50); } }; t(); }
-  componentDidUpdate() { this.refreshBadges(); }
+  componentDidMount() { const t = () => { if (window.MTAP_FEED) { this._feed = window.MTAP_FEED; this.forceUpdate(); this.loadPublicationMetadata(); this.loadPublicationJcrBands(); } else { setTimeout(t, 50); } }; t(); }
   renderVals() {
     const FEED = this._feed;
     const full = FEED ? FEED.PUBS.map(p => Object.assign({}, p)) : [];
@@ -317,11 +305,8 @@ class Component extends DCLogic {
       p.citeText = Number.isFinite(citationCount)
         ? ('Cited by ' + citationCount.toLocaleString('en-US') + ' \u00b7 ' + citationSource)
         : '';
-      p.discoveryTerms = [...(enrichment?.fields || []), ...(enrichment?.keywords || [])]
-        .filter((term, index, values) => term && values.findIndex(value => value.toLowerCase() === term.toLowerCase()) === index)
-        .slice(0, 3);
       p.metadataSearch = [...(enrichment?.fields || []), ...(enrichment?.keywords || [])].join(' ');
-      p.hasEnrichment = !!p.citeText || p.discoveryTerms.length > 0;
+      p.hasEnrichment = !!p.citeText;
       const jcrBandId = jcrBandsByDoi[this.normalizeDoi(p.doi)];
       const jcrBandLabel = jcrBandLabels[jcrBandId];
       p.jcrBand = jcrBandLabel
@@ -364,7 +349,7 @@ class Component extends DCLogic {
       if (!g) { g = { year: y, items: [] }; groups.push(g); }
       g.items.push(p);
     });
-    groups.forEach(g => { g.count = g.items.length; });
+    groups.forEach(g => { g.count = g.items.length; g.paperLabel = g.count === 1 ? 'paper' : 'papers'; });
     let metadataStatus = 'Research metadata is temporarily unavailable; publication records remain accessible.';
     if (metadata?.snapshotUpdatedAt) {
       const date = new Date(metadata.snapshotUpdatedAt);
@@ -387,6 +372,7 @@ class Component extends DCLogic {
     const themeTotals = themes.map(t => ({
       ...t,
       n: themeTally[t.t],
+      active: activeTheme === t.t,
       fg: activeTheme === t.t ? '#ffffff' : t.c,
       bg: activeTheme === t.t ? t.c : 'transparent',
       click: () => this.setState({ theme: activeTheme === t.t ? null : t.t })
@@ -397,6 +383,7 @@ class Component extends DCLogic {
       return {
         t, key, c: '#4E2A84', b: '#836EAA',
         n: full.filter(p => p.reviewClass === t).length,
+        active: activeTheme === key,
         fg: activeTheme === key ? '#ffffff' : '#4E2A84',
         bg: activeTheme === key ? '#4E2A84' : 'transparent',
         click: () => this.setState({ theme: activeTheme === key ? null : key })
@@ -442,7 +429,7 @@ class Component extends DCLogic {
       onSearch: (e) => this.setState({ q: e.target.value }),
       empty: filtered.length === 0,
       searching: !!q || !!activeTheme,
-      resultCount: filtered.length,
+      resultLabel: filtered.length === 1 ? 'publication' : 'publications', resultCount: filtered.length,
       themeGroups,
       groups,
     };
