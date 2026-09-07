@@ -13,6 +13,7 @@
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
+<link rel="stylesheet" href="assets/site-common.css">
 </head>
 <body id="top">
 <x-dc>
@@ -29,6 +30,12 @@ a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 
+    <section class="tool-start" aria-label="Getting started"><h2>Get started</h2><dl>
+      <dt>Input</dt><dd>Periodic crystal structures in CIF format.</dd>
+      <dt>Output</dt><dd>Predicted partial atomic charges; choose a supported charge model for your material.</dd>
+      <dt>Environment</dt><dd>Python package; command-line and notebook examples are provided.</dd>
+      <dt>First step</dt><dd><a href="https://github.com/Chung-Research-Group/PACMAN-charge">Install PACMAN-charge and start with the supplied CIF example.</a></dd>
+    </dl></section>
 /* responsive+scale v2 */
 body{zoom:0.88}
 @media (max-width:840px){
@@ -58,6 +65,7 @@ body{zoom:0.88}
 </style>
 </helmet>
 
+<a class="site-skip-link" href="#main-content">Skip to main content</a>
 <div data-screen-label="PACMAN">
   <div style="height:4px;background:var(--color-accent)"></div>
   <nav class="nav" style="padding-inline:64px;position:sticky;top:0;z-index:60;background:var(--color-bg);box-shadow:0 2px 0 var(--color-divider)">
@@ -69,7 +77,7 @@ body{zoom:0.88}
     <a href="Join%20Us.dc.html" class="btn-primary" style="background:var(--color-accent);color:var(--color-bg);text-decoration:none;padding:6px 16px;font-weight:700" style-hover="background:var(--color-accent-800)">Join Us</a>
   </nav>
 
-  <div style="padding:0 64px">
+  <main id="main-content" tabindex="-1" style="padding:0 64px">
     <header style="padding:48px 0 36px">
       <p style="display:flex;align-items:center;gap:8px;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:#a86700;margin:0 0 14px"><span style="width:10px;height:10px;background:#ffa500"></span><a href="Software %26 Data.dc.html" style="text-decoration:none;color:var(--color-accent-700)">Software &amp; Data</a> / Machine learning</p>
       <h1 style="font-family:var(--font-heading);font-weight:800;font-size:52px;line-height:58px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">PACMAN.</h1>
@@ -96,13 +104,13 @@ body{zoom:0.88}
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
   <a href="#top" aria-label="Back to top" style="position:fixed;right:28px;bottom:28px;z-index:70;display:grid;place-items:center;width:52px;height:52px;background:var(--color-accent);color:#ffffff;text-decoration:none;box-shadow:0 6px 18px rgba(0,32,80,.25)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
   <footer style="padding:0 64px 40px;font-size:15px;line-height:24px;color:var(--color-text)">
     <span style="display:block;font-family:var(--font-heading);font-weight:800;color:var(--color-text)">Chung Research Group</span>
     <span style="display:block;margin-top:2px">School of Chemical Engineering, Pusan National University · 2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan 46241, Republic of Korea</span>
-    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved. · Last updated July 2026</span>
+    <span style="display:block;margin-top:6px;color:color-mix(in srgb, var(--color-text) 72%, transparent)">© 2026 Chung Research Group. All rights reserved.</span>
   </footer>
 </div>
 </x-dc>

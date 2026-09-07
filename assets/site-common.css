@@ -1,0 +1,15 @@
+/* Shared accessibility; page-specific layouts stay in their existing files. */
+.site-skip-link{position:fixed;top:8px;left:8px;z-index:1000;padding:12px 18px;background:#fff;color:#005baa;transform:translateY(-160%)}
+.site-skip-link:focus{transform:none}
+:focus-visible{outline:3px solid #005baa;outline-offset:4px}
+main{scroll-margin-top:100px}
+button.filter-chip{font-family:inherit;border-radius:0;min-height:32px}
+.resource-links{display:flex;flex-wrap:wrap;gap:12px 24px;position:relative;z-index:2}
+.tool-start{padding:24px 0;border-top:1px solid #ccd6df;max-width:88ch}
+.tool-start h2{font-size:24px;margin:0 0 16px}
+.tool-start dl{display:grid;grid-template-columns:130px 1fr;gap:10px 20px;font-size:17px;line-height:1.6}
+.tool-start dt{font-weight:700}.tool-start dd{margin:0}
+.service-note{font-size:16px;line-height:1.6;max-width:75ch}
+@media(max-width:840px){nav.nav .nav-brand{flex-wrap:wrap;white-space:normal;gap:0 8px!important}nav.nav{position:relative!important}button.filter-chip{min-height:44px}main{min-width:0;scroll-margin-top:12px}.tool-start dl{grid-template-columns:1fr;gap:4px}.tool-start dd{margin-bottom:12px}}
+@media(max-width:440px){nav.nav .nav-brand{flex-basis:100%}nav.nav .nav-brand span{font-size:21px!important}nav.nav a:not(.nav-brand){font-size:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}nav.nav a{transition:none!important;transform:none!important}}

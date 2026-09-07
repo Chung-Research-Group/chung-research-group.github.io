@@ -14,6 +14,7 @@
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 <script src="./force-layout.js"></script>
+<link rel="stylesheet" href="assets/site-common.css">
 </head>
 <body id="top">
 <x-dc>
@@ -438,7 +439,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
               <a class="statistics-metric-link" href="{{ hIndexProfileUrl }}" target="_blank" rel="noopener noreferrer">{{ hIndexLinkText }}</a>
             </sc-if>
           </article>
-          <article class="statistics-metric" data-impact-factor-status="{{ impactFactorStatus }}">
+          <details class="statistics-metric" data-impact-factor-status="{{ impactFactorStatus }}" open="{{ impactFactorAvailable }}"><summary>Journal Impact Factor · {{ impactFactorStatusText }}</summary>
             <span class="statistics-kicker">{{ impactFactorMetricLabel }}</span>
             <strong class="statistics-metric-value">{{ impactFactorTotalText }}</strong>
             <span class="statistics-card-label">Cumulative Journal Impact Factor</span>
@@ -457,7 +458,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
             <sc-if value="{{ impactFactorReasonAvailable }}" hint-placeholder-val="{{ true }}">
               <p class="statistics-unavailable">{{ impactFactorReason }}</p>
             </sc-if>
-          </article>
+          </details>
         </div>
       </section>
 
@@ -489,8 +490,10 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
           </sc-if>
         </sc-if>
         <sc-if value="{{ journalStandingUnavailable }}" hint-placeholder-val="{{ true }}">
+          <details><summary>JCR data unavailable — source and coverage details</summary>
           <p class="statistics-unavailable" data-journal-standing-unavailable>{{ journalStandingReason }}</p>
           <p class="statistics-metric-explanation">{{ journalStandingYearBasisText }} Publication-year or current JCR percentiles and quartiles cannot replace unavailable year Y−1 data.</p>
+          </details>
         </sc-if>
       </section>
 
@@ -1470,6 +1473,7 @@ class Component extends DCLogic {
       hIndexProfileAvailable: /^https?:\/\//i.test(normalizedHIndexUrl),
       hIndexProfileUrl: normalizedHIndexUrl,
       hIndexLinkText: /google scholar/i.test(hIndexSourceLabel) ? 'Open Google Scholar profile' : 'Open h-index source',
+      impactFactorAvailable,
       impactFactorStatus,
       impactFactorMetricLabel,
       impactFactorTotalText: impactFactorAvailable ? this.decimalText(impactFactorTotal) : '—',

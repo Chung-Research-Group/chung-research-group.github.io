@@ -1,6 +1,43 @@
 import { expect, test } from '@playwright/test';
 import vm from 'node:vm';
 
+test('member and publication filters support keyboard input and report their state', async ({ page }) => {
+  await page.goto('/People.dc.html');
+  const chip = page.getByRole('button', { name: /Machine learning & data/ });
+  await expect(chip).toHaveAttribute('aria-pressed', 'false');
+  await chip.focus();
+  await page.keyboard.press('Enter');
+  await expect(chip).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('image-slot')).toHaveCount(0);
+  await expect(page.locator('#m-baek img')).toHaveAttribute('alt', 'Baek, Mingyu');
+  await expect(page.getByRole('heading', { name: /^Visitors/ })).toHaveCount(0);
+  await page.goto('/Publications.dc.html');
+  const toggle = page.getByRole('button', { name: 'Expand Physics' });
+  await toggle.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('button', { name: 'Collapse Physics' })).toHaveAttribute('aria-expanded', 'true');
+  const adsorption = page.getByRole('button', { name: /^Adsorption ×/ });
+  await adsorption.focus();
+  await page.keyboard.press('Space');
+  await expect(adsorption).toHaveAttribute('aria-pressed', 'true');
+});
+
+test.describe('static content without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('publication, member, software and recruiting information remain readable', async ({ page }) => {
+    await page.goto('/Publications.dc.html');
+    await expect(page.getByRole('heading', { name: 'Publications.' })).toBeVisible();
+    await expect(page.getByRole('link', { name: /MOFClassifier: A Machine Learning Approach/i })).toBeVisible();
+    await expect(page.locator('main a[href^="https://doi.org/"]')).not.toHaveCount(0);
+    await page.goto('/People.dc.html');
+    await expect(page.getByRole('heading', { name: 'Baek, Mingyu' })).toBeVisible();
+    await page.goto('/SESAMI-APP.dc.html');
+    await expect(page.getByRole('link', { name: 'Source code & local setup' })).toBeVisible();
+    await page.goto('/Join%20Us.dc.html');
+    await expect(page.getByText('No openings at this time.', { exact: true })).toHaveCount(3);
+  });
+});
+
 const pages = [
   'index.html', 'News.dc.html', 'People.dc.html',
   'Software%20%26%20Data.dc.html', 'Publications.dc.html', 'Join%20Us.dc.html',
@@ -308,17 +345,20 @@ test('publication cards prefer per-paper Google Scholar and retain source fallba
   await expect(page.locator('[data-publication-no="71"]')).toContainText('Cited by 40 · OpenAlex');
 });
 
-test('publication search includes a rendered metadata field or keyword', async ({ page }) => {
-  await page.goto('/Publications.dc.html', { waitUntil: 'domcontentloaded' });
-  const term = page.locator('[data-metadata-term]').first();
-  await expect(term).toBeVisible({ timeout: 30_000 });
-  const query = (await term.textContent())?.trim();
-  expect(query).toBeTruthy();
-  const publication = term.locator('xpath=ancestor::*[@data-publication-no][1]');
-  const publicationNo = await publication.getAttribute('data-publication-no');
-
-  await page.getByPlaceholder(/Search publications/).fill(query);
-  await expect(page.locator(`[data-publication-no="${publicationNo}"]`)).toBeVisible();
+test('metadata is searchable but automatic subject tags and third-party badges are not displayed', async ({ page }) => {
+  await page.route('**/data/publication-metadata.json*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ snapshotUpdatedAt: '2026-09-07T00:00:00Z',
+      publications: { '10.1002/ijch.70028': { fields: ['Medicine'], keywords: ['unique-search-term'], openAlex: { citationCount: 17 } } } })
+  }));
+  await page.goto('/Publications.dc.html', { waitUntil: 'load' });
+  await expect(page.locator('[data-publication-no="72"]')).toContainText('Cited by 17');
+  await expect(page.locator('[data-metadata-term], .altmetric-embed, .__dimensions_badge_embed__')).toHaveCount(0);
+  await page.getByPlaceholder(/Search publications/).fill('unique-search-term');
+  await expect(page.locator('[data-publication-no]')).toHaveCount(1);
+  await expect(page.locator('[data-publication-no="72"]')).toBeVisible();
+  await page.getByPlaceholder(/Search publications/).fill('MOFClassifier');
+  await expect(page.locator('[data-publication-no]')).not.toContainText('Cited by 17');
 });
 
 test('publications remain usable when the metadata snapshot is unavailable', async ({ page }) => {
@@ -405,7 +445,7 @@ test('publication topic filters and search work', async ({ page }) => {
   // Only the first major category is expanded initially.
   await expect(page.getByText(/^Machine Learning\s*×/).first()).toBeVisible();
   await expect(page.getByText(/^Reticular Materials\s*×/)).toHaveCount(0);
-  const computationLabels = computationGroup.locator('.publication-filter-items > span');
+  const computationLabels = computationGroup.locator('.publication-filter-items > button');
   await expect(computationLabels.first()).toContainText('Grand Canonical Monte Carlo × 27');
 
   // Major categories can be expanded and selected as aggregate filters.
@@ -490,7 +530,7 @@ test('all recruiting categories are closed and contact details are in English', 
   await expect(professorOfficeAddress.locator('xpath=ancestor::a')).toHaveCount(0);
   await expect(page.getByText("Professor's office · +82 51 510 3757", { exact: true })).toBeVisible();
   await expect(page.getByText('Student office · +82 51 510 3082', { exact: true })).toBeVisible();
-  await expect(page.getByText('drygchung AT gmail DOT com').first()).toBeVisible();
+  await expect(page.getByText('drygchung AT pusan DOT ac DOT kr').first()).toBeVisible();
   await expect(page.getByText('Email Prof. Chung', { exact: true })).toBeVisible();
   await expect(page.locator('[data-prof-email]')).toHaveCount(2);
   await expect(page.locator('[data-prof-email]').first()).toHaveAttribute('href', /^mailto:/);
@@ -505,8 +545,8 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   }
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');
-  await expect(baek.getByText('AI & Data', { exact: true })).toBeVisible();
-  await expect(baek.getByText('Atoms/Electrons', { exact: true })).toHaveCount(0);
+  await expect(baek.getByText('Machine learning & data', { exact: true })).toBeVisible();
+  await expect(baek.getByText('Atomistic modeling', { exact: true })).toHaveCount(0);
 
   await page.goto('/Publications.dc.html', { waitUntil: 'load' });
   await page.getByPlaceholder(/Search publications/).fill('Surface area determination');
