@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 import { parseHTML } from 'linkedom';
-import { sharedChrome } from './site-chrome.mjs';
+import { sharedChrome, site } from './site-chrome.mjs';
 
 // Evaluate only checked-in page logic. No requests, timers or lifecycle hooks run.
 export async function renderPublishedPage(source, { filename, dataRoot }) {
@@ -73,7 +73,7 @@ export async function renderPublishedPage(source, { filename, dataRoot }) {
   for (const n of root.querySelectorAll('button')) n.remove();
   // Keep no-JS controls honest: native links/details still work; filters require JS.
   const fallback = `<noscript data-static-fallback>${styles}<link rel="stylesheet" href="assets/site-common.css"><div class="static-page"><p class="service-note" style="padding:12px 24px">Static view. Enable JavaScript for search, filters, and interactive charts.</p>${root.innerHTML}</div></noscript>`
-    .replaceAll('@', '&#64;');
+    .replaceAll(site.email, site.email.replace('@', '&#64;'));
   if (/{{|<sc-(?:for|if)\b/.test(fallback)) throw new Error(`${filename}: unresolved static template`);
   // These data globals must exist before the runtime evaluates renderVals.
   // Scripts cloned out of an inert template do not retain parser-blocking order.

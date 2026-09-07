@@ -1,6 +1,21 @@
 import { expect, test } from '@playwright/test';
 import vm from 'node:vm';
 
+for (const javaScriptEnabled of [true, false]) {
+  test.describe(`tool guidance with JavaScript ${javaScriptEnabled ? 'enabled' : 'disabled'}`, () => {
+    test.use({ javaScriptEnabled, viewport: { width: 390, height: 844 } });
+    test('all six tool pages display their getting-started guidance', async ({ page }) => {
+      for (const name of ['AIM', 'CoRE MOF Database', 'GWP-estimator', 'MOFClassifier', 'PACMAN', 'SESAMI-APP']) {
+        await page.goto('/' + encodeURIComponent(name + '.dc.html'));
+        const section = page.locator('main > .tool-start');
+        await expect(section.getByRole('heading', { name: 'Get started' })).toBeVisible();
+        await expect(section.locator('dt')).toHaveText(['Input', 'Output', 'Environment', 'First step']);
+        await expect(section.getByRole('link')).toBeVisible();
+      }
+    });
+  });
+}
+
 test('member and publication filters support keyboard input and report their state', async ({ page }) => {
   await page.goto('/People.dc.html');
   const chip = page.getByRole('button', { name: /Machine learning & data/ });
