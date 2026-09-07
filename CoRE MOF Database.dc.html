@@ -25,10 +25,13 @@
 <script async src="https://badge.dimensions.ai/badge.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-600:#e18a00;--color-sub:#00a651}
-body{margin:0;background:var(--color-bg);text-wrap:pretty}
+body{margin:0;background:var(--color-bg)}
 a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}nav.nav a:hover{transform:translateY(-2px)}
 a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
+.funding-header{display:flex;align-items:center;flex-wrap:wrap;gap:16px 20px}
+.funding-logo{flex:0 1 180px;max-width:100%}
+.funding-copy{flex:1 1 230px;min-width:0}
 
 /* responsive+scale v2 */
 body{zoom:0.88}
@@ -78,7 +81,7 @@ body{zoom:0.88}
       <p style="font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);margin:0 0 14px"><a href="Software %26 Data.dc.html" style="text-decoration:none">Software &amp; Data</a> / Database</p>
       <h1 style="font-family:var(--font-heading);font-weight:800;font-size:52px;line-height:58px;letter-spacing:-0.02em;margin:0 0 0 -0.058em">Computation-Ready Experimental (CoRE) MOF Database.</h1>
       <p style="font-size:16.5px;line-height:24px;margin:8px 0 0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">CoRE is pronounced "core."</p>
-      <p style="font-size:19px;line-height:30px;max-width:88ch;margin:14px 0 0">CoRE MOF 2025 v1.0 contains 43,439 experimentally reported MOF structures, including both computation-ready (CR) and not-computation-ready (NCR) entries. It provides curated structural data and machine-learned properties for material–process screening; the full collection is not a simulation-ready subset. Start with the release-specific recommended screening list and check structural validity, charge assignment, and suitability for your simulation. <a href="https://zenodo.org/records/15621349">Read the release notes and access instructions</a>.</p>
+      <p style="font-size:19px;line-height:30px;margin:14px 0 0">CoRE MOF 2025 v1.0 contains 43,439 experimentally reported MOF structures, including both computation-ready (CR) and not-computation-ready (NCR) entries. It provides curated structural data and machine-learned properties for material–process screening; the full collection is not a simulation-ready subset. Start with the release-specific recommended screening list and check structural validity, charge assignment, and suitability for your simulation. <a href="https://zenodo.org/records/15621349">Read the release notes and access instructions</a>.</p>
       <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin-top:22px">
         <a class="btn btn-primary" href="https://mof-db.pusan.ac.kr/" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3z"></path></svg>Web Interface</a>
         <a class="btn btn-secondary" href="https://zenodo.org/communities/core-mofs/records?q=&amp;l=list&amp;p=1&amp;s=10" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"></path><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg>Data repository (Zenodo)</a>
@@ -166,9 +169,9 @@ body{zoom:0.88}
       <span style="display:block;font-size:28px;line-height:32px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-heading);font-weight:800;color:var(--color-accent-700);margin:0 0 22px">Funding &amp; acknowledgements</span>
       <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:20px">
         <div class="card">
-          <div style="display:flex;align-items:center;gap:14px">
-            <div style="width:340px;height:auto;flex:none"><img src="images/nrf-logo.jpg" alt="NRF logo" style="display:block;width:100%;height:auto"></div>
-            <div>
+          <div class="funding-header">
+            <div class="funding-logo"><img src="images/nrf-logo.jpg" alt="NRF logo" style="display:block;width:100%;height:auto"></div>
+            <div class="funding-copy">
               <h3 class="card-title" style="margin:0">National Research Foundation of Korea (NRF)</h3>
               <span style="font-size:15px;line-height:19px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;color:#1c4fa1">Funded by the Korean government (MSIT)</span>
             </div>
@@ -180,9 +183,9 @@ body{zoom:0.88}
           </ul>
         </div>
         <div class="card">
-          <div style="display:flex;align-items:center;gap:14px">
-            <div style="width:340px;height:auto;flex:none"><img src="images/doe-logo.png" alt="U.S. Department of Energy logo" style="display:block;width:100%;height:auto"></div>
-            <div>
+          <div class="funding-header">
+            <div class="funding-logo"><img src="images/doe-logo.png" alt="U.S. Department of Energy logo" style="display:block;width:100%;height:auto"></div>
+            <div class="funding-copy">
               <h3 class="card-title" style="margin:0">U.S. Department of Energy — Office of Basic Energy Sciences</h3>
               <span style="font-size:15px;line-height:19px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;color:#1c4fa1"><a href="http://www1.chem.umn.edu/nmgc/" style="color:inherit;text-decoration:underline">Nanoporous Materials Genome Center</a></span>
             </div>
@@ -190,9 +193,9 @@ body{zoom:0.88}
           <p style="font-size:17px;line-height:26px;margin:14px 0 0;color:var(--color-text)">Developed through a collaboration of research groups in the Nanoporous Materials Genome Center (Award <span style="font-feature-settings:'tnum' 1">DE-FG02-12ER16362</span>), using resources of the Argonne Leadership Computing Facility (Contract <span style="font-feature-settings:'tnum' 1">DE-AC02-06CH11357</span>).</p>
         </div>
         <div class="card">
-          <div style="display:flex;align-items:center;gap:14px">
-            <div style="width:340px;height:auto;flex:none"><img src="images/kisti-logo.jpg" alt="KISTI logo" style="display:block;width:100%;height:auto"></div>
-            <div>
+          <div class="funding-header">
+            <div class="funding-logo"><img src="images/kisti-logo.jpg" alt="KISTI logo" style="display:block;width:100%;height:auto"></div>
+            <div class="funding-copy">
               <h3 class="card-title" style="margin:0">Korea Institute of Science and Technology Information (KISTI)</h3>
               <span style="font-size:15px;line-height:19px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;color:#1c4fa1">National Supercomputing Center</span>
             </div>

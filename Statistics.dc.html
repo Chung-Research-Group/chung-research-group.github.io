@@ -23,7 +23,7 @@
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <style>
 :root{--color-accent:#005baa;--color-accent-100:#edf4fb;--color-accent-200:#d3e5f5;--color-accent-300:#a9cceb;--color-accent-400:#2da7e0;--color-accent-500:#1c4fa1;--color-accent-600:#005baa;--color-accent-700:#1c4fa1;--color-accent-800:#00396d;--color-accent-900:#002a50;--color-accent-2:#ffa500;--color-accent-2-100:#fff6e8;--color-accent-2-200:#ffe8c2;--color-accent-2-300:#ffd28a;--color-accent-2-400:#ffb84d;--color-accent-2-500:#ffa500;--color-accent-2-600:#e18a00;--color-accent-2-700:#a86700;--color-accent-2-800:#7f4e00;--color-accent-2-900:#4d2f00;--color-sub:#00a651}
-body{margin:0;background:var(--color-bg);text-wrap:pretty}
+body{margin:0;background:var(--color-bg)}
 a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
 nav.nav a{font-size:19px;transition:transform .12s ease}
 nav.nav a:hover{transform:translateY(-2px)}
@@ -34,8 +34,8 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
 .skip-link{position:fixed;z-index:100;top:12px;left:12px;padding:10px 14px;background:var(--color-text);color:var(--color-bg);font-family:var(--font-heading);font-weight:800;text-decoration:none;transform:translateY(-180%)}
 .skip-link:focus{color:var(--color-bg);transform:translateY(0)}
 
-.statistics-intro{max-width:900px;font-size:19px;line-height:30px;margin:18px 0 0;color:var(--color-text)}
-.statistics-caveat{display:flex;align-items:flex-start;gap:10px;max-width:900px;margin:18px 0 0;padding:12px 14px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:16px;line-height:24px}
+.statistics-intro{font-size:19px;line-height:30px;margin:18px 0 0;color:var(--color-text)}
+.statistics-caveat{display:flex;align-items:flex-start;gap:10px;margin:18px 0 0;padding:12px 14px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:16px;line-height:24px}
 .statistics-caveat strong{font-family:var(--font-heading);font-weight:800}
 .statistics-state{margin:32px 0 56px;padding:26px;border:2px solid var(--color-divider);font-size:18px;line-height:28px}
 .statistics-state[data-tone="error"]{border-left:7px solid #a52a1d;background:color-mix(in srgb,#a52a1d 5%,var(--color-bg))}
@@ -43,7 +43,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
 .statistics-section-heading{display:flex;align-items:end;justify-content:space-between;gap:18px 32px;flex-wrap:wrap;margin:0 0 26px}
 .statistics-section-title{font-family:var(--font-heading);font-size:31px;line-height:38px;font-weight:800;letter-spacing:-.015em;margin:0}
 .statistics-section-title span{display:block;margin-top:3px;font-size:17px;line-height:24px;letter-spacing:.03em;color:color-mix(in srgb,var(--color-text) 68%,transparent)}
-.statistics-section-note{max-width:690px;font-size:16px;line-height:24px;margin:0;color:color-mix(in srgb,var(--color-text) 76%,transparent)}
+.statistics-section-note{flex:1 1 32rem;font-size:16px;line-height:24px;margin:0;color:color-mix(in srgb,var(--color-text) 76%,transparent)}
 .statistics-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--color-text);border-bottom:2px solid var(--color-text)}
 .statistics-summary-card{min-width:0;padding:24px 22px;border-left:1px solid var(--color-divider)}
 .statistics-summary-card:first-child{border-left:0}
@@ -88,7 +88,7 @@ select:focus-visible,summary:focus-visible,a:focus-visible,.statistics-bar-row:f
 .statistics-metric:first-child{border-left:0}
 .statistics-metric-value{display:block;margin-top:8px;font-family:var(--font-heading);font-size:46px;line-height:52px;font-weight:800;font-feature-settings:"tnum" 1;color:var(--color-accent)}
 .statistics-metric-status{display:block;margin-top:7px;font-size:15px;line-height:23px;font-weight:700}
-.statistics-metric-explanation{max-width:620px;margin:9px 0 0;font-size:14px;line-height:22px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
+.statistics-metric-explanation{margin:9px 0 0;font-size:14px;line-height:22px;color:color-mix(in srgb,var(--color-text) 72%,transparent)}
 .statistics-metric-link{display:inline-block;margin-top:10px;font-family:var(--font-heading);font-size:14px;line-height:21px;font-weight:800}
 .statistics-unavailable{margin:18px 0 0;padding:16px;border-left:5px solid var(--color-accent-2);background:var(--color-accent-2-100);font-size:15px;line-height:23px}
 .statistics-network{position:relative;width:min(100%,760px);margin:0 auto;overflow:hidden}

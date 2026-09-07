@@ -40,6 +40,10 @@ test('member and publication filters support keyboard input and report their sta
 test.describe('static content without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
   test('publication, member, software and recruiting information remain readable', async ({ page }) => {
+    await page.goto('/index.html');
+    await expect(page.locator('.mof-poster')).toBeVisible();
+    await expect(page.locator('.resource-card')).toHaveCount(3);
+    await expect(page.getByRole('button', { name: /rotation/ })).toHaveCount(0);
     await page.goto('/Publications.dc.html');
     await expect(page.getByRole('heading', { name: 'Publications.' })).toBeVisible();
     await expect(page.getByRole('link', { name: /MOFClassifier: A Machine Learning Approach/i })).toBeVisible();
@@ -62,6 +66,41 @@ const pages = [
   'MOFClassifier.dc.html', 'PACMAN.dc.html', 'SESAMI-APP.dc.html',
   'Statistics.dc.html'
 ];
+
+for (const width of [1440, 390]) {
+  test(`all pages use available width without horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of pages) {
+      await page.goto('/' + path);
+      await expect(page.locator('main')).toBeVisible();
+      expect.soft(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), path).toBeLessThanOrEqual(1);
+      const guidance = page.locator('.tool-start');
+      if (await guidance.count()) {
+        const unused = await guidance.evaluate(section => {
+          const main = section.parentElement, style = getComputedStyle(main);
+          return main.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - section.offsetWidth;
+        });
+        expect(Math.abs(unused), path + ' unused guidance width').toBeLessThanOrEqual(2);
+      }
+    }
+  });
+}
+
+test('MOF canvas renders real coordinates and supports pause and reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/index.html');
+  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
+  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
+  await expect(figure.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
+  expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
+  const first = await canvas.evaluate(c => c.toDataURL());
+  await figure.getByRole('button', { name: 'Resume rotation' }).click();
+  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
+  await figure.getByRole('button', { name: 'Pause rotation' }).click();
+  const paused = await canvas.evaluate(c => c.toDataURL());
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  expect(await canvas.evaluate(c => c.toDataURL())).toBe(paused);
+});
 
 function comparePublicText(left, right) {
   const leftKey = String(left).normalize('NFKD').toLowerCase();

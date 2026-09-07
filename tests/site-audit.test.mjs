@@ -5,6 +5,26 @@ import { parseHTML } from 'linkedom';
 import { requiredPages } from '../scripts/site-files.mjs';
 import { sharedChrome } from '../scripts/site-chrome.mjs';
 import { renderPublishedPage } from '../scripts/render-static-site.mjs';
+import '../assets/mof-renderer.js';
+
+test('MOF display bonds use short periodic images and remain inside the viewport', async () => {
+  const model = JSON.parse(await readFile(new URL('../data/irmof-1.json', import.meta.url), 'utf8'));
+  assert.equal(model.units, 'angstrom');
+  assert.deepEqual(model.atom_counts, { Zn: 32, O: 104, C: 192, H: 96 });
+  const limits = { 'C-C': [1.3, 1.6], 'C-O': [1.2, 1.4], 'O-Zn': [1.8, 2.1] };
+  for (const [i, j] of model.bonds) {
+    const a = model.atoms[i], b = model.atoms[j];
+    const distance = Math.hypot(...a.slice(1).map((v, axis) => v - b[axis + 1]));
+    const [min, max] = limits[[a[0], b[0]].sort().join('-')];
+    assert.ok(distance > min && distance < max, `invalid display bond ${i}-${j}: ${distance}`);
+  }
+  for (const angle of [0, .38, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) {
+    for (const atom of MofRenderer.project(model, 350, 206, angle).filter(p => p.kind === 'atom')) {
+      assert.ok(atom.x - atom.r >= 0 && atom.x + atom.r <= 350);
+      assert.ok(atom.y - atom.r >= 0 && atom.y + atom.r <= 206);
+    }
+  }
+});
 
 test('all page templates have landmarks, consistent contact links, and no stale footer dates', async () => {
   for (const file of requiredPages) {
