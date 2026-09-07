@@ -73,7 +73,7 @@ for (const width of [1440, 390]) {
     for (const path of pages) {
       await page.goto('/' + path);
       await expect(page.locator('main')).toBeVisible();
-      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), path).toBeLessThanOrEqual(1);
+      expect.soft(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), path).toBeLessThanOrEqual(1);
       const guidance = page.locator('.tool-start');
       if (await guidance.count()) {
         const unused = await guidance.evaluate(section => {
