@@ -31,6 +31,8 @@ test.describe('static content without JavaScript', () => {
     await expect(page.locator('main a[href^="https://doi.org/"]')).not.toHaveCount(0);
     await page.goto('/People.dc.html');
     await expect(page.getByRole('heading', { name: 'Baek, Mingyu' })).toBeVisible();
+    await page.goto('/News.dc.html');
+    await expect(page.getByRole('link', { name: /Chemistry World’s article/ })).toBeVisible();
     await page.goto('/SESAMI-APP.dc.html');
     await expect(page.getByRole('link', { name: 'Source code & local setup' })).toBeVisible();
     await page.goto('/Join%20Us.dc.html');

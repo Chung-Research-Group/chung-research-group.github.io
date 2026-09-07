@@ -54,6 +54,11 @@ test('the no-JavaScript renderer uses the same records without active scripts or
       assert.equal(document.querySelectorAll('main img[loading="lazy"]').length, 8);
       assert.match(document.textContent || fallback, /Baek, Mingyu/);
     }
+    if (filename === 'News.dc.html') {
+      assert.ok(document.querySelectorAll('main a[href]').length > 20);
+      assert.match(fallback, /Research Briefing/);
+      assert.match(fallback, /chemistryworld\.com\/news\//);
+    }
     assert.match(result, /<template data-site-template><x-dc>/);
     assert.ok(result.indexOf('assets/site-template.js') < result.indexOf('./support.js'));
     if (filename === 'People.dc.html') assert.ok(result.indexOf('src="people-data.js"') < result.indexOf('./support.js'));

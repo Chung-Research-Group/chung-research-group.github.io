@@ -22,6 +22,7 @@ export async function renderPublishedPage(source, { filename, dataRoot }) {
     instance._feed = window.MTAP_FEED;
     instance.props = { showKorean: false };
     instance.state = { ...instance.state };
+    if (filename === 'News.dc.html') instance.state.news = window.MTAP_FEED.NEWS;
     if (filename === 'Publications.dc.html') {
       instance.state.metadata = JSON.parse(await readFile(path.join(dataRoot, 'data/publication-metadata.json'), 'utf8'));
       instance.state.jcrBands = JSON.parse(await readFile(path.join(dataRoot, 'data/publication-jcr-bands.json'), 'utf8'));
