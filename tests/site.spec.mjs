@@ -659,7 +659,7 @@ test('quantum language, Baek focus, and audited review taxonomy are rendered', a
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
   for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
-    await expect(page.locator('strong', { hasText: keyword })).toBeVisible();
+    await expect(page.locator('.home-hero-intro')).toContainText(keyword);
   }
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   const baek = page.locator('#m-baek');
