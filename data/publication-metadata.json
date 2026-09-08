@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-06T18:33:54.292Z",
+  "snapshotUpdatedAt": "2026-09-08T08:12:18.586Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-05T07:45:31.978Z"
+      "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
+      "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4509,
+    "semanticScholarCitations": 4517,
     "openAlexCitations": 5794,
     "googleScholarCitations": 6355
   },
@@ -354,7 +354,7 @@
         "paperId": "a4af36e07cb077d4a5beac9d3b48e1e2be40af64",
         "url": "https://www.semanticscholar.org/paper/a4af36e07cb077d4a5beac9d3b48e1e2be40af64",
         "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
-        "citationCount": 4,
+        "citationCount": 6,
         "influentialCitationCount": 0,
         "referenceCount": 186,
         "fields": [
@@ -460,7 +460,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -1660,7 +1660,7 @@
         "paperId": "0cf6deffbf4103e643f3040d3cdf52944498902a",
         "url": "https://www.semanticscholar.org/paper/0cf6deffbf4103e643f3040d3cdf52944498902a",
         "title": "Enhancing Interchain Interactions in Spirobifluorene-Based Microporous Polyimides for High-Performance Organic Solvent Nanofiltration",
-        "citationCount": 5,
+        "citationCount": 6,
         "influentialCitationCount": 0,
         "referenceCount": 62,
         "fields": [
@@ -1771,7 +1771,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2093,8 +2093,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.351,
-        "citationPercentile": 0.7977384,
+        "fwci": 1.3442,
+        "citationPercentile": 0.79656996,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2186,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-05T08:02:43.246662"
+        "updatedAt": "2026-09-07T09:17:50.787605"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2195,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-06T07:59:40.343Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2691,7 +2691,7 @@
         "paperId": "e86066b21125618a2ce45ddc393277597380d34c",
         "url": "https://www.semanticscholar.org/paper/e86066b21125618a2ce45ddc393277597380d34c",
         "title": "PACMAN: A Robust Partial Atomic Charge Predicter for Nanoporous Materials Based on Crystal Graph Convolution Networks.",
-        "citationCount": 37,
+        "citationCount": 38,
         "influentialCitationCount": 0,
         "referenceCount": 66,
         "fields": [
@@ -2810,7 +2810,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -5467,7 +5467,7 @@
         "paperId": "888835c83fa231448bba018d0652b1626724e0a0",
         "url": "https://www.semanticscholar.org/paper/888835c83fa231448bba018d0652b1626724e0a0",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO2 with epoxides",
-        "citationCount": 53,
+        "citationCount": 55,
         "influentialCitationCount": 0,
         "referenceCount": 2,
         "fields": [
@@ -5576,7 +5576,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-05T07:45:31.978Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7443,7 +7443,7 @@
         "paperId": "d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "url": "https://www.semanticscholar.org/paper/d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 143,
+        "citationCount": 144,
         "influentialCitationCount": 0,
         "referenceCount": 68,
         "fields": [
@@ -7575,7 +7575,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-30T09:21:14.764Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7780,9 +7780,9 @@
         "paperId": "c05833d9e2e5cbbb703260f9fb73992bcbab093d",
         "url": "https://www.semanticscholar.org/paper/c05833d9e2e5cbbb703260f9fb73992bcbab093d",
         "title": "The role of molecular modelling and simulation in the discovery and deployment of metal-organic frameworks for gas storage and separation",
-        "citationCount": 95,
+        "citationCount": 96,
         "influentialCitationCount": 0,
-        "referenceCount": 451,
+        "referenceCount": 455,
         "fields": [
           "Materials Science",
           "Medicine",
@@ -7921,7 +7921,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-09T04:41:15.501Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10639,7 +10639,7 @@
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
         "citationCount": 645,
-        "influentialCitationCount": 10,
+        "influentialCitationCount": 11,
         "referenceCount": 35,
         "fields": [
           "Chemistry",
@@ -10794,7 +10794,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-01T08:46:27.555Z"
+          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
         },
         "openAlex": {
           "status": "observed",
