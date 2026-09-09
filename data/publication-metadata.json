@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-08T08:12:18.586Z",
+  "snapshotUpdatedAt": "2026-09-09T08:15:33.883Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+      "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 72,
     "semanticScholarCitations": 4517,
-    "openAlexCitations": 5794,
+    "openAlexCitations": 5796,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -804,12 +804,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4415847876",
         "title": "Multiscale, techno-economic evaluation of isoreticular series of CALF-20 for biogas upgrading using a pressure/vacuum swing adsorption (PVSA) process",
-        "citationCount": 2,
+        "citationCount": 3,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6577,
-        "citationPercentile": 0.65832566,
+        "fwci": 0.9391,
+        "citationPercentile": 0.72327514,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -870,10 +870,10 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 2
+            "citationCount": 3
           }
         ],
-        "updatedAt": "2026-08-26T07:47:46.906454"
+        "updatedAt": "2026-09-08T07:41:39.490200"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -882,7 +882,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-27T14:20:58.566Z"
+          "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1212,8 +1212,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5805,
-        "citationPercentile": 0.62596102,
+        "fwci": 0.5745,
+        "citationPercentile": 0.62371735,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1301,7 +1301,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-04T10:56:28.161419"
+        "updatedAt": "2026-09-08T07:41:39.490200"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1310,7 +1310,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-05T07:45:31.978Z"
+          "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9915,12 +9915,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2530805533",
         "title": "In silico discovery of metal-organic frameworks for precombustion CO 2 capture using a genetic algorithm",
-        "citationCount": 318,
+        "citationCount": 319,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 11.485,
-        "citationPercentile": 0.98641856,
+        "fwci": 11.5072,
+        "citationPercentile": 0.98644803,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9996,7 +9996,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 21
+            "citationCount": 22
           },
           {
             "year": 2025,
@@ -10039,7 +10039,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-08T07:41:39.490200"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10048,7 +10048,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
         },
         "googleScholar": {
           "status": "unavailable",
