@@ -611,11 +611,11 @@ test('homepage shows three latest publications and three news items', async ({ p
   await expect(page.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('homepage displays the three requested research interests', async ({ page }) => {
+test('homepage displays the four requested research interests', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   const research = page.locator('[data-screen-label="Research"]');
   await expect(research.getByRole('heading', { name: 'Research Interests', exact: true })).toBeVisible();
-  await expect(research.getByRole('listitem')).toHaveText(['Data & AI', 'Nanoporous Materials', 'Chemical Separations']);
+  await expect(research.getByRole('listitem')).toHaveText(['Computation', 'Artificial Intelligence', 'Materials', 'Chemical Separation']);
 });
 
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
