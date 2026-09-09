@@ -33,14 +33,8 @@ a.btn-primary,a.btn-primary:hover,a.btn-primary:active{color:var(--color-bg)}
 .home-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:26px}
 .home-section-heading h2{font-family:var(--font-heading);font-size:28px;line-height:1.25;letter-spacing:-.01em;margin:0;font-weight:700}
 .home-section-heading>a{flex:none;font-size:16px;text-underline-offset:4px}
-.home-research-focus{margin-top:30px;padding-top:20px;border-top:1px solid var(--color-divider)}
-.home-research-focus-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:20px;padding:6px 0}
-.home-research-focus h3{font-size:16px;line-height:26px;font-weight:600;margin:0}
-.home-research-focus p{font-size:16px;line-height:26px;margin:0;color:#536373}
-.home-research-core{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 48px}
-.home-research-card{min-width:0}
-.home-research-card h3{font-family:var(--font-heading);font-weight:700;font-size:22px;line-height:1.35;letter-spacing:-.01em;margin:0}
-.home-research-copy{font-size:18px;line-height:1.6;margin:8px 0 0;color:#536373}
+.home-research-interests{margin:0;padding-left:1.25em;font-size:22px;line-height:1.6}
+.home-research-interests li+li{margin-top:8px}
 .home-publication{padding:20px 0;border-top:1px solid var(--color-divider)}
 .home-publication:first-child{padding-top:0;border-top:0}
 .home-publication h3{font-size:21px;line-height:1.4;font-weight:600;margin:0}
@@ -78,8 +72,7 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
-  .home-research-core{grid-template-columns:1fr;gap:24px}
-  .home-research-focus-row{grid-template-columns:1fr;gap:0;padding:8px 0}
+  .home-research-interests{font-size:20px}
   .home-section{padding:32px 0}
   .home-section-heading{gap:12px;flex-wrap:wrap;margin-bottom:22px}
   .home-section-heading h2{font-size:26px}
@@ -142,35 +135,12 @@ body{zoom:0.88}
     </section>
 
     <section class="home-section" data-screen-label="Research">
-      <header class="home-section-heading"><h2>Research</h2></header>
-      <div class="home-research-core">
-        <article class="home-research-card">
-          <div><h3>Atomistic &amp; Materials Modeling</h3>
-          <p class="home-research-copy">Quantum and atomistic simulations to understand material structure, properties, and molecular behavior.</p></div>
-        </article>
-        <article class="home-research-card">
-          <div><h3>Adsorption &amp; Separation Processes</h3>
-          <p class="home-research-copy">Connecting molecular adsorption and transport to separation processes and their performance.</p></div>
-        </article>
-        <article class="home-research-card">
-          <div><h3>Data-Driven Materials Discovery</h3>
-          <p class="home-research-copy">Curated data, machine learning, and high-throughput screening to identify promising materials.</p></div>
-        </article>
-        <article class="home-research-card">
-          <div><h3>AI-Enabled Research Automation</h3>
-          <p class="home-research-copy">AI agents that plan, run, and verify computational research workflows.</p></div>
-        </article>
-      </div>
-      <div class="home-research-focus">
-        <div class="home-research-focus-row">
-          <h3>Applications</h3>
-          <p>Carbon capture &amp; gas separations · Hydrogen &amp; methane storage · Electrochemical energy storage · Catalysis &amp; conversion · Adsorption cooling</p>
-        </div>
-        <div class="home-research-focus-row">
-          <h3>Materials</h3>
-          <p>Reticular materials · Polymers · Carbons · Oxides · Electrolytes</p>
-        </div>
-      </div>
+      <header class="home-section-heading"><h2>Research Interests</h2></header>
+      <ul class="home-research-interests">
+        <li>Data &amp; AI</li>
+        <li>Nanoporous Materials</li>
+        <li>Chemical Separations</li>
+      </ul>
     </section>
 
     <section class="home-section" data-screen-label="Software and data">

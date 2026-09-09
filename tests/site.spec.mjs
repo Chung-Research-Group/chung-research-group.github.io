@@ -611,17 +611,11 @@ test('homepage shows three latest publications and three news items', async ({ p
   await expect(page.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('homepage research summary uses four concise pillars and two focus rows', async ({ page }) => {
+test('homepage displays the three requested research interests', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   const research = page.locator('[data-screen-label="Research"]');
-  await expect(research.locator('.home-research-focus-row')).toHaveCount(2);
-  await expect(research.locator('.home-research-card')).toHaveCount(4);
-  await expect(research.getByText('Atomistic & Materials Modeling', { exact: true })).toBeVisible();
-  await expect(research.getByText('Adsorption & Separation Processes', { exact: true })).toBeVisible();
-  await expect(research.getByText('Data-Driven Materials Discovery', { exact: true })).toBeVisible();
-  await expect(research.getByText('AI-Enabled Research Automation', { exact: true })).toBeVisible();
-  await expect(research.getByText('Emerging direction', { exact: true })).toHaveCount(0);
-  await expect(research.locator('.home-research-context-card')).toHaveCount(0);
+  await expect(research.getByRole('heading', { name: 'Research Interests', exact: true })).toBeVisible();
+  await expect(research.getByRole('listitem')).toHaveText(['Data & AI', 'Nanoporous Materials', 'Chemical Separations']);
 });
 
 test('graduate program data is rendered without duplicate education text', async ({ page }) => {
