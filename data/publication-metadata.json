@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-09T08:15:33.883Z",
+  "snapshotUpdatedAt": "2026-09-10T08:14:57.540Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+      "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
+      "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4517,
-    "openAlexCitations": 5796,
+    "semanticScholarCitations": 4519,
+    "openAlexCitations": 5800,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -516,12 +516,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W7107949320",
         "title": "Bridging the Gap Between Materials and Engineering: Large‐Scale Screening of Metal–Organic Frameworks for Adsorption Cooling From Device Level",
-        "citationCount": 0,
+        "citationCount": 1,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0,
-        "citationPercentile": 0.29331222,
+        "fwci": 0.2588,
+        "citationPercentile": 0.54706671,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -589,8 +589,13 @@
             "score": 0.3571999967098236
           }
         ],
-        "countsByYear": [],
-        "updatedAt": "2026-08-23T07:36:19.812096"
+        "countsByYear": [
+          {
+            "year": 2026,
+            "citationCount": 1
+          }
+        ],
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -599,7 +604,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-24T04:11:34.102Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -787,7 +792,7 @@
         "paperId": "dbc4b1ecf6e4e12bf5ace9f8561e712d32faf0c3",
         "url": "https://www.semanticscholar.org/paper/dbc4b1ecf6e4e12bf5ace9f8561e712d32faf0c3",
         "title": "Multiscale, Techno-economic Evaluation of Isoreticular Series of CALF-20 for Biogas Upgrading using a Pressure/Vacuum Swing Adsorption (PVSA) Process",
-        "citationCount": 3,
+        "citationCount": 4,
         "influentialCitationCount": 0,
         "referenceCount": 0,
         "fields": [
@@ -878,7 +883,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-17T04:08:00.299Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2093,8 +2098,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3442,
-        "citationPercentile": 0.79656996,
+        "fwci": 1.348,
+        "citationPercentile": 0.79633028,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2186,7 +2191,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-07T09:17:50.787605"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2195,7 +2200,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3152,7 +3157,7 @@
         "paperId": "b668de6362f1983330d87c77c18bbb1449426199",
         "url": "https://www.semanticscholar.org/paper/b668de6362f1983330d87c77c18bbb1449426199",
         "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
-        "citationCount": 30,
+        "citationCount": 31,
         "influentialCitationCount": 0,
         "referenceCount": 7,
         "fields": [
@@ -3271,7 +3276,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "openAlex": {
           "status": "observed",
@@ -3477,8 +3482,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0521,
-        "citationPercentile": 0.87284817,
+        "fwci": 2.0219,
+        "citationPercentile": 0.87026843,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3570,7 +3575,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-08-28T12:50:07.497085"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3579,7 +3584,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-28T15:30:03.985Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3634,12 +3639,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4390750649",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 199,
+        "citationCount": 201,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 22.7507,
-        "citationPercentile": 0.99912396,
+        "fwci": 23.1846,
+        "citationPercentile": 0.99950471,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3720,7 +3725,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 65
+            "citationCount": 67
           },
           {
             "year": 2025,
@@ -3731,7 +3736,7 @@
             "citationCount": 40
           }
         ],
-        "updatedAt": "2026-09-02T07:38:04.252551"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3740,7 +3745,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-03T08:09:54.353Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9179,8 +9184,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.8833,
-        "citationPercentile": 0.91723627,
+        "fwci": 3.0716,
+        "citationPercentile": 0.91934105,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9300,7 +9305,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-03T10:48:47.769340"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9309,7 +9314,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10300,8 +10305,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.8168,
-        "citationPercentile": 0.95738605,
+        "fwci": 5.0114,
+        "citationPercentile": 0.95929612,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10424,7 +10429,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-09-06T09:10:53.072986"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10433,7 +10438,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-06T18:33:54.292Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10483,12 +10488,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2148931917",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 386,
+        "citationCount": 387,
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 15.3776,
-        "citationPercentile": 0.99496948,
+        "fwci": 16.1341,
+        "citationPercentile": 0.99583966,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10549,7 +10554,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 9
+            "citationCount": 10
           },
           {
             "year": 2025,
@@ -10596,7 +10601,7 @@
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-09T07:26:56.047234"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10605,7 +10610,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
         },
         "googleScholar": {
           "status": "unavailable",
