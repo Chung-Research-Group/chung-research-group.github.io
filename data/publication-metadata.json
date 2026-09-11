@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-10T08:14:57.540Z",
+  "snapshotUpdatedAt": "2026-09-11T08:10:19.964Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 70,
       "observedMatched": 70,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
+      "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
+      "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 72,
-    "semanticScholarCitations": 4519,
+    "semanticScholarCitations": 4523,
     "openAlexCitations": 5800,
     "googleScholarCitations": 6355
   },
@@ -90,7 +90,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.38046461,
+        "citationPercentile": 0.32055662,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -159,7 +159,7 @@
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-10T07:47:47.112893"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -168,7 +168,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -500,7 +500,7 @@
         "paperId": "6c5f16ab3cd41b64f0b2b429c5149983214e4b26",
         "url": "https://www.semanticscholar.org/paper/6c5f16ab3cd41b64f0b2b429c5149983214e4b26",
         "title": "Bridging the Gap Between Materials and Engineering: Large‐Scale Screening of Metal–Organic Frameworks for Adsorption Cooling From Device Level",
-        "citationCount": 1,
+        "citationCount": 2,
         "influentialCitationCount": 0,
         "referenceCount": 60,
         "fields": [
@@ -600,7 +600,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2098,8 +2098,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.348,
-        "citationPercentile": 0.79633028,
+        "fwci": 1.3458,
+        "citationPercentile": 0.79588301,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2191,7 +2191,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-09T07:26:56.047234"
+        "updatedAt": "2026-09-10T07:47:47.112893"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2200,7 +2200,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3620,7 +3620,7 @@
         "paperId": "cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "url": "https://www.semanticscholar.org/paper/cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 176,
+        "citationCount": 177,
         "influentialCitationCount": 1,
         "referenceCount": 110,
         "fields": [
@@ -3741,7 +3741,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10091,7 +10091,7 @@
         "paperId": "830353689e68e8d68002fff4699c43557761f079",
         "url": "https://www.semanticscholar.org/paper/830353689e68e8d68002fff4699c43557761f079",
         "title": "High-Throughput Screening of Metal-Organic Frameworks for CO2 Capture in the Presence of Water.",
-        "citationCount": 20,
+        "citationCount": 21,
         "influentialCitationCount": 0,
         "referenceCount": 58,
         "fields": [
@@ -10243,7 +10243,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-04T08:08:14.991Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10305,8 +10305,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.0114,
-        "citationPercentile": 0.95929612,
+        "fwci": 5.0042,
+        "citationPercentile": 0.959248,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10429,7 +10429,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-09-09T07:26:56.047234"
+        "updatedAt": "2026-09-10T07:47:47.112893"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10438,7 +10438,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10474,7 +10474,7 @@
         "paperId": "32f329457a1f08d5715895b3017fe5649f132f29",
         "url": "https://www.semanticscholar.org/paper/32f329457a1f08d5715895b3017fe5649f132f29",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 269,
+        "citationCount": 270,
         "influentialCitationCount": 3,
         "referenceCount": 72,
         "fields": [
@@ -10606,7 +10606,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-23T04:06:24.769Z"
+          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
         },
         "openAlex": {
           "status": "observed",
