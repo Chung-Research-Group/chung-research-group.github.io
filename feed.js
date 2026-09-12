@@ -123,6 +123,7 @@ const F = (no, title, authors, jk, journal, meta, code, doi) => ({
 
 // Full publication list, newest first.
 const PUBS = [
+  F('73', 'Local Environmental Modification of Ti-SiO2 via Terminal Alcohols Grafting for Liquid-Phase Cyclohexene Epoxidation with H2O2', 'Lee, Seunghyun, Lee, Taekgi, Jo, Ayoung, Yu, Jaehyung, Kim, In soo, Chung, Yongchul G., Ahn, Sol', 'doi', 'Langmuir', ' (2026)', null, '10.1021/acs.langmuir.6c04247'),
   F('72', 'Hunting Structural Demons in Digital Reticular Chemistry: Lessons from Metal-Organic Frameworks', 'Chung, Y.G.*, Lah, M.S.', 'ijc', 'Israel Journal of Chemistry', ', 66, e70028 (2026)', null, '10.1002/ijch.70028'),
   F('71', 'Data-driven Prediction of Ionic Conductivity in Solid-State Electrolytes with Machine Learning and Large Language Models', 'Kim, H.#, Lee, T.#, Hong, S., Kim, K.H., Chung, Y.G.*', 'jcp', 'Journal of Chemical Physics', ', 164, 114502 (2026)', null, '10.1063/5.0307954'),
   F('70', 'Direct Air Capture with Solid-Sorbents: Adsorbent Design, Process Engineering, and CO2 Conversion', 'Hassan, M., Shin, C., Lee, T., Lee, S., Chowdhury, S., Kwon, H-.T., Kang, S.G.*, Ahn, S.*, Chung, Y.G.*', 'cej', 'Chemical Engineering Journal', ', 534, 175117 (2026)', null, '10.1016/j.cej.2026.175117'),
@@ -200,6 +201,7 @@ const PUBS = [
 // Editorial topic assignments. These are intentionally explicit rather than
 // inferred in the browser so classification remains reviewable and stable.
 const PUB_TOPICS = {
+  '73': ['Density Functional Theory', 'Material Characterization', 'Adsorption', 'Reaction', 'Oxides', 'Catalysis'],
   '72': ['Review'], '71': ['Machine Learning', 'Large Language Models', 'Data Curation', 'Diffusion', 'Electrochemistry', 'Electrolytes', 'Secondary Battery'], '70': ['Review'],
   '69': ['Adsorption', 'Diffusion', 'Chiller', 'Reticular Materials', 'Adsorption Cooling'], '68': ['Infrastructure', 'Adsorption'], '67': ['Grand Canonical Monte Carlo', 'Adsorption', 'Techno-Economic Analysis', 'Cyclic Swing Adsorber', 'Reticular Materials', 'Biogas Upgrading'],
   '66': ['Grand Canonical Monte Carlo', 'Enhanced Sampling', 'Adsorption', 'Cyclic Swing Adsorber', 'Carbon Capture'], '65': ['Grand Canonical Monte Carlo', 'Material Characterization', 'Adsorption', 'Reticular Materials'], '64': ['Adsorption', 'Techno-Economic Analysis', 'Cyclic Swing Adsorber', 'Carbons', 'Carbon Monoxide Separation'], '63': ['Machine Learning', 'Data Curation', 'Material Characterization', 'Reticular Materials'],

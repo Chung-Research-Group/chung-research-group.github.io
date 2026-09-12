@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "snapshotUpdatedAt": "2026-07-30T05:18:45.289Z",
+  "snapshotUpdatedAt": "2026-09-12T04:42:13.316Z",
   "publications": {
     "10.1002/ijch.70028": {
       "doi": "10.1002/ijch.70028",
@@ -3112,6 +3112,51 @@
       "source": {
         "provider": "crossref",
         "retrievedAt": "2026-07-30T05:18:45.289Z"
+      }
+    },
+    "10.1021/acs.langmuir.6c04247": {
+      "doi": "10.1021/acs.langmuir.6c04247",
+      "type": "article",
+      "title": "Local Environmental Modification of Ti-SiO2 via Terminal Alcohols Grafting for Liquid-Phase Cyclohexene Epoxidation with H2O2",
+      "authors": [
+        {
+          "given": "Seunghyun",
+          "family": "Lee"
+        },
+        {
+          "given": "Taekgi",
+          "family": "Lee"
+        },
+        {
+          "given": "Ayoung",
+          "family": "Jo"
+        },
+        {
+          "given": "Jaehyung",
+          "family": "Yu",
+          "orcid": "https://orcid.org/0000-0002-9925-2309"
+        },
+        {
+          "given": "In soo",
+          "family": "Kim",
+          "orcid": "https://orcid.org/0000-0003-1615-3119"
+        },
+        {
+          "given": "Yongchul G.",
+          "family": "Chung",
+          "orcid": "https://orcid.org/0000-0002-7756-0589"
+        },
+        {
+          "given": "Sol",
+          "family": "Ahn",
+          "orcid": "https://orcid.org/0000-0003-2792-816X"
+        }
+      ],
+      "journal": "Langmuir",
+      "year": 2026,
+      "publisher": "American Chemical Society (ACS)",
+      "source": {
+        "provider": "crossref"
       }
     }
   }
