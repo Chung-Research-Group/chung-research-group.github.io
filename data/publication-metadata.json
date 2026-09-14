@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-12T08:00:23.844Z",
+  "snapshotUpdatedAt": "2026-09-14T09:05:52.403Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-12T05:08:25.591Z"
+      "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4523,
-    "openAlexCitations": 5801,
+    "openAlexCitations": 5803,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -72,7 +72,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.76164555,
+        "citationPercentile": 0.75327631,
         "primaryTopic": {
           "id": "https://openalex.org/T10735",
           "name": "Mesoporous Materials and Catalysis",
@@ -146,7 +146,7 @@
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-09-11T09:22:31.653822"
+        "updatedAt": "2026-09-12T09:15:50.089291"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -155,7 +155,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-12T05:08:25.591Z"
+          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1339,8 +1339,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5745,
-        "citationPercentile": 0.62371735,
+        "fwci": 0.5457,
+        "citationPercentile": 0.60369502,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1428,7 +1428,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-08T07:41:39.490200"
+        "updatedAt": "2026-09-14T07:18:48.979198"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1437,7 +1437,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-09T08:15:33.883Z"
+          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2220,8 +2220,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3458,
-        "citationPercentile": 0.79588301,
+        "fwci": 1.2772,
+        "citationPercentile": 0.78479207,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2313,7 +2313,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-10T07:47:47.112893"
+        "updatedAt": "2026-09-14T07:18:48.979198"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2322,7 +2322,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-11T08:10:19.964Z"
+          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7756,12 +7756,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 900,
+        "citationCount": 901,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 24.4916,
-        "citationPercentile": 0.99884125,
+        "fwci": 24.4629,
+        "citationPercentile": 0.99884055,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7832,7 +7832,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 113
+            "citationCount": 114
           },
           {
             "year": 2025,
@@ -7863,7 +7863,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-09-11T09:22:31.653822"
+        "updatedAt": "2026-09-12T09:15:50.089291"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7872,7 +7872,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-12T05:08:25.591Z"
+          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9664,12 +9664,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2549466574",
         "title": "Large-Scale Refinement of Metal−Organic Framework Structures Using Density Functional Theory",
-        "citationCount": 138,
+        "citationCount": 139,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.9178,
-        "citationPercentile": 0.97578511,
+        "fwci": 5.3319,
+        "citationPercentile": 0.96430158,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9750,7 +9750,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
@@ -9797,7 +9797,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-25T07:29:55.448023"
+        "updatedAt": "2026-09-12T09:15:50.089291"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9806,7 +9806,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-26T04:07:15.061Z"
+          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
         },
         "googleScholar": {
           "status": "unavailable",
