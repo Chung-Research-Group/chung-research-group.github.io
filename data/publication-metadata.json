@@ -1,14 +1,14 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-14T09:05:52.403Z",
+  "snapshotUpdatedAt": "2026-09-15T08:48:27.077Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
       "reason": null,
-      "matched": 70,
-      "observedMatched": 70,
+      "matched": 71,
+      "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-12T08:00:23.844Z"
+      "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
+      "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4523,
-    "openAlexCitations": 5803,
+    "openAlexCitations": 5804,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -63,7 +63,23 @@
       "doi": "10.1021/acs.langmuir.6c04247",
       "title": "Local Environmental Modification of Ti-SiO2 via Terminal Alcohols Grafting for Liquid-Phase Cyclohexene Epoxidation with H2O2",
       "year": 2026,
-      "semanticScholar": null,
+      "semanticScholar": {
+        "paperId": "b5f9079d05bead48093f79c2f03c424108524454",
+        "url": "https://www.semanticscholar.org/paper/b5f9079d05bead48093f79c2f03c424108524454",
+        "title": "Local Environmental Modification of Ti-SiO2 via Terminal Alcohols Grafting for Liquid-Phase Cyclohexene Epoxidation\nwith H2O2",
+        "citationCount": 0,
+        "influentialCitationCount": 0,
+        "referenceCount": 59,
+        "fields": [
+          "Chemistry",
+          "Environmental Science"
+        ],
+        "publicationTypes": [
+          "JournalArticle"
+        ],
+        "publicationDate": "2026-09-10",
+        "year": 2026
+      },
       "openAlex": {
         "workId": "https://openalex.org/W7212144579",
         "title": "Local Environmental Modification of Ti-SiO2 via Terminal Alcohols Grafting for Liquid-Phase Cyclohexene Epoxidation with H2O2",
@@ -150,8 +166,8 @@
       },
       "sourceFreshness": {
         "semanticScholar": {
-          "status": "unavailable",
-          "contentUpdatedAt": null
+          "status": "observed",
+          "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
         },
         "openAlex": {
           "status": "observed",
@@ -164,6 +180,8 @@
         }
       },
       "fields": [
+        "Chemistry",
+        "Environmental Science",
         "Materials Science",
         "Materials Chemistry"
       ],
@@ -1339,8 +1357,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5457,
-        "citationPercentile": 0.60369502,
+        "fwci": 0.5443,
+        "citationPercentile": 0.60298662,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1428,7 +1446,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-14T07:18:48.979198"
+        "updatedAt": "2026-09-15T07:32:03.291174"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1437,7 +1455,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
+          "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2220,8 +2238,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2772,
-        "citationPercentile": 0.78479207,
+        "fwci": 1.2752,
+        "citationPercentile": 0.78447599,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2313,7 +2331,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-14T07:18:48.979198"
+        "updatedAt": "2026-09-15T07:32:03.291174"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2322,7 +2340,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
+          "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7756,12 +7774,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 901,
+        "citationCount": 902,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 24.4629,
-        "citationPercentile": 0.99884055,
+        "fwci": 24.46,
+        "citationPercentile": 0.99884023,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7832,7 +7850,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 114
+            "citationCount": 115
           },
           {
             "year": 2025,
@@ -7863,7 +7881,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-09-12T09:15:50.089291"
+        "updatedAt": "2026-09-15T07:32:03.291174"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7872,7 +7890,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-14T09:05:52.403Z"
+          "contentUpdatedAt": "2026-09-15T08:48:27.077Z"
         },
         "googleScholar": {
           "status": "unavailable",
