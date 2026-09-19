@@ -614,6 +614,7 @@ test('homepage shows three latest publications and three news items', async ({ p
 test('research interests appear only in the professor profile', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByRole('heading', { name: 'Research Interests', exact: true })).toHaveCount(0);
+  await expect(page.locator('[data-screen-label="Research"]')).toHaveCount(0);
   await page.goto('/People.dc.html', { waitUntil: 'load' });
   await expect(page.locator('[data-professor-interests] li')).toHaveText(['Computation', 'Artificial Intelligence', 'Materials', 'Chemical Separation']);
 });
