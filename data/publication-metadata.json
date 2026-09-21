@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-20T08:42:08.996Z",
+  "snapshotUpdatedAt": "2026-09-21T09:07:31.552Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-19T08:09:46.699Z"
+      "contentUpdatedAt": "2026-09-21T09:07:31.552Z"
     },
     "openAlex": {
       "status": "ok",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4526,
+    "semanticScholarCitations": 4528,
     "openAlexCitations": 5813,
     "googleScholarCitations": 6355
   },
@@ -1956,7 +1956,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 93,
+        "citationCount": 94,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -2052,7 +2052,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-05T07:45:31.978Z"
+          "contentUpdatedAt": "2026-09-21T09:07:31.552Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7592,8 +7592,8 @@
         "paperId": "d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "url": "https://www.semanticscholar.org/paper/d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 144,
-        "influentialCitationCount": 0,
+        "citationCount": 145,
+        "influentialCitationCount": 1,
         "referenceCount": 68,
         "fields": [
           "Chemistry",
@@ -7724,7 +7724,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-09-21T09:07:31.552Z"
         },
         "openAlex": {
           "status": "observed",
