@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-23T08:42:13.838Z",
+  "snapshotUpdatedAt": "2026-09-24T08:35:15.223Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+      "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-23T08:42:13.838Z"
+      "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4530,
-    "openAlexCitations": 5822,
+    "semanticScholarCitations": 4536,
+    "openAlexCitations": 5823,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -88,7 +88,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.70488128,
+        "citationPercentile": 0.7037781,
         "primaryTopic": {
           "id": "https://openalex.org/T10735",
           "name": "Mesoporous Materials and Catalysis",
@@ -162,7 +162,7 @@
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-09-23T05:00:35.095934"
+        "updatedAt": "2026-09-23T09:40:40.371523"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -171,7 +171,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-23T08:42:13.838Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1956,7 +1956,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 95,
+        "citationCount": 96,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -2052,7 +2052,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2217,7 +2217,7 @@
         "paperId": "c010c3e513f225d705c39b08382318429a81bedb",
         "url": "https://www.semanticscholar.org/paper/c010c3e513f225d705c39b08382318429a81bedb",
         "title": "Hierarchically Structured Conductive Lanthanide Metal Organic Framework Nanorods for Ultrastable Flexible Magnesium Ion Capacitors",
-        "citationCount": 13,
+        "citationCount": 14,
         "influentialCitationCount": 0,
         "referenceCount": 64,
         "fields": [
@@ -2238,8 +2238,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2647,
-        "citationPercentile": 0.78255598,
+        "fwci": 1.2582,
+        "citationPercentile": 0.78118536,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2331,16 +2331,16 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-22T17:25:34.749102"
+        "updatedAt": "2026-09-23T09:40:40.371523"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-23T08:42:13.838Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6581,7 +6581,7 @@
         "paperId": "3252b64311a04a8f02d7f8c294564ad576577724",
         "url": "https://www.semanticscholar.org/paper/3252b64311a04a8f02d7f8c294564ad576577724",
         "title": "High‐Throughput Discovery of Ni(IN)2 for Ethane/Ethylene Separation",
-        "citationCount": 72,
+        "citationCount": 73,
         "influentialCitationCount": 0,
         "referenceCount": 52,
         "fields": [
@@ -6713,7 +6713,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-15T03:58:48.778Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7763,7 +7763,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 726,
+        "citationCount": 727,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7890,7 +7890,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-19T08:09:46.699Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7929,7 +7929,7 @@
         "paperId": "c05833d9e2e5cbbb703260f9fb73992bcbab093d",
         "url": "https://www.semanticscholar.org/paper/c05833d9e2e5cbbb703260f9fb73992bcbab093d",
         "title": "The role of molecular modelling and simulation in the discovery and deployment of metal-organic frameworks for gas storage and separation",
-        "citationCount": 96,
+        "citationCount": 97,
         "influentialCitationCount": 0,
         "referenceCount": 455,
         "fields": [
@@ -8070,7 +8070,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10787,8 +10787,8 @@
         "paperId": "6efacf8930daa62031b27237227bdccbfb0c20b4",
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 645,
-        "influentialCitationCount": 11,
+        "citationCount": 646,
+        "influentialCitationCount": 10,
         "referenceCount": 35,
         "fields": [
           "Chemistry",
@@ -10801,7 +10801,7 @@
       "openAlex": {
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 760,
+        "citationCount": 761,
         "year": 2014,
         "type": "article",
         "isRetracted": false,
@@ -10911,7 +10911,7 @@
           },
           {
             "year": 2020,
-            "citationCount": 84
+            "citationCount": 85
           },
           {
             "year": 2019,
@@ -10938,16 +10938,16 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-23T05:00:35.095934"
+        "updatedAt": "2026-09-23T09:40:40.371523"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-23T08:42:13.838Z"
+          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
         },
         "googleScholar": {
           "status": "unavailable",
