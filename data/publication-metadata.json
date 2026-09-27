@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-26T08:43:09.071Z",
+  "snapshotUpdatedAt": "2026-09-27T09:23:23.674Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+      "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+      "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4543,
-    "openAlexCitations": 5833,
+    "semanticScholarCitations": 4544,
+    "openAlexCitations": 5835,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1357,8 +1357,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5229,
-        "citationPercentile": 0.59210051,
+        "fwci": 0.5208,
+        "citationPercentile": 0.59110691,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1446,7 +1446,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-09-26T08:19:03.415552"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1455,7 +1455,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1978,8 +1978,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 20.6969,
-        "citationPercentile": 0.99838691,
+        "fwci": 20.6362,
+        "citationPercentile": 0.9983871,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2047,7 +2047,7 @@
             "citationCount": 35
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-09-26T08:19:03.415552"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2056,7 +2056,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3015,8 +3015,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3162,
-        "citationPercentile": 0.42331252,
+        "fwci": 0.3117,
+        "citationPercentile": 0.41900107,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3099,7 +3099,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-28T12:50:07.497085"
+        "updatedAt": "2026-09-26T08:19:03.415552"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3108,7 +3108,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3474,12 +3474,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4392796477",
         "title": "Leveraging Machine Learning To Predict the Atmospheric Lifetime and the Global Warming Potential of SF6 Replacement Gases",
-        "citationCount": 21,
+        "citationCount": 22,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.4817,
-        "citationPercentile": 0.96315563,
+        "fwci": 4.6263,
+        "citationPercentile": 0.96564377,
         "primaryTopic": {
           "id": "https://openalex.org/T10075",
           "name": "Atmospheric chemistry and aerosols",
@@ -3545,7 +3545,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 6
+            "citationCount": 7
           },
           {
             "year": 2025,
@@ -3556,7 +3556,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-09-22T06:50:58.402377"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3565,7 +3565,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3942,8 +3942,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9487,
-        "citationPercentile": 0.67933393,
+        "fwci": 0.9352,
+        "citationPercentile": 0.67522947,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4035,7 +4035,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-28T12:50:07.497085"
+        "updatedAt": "2026-09-26T08:19:03.415552"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4044,7 +4044,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4418,8 +4418,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4314,
-        "citationPercentile": 0.80122208,
+        "fwci": 1.4298,
+        "citationPercentile": 0.80095198,
         "primaryTopic": {
           "id": "https://openalex.org/T11690",
           "name": "Advanced battery technologies research",
@@ -4515,7 +4515,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-09-26T08:19:03.415552"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4524,7 +4524,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5634,8 +5634,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.2057,
-        "citationPercentile": 0.98563906,
+        "fwci": 6.1903,
+        "citationPercentile": 0.98561151,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5720,7 +5720,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-09-21T07:43:02.447757"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5729,7 +5729,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8300,12 +8300,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 359,
+        "citationCount": 360,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.1977,
-        "citationPercentile": 0.98109244,
+        "fwci": 7.2165,
+        "citationPercentile": 0.98129129,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8406,14 +8406,14 @@
           },
           {
             "year": 2021,
-            "citationCount": 34
+            "citationCount": 35
           },
           {
             "year": 2020,
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-09-20T07:33:13.661266"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8422,7 +8422,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10618,7 +10618,7 @@
         "paperId": "32f329457a1f08d5715895b3017fe5649f132f29",
         "url": "https://www.semanticscholar.org/paper/32f329457a1f08d5715895b3017fe5649f132f29",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 271,
+        "citationCount": 272,
         "influentialCitationCount": 3,
         "referenceCount": 72,
         "fields": [
@@ -10750,7 +10750,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
         },
         "openAlex": {
           "status": "observed",
