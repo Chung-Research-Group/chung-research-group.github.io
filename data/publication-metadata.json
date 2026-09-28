@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-09-27T09:23:23.674Z",
+  "snapshotUpdatedAt": "2026-09-28T09:58:57.724Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
+      "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4544,
-    "openAlexCitations": 5835,
+    "openAlexCitations": 5838,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -515,8 +515,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 14.9939,
-        "citationPercentile": 0.99226034,
+        "fwci": 14.6802,
+        "citationPercentile": 0.99201601,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -595,7 +595,7 @@
             "citationCount": 7
           }
         ],
-        "updatedAt": "2026-09-24T07:57:37.273135"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -604,7 +604,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-25T08:56:57.779Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2238,8 +2238,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2515,
-        "citationPercentile": 0.77995425,
+        "fwci": 1.2491,
+        "citationPercentile": 0.77902073,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2331,7 +2331,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2340,7 +2340,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2853,12 +2853,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4399259267",
         "title": "PACMAN: A Robust Partial Atomic Charge Predicter for Nanoporous Materials Based on Crystal Graph Convolution Networks",
-        "citationCount": 45,
+        "citationCount": 48,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.6681,
-        "citationPercentile": 0.96493192,
+        "fwci": 3.9029,
+        "citationPercentile": 0.96904766,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -2939,7 +2939,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 19
+            "citationCount": 22
           },
           {
             "year": 2025,
@@ -2950,7 +2950,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2959,7 +2959,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3015,8 +3015,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3117,
-        "citationPercentile": 0.41900107,
+        "fwci": 0.3115,
+        "citationPercentile": 0.41893181,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3099,7 +3099,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-26T08:19:03.415552"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3108,7 +3108,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3942,8 +3942,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9352,
-        "citationPercentile": 0.67522947,
+        "fwci": 0.9307,
+        "citationPercentile": 0.67437,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4035,7 +4035,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-26T08:19:03.415552"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4044,7 +4044,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-27T09:23:23.674Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8801,8 +8801,8 @@
         "year": 2018,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6646,
-        "citationPercentile": 0.56656948,
+        "fwci": 0.6575,
+        "citationPercentile": 0.56445313,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -8902,7 +8902,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-08-21T09:56:20.448147"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8911,7 +8911,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9880,8 +9880,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.8533,
-        "citationPercentile": 0.84556506,
+        "fwci": 1.8472,
+        "citationPercentile": 0.84493671,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -10001,7 +10001,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-09-24T07:57:37.273135"
+        "updatedAt": "2026-09-27T08:07:27.782135"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10010,7 +10010,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-25T08:56:57.779Z"
+          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
         },
         "googleScholar": {
           "status": "unavailable",
