@@ -991,6 +991,28 @@ async function candidateByDoi(doi) {
   }
 }
 
+export async function loadApprovedCandidate(
+  doi,
+  feed,
+  {
+    repairDois = new Set(),
+    candidateLoader = candidateByDoi,
+    onError = message => console.error(message)
+  } = {}
+) {
+  const normalizedDoi = normalizeDoi(doi);
+  if (shouldIgnoreCandidate(feed, { doi: normalizedDoi }, { repairDois })) return null;
+
+  try {
+    const candidate = await candidateLoader(normalizedDoi);
+    return shouldIgnoreCandidate(feed, candidate, { repairDois }) ? null : candidate;
+  } catch (error) {
+    const reason = cleanText(error?.message || String(error)).slice(0, 300);
+    onError(`Skipping approved publication candidate ${normalizedDoi}: ${reason}`);
+    return null;
+  }
+}
+
 function publicationPrBody(candidate) {
   const classification = candidate.classification;
   const classificationMethod = classification?.method === 'llm'
@@ -1394,8 +1416,8 @@ async function run() {
     const reactions = reactionDecision(authorizedReactions, channel, root.ts);
     if (reactions.conflict || reactions.excluded || !reactions.approved) continue;
 
-    const candidate = await candidateByDoi(doi);
-    if (shouldIgnoreCandidate(feed.content, candidate, { repairDois })) continue;
+    const candidate = await loadApprovedCandidate(doi, feed.content, { repairDois });
+    if (!candidate) continue;
     const postedClassification = classificationFromCandidateMessage(root.text);
     if (postedClassification) {
       candidate.classification = postedClassification;
