@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-01T10:17:55.787Z",
+  "snapshotUpdatedAt": "2026-10-02T09:55:17.666Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+      "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+      "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4554,
-    "openAlexCitations": 5860,
+    "semanticScholarCitations": 4560,
+    "openAlexCitations": 5865,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -88,7 +88,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.69187574,
+        "citationPercentile": 0.66445382,
         "primaryTopic": {
           "id": "https://openalex.org/T10735",
           "name": "Mesoporous Materials and Catalysis",
@@ -116,49 +116,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/cyclohexene",
-            "name": "Cyclohexene",
-            "score": 0.8400999903678894
+            "id": "https://openalex.org/keywords/cyclohexene-epoxidation",
+            "name": "cyclohexene epoxidation",
+            "score": 0.9350000023841858
           },
           {
-            "id": "https://openalex.org/keywords/catalysis",
-            "name": "Catalysis",
-            "score": 0.8148000240325928
-          },
-          {
-            "id": "https://openalex.org/keywords/cyclohexene-oxide",
-            "name": "Cyclohexene oxide",
-            "score": 0.7020999789237976
-          },
-          {
-            "id": "https://openalex.org/keywords/epoxide",
-            "name": "Epoxide",
-            "score": 0.7008000016212463
+            "id": "https://openalex.org/keywords/hydrogen-peroxide-oxidation",
+            "name": "hydrogen peroxide oxidation",
+            "score": 0.8309999704360962
           },
           {
             "id": "https://openalex.org/keywords/surface-modification",
-            "name": "Surface modification",
-            "score": 0.4747999906539917
+            "name": "surface modification",
+            "score": 0.4729999899864197
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.45579999685287476
+            "id": "https://openalex.org/keywords/lewis-acid-sites",
+            "name": "Lewis acid sites",
+            "score": 0.8420000076293945
           },
           {
-            "id": "https://openalex.org/keywords/heterogeneous-catalysis",
-            "name": "Heterogeneous catalysis",
-            "score": 0.4514999985694885
+            "id": "https://openalex.org/keywords/hydrophobicity",
+            "name": "hydrophobicity",
+            "score": 0.597000002861023
           },
           {
-            "id": "https://openalex.org/keywords/silanol",
-            "name": "Silanol",
-            "score": 0.4514999985694885
+            "id": "https://openalex.org/keywords/silanol-groups",
+            "name": "silanol groups",
+            "score": 0.6159999966621399
           },
           {
-            "id": "https://openalex.org/keywords/selectivity",
-            "name": "Selectivity",
-            "score": 0.44350001215934753
+            "id": "https://openalex.org/keywords/selective-oxidation",
+            "name": "selective oxidation",
+            "score": 0.6179999709129333
+          },
+          {
+            "id": "https://openalex.org/keywords/dft-calculations",
+            "name": "DFT calculations",
+            "score": 0.46399998664855957
           }
         ],
         "countsByYear": [],
@@ -171,7 +166,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -189,13 +184,13 @@
         "Mesoporous Materials and Catalysis",
         "Catalysis and Oxidation Reactions",
         "Catalytic Processes in Materials Science",
-        "Cyclohexene",
-        "Catalysis",
-        "Cyclohexene oxide",
-        "Epoxide",
-        "Surface modification",
-        "Adsorption",
-        "Heterogeneous catalysis"
+        "cyclohexene epoxidation",
+        "hydrogen peroxide oxidation",
+        "surface modification",
+        "Lewis acid sites",
+        "hydrophobicity",
+        "silanol groups",
+        "selective oxidation"
       ]
     },
     "10.1002/ijch.70028": {
@@ -230,7 +225,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.28893869,
+        "citationPercentile": 0.27480499,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -258,44 +253,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/encode",
-            "name": "ENCODE",
-            "score": 0.6751999855041504
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9150000214576721
           },
           {
-            "id": "https://openalex.org/keywords/topology",
-            "name": "Topology (electrical circuits)",
-            "score": 0.46399998664855957
+            "id": "https://openalex.org/keywords/mof-database",
+            "name": "MOF database",
+            "score": 0.5950000286102295
           },
           {
-            "id": "https://openalex.org/keywords/reticular-connective-tissue",
-            "name": "Reticular connective tissue",
-            "score": 0.46160000562667847
+            "id": "https://openalex.org/keywords/computational-screening",
+            "name": "computational screening",
+            "score": 0.6029999852180481
           },
           {
-            "id": "https://openalex.org/keywords/key",
-            "name": "Key (lock)",
-            "score": 0.43720000982284546
+            "id": "https://openalex.org/keywords/structure-validation",
+            "name": "structural validation",
+            "score": 0.4259999990463257
           },
           {
-            "id": "https://openalex.org/keywords/crystal-structure",
-            "name": "Crystal structure",
-            "score": 0.40549999475479126
+            "id": "https://openalex.org/keywords/oxidation-state",
+            "name": "oxidation state",
+            "score": 0.5070000290870667
           },
           {
-            "id": "https://openalex.org/keywords/phaser",
-            "name": "Phaser",
-            "score": 0.39590001106262207
+            "id": "https://openalex.org/keywords/coordination-environment",
+            "name": "coordination environment",
+            "score": 0.8429999947547913
           },
           {
-            "id": "https://openalex.org/keywords/computational-model",
-            "name": "Computational model",
-            "score": 0.3734000027179718
+            "id": "https://openalex.org/keywords/charge-distribution",
+            "name": "charge distribution",
+            "score": 0.6309999823570251
           },
           {
-            "id": "https://openalex.org/keywords/term",
-            "name": "Term (time)",
-            "score": 0.325300008058548
+            "id": "https://openalex.org/keywords/database-curation",
+            "name": "database curation",
+            "score": 0.7080000042915344
+          },
+          {
+            "id": "https://openalex.org/keywords/structure-generation",
+            "name": "structure generation",
+            "score": 0.492000013589859
           }
         ],
         "countsByYear": [],
@@ -308,7 +308,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -326,13 +326,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Machine Learning in Materials Science",
         "Nanocluster Synthesis and Applications",
-        "ENCODE",
-        "Topology (electrical circuits)",
-        "Reticular connective tissue",
-        "Key (lock)",
-        "Crystal structure",
-        "Phaser",
-        "Computational model"
+        "metal-organic frameworks",
+        "MOF database",
+        "computational screening",
+        "structural validation",
+        "oxidation state",
+        "coordination environment",
+        "charge distribution"
       ]
     },
     "10.1063/5.0307954": {
@@ -367,8 +367,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.6077,
-        "citationPercentile": 0.79950401,
+        "fwci": 1.5804,
+        "citationPercentile": 0.79629312,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -396,49 +396,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/feature",
-            "name": "Feature (linguistics)",
-            "score": 0.47589999437332153
+            "id": "https://openalex.org/keywords/solid-electrolytes",
+            "name": "solid electrolytes",
+            "score": 0.9980000257492065
           },
           {
-            "id": "https://openalex.org/keywords/tree",
-            "name": "Tree (set theory)",
-            "score": 0.44909998774528503
+            "id": "https://openalex.org/keywords/ionic-conductivity-prediction",
+            "name": "ionic conductivity prediction",
+            "score": 0.9160000085830688
           },
           {
-            "id": "https://openalex.org/keywords/ranking",
-            "name": "Ranking (information retrieval)",
-            "score": 0.42989999055862427
+            "id": "https://openalex.org/keywords/lithium-ion-batteries",
+            "name": "lithium-ion batteries",
+            "score": 0.9419999718666077
           },
           {
-            "id": "https://openalex.org/keywords/artificial-neural-network",
-            "name": "Artificial neural network",
-            "score": 0.4253000020980835
+            "id": "https://openalex.org/keywords/crystallographic-disorder",
+            "name": "crystallographic disorder",
+            "score": 0.8550000190734863
           },
           {
-            "id": "https://openalex.org/keywords/symmetry",
-            "name": "Symmetry (geometry)",
-            "score": 0.35260000824928284
+            "id": "https://openalex.org/keywords/crystal-structure-descriptors",
+            "name": "crystal structure descriptors",
+            "score": 0.7369999885559082
           },
           {
-            "id": "https://openalex.org/keywords/conductivity",
-            "name": "Conductivity",
-            "score": 0.3449000120162964
+            "id": "https://openalex.org/keywords/geometric-descriptors",
+            "name": "geometric descriptors",
+            "score": 0.8289999961853027
           },
           {
-            "id": "https://openalex.org/keywords/test-data",
-            "name": "Test data",
-            "score": 0.3359000086784363
+            "id": "https://openalex.org/keywords/oxygen-ratio",
+            "name": "oxygen ratio",
+            "score": 0.6639999747276306
           },
           {
-            "id": "https://openalex.org/keywords/feature-extraction",
-            "name": "Feature extraction",
-            "score": 0.33399999141693115
+            "id": "https://openalex.org/keywords/large-language-models",
+            "name": "large language models",
+            "score": 0.8799999952316284
           },
           {
-            "id": "https://openalex.org/keywords/differentiable-function",
-            "name": "Differentiable function",
-            "score": 0.32600000500679016
+            "id": "https://openalex.org/keywords/shap",
+            "name": "SHAP",
+            "score": 0.675000011920929
+          },
+          {
+            "id": "https://openalex.org/keywords/structure-property-relationships",
+            "name": "structure-property relationships",
+            "score": 0.574999988079071
           }
         ],
         "countsByYear": [
@@ -456,7 +461,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -476,13 +481,13 @@
         "Machine Learning in Materials Science",
         "Advanced Battery Materials and Technologies",
         "Inorganic Chemistry and Materials",
-        "Feature (linguistics)",
-        "Tree (set theory)",
-        "Ranking (information retrieval)",
-        "Artificial neural network",
-        "Symmetry (geometry)",
-        "Conductivity",
-        "Test data"
+        "solid electrolytes",
+        "ionic conductivity prediction",
+        "lithium-ion batteries",
+        "crystallographic disorder",
+        "crystal structure descriptors",
+        "geometric descriptors",
+        "oxygen ratio"
       ]
     },
     "10.1016/j.cej.2026.175117": {
@@ -515,8 +520,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 14.6802,
-        "citationPercentile": 0.99201601,
+        "fwci": 14.3715,
+        "citationPercentile": 0.99170969,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -544,49 +549,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.6301000118255615
+            "id": "https://openalex.org/keywords/direct-air-capture",
+            "name": "direct air capture",
+            "score": 1
           },
           {
-            "id": "https://openalex.org/keywords/process-systems",
-            "name": "Process systems",
-            "score": 0.566100001335144
+            "id": "https://openalex.org/keywords/solid-sorbents",
+            "name": "solid sorbents",
+            "score": 0.9879999756813049
           },
           {
-            "id": "https://openalex.org/keywords/vacuum-swing-adsorption",
-            "name": "Vacuum swing adsorption",
-            "score": 0.5116999745368958
+            "id": "https://openalex.org/keywords/carbon-dioxide-removal",
+            "name": "carbon dioxide removal",
+            "score": 0.7369999885559082
           },
           {
-            "id": "https://openalex.org/keywords/process-integration",
-            "name": "Process integration",
-            "score": 0.5005000233650208
+            "id": "https://openalex.org/keywords/amine-functionalized-sorbents",
+            "name": "amine-functionalized sorbents",
+            "score": 0.8790000081062317
           },
           {
-            "id": "https://openalex.org/keywords/capital-cost",
-            "name": "Capital cost",
-            "score": 0.46700000762939453
+            "id": "https://openalex.org/keywords/porous-frameworks",
+            "name": "porous frameworks",
+            "score": 0.7910000085830688
           },
           {
-            "id": "https://openalex.org/keywords/contactor",
-            "name": "Contactor",
-            "score": 0.45080000162124634
+            "id": "https://openalex.org/keywords/temperature-swing-adsorption",
+            "name": "temperature swing adsorption",
+            "score": 0.9010000228881836
           },
           {
-            "id": "https://openalex.org/keywords/process",
-            "name": "Process (computing)",
-            "score": 0.4323999881744385
-          },
-          {
-            "id": "https://openalex.org/keywords/pressure-swing-adsorption",
-            "name": "Pressure swing adsorption",
-            "score": 0.42649999260902405
+            "id": "https://openalex.org/keywords/temperature-vacuum-swing-adsorption",
+            "name": "temperature vacuum swing adsorption",
+            "score": 0.9739999771118164
           },
           {
             "id": "https://openalex.org/keywords/energy-consumption",
-            "name": "Energy consumption",
-            "score": 0.3869999945163727
+            "name": "energy consumption",
+            "score": 0.7400000095367432
+          },
+          {
+            "id": "https://openalex.org/keywords/techno-economic-analysis",
+            "name": "techno-economic analysis",
+            "score": 0.8220000267028809
+          },
+          {
+            "id": "https://openalex.org/keywords/co2-conversion",
+            "name": "CO2 conversion",
+            "score": 0.9309999942779541
           }
         ],
         "countsByYear": [
@@ -604,7 +614,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-28T09:58:57.724Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -622,13 +632,13 @@
         "Carbon Dioxide Capture Technologies",
         "Adsorption and Cooling Systems",
         "Chemical Looping and Thermochemical Processes",
-        "Adsorption",
-        "Process systems",
-        "Vacuum swing adsorption",
-        "Process integration",
-        "Capital cost",
-        "Contactor",
-        "Process (computing)"
+        "direct air capture",
+        "solid sorbents",
+        "carbon dioxide removal",
+        "amine-functionalized sorbents",
+        "porous frameworks",
+        "temperature swing adsorption",
+        "temperature vacuum swing adsorption"
       ]
     },
     "10.1002/aenm.202504672": {
@@ -660,8 +670,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.2185,
-        "citationPercentile": 0.47881796,
+        "fwci": 0.2163,
+        "citationPercentile": 0.47700917,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -689,44 +699,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/bridging",
-            "name": "Bridging (networking)",
-            "score": 0.8608999848365784
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9319999814033508
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.8460999727249146
+            "id": "https://openalex.org/keywords/adsorption-refrigeration",
+            "name": "adsorption refrigeration",
+            "score": 0.9980000257492065
           },
           {
-            "id": "https://openalex.org/keywords/cooling-capacity",
-            "name": "Cooling capacity",
-            "score": 0.5572999715805054
+            "id": "https://openalex.org/keywords/mof-screening",
+            "name": "MOF screening",
+            "score": 0.9079999923706055
           },
           {
-            "id": "https://openalex.org/keywords/thermal-conductivity",
-            "name": "Thermal conductivity",
-            "score": 0.48559999465942383
+            "id": "https://openalex.org/keywords/multiscale-modeling",
+            "name": "multiscale modeling",
+            "score": 0.8360000252723694
           },
           {
-            "id": "https://openalex.org/keywords/thermal",
-            "name": "Thermal",
-            "score": 0.42829999327659607
+            "id": "https://openalex.org/keywords/heat-and-mass-transfer",
+            "name": "heat and mass transfer",
+            "score": 0.902999997138977
           },
           {
-            "id": "https://openalex.org/keywords/mass-transfer",
-            "name": "Mass transfer",
-            "score": 0.4142000079154968
+            "id": "https://openalex.org/keywords/gas-adsorption-capacity",
+            "name": "gas adsorption capacity",
+            "score": 0.8429999947547913
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.40529999136924744
+            "id": "https://openalex.org/keywords/heat-transfer-performance",
+            "name": "heat transfer performance",
+            "score": 0.6759999990463257
           },
           {
-            "id": "https://openalex.org/keywords/heat-transfer",
-            "name": "Heat transfer",
-            "score": 0.3571999967098236
+            "id": "https://openalex.org/keywords/adsorption-desorption-cycles",
+            "name": "adsorption-desorption cycles",
+            "score": 0.8999999761581421
+          },
+          {
+            "id": "https://openalex.org/keywords/energy-and-power-density",
+            "name": "energy and power density",
+            "score": 0.8050000071525574
           }
         ],
         "countsByYear": [
@@ -744,7 +759,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-29T09:58:46.893Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -762,13 +777,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Carbon Dioxide Capture Technologies",
         "Adsorption and Cooling Systems",
-        "Bridging (networking)",
-        "Adsorption",
-        "Cooling capacity",
-        "Thermal conductivity",
-        "Thermal",
-        "Mass transfer",
-        "Metal-organic framework"
+        "metal-organic frameworks",
+        "adsorption refrigeration",
+        "MOF screening",
+        "multiscale modeling",
+        "heat and mass transfer",
+        "gas adsorption capacity",
+        "heat transfer performance"
       ]
     },
     "10.1016/j.cpc.2025.109944": {
@@ -802,8 +817,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.5945,
-        "citationPercentile": 0.90386161,
+        "fwci": 2.5839,
+        "citationPercentile": 0.90313349,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -890,7 +905,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -948,8 +963,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.8675,
-        "citationPercentile": 0.70268171,
+        "fwci": 0.8613,
+        "citationPercentile": 0.70082422,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -977,34 +992,39 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/biogas",
-            "name": "Biogas",
-            "score": 0.7371000051498413
+            "id": "https://openalex.org/keywords/calf-20",
+            "name": "CALF-20",
+            "score": 0.9710000157356262
           },
           {
-            "id": "https://openalex.org/keywords/process",
-            "name": "Process (computing)",
-            "score": 0.675599992275238
+            "id": "https://openalex.org/keywords/vacuum-pressure-swing-adsorption",
+            "name": "vacuum pressure swing adsorption",
+            "score": 0.8989999890327454
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.5152999758720398
+            "id": "https://openalex.org/keywords/biogas-upgrading",
+            "name": "biogas upgrading",
+            "score": 0.996999979019165
           },
           {
-            "id": "https://openalex.org/keywords/swing",
-            "name": "Swing",
-            "score": 0.477400004863739
+            "id": "https://openalex.org/keywords/molecular-modeling",
+            "name": "molecular modeling",
+            "score": 0.3490000069141388
           },
           {
-            "id": "https://openalex.org/keywords/series",
-            "name": "Series (stratigraphy)",
-            "score": 0.39570000767707825
+            "id": "https://openalex.org/keywords/techno-economic-analysis",
+            "name": "techno-economic analysis",
+            "score": 0.9449999928474426
           },
           {
-            "id": "https://openalex.org/keywords/bioenergy",
-            "name": "Bioenergy",
-            "score": 0.35760000348091125
+            "id": "https://openalex.org/keywords/energy-consumption",
+            "name": "energy consumption",
+            "score": 0.8820000290870667
+          },
+          {
+            "id": "https://openalex.org/keywords/adsorbent-design",
+            "name": "adsorbent design",
+            "score": 0.5699999928474426
           }
         ],
         "countsByYear": [
@@ -1022,7 +1042,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1040,12 +1060,13 @@
         "Carbon Dioxide Capture Technologies",
         "Anaerobic Digestion and Biogas Production",
         "Metal-Organic Frameworks: Synthesis and Applications",
-        "Biogas",
-        "Process (computing)",
-        "Adsorption",
-        "Swing",
-        "Series (stratigraphy)",
-        "Bioenergy"
+        "CALF-20",
+        "vacuum pressure swing adsorption",
+        "biogas upgrading",
+        "molecular modeling",
+        "techno-economic analysis",
+        "energy consumption",
+        "adsorbent design"
       ]
     },
     "10.1021/acs.iecr.5c03794": {
@@ -1080,7 +1101,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.23380012,
+        "citationPercentile": 0.23315669,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -1133,7 +1154,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1187,8 +1208,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.4342,
-        "citationPercentile": 0.56163435,
+        "fwci": 0.4325,
+        "citationPercentile": 0.56106848,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1266,7 +1287,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1449,12 +1470,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4413100409",
         "title": "MOFClassifier: A Machine Learning Approach for Validating Computation-Ready Metal–Organic Frameworks",
-        "citationCount": 15,
+        "citationCount": 16,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.1723,
-        "citationPercentile": 0.93187774,
+        "fwci": 3.3702,
+        "citationPercentile": 0.93787717,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -1520,14 +1541,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 13
+            "citationCount": 14
           },
           {
             "year": 2025,
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-09-29T14:09:16.559479"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1536,7 +1557,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1595,8 +1616,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.3062,
-        "citationPercentile": 0.87911374,
+        "fwci": 2.2968,
+        "citationPercentile": 0.8784068,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -1693,7 +1714,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1750,8 +1771,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4414,
-        "citationPercentile": 0.78655977,
+        "fwci": 1.4355,
+        "citationPercentile": 0.78551245,
         "primaryTopic": {
           "id": "https://openalex.org/T11362",
           "name": "Membrane Separation and Gas Transport",
@@ -1839,7 +1860,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1875,7 +1896,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 99,
+        "citationCount": 100,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -1893,12 +1914,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4410091570",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 97,
+        "citationCount": 99,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 21.0572,
-        "citationPercentile": 0.99844183,
+        "fwci": 21.4101,
+        "citationPercentile": 0.99873074,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1974,23 +1995,23 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 62
+            "citationCount": 64
           },
           {
             "year": 2025,
             "citationCount": 35
           }
         ],
-        "updatedAt": "2026-09-30T09:27:27.532063"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2048,8 +2069,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.9348,
-        "citationPercentile": 0.92404453,
+        "fwci": 3.9169,
+        "citationPercentile": 0.92377512,
         "primaryTopic": {
           "id": "https://openalex.org/T13200",
           "name": "Spacecraft and Cryogenic Technologies",
@@ -2127,7 +2148,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2343,8 +2364,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0642,
-        "citationPercentile": 0.87256325,
+        "fwci": 2.0599,
+        "citationPercentile": 0.87229204,
         "primaryTopic": {
           "id": "https://openalex.org/T11690",
           "name": "Advanced battery technologies research",
@@ -2431,7 +2452,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2489,8 +2510,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.2668,
-        "citationPercentile": 0.8857962,
+        "fwci": 2.262,
+        "citationPercentile": 0.88519204,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2587,7 +2608,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2644,8 +2665,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.8243,
-        "citationPercentile": 0.65458129,
+        "fwci": 0.8225,
+        "citationPercentile": 0.65390359,
         "primaryTopic": {
           "id": "https://openalex.org/T10353",
           "name": "Zeolite Catalysis and Synthesis",
@@ -2742,7 +2763,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2798,8 +2819,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.8427,
-        "citationPercentile": 0.96844997,
+        "fwci": 3.8365,
+        "citationPercentile": 0.9683424,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -2890,7 +2911,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2946,8 +2967,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3098,
-        "citationPercentile": 0.41719916,
+        "fwci": 0.3085,
+        "citationPercentile": 0.41634311,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2975,49 +2996,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/linker",
-            "name": "Linker",
-            "score": 0.9410808086395264
+            "id": "https://openalex.org/keywords/co2-fixation",
+            "name": "CO2 fixation",
+            "score": 0.7979999780654907
           },
           {
-            "id": "https://openalex.org/keywords/dual",
-            "name": "Dual (grammatical number)",
-            "score": 0.6517642736434937
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.7099999785423279
           },
           {
-            "id": "https://openalex.org/keywords/catalysis",
-            "name": "Catalysis",
-            "score": 0.6305398344993591
+            "id": "https://openalex.org/keywords/catalyst-recycling",
+            "name": "catalyst recycling",
+            "score": 0.6809999942779541
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.5314739346504211
+            "id": "https://openalex.org/keywords/cyclic-carbonates",
+            "name": "cyclic carbonates",
+            "score": 0.9980000257492065
           },
           {
-            "id": "https://openalex.org/keywords/fixation",
-            "name": "Fixation (population genetics)",
-            "score": 0.4544321894645691
+            "id": "https://openalex.org/keywords/solvent-free-synthesis",
+            "name": "solvent-free synthesis",
+            "score": 0.777999997138977
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.444717139005661
+            "id": "https://openalex.org/keywords/catalytic-site",
+            "name": "catalytic site",
+            "score": 0.8669999837875366
           },
           {
-            "id": "https://openalex.org/keywords/metal",
-            "name": "Metal",
-            "score": 0.43019503355026245
+            "id": "https://openalex.org/keywords/catalytic-mechanism",
+            "name": "catalytic mechanism",
+            "score": 0.8960000276565552
           },
           {
-            "id": "https://openalex.org/keywords/combinatorial-chemistry",
-            "name": "Combinatorial chemistry",
-            "score": 0.4216604232788086
-          },
-          {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.3905389606952667
+            "id": "https://openalex.org/keywords/molecular-modeling",
+            "name": "molecular modeling",
+            "score": 0.7099999785423279
           }
         ],
         "countsByYear": [
@@ -3039,7 +3055,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3056,13 +3072,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Carbon dioxide utilization in catalysis",
         "CO2 Reduction Techniques and Catalysts",
-        "Linker",
-        "Dual (grammatical number)",
-        "Catalysis",
-        "Metal-organic framework",
-        "Fixation (population genetics)",
-        "Metal",
-        "Combinatorial chemistry"
+        "CO2 fixation",
+        "metal-organic frameworks",
+        "catalyst recycling",
+        "cyclic carbonates",
+        "solvent-free synthesis",
+        "catalytic site",
+        "catalytic mechanism"
       ]
     },
     "10.1016/j.seppur.2024.127752": {
@@ -3095,8 +3111,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.7581,
-        "citationPercentile": 0.83446793,
+        "fwci": 1.7479,
+        "citationPercentile": 0.83304462,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3124,49 +3140,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.7838619947433472
+            "id": "https://openalex.org/keywords/xenon-krypton-separation",
+            "name": "xenon/krypton separation",
+            "score": 0.9160000085830688
           },
           {
-            "id": "https://openalex.org/keywords/covalent-bond",
-            "name": "Covalent bond",
-            "score": 0.5927591323852539
+            "id": "https://openalex.org/keywords/noble-gas-adsorption",
+            "name": "noble gas adsorption",
+            "score": 0.8349999785423279
           },
           {
-            "id": "https://openalex.org/keywords/separation",
-            "name": "Separation (statistics)",
-            "score": 0.5385825037956238
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9950000047683716
           },
           {
-            "id": "https://openalex.org/keywords/noble-gas",
-            "name": "Noble gas",
-            "score": 0.4960366189479828
+            "id": "https://openalex.org/keywords/covalent-organic-frameworks",
+            "name": "covalent organic frameworks",
+            "score": 0.996999979019165
           },
           {
-            "id": "https://openalex.org/keywords/covalent-organic-framework",
-            "name": "Covalent organic framework",
-            "score": 0.45413336157798767
+            "id": "https://openalex.org/keywords/transfer-learning",
+            "name": "transfer learning",
+            "score": 0.9629999995231628
           },
           {
-            "id": "https://openalex.org/keywords/noble-metal",
-            "name": "Noble metal",
-            "score": 0.4472254514694214
+            "id": "https://openalex.org/keywords/computational-materials-screening",
+            "name": "computational materials screening",
+            "score": 0.7599999904632568
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.42193931341171265
+            "id": "https://openalex.org/keywords/class-imbalance",
+            "name": "class imbalance",
+            "score": 0.7360000014305115
           },
           {
-            "id": "https://openalex.org/keywords/gas-separation",
-            "name": "Gas separation",
-            "score": 0.4211656153202057
+            "id": "https://openalex.org/keywords/molecular-descriptors",
+            "name": "molecular descriptors",
+            "score": 0.9449999928474426
           },
           {
-            "id": "https://openalex.org/keywords/metal",
-            "name": "Metal",
-            "score": 0.30920132994651794
+            "id": "https://openalex.org/keywords/nanoporous-materials",
+            "name": "nanoporous materials",
+            "score": 0.796999990940094
+          },
+          {
+            "id": "https://openalex.org/keywords/feature-importance-analysis",
+            "name": "feature importance analysis",
+            "score": 0.5659999847412109
           }
         ],
         "countsByYear": [
@@ -3192,7 +3213,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-29T09:58:46.893Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3210,13 +3231,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Covalent Organic Framework Applications",
         "Gas Sensing Nanomaterials and Sensors",
-        "Metal-organic framework",
-        "Covalent bond",
-        "Separation (statistics)",
-        "Noble gas",
-        "Covalent organic framework",
-        "Noble metal",
-        "Gas separation"
+        "xenon/krypton separation",
+        "noble gas adsorption",
+        "metal-organic frameworks",
+        "covalent organic frameworks",
+        "transfer learning",
+        "computational materials screening",
+        "class imbalance"
       ]
     },
     "10.1002/adma.202401739": {
@@ -3228,7 +3249,7 @@
         "paperId": "b668de6362f1983330d87c77c18bbb1449426199",
         "url": "https://www.semanticscholar.org/paper/b668de6362f1983330d87c77c18bbb1449426199",
         "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
-        "citationCount": 32,
+        "citationCount": 33,
         "influentialCitationCount": 0,
         "referenceCount": 7,
         "fields": [
@@ -3249,8 +3270,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.4305,
-        "citationPercentile": 0.96141441,
+        "fwci": 4.4211,
+        "citationPercentile": 0.96117317,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3332,11 +3353,11 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3394,8 +3415,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.5921,
-        "citationPercentile": 0.96529707,
+        "fwci": 4.5782,
+        "citationPercentile": 0.96505464,
         "primaryTopic": {
           "id": "https://openalex.org/T10075",
           "name": "Atmospheric chemistry and aerosols",
@@ -3476,7 +3497,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3534,8 +3555,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.9405,
-        "citationPercentile": 0.86555886,
+        "fwci": 1.9364,
+        "citationPercentile": 0.86513794,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3631,7 +3652,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3690,8 +3711,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 21.019,
-        "citationPercentile": 0.99934297,
+        "fwci": 20.9747,
+        "citationPercentile": 0.99934293,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3792,7 +3813,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3849,8 +3870,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9273,
-        "citationPercentile": 0.67321706,
+        "fwci": 0.9254,
+        "citationPercentile": 0.67248074,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3941,7 +3962,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4138,8 +4159,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3702,
-        "citationPercentile": 0.47707472,
+        "fwci": 0.3646,
+        "citationPercentile": 0.47343919,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4167,54 +4188,39 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/isostructural",
-            "name": "Isostructural",
-            "score": 0.8667103052139282
+            "id": "https://openalex.org/keywords/templated-synthesis",
+            "name": "template synthesis",
+            "score": 0.8640000224113464
           },
           {
-            "id": "https://openalex.org/keywords/symmetry",
-            "name": "Symmetry (geometry)",
-            "score": 0.595339298248291
+            "id": "https://openalex.org/keywords/iron-clusters",
+            "name": "iron clusters",
+            "score": 0.6029999852180481
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.4896577000617981
+            "id": "https://openalex.org/keywords/chromium-clusters",
+            "name": "chromium clusters",
+            "score": 0.7609999775886536
           },
           {
-            "id": "https://openalex.org/keywords/crystallography",
-            "name": "Crystallography",
-            "score": 0.4844074845314026
+            "id": "https://openalex.org/keywords/metal-exchange",
+            "name": "metal exchange",
+            "score": 0.640999972820282
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.4749976396560669
+            "id": "https://openalex.org/keywords/torsional-degrees-of-freedom",
+            "name": "torsional degrees of freedom",
+            "score": 0.671999990940094
           },
           {
-            "id": "https://openalex.org/keywords/transformation",
-            "name": "Transformation (genetics)",
-            "score": 0.4414646625518799
+            "id": "https://openalex.org/keywords/acid-and-alkali-stability",
+            "name": "acid and alkali stability",
+            "score": 0.7210000157356262
           },
           {
-            "id": "https://openalex.org/keywords/cluster",
-            "name": "Cluster (spacecraft)",
-            "score": 0.4250371754169464
-          },
-          {
-            "id": "https://openalex.org/keywords/crystallinity",
-            "name": "Crystallinity",
-            "score": 0.4142098128795624
-          },
-          {
-            "id": "https://openalex.org/keywords/chemical-physics",
-            "name": "Chemical physics",
-            "score": 0.3899584710597992
-          },
-          {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.38270634412765503
+            "id": "https://openalex.org/keywords/isoreticular-frameworks",
+            "name": "isoreticular frameworks",
+            "score": 0.6809999942779541
           }
         ],
         "countsByYear": [
@@ -4244,7 +4250,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4261,13 +4267,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Magnetism in coordination complexes",
         "Covalent Organic Framework Applications",
-        "Isostructural",
-        "Symmetry (geometry)",
-        "Crystallography",
-        "Metal-organic framework",
-        "Transformation (genetics)",
-        "Cluster (spacecraft)",
-        "Crystallinity"
+        "template synthesis",
+        "iron clusters",
+        "chromium clusters",
+        "metal exchange",
+        "torsional degrees of freedom",
+        "acid and alkali stability",
+        "isoreticular frameworks"
       ]
     },
     "10.1016/j.cej.2023.143644": {
@@ -4300,8 +4306,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4183,
-        "citationPercentile": 0.79936715,
+        "fwci": 1.4164,
+        "citationPercentile": 0.79909927,
         "primaryTopic": {
           "id": "https://openalex.org/T11690",
           "name": "Advanced battery technologies research",
@@ -4401,7 +4407,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4459,8 +4465,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6629,
-        "citationPercentile": 0.62764268,
+        "fwci": 0.6626,
+        "citationPercentile": 0.62748593,
         "primaryTopic": {
           "id": "https://openalex.org/T10016",
           "name": "Adsorption and biosorption for pollutant removal",
@@ -4540,7 +4546,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4580,8 +4586,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.501,
-        "citationPercentile": 0.98220663,
+        "fwci": 6.49,
+        "citationPercentile": 0.98220777,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4666,7 +4672,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4717,8 +4723,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.0092,
-        "citationPercentile": 0.7143348,
+        "fwci": 1.0089,
+        "citationPercentile": 0.71432497,
         "primaryTopic": {
           "id": "https://openalex.org/T10353",
           "name": "Zeolite Catalysis and Synthesis",
@@ -4823,7 +4829,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4877,8 +4883,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.1529,
-        "citationPercentile": 0.88015393,
+        "fwci": 2.1523,
+        "citationPercentile": 0.88004122,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4963,7 +4969,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5016,8 +5022,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.814,
-        "citationPercentile": 0.85434485,
+        "fwci": 1.8001,
+        "citationPercentile": 0.85313288,
         "primaryTopic": {
           "id": "https://openalex.org/T12038",
           "name": "Covalent Organic Framework Applications",
@@ -5045,49 +5051,19 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/bromine",
-            "name": "Bromine",
-            "score": 0.8296433687210083
+            "id": "https://openalex.org/keywords/charge-transfer-complexes",
+            "name": "charge-transfer complexes",
+            "score": 0.9850000143051147
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.8043798208236694
+            "id": "https://openalex.org/keywords/adsorption-reversibility",
+            "name": "adsorption reversibility",
+            "score": 0.9229999780654907
           },
           {
-            "id": "https://openalex.org/keywords/porosity",
-            "name": "Porosity",
-            "score": 0.6238511800765991
-          },
-          {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.45000341534614563
-          },
-          {
-            "id": "https://openalex.org/keywords/charge",
-            "name": "Charge (physics)",
-            "score": 0.4409494996070862
-          },
-          {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.4341890215873718
-          },
-          {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.4155539572238922
-          },
-          {
-            "id": "https://openalex.org/keywords/inorganic-chemistry",
-            "name": "Inorganic chemistry",
-            "score": 0.34522899985313416
-          },
-          {
-            "id": "https://openalex.org/keywords/organic-chemistry",
-            "name": "Organic chemistry",
-            "score": 0.28272444009780884
+            "id": "https://openalex.org/keywords/porous-organic-frameworks",
+            "name": "porous organic frameworks",
+            "score": 0.44999998807907104
           }
         ],
         "countsByYear": [
@@ -5117,7 +5093,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-23T08:42:13.838Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5134,13 +5110,9 @@
         "Covalent Organic Framework Applications",
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Luminescence and Fluorescent Materials",
-        "Bromine",
-        "Adsorption",
-        "Porosity",
-        "Chemical engineering",
-        "Charge (physics)",
-        "Inorganic chemistry",
-        "Organic chemistry"
+        "charge-transfer complexes",
+        "adsorption reversibility",
+        "porous organic frameworks"
       ]
     },
     "10.1021/acs.langmuir.2c01390": {
@@ -5173,8 +5145,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.1437,
-        "citationPercentile": 0.74773227,
+        "fwci": 1.1434,
+        "citationPercentile": 0.74785297,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5268,7 +5240,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5323,8 +5295,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.7776,
-        "citationPercentile": 0.64048501,
+        "fwci": 0.7774,
+        "citationPercentile": 0.64045483,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -5395,7 +5367,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5446,8 +5418,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.1637,
-        "citationPercentile": 0.98555609,
+        "fwci": 6.1609,
+        "citationPercentile": 0.98556304,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5546,7 +5518,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5605,8 +5577,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.7584,
-        "citationPercentile": 0.91458219,
+        "fwci": 2.7576,
+        "citationPercentile": 0.91459979,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5715,7 +5687,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5753,7 +5725,7 @@
         "paperId": "c03eb60b7529ead496c4756003edbb817f1b39de",
         "url": "https://www.semanticscholar.org/paper/c03eb60b7529ead496c4756003edbb817f1b39de",
         "title": "Microplasma Band Structure Engineering in Graphene Quantum Dots for Sensitive and Wide-Range pH Sensing.",
-        "citationCount": 48,
+        "citationCount": 49,
         "influentialCitationCount": 1,
         "referenceCount": 45,
         "fields": [
@@ -5775,8 +5747,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.0257,
-        "citationPercentile": 0.92833175,
+        "fwci": 3.0236,
+        "citationPercentile": 0.92829452,
         "primaryTopic": {
           "id": "https://openalex.org/T11342",
           "name": "Carbon and Quantum Dots Applications",
@@ -5866,11 +5838,11 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5926,8 +5898,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.303,
-        "citationPercentile": 0.78183096,
+        "fwci": 1.3024,
+        "citationPercentile": 0.7816114,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5955,54 +5927,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.6258537769317627
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9470000267028809
           },
           {
-            "id": "https://openalex.org/keywords/cascade",
-            "name": "Cascade",
-            "score": 0.5755230188369751
+            "id": "https://openalex.org/keywords/sf6-n2-separation",
+            "name": "SF6/N2 separation",
+            "score": 0.9369999766349792
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.5680679082870483
+            "id": "https://openalex.org/keywords/vacuum-swing-adsorption",
+            "name": "vacuum swing adsorption",
+            "score": 0.9039999842643738
           },
           {
-            "id": "https://openalex.org/keywords/process",
-            "name": "Process (computing)",
-            "score": 0.5418788194656372
+            "id": "https://openalex.org/keywords/pressure-swing-adsorption",
+            "name": "pressure swing adsorption",
+            "score": 0.9950000047683716
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.49429774284362793
+            "id": "https://openalex.org/keywords/grand-canonical-monte-carlo-simulation",
+            "name": "grand canonical Monte Carlo simulation",
+            "score": 0.7260000109672546
           },
           {
-            "id": "https://openalex.org/keywords/ideal",
-            "name": "Ideal (ethics)",
-            "score": 0.45365846157073975
+            "id": "https://openalex.org/keywords/energy-consumption",
+            "name": "energy consumption",
+            "score": 0.7630000114440918
           },
           {
-            "id": "https://openalex.org/keywords/zeolite",
-            "name": "Zeolite",
-            "score": 0.43712717294692993
+            "id": "https://openalex.org/keywords/uio-67",
+            "name": "UiO-67",
+            "score": 0.9869999885559082
           },
           {
-            "id": "https://openalex.org/keywords/work",
-            "name": "Work (physics)",
-            "score": 0.4311200976371765
+            "id": "https://openalex.org/keywords/zeolite-13x",
+            "name": "zeolite 13X",
+            "score": 0.8420000076293945
           },
           {
-            "id": "https://openalex.org/keywords/process-engineering",
-            "name": "Process engineering",
-            "score": 0.40024930238723755
-          },
-          {
-            "id": "https://openalex.org/keywords/computer-science",
-            "name": "Computer science",
-            "score": 0.3784577548503876
+            "id": "https://openalex.org/keywords/isotherms",
+            "name": "isotherms",
+            "score": 0.6349999904632568
           }
         ],
         "countsByYear": [
@@ -6036,7 +6003,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6054,13 +6021,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Membrane Separation and Gas Transport",
         "Zeolite Catalysis and Synthesis",
-        "Adsorption",
-        "Cascade",
-        "Metal-organic framework",
-        "Process (computing)",
-        "Ideal (ethics)",
-        "Zeolite",
-        "Work (physics)"
+        "metal-organic frameworks",
+        "SF6/N2 separation",
+        "vacuum swing adsorption",
+        "pressure swing adsorption",
+        "grand canonical Monte Carlo simulation",
+        "energy consumption",
+        "UiO-67"
       ]
     },
     "10.1002/bkcs.12380": {
@@ -6090,8 +6057,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.1379,
-        "citationPercentile": 0.33397032,
+        "fwci": 0.1371,
+        "citationPercentile": 0.33128874,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6119,54 +6086,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/nanoporous",
-            "name": "Nanoporous",
-            "score": 0.8972057104110718
+            "id": "https://openalex.org/keywords/hydrogen-adsorption",
+            "name": "hydrogen adsorption",
+            "score": 0.953000009059906
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.812079906463623
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.878000020980835
           },
           {
-            "id": "https://openalex.org/keywords/grand-canonical-ensemble",
-            "name": "Grand canonical ensemble",
-            "score": 0.6688265800476074
+            "id": "https://openalex.org/keywords/nanoporous-materials",
+            "name": "nanoporous materials",
+            "score": 0.9509999752044678
           },
           {
-            "id": "https://openalex.org/keywords/volume",
-            "name": "Volume (thermodynamics)",
-            "score": 0.6548134684562683
+            "id": "https://openalex.org/keywords/toth-equation",
+            "name": "Toth equation",
+            "score": 0.8740000128746033
           },
           {
-            "id": "https://openalex.org/keywords/monte-carlo-method",
-            "name": "Monte Carlo method",
-            "score": 0.5861291289329529
+            "id": "https://openalex.org/keywords/pore-volume-estimation",
+            "name": "pore volume estimation",
+            "score": 0.7239999771118164
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.5458229184150696
+            "id": "https://openalex.org/keywords/one-dimensional-channels",
+            "name": "one-dimensional channels",
+            "score": 0.6959999799728394
           },
           {
-            "id": "https://openalex.org/keywords/thermodynamics",
-            "name": "Thermodynamics",
-            "score": 0.5263672471046448
+            "id": "https://openalex.org/keywords/sensitivity-analysis",
+            "name": "sensitivity analysis",
+            "score": 0.8019999861717224
           },
           {
-            "id": "https://openalex.org/keywords/porosity",
-            "name": "Porosity",
-            "score": 0.4812186062335968
-          },
-          {
-            "id": "https://openalex.org/keywords/hydrogen",
-            "name": "Hydrogen",
-            "score": 0.46167799830436707
-          },
-          {
-            "id": "https://openalex.org/keywords/porous-medium",
-            "name": "Porous medium",
-            "score": 0.44564640522003174
+            "id": "https://openalex.org/keywords/hydrogen-storage",
+            "name": "hydrogen storage",
+            "score": 0.5889999866485596
           }
         ],
         "countsByYear": [
@@ -6188,7 +6145,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6205,13 +6162,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Covalent Organic Framework Applications",
         "Hydrogen Storage and Materials",
-        "Nanoporous",
-        "Adsorption",
-        "Grand canonical ensemble",
-        "Volume (thermodynamics)",
-        "Monte Carlo method",
-        "Thermodynamics",
-        "Porosity"
+        "hydrogen adsorption",
+        "metal-organic frameworks",
+        "nanoporous materials",
+        "Toth equation",
+        "pore volume estimation",
+        "one-dimensional channels",
+        "sensitivity analysis"
       ]
     },
     "10.1002/advs.202004999": {
@@ -6245,8 +6202,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.0709,
-        "citationPercentile": 0.72579029,
+        "fwci": 1.0619,
+        "citationPercentile": 0.7232243,
         "primaryTopic": {
           "id": "https://openalex.org/T11362",
           "name": "Membrane Separation and Gas Transport",
@@ -6274,54 +6231,34 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/membrane",
-            "name": "Membrane",
-            "score": 0.811420202255249
+            "id": "https://openalex.org/keywords/shape-selective-separation",
+            "name": "shape-selective separation",
+            "score": 0.8479999899864197
           },
           {
-            "id": "https://openalex.org/keywords/molecule",
-            "name": "Molecule",
-            "score": 0.6216705441474915
+            "id": "https://openalex.org/keywords/hexane-isomer-separation",
+            "name": "hexane isomer separation",
+            "score": 0.7210000157356262
           },
           {
-            "id": "https://openalex.org/keywords/separation-process",
-            "name": "Separation process",
-            "score": 0.5951697826385498
+            "id": "https://openalex.org/keywords/forward-osmosis",
+            "name": "forward osmosis",
+            "score": 0.9190000295639038
           },
           {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.548311173915863
+            "id": "https://openalex.org/keywords/molecular-differentiation",
+            "name": "molecular differentiation",
+            "score": 0.5080000162124634
           },
           {
-            "id": "https://openalex.org/keywords/carbon-fibers",
-            "name": "Carbon fibers",
-            "score": 0.548126220703125
+            "id": "https://openalex.org/keywords/hydrocarbon-fractionation",
+            "name": "hydrocarbon fractionation",
+            "score": 0.6959999799728394
           },
           {
-            "id": "https://openalex.org/keywords/phase",
-            "name": "Phase (matter)",
-            "score": 0.5176377892494202
-          },
-          {
-            "id": "https://openalex.org/keywords/hexane",
-            "name": "Hexane",
-            "score": 0.5132582187652588
-          },
-          {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.504421591758728
-          },
-          {
-            "id": "https://openalex.org/keywords/hydrocarbon",
-            "name": "Hydrocarbon",
-            "score": 0.4953128397464752
-          },
-          {
-            "id": "https://openalex.org/keywords/fractionation",
-            "name": "Fractionation",
-            "score": 0.4285010099411011
+            "id": "https://openalex.org/keywords/energy-efficient-separation",
+            "name": "energy-efficient separation",
+            "score": 0.6230000257492065
           }
         ],
         "countsByYear": [
@@ -6359,7 +6296,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6378,13 +6315,12 @@
         "Membrane Separation and Gas Transport",
         "Membrane Separation Technologies",
         "Graphene research and applications",
-        "Membrane",
-        "Molecule",
-        "Separation process",
-        "Chemical engineering",
-        "Carbon fibers",
-        "Phase (matter)",
-        "Hexane"
+        "shape-selective separation",
+        "hexane isomer separation",
+        "forward osmosis",
+        "molecular differentiation",
+        "hydrocarbon fractionation",
+        "energy-efficient separation"
       ]
     },
     "10.1002/advs.202004940": {
@@ -6418,8 +6354,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.6992,
-        "citationPercentile": 0.96220893,
+        "fwci": 4.6612,
+        "citationPercentile": 0.96185547,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6447,54 +6383,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/ethylene",
-            "name": "Ethylene",
-            "score": 0.7511976957321167
+            "id": "https://openalex.org/keywords/ethylene-ethane-separation",
+            "name": "ethylene/ethane separation",
+            "score": 0.9110000133514404
           },
           {
-            "id": "https://openalex.org/keywords/selectivity",
-            "name": "Selectivity",
-            "score": 0.7077040672302246
+            "id": "https://openalex.org/keywords/ethylene-purification",
+            "name": "ethylene purification",
+            "score": 0.7689999938011169
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.6160932779312134
+            "id": "https://openalex.org/keywords/isonicotinic-acid",
+            "name": "isonicotinic acid",
+            "score": 0.9079999923706055
           },
           {
-            "id": "https://openalex.org/keywords/selective-adsorption",
-            "name": "Selective adsorption",
-            "score": 0.5303350687026978
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9259999990463257
           },
           {
-            "id": "https://openalex.org/keywords/raw-material",
-            "name": "Raw material",
-            "score": 0.5221631526947021
+            "id": "https://openalex.org/keywords/high-throughput-computational-screening",
+            "name": "high-throughput computational screening",
+            "score": 0.8809999823570251
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.49154505133628845
+            "id": "https://openalex.org/keywords/ideal-adsorbed-solution-theory",
+            "name": "ideal adsorbed solution theory",
+            "score": 0.8140000104904175
           },
           {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.43772047758102417
+            "id": "https://openalex.org/keywords/adsorption-selectivity",
+            "name": "adsorption selectivity",
+            "score": 0.75
           },
           {
-            "id": "https://openalex.org/keywords/separation-process",
-            "name": "Separation process",
-            "score": 0.43493562936782837
+            "id": "https://openalex.org/keywords/adsorbent-reusability",
+            "name": "adsorbent reusability",
+            "score": 0.8889999985694885
           },
           {
-            "id": "https://openalex.org/keywords/sorbent",
-            "name": "Sorbent",
-            "score": 0.4117579460144043
-          },
-          {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.40564438700675964
+            "id": "https://openalex.org/keywords/process-simulation",
+            "name": "process simulation",
+            "score": 0.6520000100135803
           }
         ],
         "countsByYear": [
@@ -6532,7 +6463,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-25T08:56:57.779Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6551,13 +6482,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Enhanced Oil Recovery Techniques",
         "Machine Learning in Materials Science",
-        "Ethylene",
-        "Selectivity",
-        "Adsorption",
-        "Selective adsorption",
-        "Raw material",
-        "Chemical engineering",
-        "Separation process"
+        "ethylene/ethane separation",
+        "ethylene purification",
+        "isonicotinic acid",
+        "metal-organic frameworks",
+        "high-throughput computational screening",
+        "ideal adsorbed solution theory",
+        "adsorption selectivity"
       ]
     },
     "10.1021/acsanm.1c00740": {
@@ -6587,8 +6518,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.853,
-        "citationPercentile": 0.85292402,
+        "fwci": 1.8282,
+        "citationPercentile": 0.85078814,
         "primaryTopic": {
           "id": "https://openalex.org/T11342",
           "name": "Carbon and Quantum Dots Applications",
@@ -6616,54 +6547,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/fluorescence",
-            "name": "Fluorescence",
-            "score": 0.7363176345825195
+            "id": "https://openalex.org/keywords/graphene-quantum-dots",
+            "name": "graphene quantum dots",
+            "score": 0.9919999837875366
           },
           {
-            "id": "https://openalex.org/keywords/graphene",
-            "name": "Graphene",
-            "score": 0.7273324728012085
+            "id": "https://openalex.org/keywords/fluorescence-quenching",
+            "name": "fluorescence quenching",
+            "score": 0.9800000190734863
           },
           {
-            "id": "https://openalex.org/keywords/microplasma",
-            "name": "Microplasma",
-            "score": 0.7229329347610474
+            "id": "https://openalex.org/keywords/copper-ion-detection",
+            "name": "copper ion detection",
+            "score": 0.9589999914169312
           },
           {
-            "id": "https://openalex.org/keywords/quenching",
-            "name": "Quenching (fluorescence)",
-            "score": 0.7078403234481812
+            "id": "https://openalex.org/keywords/microplasma-synthesis",
+            "name": "microplasma synthesis",
+            "score": 0.8550000190734863
           },
           {
-            "id": "https://openalex.org/keywords/density-functional-theory",
-            "name": "Density functional theory",
-            "score": 0.630966067314148
+            "id": "https://openalex.org/keywords/starch-derived-carbon",
+            "name": "starch-derived carbon",
+            "score": 0.8389999866485596
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.6098019480705261
+            "id": "https://openalex.org/keywords/fluorescent-sensors",
+            "name": "fluorescent sensors",
+            "score": 0.828000009059906
           },
           {
-            "id": "https://openalex.org/keywords/excited-state",
-            "name": "Excited state",
-            "score": 0.5884436964988708
+            "id": "https://openalex.org/keywords/metal-ion-detection",
+            "name": "metal ion sensing",
+            "score": 0.7049999833106995
           },
           {
-            "id": "https://openalex.org/keywords/detection-limit",
-            "name": "Detection limit",
-            "score": 0.5873503684997559
+            "id": "https://openalex.org/keywords/charge-transfer",
+            "name": "charge transfer",
+            "score": 0.8700000047683716
           },
           {
-            "id": "https://openalex.org/keywords/quantum-dot",
-            "name": "Quantum dot",
-            "score": 0.5744008421897888
-          },
-          {
-            "id": "https://openalex.org/keywords/metal-ions-in-aqueous-solution",
-            "name": "Metal ions in aqueous solution",
-            "score": 0.4625614881515503
+            "id": "https://openalex.org/keywords/sustainable-synthesis",
+            "name": "sustainable synthesis",
+            "score": 0.5669999718666077
           }
         ],
         "countsByYear": [
@@ -6701,7 +6627,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6718,13 +6644,13 @@
         "Carbon and Quantum Dots Applications",
         "Nanocluster Synthesis and Applications",
         "Graphene and Nanomaterials Applications",
-        "Fluorescence",
-        "Graphene",
-        "Microplasma",
-        "Quenching (fluorescence)",
-        "Density functional theory",
-        "Excited state",
-        "Detection limit"
+        "graphene quantum dots",
+        "fluorescence quenching",
+        "copper ion detection",
+        "microplasma synthesis",
+        "starch-derived carbon",
+        "fluorescent sensors",
+        "metal ion sensing"
       ]
     },
     "10.1002/int.22368": {
@@ -6757,8 +6683,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.5865,
-        "citationPercentile": 0.96791558,
+        "fwci": 5.585,
+        "citationPercentile": 0.96786642,
         "primaryTopic": {
           "id": "https://openalex.org/T11053",
           "name": "Process Optimization and Integration",
@@ -6866,7 +6792,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6949,8 +6875,8 @@
         "year": 2020,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.2915,
-        "citationPercentile": 0.95273759,
+        "fwci": 5.2539,
+        "citationPercentile": 0.95247987,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6978,54 +6904,29 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/bet-theory",
-            "name": "BET theory",
-            "score": 0.8948855400085449
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9760000109672546
           },
           {
-            "id": "https://openalex.org/keywords/nanoporous",
-            "name": "Nanoporous",
-            "score": 0.8511649966239929
+            "id": "https://openalex.org/keywords/nanoporous-materials",
+            "name": "nanoporous materials",
+            "score": 0.8190000057220459
           },
           {
-            "id": "https://openalex.org/keywords/benchmark",
-            "name": "Benchmark (surveying)",
-            "score": 0.6885614991188049
+            "id": "https://openalex.org/keywords/adsorption-isotherms",
+            "name": "adsorption isotherms",
+            "score": 0.906000018119812
           },
           {
-            "id": "https://openalex.org/keywords/monolayer",
-            "name": "Monolayer",
-            "score": 0.6553211212158203
+            "id": "https://openalex.org/keywords/machine-learning",
+            "name": "machine learning",
+            "score": 0.8289999961853027
           },
           {
-            "id": "https://openalex.org/keywords/surface",
-            "name": "Surface (topology)",
-            "score": 0.6027002334594727
-          },
-          {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.5971842408180237
-          },
-          {
-            "id": "https://openalex.org/keywords/specific-surface-area",
-            "name": "Specific surface area",
-            "score": 0.59293133020401
-          },
-          {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.5036584734916687
-          },
-          {
-            "id": "https://openalex.org/keywords/accessible-surface-area",
-            "name": "Accessible surface area",
-            "score": 0.4885426461696625
-          },
-          {
-            "id": "https://openalex.org/keywords/characterization",
-            "name": "Characterization (materials science)",
-            "score": 0.48736435174942017
+            "id": "https://openalex.org/keywords/porous-materials-characterization",
+            "name": "porous materials characterization",
+            "score": 0.6290000081062317
           }
         ],
         "countsByYear": [
@@ -7067,7 +6968,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7086,13 +6987,11 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Machine Learning in Materials Science",
         "Block Copolymer Self-Assembly",
-        "BET theory",
-        "Nanoporous",
-        "Benchmark (surveying)",
-        "Monolayer",
-        "Surface (topology)",
-        "Specific surface area",
-        "Adsorption"
+        "metal-organic frameworks",
+        "nanoporous materials",
+        "adsorption isotherms",
+        "machine learning",
+        "porous materials characterization"
       ]
     },
     "10.14478/ace.2020.1057": {
@@ -7122,8 +7021,8 @@
         "year": 2020,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.2979,
-        "citationPercentile": 0.5745569,
+        "fwci": 0.2359,
+        "citationPercentile": 0.52609023,
         "primaryTopic": {
           "id": "https://openalex.org/T10876",
           "name": "Fault Detection and Control Systems",
@@ -7141,44 +7040,29 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/column",
-            "name": "Column (typography)",
-            "score": 0.5592371225357056
+            "id": "https://openalex.org/keywords/distillation-column",
+            "name": "distillation column",
+            "score": 0.9480000138282776
           },
           {
-            "id": "https://openalex.org/keywords/fractionating-column",
-            "name": "Fractionating column",
-            "score": 0.5485265851020813
+            "id": "https://openalex.org/keywords/temperature-prediction",
+            "name": "temperature prediction",
+            "score": 0.9129999876022339
           },
           {
-            "id": "https://openalex.org/keywords/distillation",
-            "name": "Distillation",
-            "score": 0.4802870452404022
+            "id": "https://openalex.org/keywords/machine-learning-models",
+            "name": "machine learning models",
+            "score": 0.8050000071525574
           },
           {
-            "id": "https://openalex.org/keywords/computer-science",
-            "name": "Computer science",
-            "score": 0.3888133764266968
+            "id": "https://openalex.org/keywords/process-monitoring",
+            "name": "process monitoring",
+            "score": 0.5879999995231628
           },
           {
-            "id": "https://openalex.org/keywords/environmental-science",
-            "name": "Environmental science",
-            "score": 0.35335347056388855
-          },
-          {
-            "id": "https://openalex.org/keywords/process-engineering",
-            "name": "Process engineering",
-            "score": 0.34906303882598877
-          },
-          {
-            "id": "https://openalex.org/keywords/artificial-intelligence",
-            "name": "Artificial intelligence",
-            "score": 0.3461587429046631
-          },
-          {
-            "id": "https://openalex.org/keywords/engineering",
-            "name": "Engineering",
-            "score": 0.22498613595962524
+            "id": "https://openalex.org/keywords/process-control",
+            "name": "process control",
+            "score": 0.46399998664855957
           }
         ],
         "countsByYear": [
@@ -7191,7 +7075,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-06-11T09:08:48.828518"
+        "updatedAt": "2025-10-10T17:16:08.811792"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7200,7 +7084,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T19:39:55.961Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7215,12 +7099,11 @@
       ],
       "keywords": [
         "Fault Detection and Control Systems",
-        "Column (typography)",
-        "Fractionating column",
-        "Distillation",
-        "Environmental science",
-        "Process engineering",
-        "Artificial intelligence"
+        "distillation column",
+        "temperature prediction",
+        "machine learning models",
+        "process monitoring",
+        "process control"
       ]
     },
     "10.1016/j.molliq.2019.111825": {
@@ -7249,8 +7132,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.4082,
-        "citationPercentile": 0.92850293,
+        "fwci": 3.376,
+        "citationPercentile": 0.92758777,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -7278,54 +7161,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/ionic-liquid",
-            "name": "Ionic liquid",
-            "score": 0.9272503852844238
+            "id": "https://openalex.org/keywords/amino-acid-based-ionic-liquids",
+            "name": "amino acid ionic liquids",
+            "score": 0.8980000019073486
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.7290744781494141
+            "id": "https://openalex.org/keywords/imidazolium-based-ionic-liquids",
+            "name": "imidazolium ionic liquids",
+            "score": 0.9229999780654907
           },
           {
-            "id": "https://openalex.org/keywords/imidazole",
-            "name": "Imidazole",
-            "score": 0.6738773584365845
+            "id": "https://openalex.org/keywords/co2-absorption",
+            "name": "CO2 absorption",
+            "score": 0.9589999914169312
           },
           {
-            "id": "https://openalex.org/keywords/amino-acid",
-            "name": "Amino acid",
-            "score": 0.6307357549667358
+            "id": "https://openalex.org/keywords/cyclic-capacity",
+            "name": "cyclic capacity",
+            "score": 0.5759999752044678
           },
           {
-            "id": "https://openalex.org/keywords/hydroxide",
-            "name": "Hydroxide",
-            "score": 0.6274205446243286
+            "id": "https://openalex.org/keywords/amine-functionalization",
+            "name": "amine functionalization",
+            "score": 0.7049999833106995
           },
           {
-            "id": "https://openalex.org/keywords/absorption",
-            "name": "Absorption (acoustics)",
-            "score": 0.5247713923454285
+            "id": "https://openalex.org/keywords/cation-and-anion-effects",
+            "name": "cation and anion effects",
+            "score": 0.7689999938011169
           },
           {
-            "id": "https://openalex.org/keywords/proton-nmr",
-            "name": "Proton NMR",
-            "score": 0.5059525370597839
+            "id": "https://openalex.org/keywords/ionic-liquid-viscosity",
+            "name": "ionic liquid viscosity",
+            "score": 0.6169999837875366
           },
           {
-            "id": "https://openalex.org/keywords/nuclear-chemistry",
-            "name": "Nuclear chemistry",
-            "score": 0.4560627043247223
+            "id": "https://openalex.org/keywords/monoethanolamine-comparison",
+            "name": "monoethanolamine comparison",
+            "score": 0.8569999933242798
           },
           {
-            "id": "https://openalex.org/keywords/inorganic-chemistry",
-            "name": "Inorganic chemistry",
-            "score": 0.34955161809921265
-          },
-          {
-            "id": "https://openalex.org/keywords/organic-chemistry",
-            "name": "Organic chemistry",
-            "score": 0.3486345410346985
+            "id": "https://openalex.org/keywords/carbon-dioxide-absorbents",
+            "name": "CO2 absorbents",
+            "score": 0.5659999847412109
           }
         ],
         "countsByYear": [
@@ -7367,7 +7245,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7384,13 +7262,13 @@
         "Carbon Dioxide Capture Technologies",
         "Ionic liquids properties and applications",
         "Carbon dioxide utilization in catalysis",
-        "Ionic liquid",
-        "Imidazole",
-        "Amino acid",
-        "Hydroxide",
-        "Absorption (acoustics)",
-        "Proton NMR",
-        "Nuclear chemistry"
+        "amino acid ionic liquids",
+        "imidazolium ionic liquids",
+        "CO2 absorption",
+        "cyclic capacity",
+        "amine functionalization",
+        "cation and anion effects",
+        "ionic liquid viscosity"
       ]
     },
     "10.1016/j.apcatb.2019.117888": {
@@ -7420,8 +7298,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.8054,
-        "citationPercentile": 0.98841244,
+        "fwci": 7.7341,
+        "citationPercentile": 0.9883177,
         "primaryTopic": {
           "id": "https://openalex.org/T12240",
           "name": "Nanomaterials for catalytic reactions",
@@ -7449,54 +7327,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/heteroatom",
-            "name": "Heteroatom",
-            "score": 0.8380028009414673
+            "id": "https://openalex.org/keywords/mof-derived-carbon",
+            "name": "metal-organic framework derived carbon",
+            "score": 0.8169999718666077
           },
           {
-            "id": "https://openalex.org/keywords/catalysis",
-            "name": "Catalysis",
-            "score": 0.825685441493988
+            "id": "https://openalex.org/keywords/boron-doped-carbon",
+            "name": "boron-doped carbon",
+            "score": 0.8149999976158142
           },
           {
-            "id": "https://openalex.org/keywords/boron",
-            "name": "Boron",
-            "score": 0.6376111507415771
+            "id": "https://openalex.org/keywords/nitrogen-doped-carbon",
+            "name": "nitrogen-doped carbon",
+            "score": 0.9539999961853027
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.542917013168335
+            "id": "https://openalex.org/keywords/heteroatom-doping",
+            "name": "heteroatom doping",
+            "score": 0.7739999890327454
           },
           {
-            "id": "https://openalex.org/keywords/inorganic-chemistry",
-            "name": "Inorganic chemistry",
-            "score": 0.5208547711372375
+            "id": "https://openalex.org/keywords/3d-porous-carbon",
+            "name": "3D porous carbon",
+            "score": 0.7919999957084656
           },
           {
-            "id": "https://openalex.org/keywords/x-ray-photoelectron-spectroscopy",
-            "name": "X-ray photoelectron spectroscopy",
-            "score": 0.501366138458252
+            "id": "https://openalex.org/keywords/4-nitrophenol-reduction",
+            "name": "4-nitrophenol reduction",
+            "score": 0.8889999985694885
           },
           {
-            "id": "https://openalex.org/keywords/nitrogen",
-            "name": "Nitrogen",
-            "score": 0.4806169867515564
+            "id": "https://openalex.org/keywords/nitroarene-reduction",
+            "name": "nitroarene reduction",
+            "score": 0.9800000190734863
           },
           {
-            "id": "https://openalex.org/keywords/metal",
-            "name": "Metal",
-            "score": 0.428078830242157
+            "id": "https://openalex.org/keywords/noble-metal-free-catalysts",
+            "name": "noble metal-free catalysts",
+            "score": 0.8399999737739563
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.321147620677948
+            "id": "https://openalex.org/keywords/zif-8",
+            "name": "ZIF-8",
+            "score": 0.8930000066757202
           },
           {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.30806946754455566
+            "id": "https://openalex.org/keywords/synergistic-effect",
+            "name": "synergistic effect",
+            "score": 0.8539999723434448
           }
         ],
         "countsByYear": [
@@ -7538,7 +7416,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-25T08:56:57.779Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7555,13 +7433,13 @@
         "Nanomaterials for catalytic reactions",
         "MXene and MAX Phase Materials",
         "Advanced Photocatalysis Techniques",
-        "Heteroatom",
-        "Catalysis",
-        "Boron",
-        "Inorganic chemistry",
-        "X-ray photoelectron spectroscopy",
-        "Nitrogen",
-        "Metal"
+        "metal-organic framework derived carbon",
+        "boron-doped carbon",
+        "nitrogen-doped carbon",
+        "heteroatom doping",
+        "3D porous carbon",
+        "4-nitrophenol reduction",
+        "nitroarene reduction"
       ]
     },
     "10.1021/acs.jced.9b00835": {
@@ -7752,8 +7630,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.8632,
-        "citationPercentile": 0.97946692,
+        "fwci": 6.8643,
+        "citationPercentile": 0.97947263,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7874,7 +7752,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7932,8 +7810,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3367,
-        "citationPercentile": 0.78364641,
+        "fwci": 1.3232,
+        "citationPercentile": 0.78154206,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7961,54 +7839,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/dabco",
-            "name": "DABCO",
-            "score": 0.8891520500183105
+            "id": "https://openalex.org/keywords/p-xylene-selectivity",
+            "name": "p-xylene selectivity",
+            "score": 0.9200000166893005
           },
           {
-            "id": "https://openalex.org/keywords/selectivity",
-            "name": "Selectivity",
-            "score": 0.802076518535614
+            "id": "https://openalex.org/keywords/xylene-isomer-separation",
+            "name": "xylene isomer separation",
+            "score": 0.8640000224113464
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.6993669271469116
+            "id": "https://openalex.org/keywords/vapor-adsorption",
+            "name": "vapor adsorption",
+            "score": 0.7889999747276306
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.676006555557251
+            "id": "https://openalex.org/keywords/liquid-phase-adsorption",
+            "name": "liquid-phase adsorption",
+            "score": 0.996999979019165
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.6383653283119202
+            "id": "https://openalex.org/keywords/grand-canonical-monte-carlo-simulation",
+            "name": "grand canonical Monte Carlo simulation",
+            "score": 0.9010000228881836
           },
           {
             "id": "https://openalex.org/keywords/density-functional-theory",
-            "name": "Density functional theory",
-            "score": 0.5332932472229004
+            "name": "density functional theory",
+            "score": 0.890999972820282
           },
           {
-            "id": "https://openalex.org/keywords/xylene",
-            "name": "Xylene",
-            "score": 0.5247405171394348
+            "id": "https://openalex.org/keywords/adsorption-energetics",
+            "name": "adsorption energetics",
+            "score": 0.6349999904632568
           },
           {
-            "id": "https://openalex.org/keywords/molecule",
-            "name": "Molecule",
-            "score": 0.514006495475769
-          },
-          {
-            "id": "https://openalex.org/keywords/phase",
-            "name": "Phase (matter)",
-            "score": 0.5118200182914734
-          },
-          {
-            "id": "https://openalex.org/keywords/ligand",
-            "name": "Ligand (biochemistry)",
-            "score": 0.48580503463745117
+            "id": "https://openalex.org/keywords/molecular-packing",
+            "name": "molecular packing",
+            "score": 0.44600000977516174
           }
         ],
         "countsByYear": [
@@ -8050,7 +7918,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-25T08:56:57.779Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8068,13 +7936,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Machine Learning in Materials Science",
         "Enhanced Oil Recovery Techniques",
-        "DABCO",
-        "Selectivity",
-        "Adsorption",
-        "Metal-organic framework",
-        "Density functional theory",
-        "Xylene",
-        "Molecule"
+        "p-xylene selectivity",
+        "xylene isomer separation",
+        "vapor adsorption",
+        "liquid-phase adsorption",
+        "grand canonical Monte Carlo simulation",
+        "density functional theory",
+        "adsorption energetics"
       ]
     },
     "10.1021/acs.jpcc.9b02116": {
@@ -8086,7 +7954,7 @@
         "paperId": "ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "url": "https://www.semanticscholar.org/paper/ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 295,
+        "citationCount": 296,
         "influentialCitationCount": 6,
         "referenceCount": 51,
         "fields": [
@@ -8100,12 +7968,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 361,
+        "citationCount": 362,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.194,
-        "citationPercentile": 0.98124757,
+        "fwci": 7.1951,
+        "citationPercentile": 0.98125278,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8193,7 +8061,7 @@
           },
           {
             "year": 2023,
-            "citationCount": 48
+            "citationCount": 49
           },
           {
             "year": 2022,
@@ -8208,16 +8076,16 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-09-30T09:27:27.532063"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-22T08:40:06.288Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8271,8 +8139,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.7703,
-        "citationPercentile": 0.96035608,
+        "fwci": 4.714,
+        "citationPercentile": 0.95989097,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8300,54 +8168,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/metric",
-            "name": "Metric (unit)",
-            "score": 0.7522177696228027
+            "id": "https://openalex.org/keywords/post-combustion-co2-capture",
+            "name": "post-combustion CO2 capture",
+            "score": 0.9800000190734863
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.6639053821563721
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.8759999871253967
           },
           {
             "id": "https://openalex.org/keywords/pressure-swing-adsorption",
-            "name": "Pressure swing adsorption",
-            "score": 0.5726242661476135
+            "name": "pressure swing adsorption",
+            "score": 0.9570000171661377
           },
           {
-            "id": "https://openalex.org/keywords/process-engineering",
-            "name": "Process engineering",
-            "score": 0.557120680809021
+            "id": "https://openalex.org/keywords/adsorbent-screening",
+            "name": "adsorbent screening",
+            "score": 0.906000018119812
           },
           {
-            "id": "https://openalex.org/keywords/heuristics",
-            "name": "Heuristics",
-            "score": 0.5060233473777771
+            "id": "https://openalex.org/keywords/evaluation-indicators",
+            "name": "evaluation metrics",
+            "score": 0.8989999890327454
           },
           {
-            "id": "https://openalex.org/keywords/process",
-            "name": "Process (computing)",
-            "score": 0.4618702232837677
+            "id": "https://openalex.org/keywords/co2-n2-separation",
+            "name": "CO2/N2 separation",
+            "score": 0.9340000152587891
           },
           {
-            "id": "https://openalex.org/keywords/desorption",
-            "name": "Desorption",
-            "score": 0.4417268633842468
+            "id": "https://openalex.org/keywords/work-capacity",
+            "name": "work capacity",
+            "score": 0.6579999923706055
           },
           {
-            "id": "https://openalex.org/keywords/computer-science",
-            "name": "Computer science",
-            "score": 0.42357560992240906
+            "id": "https://openalex.org/keywords/co2-capture-cost",
+            "name": "CO2 capture cost",
+            "score": 0.7570000290870667
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.34518998861312866
+            "id": "https://openalex.org/keywords/molecular-simulation",
+            "name": "molecular simulation",
+            "score": 0.5289999842643738
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.32948485016822815
+            "id": "https://openalex.org/keywords/process-optimization",
+            "name": "process optimization",
+            "score": 0.5350000262260437
           }
         ],
         "countsByYear": [
@@ -8393,7 +8261,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8411,13 +8279,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Carbon Dioxide Capture Technologies",
         "Carbon dioxide utilization in catalysis",
-        "Metric (unit)",
-        "Adsorption",
-        "Pressure swing adsorption",
-        "Process engineering",
-        "Heuristics",
-        "Process (computing)",
-        "Desorption"
+        "post-combustion CO2 capture",
+        "metal-organic frameworks",
+        "pressure swing adsorption",
+        "adsorbent screening",
+        "evaluation metrics",
+        "CO2/N2 separation",
+        "work capacity"
       ]
     },
     "10.1016/j.ccr.2019.03.008": {
@@ -8449,8 +8317,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 10.5842,
-        "citationPercentile": 0.99154193,
+        "fwci": 10.5859,
+        "citationPercentile": 0.99154428,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8566,7 +8434,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8777,8 +8645,8 @@
         "year": 2018,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.3628,
-        "citationPercentile": 0.88629738,
+        "fwci": 2.3293,
+        "citationPercentile": 0.88301517,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -8806,54 +8674,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/catalysis",
-            "name": "Catalysis",
-            "score": 0.920440137386322
+            "id": "https://openalex.org/keywords/co2-cycloaddition",
+            "name": "CO2 cycloaddition",
+            "score": 0.8180000185966492
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.7467166185379028
+            "id": "https://openalex.org/keywords/epoxides",
+            "name": "epoxides",
+            "score": 0.972000002861023
           },
           {
-            "id": "https://openalex.org/keywords/methanol",
-            "name": "Methanol",
-            "score": 0.5789859890937805
+            "id": "https://openalex.org/keywords/cyclic-carbonates",
+            "name": "cyclic carbonates",
+            "score": 0.8949999809265137
           },
           {
-            "id": "https://openalex.org/keywords/lewis-acids-and-bases",
-            "name": "Lewis acids and bases",
-            "score": 0.5590175986289978
-          },
-          {
-            "id": "https://openalex.org/keywords/solvent",
-            "name": "Solvent",
-            "score": 0.5517221093177795
-          },
-          {
-            "id": "https://openalex.org/keywords/cycloaddition",
-            "name": "Cycloaddition",
-            "score": 0.5286344289779663
-          },
-          {
-            "id": "https://openalex.org/keywords/epoxide",
-            "name": "Epoxide",
-            "score": 0.4151926636695862
+            "id": "https://openalex.org/keywords/copper-ii-metal-organic-framework",
+            "name": "copper(II) metal-organic framework",
+            "score": 0.7200000286102295
           },
           {
             "id": "https://openalex.org/keywords/tryptophan",
-            "name": "Tryptophan",
-            "score": 0.41398051381111145
+            "name": "tryptophan",
+            "score": 0.8759999871253967
           },
           {
-            "id": "https://openalex.org/keywords/amino-acid",
-            "name": "Amino acid",
-            "score": 0.3930145800113678
+            "id": "https://openalex.org/keywords/solvent-free-synthesis",
+            "name": "solvent-free synthesis",
+            "score": 0.5699999928474426
           },
           {
-            "id": "https://openalex.org/keywords/organic-chemistry",
-            "name": "Organic chemistry",
-            "score": 0.3793972432613373
+            "id": "https://openalex.org/keywords/catalyst-reusability",
+            "name": "catalyst reusability",
+            "score": 0.6200000047683716
+          },
+          {
+            "id": "https://openalex.org/keywords/water-stability",
+            "name": "water stability",
+            "score": 0.6520000100135803
+          },
+          {
+            "id": "https://openalex.org/keywords/reaction-mechanism",
+            "name": "reaction mechanism",
+            "score": 0.6759999990463257
+          },
+          {
+            "id": "https://openalex.org/keywords/co2-utilization",
+            "name": "CO2 utilization",
+            "score": 0.5080000162124634
           }
         ],
         "countsByYear": [
@@ -8903,7 +8771,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8920,13 +8788,13 @@
         "Carbon dioxide utilization in catalysis",
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Chemical Synthesis and Reactions",
-        "Catalysis",
-        "Methanol",
-        "Lewis acids and bases",
-        "Solvent",
-        "Cycloaddition",
-        "Epoxide",
-        "Tryptophan"
+        "CO2 cycloaddition",
+        "epoxides",
+        "cyclic carbonates",
+        "copper(II) metal-organic framework",
+        "tryptophan",
+        "solvent-free synthesis",
+        "catalyst reusability"
       ]
     },
     "10.1021/acs.jpclett.7b02700": {
@@ -8960,8 +8828,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.2776,
-        "citationPercentile": 0.92974497,
+        "fwci": 3.2778,
+        "citationPercentile": 0.92974067,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8989,54 +8857,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/surface-modification",
-            "name": "Surface modification",
-            "score": 0.8344430923461914
+            "id": "https://openalex.org/keywords/co2-capture",
+            "name": "CO2 capture",
+            "score": 0.9810000061988831
           },
           {
-            "id": "https://openalex.org/keywords/multivariate-statistics",
-            "name": "Multivariate statistics",
-            "score": 0.7404308319091797
+            "id": "https://openalex.org/keywords/linker-functionalization",
+            "name": "linker functionalization",
+            "score": 0.800000011920929
           },
           {
-            "id": "https://openalex.org/keywords/linker",
-            "name": "Linker",
-            "score": 0.7362583875656128
+            "id": "https://openalex.org/keywords/high-throughput-computational-screening",
+            "name": "high-throughput computational screening",
+            "score": 0.7490000128746033
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.6404107809066772
+            "id": "https://openalex.org/keywords/grand-canonical-monte-carlo-simulation",
+            "name": "grand canonical Monte Carlo simulation",
+            "score": 0.7950000166893005
           },
           {
-            "id": "https://openalex.org/keywords/selectivity",
-            "name": "Selectivity",
-            "score": 0.5170019865036011
+            "id": "https://openalex.org/keywords/co2-adsorption",
+            "name": "CO2 adsorption",
+            "score": 0.777999997138977
           },
           {
-            "id": "https://openalex.org/keywords/throughput",
-            "name": "Throughput",
-            "score": 0.46942976117134094
+            "id": "https://openalex.org/keywords/co2-n2-selectivity",
+            "name": "CO2/N2 selectivity",
+            "score": 0.972000002861023
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.4358232021331787
+            "id": "https://openalex.org/keywords/pore-size",
+            "name": "pore size",
+            "score": 0.7590000033378601
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.42999333143234253
-          },
-          {
-            "id": "https://openalex.org/keywords/nanotechnology",
-            "name": "Nanotechnology",
-            "score": 0.3905124068260193
-          },
-          {
-            "id": "https://openalex.org/keywords/computer-science",
-            "name": "Computer science",
-            "score": 0.3279068171977997
+            "id": "https://openalex.org/keywords/surface-heterogeneity",
+            "name": "surface heterogeneity",
+            "score": 0.847000002861023
           }
         ],
         "countsByYear": [
@@ -9086,7 +8944,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-29T09:58:46.893Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9105,13 +8963,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Carbon Dioxide Capture Technologies",
         "Catalytic Processes in Materials Science",
-        "Surface modification",
-        "Multivariate statistics",
-        "Linker",
-        "Metal-organic framework",
-        "Selectivity",
-        "Throughput",
-        "Adsorption"
+        "CO2 capture",
+        "linker functionalization",
+        "high-throughput computational screening",
+        "grand canonical Monte Carlo simulation",
+        "CO2 adsorption",
+        "CO2/N2 selectivity",
+        "pore size"
       ]
     },
     "10.1021/acs.chemmater.7b01565": {
@@ -9141,8 +8999,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.8348,
-        "citationPercentile": 0.91245709,
+        "fwci": 2.8349,
+        "citationPercentile": 0.91245172,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9262,7 +9120,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-30T09:27:27.532063"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9271,7 +9129,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9325,7 +9183,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0.7973,
-        "citationPercentile": 0.69304806,
+        "citationPercentile": 0.69315186,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9445,7 +9303,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9498,8 +9356,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.2566,
-        "citationPercentile": 0.96374014,
+        "fwci": 5.2584,
+        "citationPercentile": 0.96375433,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9527,54 +9385,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/density-functional-theory",
-            "name": "Density functional theory",
-            "score": 0.8732044100761414
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.9950000047683716
           },
           {
-            "id": "https://openalex.org/keywords/nanoporous",
-            "name": "Nanoporous",
-            "score": 0.7855352163314819
+            "id": "https://openalex.org/keywords/crystal-structure-refinement",
+            "name": "crystal structure refinement",
+            "score": 0.8799999952316284
           },
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.6552599668502808
+            "id": "https://openalex.org/keywords/periodic-density-functional-theory",
+            "name": "periodic density functional theory",
+            "score": 0.6980000138282776
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.6257503628730774
+            "id": "https://openalex.org/keywords/nanoporous-materials",
+            "name": "nanoporous materials",
+            "score": 0.8109999895095825
           },
           {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.5933964252471924
+            "id": "https://openalex.org/keywords/gas-adsorption",
+            "name": "gas adsorption",
+            "score": 0.828000009059906
           },
           {
-            "id": "https://openalex.org/keywords/crystal-structure-prediction",
-            "name": "Crystal structure prediction",
-            "score": 0.485590398311615
+            "id": "https://openalex.org/keywords/methane-adsorption",
+            "name": "methane adsorption",
+            "score": 0.8809999823570251
           },
           {
-            "id": "https://openalex.org/keywords/crystal-structure",
-            "name": "Crystal structure",
-            "score": 0.48107194900512695
+            "id": "https://openalex.org/keywords/co2-adsorption",
+            "name": "CO2 adsorption",
+            "score": 0.9309999942779541
           },
           {
-            "id": "https://openalex.org/keywords/work",
-            "name": "Work (physics)",
-            "score": 0.4711046814918518
+            "id": "https://openalex.org/keywords/grand-canonical-monte-carlo-simulation",
+            "name": "grand canonical Monte Carlo simulation",
+            "score": 0.6830000281333923
           },
           {
-            "id": "https://openalex.org/keywords/monte-carlo-method",
-            "name": "Monte Carlo method",
-            "score": 0.45459628105163574
-          },
-          {
-            "id": "https://openalex.org/keywords/chemical-physics",
-            "name": "Chemical physics",
-            "score": 0.3552306294441223
+            "id": "https://openalex.org/keywords/co2-loading",
+            "name": "CO2 loading",
+            "score": 0.4950000047683716
           }
         ],
         "countsByYear": [
@@ -9636,7 +9489,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9653,13 +9506,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Machine Learning in Materials Science",
         "Catalytic Processes in Materials Science",
-        "Density functional theory",
-        "Nanoporous",
-        "Metal-organic framework",
-        "Adsorption",
-        "Crystal structure prediction",
-        "Crystal structure",
-        "Work (physics)"
+        "metal-organic frameworks",
+        "crystal structure refinement",
+        "periodic density functional theory",
+        "nanoporous materials",
+        "gas adsorption",
+        "methane adsorption",
+        "CO2 adsorption"
       ]
     },
     "10.1016/j.jcou.2016.12.001": {
@@ -9688,8 +9541,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.8435,
-        "citationPercentile": 0.84451496,
+        "fwci": 1.8437,
+        "citationPercentile": 0.8446558,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -9717,54 +9570,54 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/catalysis",
-            "name": "Catalysis",
-            "score": 0.9224879741668701
+            "id": "https://openalex.org/keywords/zeolitic-imidazolate-frameworks",
+            "name": "zeolitic imidazolate frameworks",
+            "score": 0.953000009059906
           },
           {
-            "id": "https://openalex.org/keywords/zeolitic-imidazolate-framework",
-            "name": "Zeolitic imidazolate framework",
-            "score": 0.8887207508087158
+            "id": "https://openalex.org/keywords/cyclic-carbonates",
+            "name": "cyclic carbonates",
+            "score": 0.8159999847412109
+          },
+          {
+            "id": "https://openalex.org/keywords/co2-utilization",
+            "name": "CO2 utilization",
+            "score": 0.5690000057220459
+          },
+          {
+            "id": "https://openalex.org/keywords/epoxides",
+            "name": "epoxides",
+            "score": 0.8859999775886536
+          },
+          {
+            "id": "https://openalex.org/keywords/solvent-free-synthesis",
+            "name": "solvent-free synthesis",
+            "score": 0.753000020980835
           },
           {
             "id": "https://openalex.org/keywords/cycloaddition",
-            "name": "Cycloaddition",
-            "score": 0.8321042656898499
+            "name": "cycloaddition",
+            "score": 0.875
           },
           {
-            "id": "https://openalex.org/keywords/imidazolate",
-            "name": "Imidazolate",
-            "score": 0.825868546962738
+            "id": "https://openalex.org/keywords/cocatalyst",
+            "name": "cocatalyst",
+            "score": 0.675000011920929
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.5700510740280151
+            "id": "https://openalex.org/keywords/catalyst-recycling",
+            "name": "catalyst recycling",
+            "score": 0.42399999499320984
           },
           {
-            "id": "https://openalex.org/keywords/substrate",
-            "name": "Substrate (aquarium)",
-            "score": 0.5127716660499573
+            "id": "https://openalex.org/keywords/catalyst-reusability",
+            "name": "catalyst reusability",
+            "score": 0.8550000190734863
           },
           {
-            "id": "https://openalex.org/keywords/reaction-conditions",
-            "name": "Reaction conditions",
-            "score": 0.44535472989082336
-          },
-          {
-            "id": "https://openalex.org/keywords/carbon-dioxide",
-            "name": "Carbon dioxide",
-            "score": 0.420148104429245
-          },
-          {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.3649793565273285
-          },
-          {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.35705989599227905
+            "id": "https://openalex.org/keywords/reaction-mechanism",
+            "name": "reaction mechanism",
+            "score": 0.7699999809265137
           }
         ],
         "countsByYear": [
@@ -9818,7 +9671,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-30T09:50:37.389Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9835,13 +9688,13 @@
         "Carbon dioxide utilization in catalysis",
         "Chemical Synthesis and Reactions",
         "Metal-Organic Frameworks: Synthesis and Applications",
-        "Catalysis",
-        "Zeolitic imidazolate framework",
-        "Cycloaddition",
-        "Imidazolate",
-        "Substrate (aquarium)",
-        "Reaction conditions",
-        "Carbon dioxide"
+        "zeolitic imidazolate frameworks",
+        "cyclic carbonates",
+        "CO2 utilization",
+        "epoxides",
+        "solvent-free synthesis",
+        "cycloaddition",
+        "cocatalyst"
       ]
     },
     "10.1126/sciadv.1600909": {
@@ -9853,7 +9706,7 @@
         "paperId": "30895e15ffdfc666838b474aa8124271ac69ae41",
         "url": "https://www.semanticscholar.org/paper/30895e15ffdfc666838b474aa8124271ac69ae41",
         "title": "In silico discovery of metal-organic frameworks for precombustion CO2 capture using a genetic algorithm",
-        "citationCount": 283,
+        "citationCount": 284,
         "influentialCitationCount": 1,
         "referenceCount": 72,
         "fields": [
@@ -9876,8 +9729,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.5949,
-        "citationPercentile": 0.98014208,
+        "fwci": 7.5955,
+        "citationPercentile": 0.98014319,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9976,11 +9829,11 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10033,12 +9886,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2519634887",
         "title": "High-Throughput Screening of Metal–Organic Frameworks for CO2 Capture in the Presence of Water",
-        "citationCount": 170,
+        "citationCount": 171,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.0223,
-        "citationPercentile": 0.96087979,
+        "fwci": 5.0247,
+        "citationPercentile": 0.96090167,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10066,60 +9919,50 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/metal-organic-framework",
-            "name": "Metal-organic framework",
-            "score": 0.6447200179100037
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.949999988079071
           },
           {
-            "id": "https://openalex.org/keywords/throughput",
-            "name": "Throughput",
-            "score": 0.5304602384567261
+            "id": "https://openalex.org/keywords/co2-capture",
+            "name": "CO2 capture",
+            "score": 0.9929999709129333
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.45483890175819397
+            "id": "https://openalex.org/keywords/water-co-adsorption",
+            "name": "water co-adsorption",
+            "score": 0.7820000052452087
           },
           {
-            "id": "https://openalex.org/keywords/environmental-science",
-            "name": "Environmental science",
-            "score": 0.34449857473373413
+            "id": "https://openalex.org/keywords/atomic-charges",
+            "name": "atomic charges",
+            "score": 0.6779999732971191
           },
           {
-            "id": "https://openalex.org/keywords/chemical-engineering",
-            "name": "Chemical engineering",
-            "score": 0.33781296014785767
+            "id": "https://openalex.org/keywords/adsorption-isotherms",
+            "name": "adsorption isotherms",
+            "score": 0.8930000066757202
           },
           {
-            "id": "https://openalex.org/keywords/environmental-chemistry",
-            "name": "Environmental chemistry",
-            "score": 0.33714109659194946
+            "id": "https://openalex.org/keywords/electrostatic-interactions",
+            "name": "electrostatic interactions",
+            "score": 0.7749999761581421
           },
           {
-            "id": "https://openalex.org/keywords/nanotechnology",
-            "name": "Nanotechnology",
-            "score": 0.3330730199813843
+            "id": "https://openalex.org/keywords/adsorption-energy",
+            "name": "adsorption energy",
+            "score": 0.7059999704360962
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.28044450283050537
-          },
-          {
-            "id": "https://openalex.org/keywords/adsorption",
-            "name": "Adsorption",
-            "score": 0.2397266924381256
-          },
-          {
-            "id": "https://openalex.org/keywords/computer-science",
-            "name": "Computer science",
-            "score": 0.23222479224205017
+            "id": "https://openalex.org/keywords/high-throughput-screening",
+            "name": "high-throughput screening",
+            "score": 0.628000020980835
           }
         ],
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 12
+            "citationCount": 13
           },
           {
             "year": 2025,
@@ -10162,7 +10005,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-09-01T08:31:24.195828"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10171,7 +10014,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-29T09:58:46.893Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10190,13 +10033,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Machine Learning in Materials Science",
         "Catalytic Processes in Materials Science",
-        "Metal-organic framework",
-        "Throughput",
-        "Chemical engineering",
-        "Environmental chemistry",
-        "Nanotechnology",
-        "Adsorption",
-        "Computer science"
+        "metal-organic frameworks",
+        "CO2 capture",
+        "water co-adsorption",
+        "atomic charges",
+        "adsorption isotherms",
+        "electrostatic interactions",
+        "adsorption energy"
       ]
     },
     "10.1039/c5sc01784j": {
@@ -10229,8 +10072,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.8783,
-        "citationPercentile": 0.95809348,
+        "fwci": 4.8802,
+        "citationPercentile": 0.9581679,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10328,7 +10171,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-09-29T14:09:16.559479"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10337,7 +10180,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10388,8 +10231,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 15.7165,
-        "citationPercentile": 0.9957415,
+        "fwci": 15.7117,
+        "citationPercentile": 0.99574199,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10417,34 +10260,39 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/methane",
-            "name": "Methane",
-            "score": 0.6309794187545776
+            "id": "https://openalex.org/keywords/methane-storage",
+            "name": "methane storage",
+            "score": 0.8339999914169312
           },
           {
-            "id": "https://openalex.org/keywords/action",
-            "name": "Action (physics)",
-            "score": 0.6240505576133728
+            "id": "https://openalex.org/keywords/metal-organic-frameworks",
+            "name": "metal-organic frameworks",
+            "score": 0.8159999847412109
           },
           {
-            "id": "https://openalex.org/keywords/environmental-science",
-            "name": "Environmental science",
-            "score": 0.4067630171775818
+            "id": "https://openalex.org/keywords/zif-8",
+            "name": "ZIF-8",
+            "score": 0.7020000219345093
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.33868712186813354
+            "id": "https://openalex.org/keywords/nanoporous-materials",
+            "name": "nanoporous materials",
+            "score": 0.9110000133514404
           },
           {
-            "id": "https://openalex.org/keywords/process-engineering",
-            "name": "Process engineering",
-            "score": 0.3330008089542389
+            "id": "https://openalex.org/keywords/materials-genome",
+            "name": "materials genome",
+            "score": 0.8029999732971191
           },
           {
-            "id": "https://openalex.org/keywords/chemistry",
-            "name": "Chemistry",
-            "score": 0.25959572196006775
+            "id": "https://openalex.org/keywords/performance-bounds",
+            "name": "performance bounds",
+            "score": 0.7250000238418579
+          },
+          {
+            "id": "https://openalex.org/keywords/materials-screening",
+            "name": "materials screening",
+            "score": 0.5270000100135803
           }
         ],
         "countsByYear": [
@@ -10497,7 +10345,7 @@
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-10-01T08:54:57.152042"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10506,7 +10354,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-29T09:58:46.893Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10524,10 +10372,13 @@
         "Metal-Organic Frameworks: Synthesis and Applications",
         "Covalent Organic Framework Applications",
         "Methane Hydrates and Related Phenomena",
-        "Methane",
-        "Action (physics)",
-        "Environmental science",
-        "Process engineering"
+        "methane storage",
+        "metal-organic frameworks",
+        "ZIF-8",
+        "nanoporous materials",
+        "materials genome",
+        "performance bounds",
+        "materials screening"
       ]
     },
     "10.1021/cm502594j": {
@@ -10539,7 +10390,7 @@
         "paperId": "6efacf8930daa62031b27237227bdccbfb0c20b4",
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 647,
+        "citationCount": 648,
         "influentialCitationCount": 10,
         "referenceCount": 35,
         "fields": [
@@ -10685,7 +10536,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-26T08:43:09.071Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10743,7 +10594,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0.4143,
-        "citationPercentile": 0.58770115,
+        "citationPercentile": 0.5877299,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -10857,7 +10708,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-01T10:17:55.787Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10914,8 +10765,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6983,
-        "citationPercentile": 0.67929489,
+        "fwci": 0.6905,
+        "citationPercentile": 0.67553058,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -10943,54 +10794,39 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/maxima-and-minima",
-            "name": "Maxima and minima",
-            "score": 0.8238472938537598
+            "id": "https://openalex.org/keywords/glassy-polymers",
+            "name": "glassy polymers",
+            "score": 0.8209999799728394
+          },
+          {
+            "id": "https://openalex.org/keywords/atomic-mobility",
+            "name": "atomic mobility",
+            "score": 0.9210000038146973
+          },
+          {
+            "id": "https://openalex.org/keywords/physical-aging",
+            "name": "physical aging",
+            "score": 0.984000027179718
+          },
+          {
+            "id": "https://openalex.org/keywords/thermal-cycling",
+            "name": "thermal cycling",
+            "score": 0.9679999947547913
           },
           {
             "id": "https://openalex.org/keywords/energy-landscape",
-            "name": "Energy landscape",
-            "score": 0.7295790314674377
+            "name": "energy landscape",
+            "score": 0.9760000109672546
           },
           {
-            "id": "https://openalex.org/keywords/thermal",
-            "name": "Thermal",
-            "score": 0.6015478372573853
+            "id": "https://openalex.org/keywords/energy-minima",
+            "name": "energy minima",
+            "score": 0.8399999737739563
           },
           {
-            "id": "https://openalex.org/keywords/thermal-energy",
-            "name": "Thermal energy",
-            "score": 0.559040367603302
-          },
-          {
-            "id": "https://openalex.org/keywords/energy",
-            "name": "Energy (signal processing)",
-            "score": 0.476365327835083
-          },
-          {
-            "id": "https://openalex.org/keywords/shear",
-            "name": "Shear (geology)",
-            "score": 0.4562268853187561
-          },
-          {
-            "id": "https://openalex.org/keywords/potential-energy",
-            "name": "Potential energy",
-            "score": 0.45222902297973633
-          },
-          {
-            "id": "https://openalex.org/keywords/molecular-dynamics",
-            "name": "Molecular dynamics",
-            "score": 0.4283973276615143
-          },
-          {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.42333298921585083
-          },
-          {
-            "id": "https://openalex.org/keywords/physics",
-            "name": "Physics",
-            "score": 0.3467663526535034
+            "id": "https://openalex.org/keywords/mobility-improvement",
+            "name": "mobility enhancement",
+            "score": 0.3630000054836273
           }
         ],
         "countsByYear": [
@@ -11032,7 +10868,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -11051,13 +10887,13 @@
         "Material Dynamics and Properties",
         "Phase Equilibria and Thermodynamics",
         "Polymer crystallization and properties",
-        "Maxima and minima",
-        "Energy landscape",
-        "Thermal",
-        "Thermal energy",
-        "Energy (signal processing)",
-        "Shear (geology)",
-        "Potential energy"
+        "glassy polymers",
+        "atomic mobility",
+        "physical aging",
+        "thermal cycling",
+        "energy landscape",
+        "energy minima",
+        "mobility enhancement"
       ]
     },
     "10.1021/ma300431x": {
@@ -11087,8 +10923,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0948,
-        "citationPercentile": 0.87748901,
+        "fwci": 2.0716,
+        "citationPercentile": 0.87623186,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -11116,54 +10952,49 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/deformation",
-            "name": "Deformation (meteorology)",
-            "score": 0.8077099323272705
-          },
-          {
-            "id": "https://openalex.org/keywords/maxima-and-minima",
-            "name": "Maxima and minima",
-            "score": 0.6531158685684204
-          },
-          {
-            "id": "https://openalex.org/keywords/deformation-mechanism",
-            "name": "Deformation mechanism",
-            "score": 0.6385522484779358
-          },
-          {
-            "id": "https://openalex.org/keywords/energy-landscape",
-            "name": "Energy landscape",
-            "score": 0.6056715250015259
-          },
-          {
-            "id": "https://openalex.org/keywords/molecular-dynamics",
-            "name": "Molecular dynamics",
-            "score": 0.5759129524230957
+            "id": "https://openalex.org/keywords/glassy-polymers",
+            "name": "glassy polymers",
+            "score": 0.7390000224113464
           },
           {
             "id": "https://openalex.org/keywords/polystyrene",
-            "name": "Polystyrene",
-            "score": 0.5319942235946655
+            "name": "polystyrene",
+            "score": 0.9860000014305115
           },
           {
-            "id": "https://openalex.org/keywords/chemical-physics",
-            "name": "Chemical physics",
-            "score": 0.48642611503601074
+            "id": "https://openalex.org/keywords/shear-deformation",
+            "name": "shear deformation",
+            "score": 0.9729999899864197
           },
           {
-            "id": "https://openalex.org/keywords/mechanism",
-            "name": "Mechanism (biology)",
-            "score": 0.4832816421985626
+            "id": "https://openalex.org/keywords/atomic-mobility",
+            "name": "atomic mobility",
+            "score": 0.9160000085830688
           },
           {
-            "id": "https://openalex.org/keywords/polymer",
-            "name": "Polymer",
-            "score": 0.4704006612300873
+            "id": "https://openalex.org/keywords/energy-landscape",
+            "name": "energy landscape",
+            "score": 0.7889999747276306
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.4487058222293854
+            "id": "https://openalex.org/keywords/van-hove-correlation-function",
+            "name": "van Hove correlation function",
+            "score": 0.7179999947547913
+          },
+          {
+            "id": "https://openalex.org/keywords/thermally-activated-transitions",
+            "name": "thermally activated transitions",
+            "score": 0.8149999976158142
+          },
+          {
+            "id": "https://openalex.org/keywords/energy-minima",
+            "name": "energy minima",
+            "score": 0.7409999966621399
+          },
+          {
+            "id": "https://openalex.org/keywords/polymer-dynamics",
+            "name": "polymer dynamics",
+            "score": 0.5379999876022339
           }
         ],
         "countsByYear": [
@@ -11229,7 +11060,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -11246,13 +11077,13 @@
         "Material Dynamics and Properties",
         "Polymer crystallization and properties",
         "Theoretical and Computational Physics",
-        "Deformation (meteorology)",
-        "Maxima and minima",
-        "Deformation mechanism",
-        "Energy landscape",
-        "Molecular dynamics",
-        "Polystyrene",
-        "Chemical physics"
+        "glassy polymers",
+        "polystyrene",
+        "shear deformation",
+        "atomic mobility",
+        "energy landscape",
+        "van Hove correlation function",
+        "thermally activated transitions"
       ]
     },
     "10.1063/1.3698473": {
@@ -11285,8 +11116,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6983,
-        "citationPercentile": 0.66909103,
+        "fwci": 0.6905,
+        "citationPercentile": 0.6652075,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -11314,54 +11145,44 @@
         ],
         "keywords": [
           {
-            "id": "https://openalex.org/keywords/rejuvenation",
-            "name": "Rejuvenation",
-            "score": 0.7650325298309326
+            "id": "https://openalex.org/keywords/glassy-polymers",
+            "name": "glassy polymers",
+            "score": 0.843999981880188
           },
           {
-            "id": "https://openalex.org/keywords/polystyrene",
-            "name": "Polystyrene",
-            "score": 0.696991503238678
+            "id": "https://openalex.org/keywords/atactic-polystyrene",
+            "name": "atactic polystyrene",
+            "score": 0.8809999823570251
           },
           {
-            "id": "https://openalex.org/keywords/torsion",
-            "name": "Torsion (gastropod)",
-            "score": 0.6160790324211121
+            "id": "https://openalex.org/keywords/shear-deformation",
+            "name": "shear deformation",
+            "score": 0.9440000057220459
           },
           {
-            "id": "https://openalex.org/keywords/materials-science",
-            "name": "Materials science",
-            "score": 0.6156266927719116
+            "id": "https://openalex.org/keywords/physical-aging",
+            "name": "physical aging",
+            "score": 0.7799999713897705
           },
           {
-            "id": "https://openalex.org/keywords/thermal",
-            "name": "Thermal",
-            "score": 0.5405210256576538
+            "id": "https://openalex.org/keywords/glass-structure",
+            "name": "glass structure",
+            "score": 0.503000020980835
           },
           {
-            "id": "https://openalex.org/keywords/glass-transition",
-            "name": "Glass transition",
-            "score": 0.5241251587867737
+            "id": "https://openalex.org/keywords/relaxation-dynamics",
+            "name": "relaxation dynamics",
+            "score": 0.47200000286102295
           },
           {
-            "id": "https://openalex.org/keywords/polymer",
-            "name": "Polymer",
-            "score": 0.5056502819061279
+            "id": "https://openalex.org/keywords/temperature-rise",
+            "name": "temperature rise",
+            "score": 0.49900001287460327
           },
           {
-            "id": "https://openalex.org/keywords/shear",
-            "name": "Shear (geology)",
-            "score": 0.503663957118988
-          },
-          {
-            "id": "https://openalex.org/keywords/composite-material",
-            "name": "Composite material",
-            "score": 0.46498507261276245
-          },
-          {
-            "id": "https://openalex.org/keywords/molecular-dynamics",
-            "name": "Molecular dynamics",
-            "score": 0.45546895265579224
+            "id": "https://openalex.org/keywords/molecular-dynamics-simulation",
+            "name": "molecular dynamics simulation",
+            "score": 0.7179999947547913
           }
         ],
         "countsByYear": [
@@ -11415,7 +11236,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-20T08:42:08.996Z"
+          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -11433,13 +11254,13 @@
         "Material Dynamics and Properties",
         "Polymer crystallization and properties",
         "Glass properties and applications",
-        "Rejuvenation",
-        "Polystyrene",
-        "Torsion (gastropod)",
-        "Thermal",
-        "Glass transition",
-        "Polymer",
-        "Shear (geology)"
+        "glassy polymers",
+        "atactic polystyrene",
+        "shear deformation",
+        "physical aging",
+        "glass structure",
+        "relaxation dynamics",
+        "temperature rise"
       ]
     }
   }
