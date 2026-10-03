@@ -28,9 +28,32 @@ KO = {
     'lineageBounds': '추정 재대기 연결이 ID 재사용이었을 때의 보존 기록 건수 범위',
     'slurmUser': '사용자', 'step': '작업 단계', 'networkVolume': '네트워크 볼륨',
     'unknownValue': '미확인', 'bytesNote': 'GB = 10⁹ bytes · TB = 10¹² bytes',
+    'masterStorage': 'SG-Master 저장 공간',
+    'masterStorageScope': 'SG-Master에 마운트된 파일시스템입니다. 계산 노드의 로컬 디스크는 조회하지 않았습니다.',
+    'sharedStorage': '공유 저장소', 'localStorage': 'SG-Master 로컬 파일시스템',
+    'otherStorage': '유형 미확인', 'localFilesystem': '로컬 파일시스템',
+    'storageObserved': '디스크 관측 시각',
+    'storageStale': '디스크 관측 유효 시간 초과 · 현재 용량 미확인',
+    'storageTimeUnknown': '디스크 관측 시각 미확인 · 현재 용량 미확인',
+    'storageQueryFailed': '디스크 조회 실패 · 현재 용량 미확인',
+    'usagePercent': '사용률',
+    'usagePercentNote': '사용률은 df 기준으로 100 × 사용량 ÷ (사용량 + 사용자 가용량)을 올림한 백분율입니다. 예약 공간 때문에 전체 용량에서 사용량을 뺀 값과 사용자 가용량이 다를 수 있습니다.',
+    'storageAliasesNote': '동일한 파일시스템의 마운트 경로는 한 행에 묶어 표시하며, 중복 합산하지 않습니다.',
 }
 EN = {'step': 'step', 'networkVolume': 'Network volume', 'unknownValue': 'Unknown',
-      'bytesNote': 'GB = 10⁹ bytes · TB = 10¹² bytes'}
+      'bytesNote': 'GB = 10⁹ bytes · TB = 10¹² bytes',
+      'masterStorage': 'SG-Master storage',
+      'masterStorageScope': 'Filesystems mounted on SG-Master. Compute-node local disks were not queried.',
+      'sharedStorage': 'Shared storage', 'localStorage': 'SG-Master local filesystems',
+      'otherStorage': 'Unclassified', 'localFilesystem': 'Local filesystem',
+      'storageObserved': 'Storage observed',
+      'storageStale': 'Storage observation expired; current capacity unknown',
+      'storageTimeUnknown': 'Storage observation time unknown; current capacity unknown',
+      'storageQueryFailed': 'Storage query unavailable; current capacity unknown',
+      'usagePercent': 'Use%',
+      'usagePercentNote': 'Use% follows df: 100 × used / (used + user available), rounded up. Reserved space can make total minus used differ from user-available space.',
+      'storageWarning': 'User available below 10%, or below 20 GB on filesystems of at least 20 GB; user-available space excludes reserved blocks.',
+      'storageAliasesNote': 'Mount paths on the same filesystem share one row and are never added together.'}
 
 STATES_KO = {
     'RUNNING': '실행 중', 'PENDING': '대기', 'COMPLETING': '종료 처리 중',
@@ -88,14 +111,44 @@ def bilingual_template(html, localize):
     replace("t.programs.join(' · ')", "threadPrograms(t).join(' · ')")
     replace('flatMap(t=>t.programs||[])', 'flatMap(threadPrograms)')
     replace('g.processes.map(p=>p.name)', 'g.processes.map(p=>namedText(p,labels.noName))')
+    replace("byId('storage').hidden=true;byId('sockets').className='node-grid'", "renderMasterStorage(s.latest);byId('sockets').className='node-grid'")
+    replace("renderStorage(null);byId('core-heading')", "if(s.host==='sg')renderMasterStorage(s.latest);else renderStorage(null);byId('core-heading')")
     replace('<span>GB = 10⁹ bytes · TB = 10¹² bytes</span>', '<span id="units-note"></span>')
     replace('<noscript>JavaScript required.</noscript>', '<noscript>JavaScript required. / JavaScript를 활성화해 주세요.</noscript>')
     # Long Korean help and scheduler explanations must wrap on narrow screens.
-    replace('</style>', '.core-head{flex-wrap:wrap}.legend{white-space:normal}.node-top{flex-wrap:wrap}.node-detail,.gpu-name,.cluster-note{overflow-wrap:anywhere}.node:focus-visible{outline:3px solid var(--focus);outline-offset:2px}</style>')
+    replace('</style>', '.core-head{flex-wrap:wrap}.legend{white-space:normal}.node-top{flex-wrap:wrap}.node-detail,.gpu-name,.cluster-note{overflow-wrap:anywhere}.node:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:36%}.storage .master-storage-table th:last-child{width:13%}.master-storage-group{margin:16px 0 6px;font-size:12px}.master-storage-meta{margin:6px 0;font-size:11px;color:var(--muted)}.master-storage-table caption{text-align:left;font-weight:600;font-size:12px;margin:14px 0 5px}.master-storage-table .mount-alias{display:block;overflow-wrap:anywhere}@media(max-width:500px){.storage .master-storage-table{font-size:10px}.storage .master-storage-table th{font-size:9px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:32%}.master-storage-table td{overflow-wrap:anywhere}.master-storage-meta{font-size:10px}}</style>')
     helpers = r'''
 const stateNames=STATE_NAMES;
 function namedText(item,fallback=labels.unknownValue){return item.name_missing?fallback:item.name;}
 function threadPrograms(thread){return (thread.programs||[]).map((name,i)=>thread.program_names_missing?.[i]?labels.noName:name);}
+function renderMasterStorage(row){
+ const el=byId('storage'),st=row?.storage;el.hidden=false;
+ let html='<div class="storage-head"><h2>'+esc(labels.masterStorage)+'</h2></div><p class="master-storage-meta">'+esc(labels.masterStorageScope)+'</p>';
+ const stamp=instant(st?.checked_at_utc),validStamp=Number.isFinite(stamp),age=(Date.now()-stamp)/60000;
+ const fresh=validStamp&&age>=-5&&age<=data.stale_after_minutes;
+ html+='<p class="master-storage-meta">'+esc(labels.storageObserved)+': '+esc(time(st?.checked_at_utc))+(validStamp?' KST':'')+'</p>';
+ if(!st||!['ok','partial'].includes(st.status)||st.scope!=='sg_master_mounts'){
+  el.innerHTML=html+'<p class="storage-status warning-message">'+esc(labels.storageQueryFailed)+'</p>';return;
+ }
+ if(!fresh){el.innerHTML=html+'<p class="storage-status warning-message">'+esc(validStamp&&age>=-5?labels.storageStale:labels.storageTimeUnknown)+'</p>';return;}
+ if(st.low_space_filesystems)html+='<p class="space-warning" title="'+esc(labels.storageWarning)+'">'+esc(labels.lowSpace)+' · '+st.low_space_filesystems+'</p>';
+ const rows=st.volumes||[];
+ for(const [scope,title] of [['shared',labels.sharedStorage],['master_local',labels.localStorage],['unclassified',labels.otherStorage]]){
+  const volumes=rows.filter(v=>(['shared','master_local'].includes(v.scope)?v.scope:'unclassified')===scope);
+  if(!volumes.length)continue;
+  html+='<table class="master-storage-table"><caption>'+esc(title)+'</caption><thead><tr><th scope="col">'+esc(labels.mount)+'</th><th scope="col">'+esc(labels.total)+'</th><th scope="col">'+esc(labels.used)+'</th><th scope="col">'+esc(labels.available)+'</th><th scope="col" title="'+esc(labels.usagePercentNote)+'">'+esc(labels.usagePercent)+'</th></tr></thead><tbody>';
+  html+=volumes.map(v=>{
+   const observed=v.status==='mounted',warning=observed&&['low','full'].includes(v.space_status);
+   const device=v.device==='Local filesystem'?labels.localFilesystem:volumeText(v.device);
+   const mounts=v.mounts?.length?v.mounts:[device||labels.unknownValue];
+   const percent=observed&&Number.isFinite(v.use_percent)&&v.use_percent>=0&&v.use_percent<=100?v.use_percent+'%':'?';
+   return '<tr class="'+(warning?'low':'')+'"><td>'+mounts.map(m=>'<span class="mount-alias">'+esc(m)+'</span>').join('')+'<span class="volume-device">'+esc([v.fstype,device,v.mount_access==='read_only'?labels.readOnly:null,!observed?labels.usage_unknown:null].filter(Boolean).join(' · '))+'</span></td><td>'+capacity(observed?v.total_bytes:null)+'</td><td>'+capacity(observed?v.used_bytes:null)+'</td><td>'+capacity(observed?v.available_bytes:null)+(warning?'<span class="volume-device space-warning">'+esc(v.space_status==='full'?labels.fullSpace:labels.lowSpace)+'</span>':'')+'</td><td>'+percent+'</td></tr>';
+  }).join('')+'</tbody></table>';
+ }
+ if(!rows.length||st.status==='partial')html+='<p class="storage-status">'+esc(labels.storagePartial)+'</p>';
+ html+='<p class="master-storage-meta">'+esc(labels.storageAliasesNote)+'</p><p class="master-storage-meta">'+esc(labels.usagePercentNote)+'</p>';
+ el.innerHTML=html;
+}
 function stateText(value){if(language!=='ko'||!value)return value;return String(value).split('+').map(part=>{const match=part.match(/^([A-Z_]+)(.*)$/);return match&&stateNames[match[1]]?stateNames[match[1]]+' ('+part+')':labels.unknownValue+' ('+part+')';}).join(' + ');}
 function volumeText(value){return value==='Network volume'?labels.networkVolume:value==='Unknown'?labels.unknownValue:value;}
 function retentionText(value){if(!value)return '?';if(language!=='ko')return value;return String(value).replace(/\b(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b/gi,unit=>({second:'초',minute:'분',hour:'시간',day:'일',week:'주',month:'개월',year:'년'})[unit.toLowerCase().replace(/s$/,'')]);}
