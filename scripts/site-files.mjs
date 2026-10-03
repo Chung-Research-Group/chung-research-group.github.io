@@ -1,5 +1,9 @@
 export const rootFilePatterns = [/\.html$/i, /\.js$/i];
 
+// This standalone status viewer is intentionally absent from navigation/indexes.
+export const unlistedStatusPath = 'assets/status/3a15d3a8018633593678cb779c7510f56aa8ce96/index.html';
+export const isUnlistedStatusFile = file => file === unlistedStatusPath;
+
 export const staticDirectories = [
   "_ds",
   "assets",

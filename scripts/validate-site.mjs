@@ -10,6 +10,7 @@ import {
   generatedLabStatisticsFile,
   generatedPublicationJcrBandsFile,
   generatedPublicationCitationFiles,
+  isUnlistedStatusFile,
   requiredPages,
   requiredRuntimeFiles,
   rootFilePatterns,
@@ -1393,6 +1394,18 @@ for (const file of htmlFiles) {
   const html = await readFile(absolute, "utf8");
   const label = `${path.relative(repositoryRoot, siteRoot) || "."}/${file}`;
 
+  if (isUnlistedStatusFile(file)) {
+    if (!/<html\b[^>]*\blang=["']en["']/i.test(html) || !/<title>[^<]+<\/title>/i.test(html)) errors.push(`${label}: missing standalone document metadata.`);
+    if (!/<meta\b[^>]*name=["']robots["'][^>]*content=["']noindex,nofollow,noarchive["']/i.test(html)) errors.push(`${label}: status viewer must remain noindex.`);
+    if (!/<iframe\b[^>]*sandbox=["']allow-scripts["']/i.test(html) || html.includes('allow-same-origin')) errors.push(`${label}: status frame sandbox changed.`);
+    if (/<nav\b|<a\b/i.test(html)) errors.push(`${label}: standalone status viewer must not add site navigation.`);
+    for (const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)) {
+      const result = spawnSync(process.execPath, ["--check", "-"], { input: match[1], encoding: "utf8" });
+      if (result.status !== 0) errors.push(`${label}: status script syntax error\n${result.stderr.trim()}`);
+    }
+    continue;
+  }
+
   if (!html.includes("<x-dc>")) errors.push(`${label}: missing <x-dc> runtime root.`);
   if (html.includes("{{") && !html.includes("data-dc-script")) {
     errors.push(`${label}: template expressions exist without a page data script.`);
@@ -1984,7 +1997,7 @@ if (compareRoot) {
       readFile(path.join(compareRoot, file)),
       readFile(path.join(siteRoot, file))
     ]);
-    const expected = file.endsWith('.html')
+    const expected = file.endsWith('.html') && !isUnlistedStatusFile(file)
       ? await (await import('./render-static-site.mjs')).renderPublishedPage(source.toString('utf8'), { filename: file, dataRoot: siteRoot })
       : source;
     if (sha256(expected) !== sha256(built)) errors.push(`${file}: build differs from deterministic published output.`);

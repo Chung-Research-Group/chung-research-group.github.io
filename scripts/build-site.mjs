@@ -8,7 +8,7 @@ import {
   generateLabStatisticsFile,
   generatePublicationJcrBandsFile
 } from "./lab-statistics.mjs";
-import { rootFilePatterns, staticDirectories } from "./site-files.mjs";
+import { isUnlistedStatusFile, rootFilePatterns, staticDirectories } from "./site-files.mjs";
 import { renderPublishedPage } from "./render-static-site.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -81,7 +81,7 @@ await writeFile(path.join(outputRoot, ".nojekyll"), "");
 
 const manifest = {};
 for (const file of await listFiles(outputRoot)) {
-  if (file === "site-manifest.json") continue;
+  if (file === "site-manifest.json" || isUnlistedStatusFile(file)) continue;
   const bytes = await readFile(path.join(outputRoot, file));
   manifest[file] = {
     bytes: bytes.length,

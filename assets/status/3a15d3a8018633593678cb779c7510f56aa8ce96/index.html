@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Hourly laboratory computing resource observations.">
+<title>Server status · Chung Research Group</title>
+<style>
+:root{color-scheme:light dark;--bg:#f4f6f8;--ink:#172b3a;--muted:#6d7d89;--warm:#a45c13;--line:#e1e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#121a20;--ink:#edf5f8;--muted:#a2b4c0;--warm:#f3b464;--line:#35444e}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.45 system-ui,-apple-system,sans-serif}.loader{max-width:1168px;margin:auto;padding:12px 24px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}.loader p{margin:0;color:var(--muted)}.loader p[data-warning=true]{color:var(--warm)}button{background:transparent;border:1px solid var(--line);border-radius:6px;color:inherit;font:inherit;padding:4px 10px;cursor:pointer}button:focus-visible{outline:2px solid #08796c;outline-offset:2px}iframe{display:block;width:100%;min-height:100vh;border:0}iframe[hidden]{display:none}noscript{display:block;padding:24px}@media(max-width:500px){.loader{padding:10px 14px 0}}
+</style>
+</head>
+<body>
+<div class="loader"><p id="load-status" role="status" aria-live="polite">Loading server status…</p><button id="refresh" type="button">Refresh</button></div>
+<iframe id="dashboard" title="Laboratory server status" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
+<noscript>Enable JavaScript to load the server dashboard.</noscript>
+<script>
+'use strict';
+const source='https://raw.githubusercontent.com/Chung-Research-Group/chung-research-group.github.io/server-status-data/status/3a15d3a8018633593678cb779c7510f56aa8ce96.html';
+const frame=document.getElementById('dashboard'),status=document.getElementById('load-status'),button=document.getElementById('refresh');
+let activeRequest=false,lastDocument='';
+async function refresh(){
+ if(activeRequest)return;
+ activeRequest=true;button.disabled=true;
+ const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+ try{
+  const response=await fetch(source+'?t='+Date.now(),{cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',signal:controller.signal});
+  if(!response.ok)throw new Error('unavailable');
+  const html=await response.text();
+  if(html.length>2000000||!/^\s*<!doctype html>/i.test(html)||!html.includes('id="resource-data"'))throw new Error('invalid_dashboard');
+  if(html!==lastDocument){frame.srcdoc=html;lastDocument=html;}
+  frame.hidden=false;status.textContent='Server observations refresh hourly.';status.dataset.warning='false';
+ }catch{
+  status.textContent=lastDocument?'Refresh unavailable. The last loaded dashboard is shown below.':'Server status is temporarily unavailable. Retrying automatically.';
+  status.dataset.warning='true';
+ }finally{clearTimeout(timeout);activeRequest=false;button.disabled=false;}
+}
+window.addEventListener('message',event=>{
+ if(event.source!==frame.contentWindow||event.data?.type!=='mtap-server-status:size')return;
+ const height=event.data.height;
+ if(Number.isFinite(height)&&height>=240&&height<=20000)frame.style.height=Math.ceil(height)+'px';
+});
+button.addEventListener('click',refresh);
+refresh();setInterval(refresh,300000);
+</script>
+</body>
+</html>
