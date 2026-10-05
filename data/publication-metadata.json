@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-04T09:57:12.169Z",
+  "snapshotUpdatedAt": "2026-10-05T10:39:46.410Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+      "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+      "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4566,
-    "openAlexCitations": 5875,
+    "semanticScholarCitations": 4567,
+    "openAlexCitations": 5876,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1344,8 +1344,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5131,
-        "citationPercentile": 0.58808229,
+        "fwci": 0.5125,
+        "citationPercentile": 0.58795931,
         "primaryTopic": {
           "id": "https://openalex.org/T10402",
           "name": "Phase Equilibria and Thermodynamics",
@@ -1408,7 +1408,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-03T13:16:28.481748"
+        "updatedAt": "2026-10-04T09:36:47.201465"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1417,7 +1417,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2205,8 +2205,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2392,
-        "citationPercentile": 0.77663414,
+        "fwci": 1.2386,
+        "citationPercentile": 0.77632472,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2298,7 +2298,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-03T13:16:28.481748"
+        "updatedAt": "2026-10-04T09:36:47.201465"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2307,7 +2307,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7466,12 +7466,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 910,
+        "citationCount": 911,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 24.2926,
-        "citationPercentile": 0.99883482,
+        "fwci": 24.2959,
+        "citationPercentile": 0.99883489,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7532,7 +7532,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 121
+            "citationCount": 122
           },
           {
             "year": 2025,
@@ -7563,7 +7563,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-10-02T10:15:12.560889"
+        "updatedAt": "2026-10-04T09:36:47.201465"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7572,7 +7572,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8806,7 +8806,7 @@
         "paperId": "26f41b361d706473b2b9a8d40a47d78be3d33856",
         "url": "https://www.semanticscholar.org/paper/26f41b361d706473b2b9a8d40a47d78be3d33856",
         "title": "High-Throughput Computational Screening of Multivariate Metal-Organic Frameworks (MTV-MOFs) for CO2 Capture.",
-        "citationCount": 107,
+        "citationCount": 108,
         "influentialCitationCount": 0,
         "referenceCount": 30,
         "fields": [
@@ -8940,7 +8940,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
         },
         "openAlex": {
           "status": "observed",
