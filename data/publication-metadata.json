@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-05T10:39:46.410Z",
+  "snapshotUpdatedAt": "2026-10-06T10:32:50.303Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
+      "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
+      "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4567,
+    "semanticScholarCitations": 4574,
     "openAlexCitations": 5876,
     "googleScholarCitations": 6355
   },
@@ -942,7 +942,7 @@
         "paperId": "dbc4b1ecf6e4e12bf5ace9f8561e712d32faf0c3",
         "url": "https://www.semanticscholar.org/paper/dbc4b1ecf6e4e12bf5ace9f8561e712d32faf0c3",
         "title": "Multiscale, Techno-economic Evaluation of Isoreticular Series of CALF-20 for Biogas Upgrading using a Pressure/Vacuum Swing Adsorption (PVSA) Process",
-        "citationCount": 4,
+        "citationCount": 5,
         "influentialCitationCount": 0,
         "referenceCount": 0,
         "fields": [
@@ -1038,7 +1038,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-10T08:14:57.540Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "openAlex": {
           "status": "observed",
@@ -1344,31 +1344,31 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5125,
-        "citationPercentile": 0.58795931,
+        "fwci": 0.6238,
+        "citationPercentile": 0.62679414,
         "primaryTopic": {
-          "id": "https://openalex.org/T10402",
-          "name": "Phase Equilibria and Thermodynamics",
-          "score": 0.9997000098228455,
-          "subfield": "Biomedical Engineering",
+          "id": "https://openalex.org/T10967",
+          "name": "Carbon Dioxide Capture Technologies",
+          "score": 0.9926999807357788,
+          "subfield": "Mechanical Engineering",
           "field": "Engineering",
           "domain": "Physical Sciences"
         },
         "topics": [
           {
-            "id": "https://openalex.org/T10402",
-            "name": "Phase Equilibria and Thermodynamics",
-            "score": 0.9997000098228455
+            "id": "https://openalex.org/T10967",
+            "name": "Carbon Dioxide Capture Technologies",
+            "score": 0.9926999807357788
           },
           {
-            "id": "https://openalex.org/T10192",
-            "name": "Catalytic Processes in Materials Science",
-            "score": 0.9995999932289124
+            "id": "https://openalex.org/T11362",
+            "name": "Membrane Separation and Gas Transport",
+            "score": 0.001500000013038516
           },
           {
-            "id": "https://openalex.org/T10495",
-            "name": "Catalysts for Methane Reforming",
-            "score": 0.9994000196456909
+            "id": "https://openalex.org/T10353",
+            "name": "Zeolite Catalysis and Synthesis",
+            "score": 0.0007999999797903001
           }
         ],
         "keywords": [
@@ -1408,7 +1408,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-04T09:36:47.201465"
+        "updatedAt": "2026-10-05T09:50:58.205359"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1417,7 +1417,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1429,12 +1429,12 @@
         "Environmental Science",
         "Engineering",
         "Chemistry",
-        "Biomedical Engineering"
+        "Mechanical Engineering"
       ],
       "keywords": [
-        "Phase Equilibria and Thermodynamics",
-        "Catalytic Processes in Materials Science",
-        "Catalysts for Methane Reforming",
+        "Carbon Dioxide Capture Technologies",
+        "Membrane Separation and Gas Transport",
+        "Zeolite Catalysis and Synthesis",
         "vacuum pressure swing adsorption",
         "PET bottle waste",
         "techno-economic analysis",
@@ -1896,7 +1896,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 102,
+        "citationCount": 104,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -2007,7 +2007,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-03T09:17:10.248Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2205,12 +2205,12 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2386,
-        "citationPercentile": 0.77632472,
+        "fwci": 1.2643,
+        "citationPercentile": 0.77831689,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
-          "score": 1,
+          "score": 0.7387999892234802,
           "subfield": "Electronic, Optical and Magnetic Materials",
           "field": "Materials Science",
           "domain": "Physical Sciences"
@@ -2219,17 +2219,17 @@
           {
             "id": "https://openalex.org/T10179",
             "name": "Supercapacitor Materials and Fabrication",
-            "score": 1
+            "score": 0.7387999892234802
           },
           {
-            "id": "https://openalex.org/T10018",
-            "name": "Advancements in Battery Materials",
-            "score": 0.9998999834060669
+            "id": "https://openalex.org/T11690",
+            "name": "Advanced battery technologies research",
+            "score": 0.23579999804496765
           },
           {
-            "id": "https://openalex.org/T12046",
-            "name": "MXene and MAX Phase Materials",
-            "score": 0.9977999925613403
+            "id": "https://openalex.org/T10096",
+            "name": "Metal-Organic Frameworks: Synthesis and Applications",
+            "score": 0.013199999928474426
           }
         ],
         "keywords": [
@@ -2298,7 +2298,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-04T09:36:47.201465"
+        "updatedAt": "2026-10-05T09:50:58.205359"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2307,7 +2307,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-05T10:39:46.410Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2323,8 +2323,8 @@
       ],
       "keywords": [
         "Supercapacitor Materials and Fabrication",
-        "Advancements in Battery Materials",
-        "MXene and MAX Phase Materials",
+        "Advanced battery technologies research",
+        "Metal-Organic Frameworks: Synthesis and Applications",
         "lanthanide metal-organic frameworks",
         "flexible energy storage",
         "hexahydroxytriphenylene",
@@ -7280,7 +7280,7 @@
         "paperId": "d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "url": "https://www.semanticscholar.org/paper/d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 145,
+        "citationCount": 146,
         "influentialCitationCount": 1,
         "referenceCount": 68,
         "fields": [
@@ -7412,7 +7412,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-21T09:07:31.552Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7451,7 +7451,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 730,
+        "citationCount": 731,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7568,7 +7568,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-04T09:57:12.169Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "openAlex": {
           "status": "observed",
@@ -10390,7 +10390,7 @@
         "paperId": "6efacf8930daa62031b27237227bdccbfb0c20b4",
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 649,
+        "citationCount": 651,
         "influentialCitationCount": 10,
         "referenceCount": 35,
         "fields": [
@@ -10536,7 +10536,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-03T09:17:10.248Z"
+          "contentUpdatedAt": "2026-10-06T10:32:50.303Z"
         },
         "openAlex": {
           "status": "observed",
