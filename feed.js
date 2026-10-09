@@ -75,6 +75,7 @@ const norm = (parts) => parts.flatMap(s => {
 
 // Newest first. { y: year, m: 2-digit month, parts: [...] }
 const NEWS_RAW = [
+  { y: '2026', m: '09', parts: [P('Yu Chen', 'm-chen'), ' received the 2025–2026 ', { t: 'Chinese Government Award for Outstanding Self-Financed Students Abroad', journal: true, href: 'https://kr.china-embassy.gov.cn/sghd/202609/t20260923_12029488.htm' }, '. Congratulations!'] },
   { y: '2026', m: '05', parts: [P('Prof. Chung', 'p-chung'), " and Prof. Lah's invited review paper on Structural Demons has been published in the special issue of the ", J('Israel Journal of Chemistry', 'ijc', '10.1002/ijch.70028'), '.'] },
   { y: '2026', m: '03', parts: [P('Muhammad', 'm-hassan'), "'s review paper on direct air capture has been published in the ", J('Chemical Engineering Journal', 'cej', '10.1016/j.cej.2026.175117'), '. Congratulations!'] },
   { y: '2026', m: '03', parts: [P('Haewon', 'a-haewon'), ' and ', P('Taekgi', 'm-lee'), "'s paper on machine learning and large language models to predict lithium ion conductivity in solid-state electrolytes has been published in the ", J('Journal of Chemical Physics', 'jcp', '10.1063/5.0307954'), '. Congratulations!'] },
