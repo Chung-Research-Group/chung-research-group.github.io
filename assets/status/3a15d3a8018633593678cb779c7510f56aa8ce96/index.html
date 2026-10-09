@@ -21,28 +21,30 @@
  <p id="load-status" role="status" aria-live="polite">Loading server status…</p>
  <div class="controls">
   <div id="languages" class="languages" role="group" aria-label="Display language">
-   <button id="language-ko" type="button" aria-label="View in Korean" aria-pressed="false">KOR</button>
    <button id="language-en" type="button" aria-label="View in English" aria-pressed="true">ENG</button>
+   <button id="language-ko" type="button" aria-label="View in Korean" aria-pressed="false">KOR</button>
    <button id="language-zh" type="button" lang="zh-Hans" aria-label="View in Simplified Chinese" aria-pressed="false">中文</button>
+   <button id="language-ur" type="button" lang="ur" dir="rtl" aria-label="View in Urdu" aria-pressed="false">اردو</button>
    <button id="language-fa" type="button" lang="fa" dir="rtl" aria-label="View in Farsi" aria-pressed="false">فارسی</button>
   </div>
   <button id="refresh" type="button">Refresh</button>
  </div>
 </div>
 <iframe id="dashboard" title="Laboratory server status" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
-<noscript><span lang="en">Enable JavaScript to load the server dashboard.</span> <span lang="ko">서버 상태를 보려면 자바스크립트를 활성화해 주세요.</span> <span lang="zh-Hans">请启用 JavaScript 以加载服务器状态。</span> <span lang="fa" dir="rtl">برای نمایش وضعیت سرور، JavaScript را فعال کنید.</span></noscript>
+<noscript><span lang="en">Enable JavaScript to load the server dashboard.</span> <span lang="ko">서버 상태를 보려면 자바스크립트를 활성화해 주세요.</span> <span lang="zh-Hans">请启用 JavaScript 以加载服务器状态。</span> <span lang="fa" dir="rtl">برای نمایش وضعیت سرور، JavaScript را فعال کنید.</span> <span lang="ur" dir="rtl">سرور کی صورتِ حال دیکھنے کے لیے JavaScript فعال کریں۔</span></noscript>
 <script>
 'use strict';
 const source='https://raw.githubusercontent.com/Chung-Research-Group/chung-research-group.github.io/server-status-data/status/3a15d3a8018633593678cb779c7510f56aa8ce96.html';
 const frame=document.getElementById('dashboard'),status=document.getElementById('load-status'),button=document.getElementById('refresh');
-const languageCodes=['ko','en','zh','fa'];
+const languageCodes=['en','ko','zh','ur','fa'];
 const languageGroup=document.getElementById('languages'),languageButtons=Object.fromEntries(languageCodes.map(code=>[code,document.getElementById('language-'+code)]));
 const languageKey='mtap-server-status:language';
 const messages={
- en:{title:'Server status — Chung Research Group',description:'Hourly laboratory computing resource observations.',frame:'Laboratory server status',language:'Display language',ko:'View in Korean',en:'View in English',zh:'View in Simplified Chinese',fa:'View in Farsi',refresh:'Refresh',loading:'Loading server status…',loaded:'Server observations refresh hourly.',cached:'Refresh unavailable. The last loaded dashboard is shown below.',unavailable:'Server status is temporarily unavailable. Retrying automatically.'},
- ko:{title:'서버 상태 — Chung Research Group',description:'매시간 수집하는 연구실 컴퓨팅 자원 현황입니다.',frame:'연구실 서버 상태',language:'표시 언어',ko:'한국어로 보기',en:'영어로 보기',zh:'중국어 간체로 보기',fa:'페르시아어로 보기',refresh:'새로고침',loading:'서버 상태를 불러오는 중…',loaded:'서버 상태는 매시간 수집됩니다.',cached:'새로고침할 수 없습니다. 마지막으로 불러온 서버 상태를 표시합니다.',unavailable:'일시적으로 서버 상태를 불러올 수 없습니다. 자동으로 다시 시도합니다.'},
- zh:{title:'服务器状态 — Chung Research Group',description:'每小时采集的研究室计算资源状态。',frame:'研究室服务器状态',language:'显示语言',ko:'以韩语查看',en:'以英语查看',zh:'以简体中文查看',fa:'以波斯语查看',refresh:'刷新',loading:'正在加载服务器状态…',loaded:'服务器状态每小时采集一次。',cached:'无法刷新。下方显示最近一次加载的服务器状态。',unavailable:'服务器状态暂时不可用，正在自动重试。'},
- fa:{title:'وضعیت سرور — Chung Research Group',description:'مشاهدات ساعتی منابع محاسباتی آزمایشگاه.',frame:'وضعیت سرورهای آزمایشگاه',language:'زبان نمایش',ko:'نمایش به کره‌ای',en:'نمایش به انگلیسی',zh:'نمایش به چینی ساده‌شده',fa:'نمایش به فارسی',refresh:'تازه‌سازی',loading:'در حال بارگذاری وضعیت سرور…',loaded:'وضعیت سرورها هر ساعت گردآوری می‌شود.',cached:'تازه‌سازی ممکن نیست. آخرین وضعیت بارگذاری‌شده در پایین نمایش داده می‌شود.',unavailable:'وضعیت سرور موقتاً در دسترس نیست. تلاش مجدد خودکار انجام می‌شود.'}
+ en:{title:'Server status — Chung Research Group',description:'Hourly laboratory computing resource observations.',frame:'Laboratory server status',language:'Display language',ko:'View in Korean',en:'View in English',zh:'View in Simplified Chinese',fa:'View in Farsi',ur:'View in Urdu',refresh:'Refresh',loading:'Loading server status…',loaded:'Server observations refresh hourly.',cached:'Refresh unavailable. The last loaded dashboard is shown below.',unavailable:'Server status is temporarily unavailable. Retrying automatically.'},
+ ko:{title:'서버 상태 — Chung Research Group',description:'매시간 수집하는 연구실 컴퓨팅 자원 현황입니다.',frame:'연구실 서버 상태',language:'표시 언어',ko:'한국어로 보기',en:'영어로 보기',zh:'중국어 간체로 보기',fa:'페르시아어로 보기',ur:'우르두어로 보기',refresh:'새로고침',loading:'서버 상태를 불러오는 중…',loaded:'서버 상태는 매시간 수집됩니다.',cached:'새로고침할 수 없습니다. 마지막으로 불러온 서버 상태를 표시합니다.',unavailable:'일시적으로 서버 상태를 불러올 수 없습니다. 자동으로 다시 시도합니다.'},
+ zh:{title:'服务器状态 — Chung Research Group',description:'每小时采集的研究室计算资源状态。',frame:'研究室服务器状态',language:'显示语言',ko:'以韩语查看',en:'以英语查看',zh:'以简体中文查看',fa:'以波斯语查看',ur:'以乌尔都语查看',refresh:'刷新',loading:'正在加载服务器状态…',loaded:'服务器状态每小时采集一次。',cached:'无法刷新。下方显示最近一次加载的服务器状态。',unavailable:'服务器状态暂时不可用，正在自动重试。'},
+ fa:{title:'وضعیت سرور — Chung Research Group',description:'مشاهدات ساعتی منابع محاسباتی آزمایشگاه.',frame:'وضعیت سرورهای آزمایشگاه',language:'زبان نمایش',ko:'نمایش به کره‌ای',en:'نمایش به انگلیسی',zh:'نمایش به چینی ساده‌شده',fa:'نمایش به فارسی',ur:'نمایش به اردو',refresh:'تازه‌سازی',loading:'در حال بارگذاری وضعیت سرور…',loaded:'وضعیت سرورها هر ساعت گردآوری می‌شود.',cached:'تازه‌سازی ممکن نیست. آخرین وضعیت بارگذاری‌شده در پایین نمایش داده می‌شود.',unavailable:'وضعیت سرور موقتاً در دسترس نیست. تلاش مجدد خودکار انجام می‌شود.'},
+ ur:{title:'سرور کی صورتِ حال — Chung Research Group',description:'تحقیق گاہ کے حسابی وسائل کا ہر گھنٹے مشاہدہ۔',frame:'تحقیق گاہ کے سرور کی صورتِ حال',language:'زبان',en:'انگریزی میں دیکھیں',ko:'کوریائی میں دیکھیں',zh:'آسان چینی میں دیکھیں',ur:'اردو میں دیکھیں',fa:'فارسی میں دیکھیں',refresh:'تازہ کریں',loading:'سرور کی صورتِ حال لوڈ ہو رہی ہے…',loaded:'سرور کی صورتِ حال ہر گھنٹے جمع کی جاتی ہے۔',cached:'تازہ کرنا ممکن نہیں۔ آخری لوڈ شدہ صورتِ حال نیچے دکھائی گئی ہے۔',unavailable:'سرور کی صورتِ حال عارضی طور پر دستیاب نہیں۔ خودکار کوشش جاری ہے۔'}
 };
 function initialLanguage(){
  try{const saved=localStorage.getItem(languageKey);if(languageCodes.includes(saved))return saved;}catch{}
@@ -58,7 +60,7 @@ function sendLanguage(){
 }
 function renderLanguage(){
  const labels=messages[language];
- document.documentElement.lang=language==='zh'?'zh-Hans':language;document.documentElement.dir=language==='fa'?'rtl':'ltr';document.title=labels.title;
+ document.documentElement.lang=language==='zh'?'zh-Hans':language;document.documentElement.dir=['fa','ur'].includes(language)?'rtl':'ltr';document.title=labels.title;
  document.querySelector('meta[name="description"]').content=labels.description;
  frame.title=labels.frame;languageGroup.setAttribute('aria-label',labels.language);
  for(const code of languageCodes){

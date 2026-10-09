@@ -1,6 +1,8 @@
 """Language support for the public dashboard; no collection or publishing I/O."""
 import json
 from dashboard_languages import ZH, FA, STATES_ZH, STATES_FA, RETENTION_UNITS, RTL_CSS
+from urdu_languages import UR, STATES_UR, RETENTION_UR
+RETENTION_UNITS = {**RETENTION_UNITS, "ur": RETENTION_UR}
 
 
 KO = {
@@ -85,7 +87,7 @@ def bilingual_template(html, localize):
             raise ValueError('Bilingual template drift: ' + before[:70])
         html = html.replace(before, after, 1)
 
-    labels = {'en': {**localize.EN, **EN}, 'ko': {**localize.KO, **KO}, 'zh': ZH, 'fa': FA}
+    labels = {'en': {**localize.EN, **EN}, 'ko': {**localize.KO, **KO}, 'zh': ZH, 'fa': FA, 'ur': UR}
     for code, dictionary in labels.items():
         if dictionary.keys() != labels['en'].keys():
             raise ValueError('Dashboard dictionary keys differ: ' + code)
@@ -93,7 +95,7 @@ def bilingual_template(html, localize):
     start = html.index('const labels=')
     end = html.index(';\nconst data=', start)
     html = html[:start] + 'const dictionaries=' + encoded + ";\nlet language='en',labels=dictionaries.en" + html[end:]
-    replace("new Intl.DateTimeFormat('en-GB',", "new Intl.DateTimeFormat({en:'en-GB',ko:'ko-KR',zh:'zh-CN',fa:'fa-IR-u-ca-gregory-nu-latn'}[language],")
+    replace("new Intl.DateTimeFormat('en-GB',", "new Intl.DateTimeFormat({en:'en-GB',ko:'ko-KR',zh:'zh-CN',fa:'fa-IR-u-ca-gregory-nu-latn',ur:'ur-PK-u-ca-gregory-nu-latn'}[language],")
     replace(".format(new Date(s)):'Unknown';", ".format(new Date(s)):labels.unknownValue;")
     replace('<th>User</th>', "<th>'+esc(labels.slurmUser)+'</th>")
     replace("+' · step '+", "+' · '+esc(labels.step)+' '+")
@@ -118,8 +120,8 @@ def bilingual_template(html, localize):
     replace("byId('storage').hidden=true;byId('sockets').className='node-grid'", "renderMasterStorage(s.latest);byId('sockets').className='node-grid'")
     replace("renderStorage(null);byId('core-heading')", "if(s.host==='sg')renderMasterStorage(s.latest);else renderStorage(null);byId('core-heading')")
     replace('<span>GB = 10⁹ bytes · TB = 10¹² bytes</span>', '<span id="units-note"></span>')
-    replace('<noscript>JavaScript required.</noscript>', '<noscript>JavaScript required. / JavaScript를 활성화해 주세요. / 请启用 JavaScript。 / لطفاً JavaScript را فعال کنید.</noscript>')
-    replace("i+(e.key==='ArrowRight'?1:servers.length-1)", "i+((e.key==='ArrowRight')!==(language==='fa')?1:servers.length-1)")
+    replace('<noscript>JavaScript required.</noscript>', '<noscript>JavaScript required. / JavaScript를 활성화해 주세요. / 请启用 JavaScript。 / لطفاً JavaScript را فعال کنید. / براہِ کرم JavaScript فعال کریں۔</noscript>')
+    replace("i+(e.key==='ArrowRight'?1:servers.length-1)", "i+((e.key==='ArrowRight')!==(['fa','ur'].includes(language))?1:servers.length-1)")
     replace('</style>', RTL_CSS + '</style>')
     # Long Korean help and scheduler explanations must wrap on narrow screens.
     replace('</style>', '.core-head{flex-wrap:wrap}.legend{white-space:normal}.node-top{flex-wrap:wrap}.node-detail,.gpu-name,.cluster-note{overflow-wrap:anywhere}.node:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:36%}.storage .master-storage-table th:last-child{width:13%}.master-storage-group{margin:16px 0 6px;font-size:12px}.master-storage-meta{margin:6px 0;font-size:11px;color:var(--muted)}.master-storage-table caption{text-align:left;font-weight:600;font-size:12px;margin:14px 0 5px}.master-storage-table .mount-alias{display:block;overflow-wrap:anywhere}@media(max-width:500px){.storage .master-storage-table{font-size:10px}.storage .master-storage-table th{font-size:9px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:32%}.master-storage-table td{overflow-wrap:anywhere}.master-storage-meta{font-size:10px}}</style>')
@@ -176,8 +178,8 @@ function repaint(){
  document.querySelectorAll('details').forEach((el,i)=>{el.open=opened.includes(i);});
 }
 function setLanguage(value){
- if(!['en','ko','zh','fa'].includes(value))return;
- language=value;labels=dictionaries[value];document.documentElement.lang=value==='zh'?'zh-Hans':value;document.documentElement.dir=value==='fa'?'rtl':'ltr';repaint();
+ if(!['en','ko','zh','ur','fa'].includes(value))return;
+ language=value;labels=dictionaries[value];document.documentElement.lang=value==='zh'?'zh-Hans':value;document.documentElement.dir=['fa','ur'].includes(value)?'rtl':'ltr';repaint();
 }
 if(typeof window!=='undefined'){
  window.addEventListener('message',event=>{
@@ -186,6 +188,6 @@ if(typeof window!=='undefined'){
  });
  window.parent.postMessage({type:'mtap-server-status:ready'},'*');
 }
-'''.replace('STATE_NAMES', json.dumps({'ko': STATES_KO, 'zh': STATES_ZH, 'fa': STATES_FA}, ensure_ascii=False)).replace('RETENTION_UNITS', json.dumps(RETENTION_UNITS, ensure_ascii=False))
+'''.replace('STATE_NAMES', json.dumps({'ko': STATES_KO, 'zh': STATES_ZH, 'fa': STATES_FA, 'ur': STATES_UR}, ensure_ascii=False)).replace('RETENTION_UNITS', json.dumps(RETENTION_UNITS, ensure_ascii=False))
     replace('render();setInterval(render,60000);', helpers + 'repaint();setInterval(repaint,60000);')
     return html

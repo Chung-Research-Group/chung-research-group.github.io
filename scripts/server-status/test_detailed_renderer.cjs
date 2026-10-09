@@ -205,6 +205,7 @@ test('Chinese and Farsi repaint all four servers without changing data or host s
     for (const [code,title,lang,dir] of [
       ['zh','服务器资源状态','zh-Hans','ltr'],
       ['fa','وضعیت منابع سرور','fa','rtl'],
+      ['ur','سرور وسائل کی صورتِ حال','ur','rtl'],
       ['en','Compute resources','en','ltr']
     ]) {
       vm.runInContext('setLanguage('+JSON.stringify(code)+')', h.context);
@@ -219,14 +220,14 @@ test('Chinese and Farsi repaint all four servers without changing data or host s
 });
 
 test('translated failed and stale samples never become current capacity', () => {
-  for (const code of ['zh','fa']) {
+  for (const code of ['zh','fa','ur']) {
     const h = harness(fixture());
     vm.runInContext('setLanguage('+JSON.stringify(code)+')',h.context);
     h.tick(86);
     assert.equal(h.get('sockets').innerHTML,'');
     assert.equal(h.get('gpus').innerHTML,'');
     assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.unknown',h.context)));
-    assert.equal(vm.runInContext("time('invalid')",h.context),code==='zh'?'未知':'نامشخص');
+    assert.equal(vm.runInContext("time('invalid')",h.context),({zh:'未知',fa:'نامشخص',ur:'نامعلوم'})[code]);
     const failed = fixture();failed.servers.forEach(s=>s.latest.status='failed');
     const f = harness(failed);
     vm.runInContext('setLanguage('+JSON.stringify(code)+')',f.context);
@@ -237,7 +238,7 @@ test('translated failed and stale samples never become current capacity', () => 
 
 test('localized retention and scheduler states preserve units and raw codes', () => {
   const h = harness(fixture());
-  for (const [code,month,year] of [['zh','12 个月','1 年'],['fa','12 ماه','1 سال']]) {
+  for (const [code,month,year] of [['zh','12 个月','1 年'],['fa','12 ماه','1 سال'],['ur','12 مہینے','1 سال']]) {
     vm.runInContext('setLanguage('+JSON.stringify(code)+')',h.context);
     assert.equal(vm.runInContext("retentionText('12 months')",h.context),month);
     assert.equal(vm.runInContext("retentionText('1 year')",h.context),year);
@@ -261,6 +262,17 @@ test('Farsi keyboard arrows follow the visual RTL tab order', () => {
   assert.equal(vm.runInContext('activeHost',h.context),'carbon');
   h.get('tabs').listeners.keydown({key:'ArrowRight',preventDefault(){}});
   assert.equal(vm.runInContext('activeHost',h.context),'sg');
+});
+
+test('Urdu dates and arrows retain Gregorian KST and RTL ordering', () => {
+ const h=harness(fixture(),'sg');
+ vm.runInContext("setLanguage('ur')",h.context);
+ const expected=new Intl.DateTimeFormat('ur-PK-u-ca-gregory-nu-latn',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(baseNow));
+ assert.equal(vm.runInContext('time('+JSON.stringify(new Date(baseNow).toISOString())+')',h.context),expected);
+ h.get('tabs').listeners.keydown({key:'ArrowLeft',preventDefault(){}});
+ assert.equal(vm.runInContext('activeHost',h.context),'carbon');
+ h.get('tabs').listeners.keydown({key:'ArrowRight',preventDefault(){}});
+ assert.equal(vm.runInContext('activeHost',h.context),'sg');
 });
 
 console.log('Detailed renderer DOM-state checks passed: ' + passed);

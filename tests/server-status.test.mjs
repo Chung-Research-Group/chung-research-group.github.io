@@ -19,8 +19,8 @@ function runtime(fetcher,{savedLanguage=null,navigatorLanguage='en-US',storageBl
  const frame={...element(),hidden:true,srcdoc:'',style:{},contentWindow:{postMessage:(message,origin)=>messages.push({message,origin})}};
  const status={textContent:'',dataset:{}};
  const button={disabled:false,addEventListener:(event,fn)=>{callbacks[event]=fn;}};
- const listeners={},description={},languageGroup=element(),languageButtons={ko:element(),en:element(),zh:element(),fa:element()};
- const document={documentElement:{},title:'',querySelector:()=>description,getElementById:id=>({'dashboard':frame,'load-status':status,'refresh':button,'languages':languageGroup,'language-ko':languageButtons.ko,'language-en':languageButtons.en,'language-zh':languageButtons.zh,'language-fa':languageButtons.fa})[id]};
+ const listeners={},description={},languageGroup=element(),languageButtons={ko:element(),en:element(),zh:element(),fa:element(),ur:element()};
+ const document={documentElement:{},title:'',querySelector:()=>description,getElementById:id=>({'dashboard':frame,'load-status':status,'refresh':button,'languages':languageGroup,'language-ko':languageButtons.ko,'language-en':languageButtons.en,'language-zh':languageButtons.zh,'language-fa':languageButtons.fa,'language-ur':languageButtons.ur})[id]};
  const context={document,navigator:{language:navigatorLanguage,languages:[navigatorLanguage]},
   localStorage:{getItem:key=>{assert.equal(key,'mtap-server-status:language');if(storageBlocked)throw new Error('storage_blocked');return savedLanguage;},setItem:(key,value)=>{if(storageBlocked)throw new Error('storage_blocked');writes.push({key,value});}},
   window:{addEventListener:(event,fn)=>{listeners[event]=fn;}},AbortController,Date,Number,Math,
@@ -139,11 +139,11 @@ test('frame load and trusted ready messages restore the currently selected langu
 
 test('Chinese and Farsi preferences, browser defaults and directions work',async()=>{
  for(const [savedLanguage,navigatorLanguage,expected] of [
-  [null,'zh-CN','zh'],[null,'fa-IR','fa'],['fa','en-US','fa'],['zh','ko-KR','zh'],['invalid','fa-IR','fa']
+  [null,'ur-PK','ur'],['ur','en-US','ur'],[null,'zh-CN','zh'],[null,'fa-IR','fa'],['fa','en-US','fa'],['zh','ko-KR','zh'],['invalid','fa-IR','fa']
  ]){
   const r=runtime(async()=>({ok:true,text:async()=>fixture}),{savedLanguage,navigatorLanguage});await drain();
   assert.equal(r.document.documentElement.lang,expected==='zh'?'zh-Hans':expected);
-  assert.equal(r.document.documentElement.dir,expected==='fa'?'rtl':'ltr');
+  assert.equal(r.document.documentElement.dir,['fa','ur'].includes(expected)?'rtl':'ltr');
   assert.equal(r.languageButtons[expected].attributes['aria-pressed'],'true');
   assert.equal(r.requests.length,1);
  }
@@ -152,7 +152,7 @@ test('Chinese and Farsi preferences, browser defaults and directions work',async
 test('new language switches preserve the loaded document and restore LTR',async()=>{
  const r=runtime(async()=>({ok:true,text:async()=>fixture}));await drain();
  for(const [code,refresh,lang,dir] of [
-  ['zh','刷新','zh-Hans','ltr'],['fa','تازه‌سازی','fa','rtl'],['en','Refresh','en','ltr'],['ko','새로고침','ko','ltr']
+  ['zh','刷新','zh-Hans','ltr'],['fa','تازه‌سازی','fa','rtl'],['ur','تازہ کریں','ur','rtl'],['en','Refresh','en','ltr'],['ko','새로고침','ko','ltr']
  ]){
   r.languageButtons[code].listeners.click();
   assert.equal(r.button.textContent,refresh);
@@ -168,7 +168,8 @@ test('new language switches preserve the loaded document and restore LTR',async(
 test('new language loading and failed refresh messages are translated',async()=>{
  for(const [code,loadingText,failedText] of [
   ['zh','正在加载服务器状态…','服务器状态暂时不可用，正在自动重试。'],
-  ['fa','در حال بارگذاری وضعیت سرور…','وضعیت سرور موقتاً در دسترس نیست. تلاش مجدد خودکار انجام می‌شود.']
+  ['fa','در حال بارگذاری وضعیت سرور…','وضعیت سرور موقتاً در دسترس نیست. تلاش مجدد خودکار انجام می‌شود.'],
+  ['ur','سرور کی صورتِ حال لوڈ ہو رہی ہے…','سرور کی صورتِ حال عارضی طور پر دستیاب نہیں۔ خودکار کوشش جاری ہے۔']
  ]){
   const loading=runtime(()=>new Promise(()=>{}),{savedLanguage:code});
   assert.equal(loading.status.textContent,loadingText);
@@ -176,4 +177,8 @@ test('new language loading and failed refresh messages are translated',async()=>
   assert.equal(failed.status.textContent,failedText);
   assert.equal(failed.frame.hidden,true);
  }
+});
+
+test('language button DOM order follows the requested order',()=>{
+ assert.deepEqual([...source.matchAll(/<button id="language-([a-z]+)"/g)].map(m=>m[1]),['en','ko','zh','ur','fa']);
 });
