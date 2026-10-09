@@ -11,6 +11,9 @@
 :root{color-scheme:light dark;--bg:#f4f6f8;--ink:#172b3a;--muted:#6d7d89;--warm:#a45c13;--line:#e1e7eb}
 @media(prefers-color-scheme:dark){:root{--bg:#121a20;--ink:#edf5f8;--muted:#a2b4c0;--warm:#f3b464;--line:#35444e}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.45 system-ui,-apple-system,sans-serif}.loader{max-width:1168px;margin:auto;padding:12px 24px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.loader p{margin:0;color:var(--muted);flex:1 1 220px}.loader p[data-warning=true]{color:var(--warm)}.controls{display:flex;align-items:center;gap:12px}.languages{display:flex;gap:4px}button{background:transparent;border:1px solid var(--line);border-radius:6px;color:inherit;font:inherit;padding:6px 10px;min-height:36px;cursor:pointer}button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}button:focus-visible{outline:2px solid #08796c;outline-offset:2px}button:disabled{cursor:wait;opacity:.6}iframe{display:block;width:100%;min-height:100vh;border:0}iframe[hidden]{display:none}noscript{display:block;padding:24px}@media(max-width:500px){.loader{padding:10px 14px 0;gap:10px}.loader p{flex-basis:100%}button{min-height:44px}}
+.controls{flex-wrap:wrap;justify-content:flex-end}.languages{direction:ltr;flex-wrap:wrap}button{white-space:nowrap}
+[dir=rtl] .loader{text-align:right}
+@media(max-width:500px){.controls{gap:6px}.languages{gap:3px}button{padding:6px 8px}}
 </style>
 </head>
 <body>
@@ -20,25 +23,34 @@
   <div id="languages" class="languages" role="group" aria-label="Display language">
    <button id="language-ko" type="button" aria-label="View in Korean" aria-pressed="false">KOR</button>
    <button id="language-en" type="button" aria-label="View in English" aria-pressed="true">ENG</button>
+   <button id="language-zh" type="button" lang="zh-Hans" aria-label="View in Simplified Chinese" aria-pressed="false">中文</button>
+   <button id="language-fa" type="button" lang="fa" dir="rtl" aria-label="View in Farsi" aria-pressed="false">فارسی</button>
   </div>
   <button id="refresh" type="button">Refresh</button>
  </div>
 </div>
 <iframe id="dashboard" title="Laboratory server status" sandbox="allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
-<noscript><span lang="en">Enable JavaScript to load the server dashboard.</span> <span lang="ko">서버 상태를 보려면 자바스크립트를 활성화해 주세요.</span></noscript>
+<noscript><span lang="en">Enable JavaScript to load the server dashboard.</span> <span lang="ko">서버 상태를 보려면 자바스크립트를 활성화해 주세요.</span> <span lang="zh-Hans">请启用 JavaScript 以加载服务器状态。</span> <span lang="fa" dir="rtl">برای نمایش وضعیت سرور، JavaScript را فعال کنید.</span></noscript>
 <script>
 'use strict';
 const source='https://raw.githubusercontent.com/Chung-Research-Group/chung-research-group.github.io/server-status-data/status/3a15d3a8018633593678cb779c7510f56aa8ce96.html';
 const frame=document.getElementById('dashboard'),status=document.getElementById('load-status'),button=document.getElementById('refresh');
-const languageGroup=document.getElementById('languages'),languageButtons={ko:document.getElementById('language-ko'),en:document.getElementById('language-en')};
+const languageCodes=['ko','en','zh','fa'];
+const languageGroup=document.getElementById('languages'),languageButtons=Object.fromEntries(languageCodes.map(code=>[code,document.getElementById('language-'+code)]));
 const languageKey='mtap-server-status:language';
 const messages={
- en:{title:'Server status — Chung Research Group',description:'Hourly laboratory computing resource observations.',frame:'Laboratory server status',language:'Display language',ko:'View in Korean',en:'View in English',refresh:'Refresh',loading:'Loading server status…',loaded:'Server observations refresh hourly.',cached:'Refresh unavailable. The last loaded dashboard is shown below.',unavailable:'Server status is temporarily unavailable. Retrying automatically.'},
- ko:{title:'서버 상태 — Chung Research Group',description:'매시간 수집하는 연구실 컴퓨팅 자원 현황입니다.',frame:'연구실 서버 상태',language:'표시 언어',ko:'한국어로 보기',en:'영어로 보기',refresh:'새로고침',loading:'서버 상태를 불러오는 중…',loaded:'서버 상태는 매시간 수집됩니다.',cached:'새로고침할 수 없습니다. 마지막으로 불러온 서버 상태를 표시합니다.',unavailable:'일시적으로 서버 상태를 불러올 수 없습니다. 자동으로 다시 시도합니다.'}
+ en:{title:'Server status — Chung Research Group',description:'Hourly laboratory computing resource observations.',frame:'Laboratory server status',language:'Display language',ko:'View in Korean',en:'View in English',zh:'View in Simplified Chinese',fa:'View in Farsi',refresh:'Refresh',loading:'Loading server status…',loaded:'Server observations refresh hourly.',cached:'Refresh unavailable. The last loaded dashboard is shown below.',unavailable:'Server status is temporarily unavailable. Retrying automatically.'},
+ ko:{title:'서버 상태 — Chung Research Group',description:'매시간 수집하는 연구실 컴퓨팅 자원 현황입니다.',frame:'연구실 서버 상태',language:'표시 언어',ko:'한국어로 보기',en:'영어로 보기',zh:'중국어 간체로 보기',fa:'페르시아어로 보기',refresh:'새로고침',loading:'서버 상태를 불러오는 중…',loaded:'서버 상태는 매시간 수집됩니다.',cached:'새로고침할 수 없습니다. 마지막으로 불러온 서버 상태를 표시합니다.',unavailable:'일시적으로 서버 상태를 불러올 수 없습니다. 자동으로 다시 시도합니다.'},
+ zh:{title:'服务器状态 — Chung Research Group',description:'每小时采集的研究室计算资源状态。',frame:'研究室服务器状态',language:'显示语言',ko:'以韩语查看',en:'以英语查看',zh:'以简体中文查看',fa:'以波斯语查看',refresh:'刷新',loading:'正在加载服务器状态…',loaded:'服务器状态每小时采集一次。',cached:'无法刷新。下方显示最近一次加载的服务器状态。',unavailable:'服务器状态暂时不可用，正在自动重试。'},
+ fa:{title:'وضعیت سرور — Chung Research Group',description:'مشاهدات ساعتی منابع محاسباتی آزمایشگاه.',frame:'وضعیت سرورهای آزمایشگاه',language:'زبان نمایش',ko:'نمایش به کره‌ای',en:'نمایش به انگلیسی',zh:'نمایش به چینی ساده‌شده',fa:'نمایش به فارسی',refresh:'تازه‌سازی',loading:'در حال بارگذاری وضعیت سرور…',loaded:'وضعیت سرورها هر ساعت گردآوری می‌شود.',cached:'تازه‌سازی ممکن نیست. آخرین وضعیت بارگذاری‌شده در پایین نمایش داده می‌شود.',unavailable:'وضعیت سرور موقتاً در دسترس نیست. تلاش مجدد خودکار انجام می‌شود.'}
 };
 function initialLanguage(){
- try{const saved=localStorage.getItem(languageKey);if(saved==='en'||saved==='ko')return saved;}catch{}
- return /^ko(?:-|$)/i.test(navigator.languages?.[0]||navigator.language||'en')?'ko':'en';
+ try{const saved=localStorage.getItem(languageKey);if(languageCodes.includes(saved))return saved;}catch{}
+ for(const value of navigator.languages?.length?navigator.languages:[navigator.language||'en']){
+  const code=String(value).toLowerCase().split('-')[0];
+  if(languageCodes.includes(code))return code;
+ }
+ return 'en';
 }
 let language=initialLanguage(),statusKey='loading',activeRequest=false,lastDocument='';
 function sendLanguage(){
@@ -46,17 +58,17 @@ function sendLanguage(){
 }
 function renderLanguage(){
  const labels=messages[language];
- document.documentElement.lang=language;document.title=labels.title;
+ document.documentElement.lang=language==='zh'?'zh-Hans':language;document.documentElement.dir=language==='fa'?'rtl':'ltr';document.title=labels.title;
  document.querySelector('meta[name="description"]').content=labels.description;
  frame.title=labels.frame;languageGroup.setAttribute('aria-label',labels.language);
- for(const code of ['ko','en']){
+ for(const code of languageCodes){
   languageButtons[code].setAttribute('aria-label',labels[code]);
   languageButtons[code].setAttribute('aria-pressed',String(code===language));
  }
  button.textContent=labels.refresh;status.textContent=labels[statusKey];
 }
 function selectLanguage(code){
- if(code!=='en'&&code!=='ko')return;
+ if(!languageCodes.includes(code))return;
  language=code;
  try{localStorage.setItem(languageKey,language);}catch{}
  renderLanguage();sendLanguage();
@@ -84,7 +96,7 @@ window.addEventListener('message',event=>{
  if(Number.isFinite(height)&&height>=240&&height<=20000)frame.style.height=Math.ceil(height)+'px';
 });
 frame.addEventListener('load',sendLanguage);
-for(const code of ['ko','en'])languageButtons[code].addEventListener('click',()=>selectLanguage(code));
+for(const code of languageCodes)languageButtons[code].addEventListener('click',()=>selectLanguage(code));
 button.addEventListener('click',refresh);
 renderLanguage();refresh();setInterval(refresh,300000);
 </script>

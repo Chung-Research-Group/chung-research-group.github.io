@@ -1,8 +1,10 @@
 """Language support for the public dashboard; no collection or publishing I/O."""
 import json
+from dashboard_languages import ZH, FA, STATES_ZH, STATES_FA, RETENTION_UNITS, RTL_CSS
 
 
 KO = {
+    'sharedHostScope': '공유 호스트의 CPU·RAM·GPU 관측값입니다. 연구실에서 GPU {count}개를 모두 사용할 수 있습니다.',
     'title': '서버 자원 현황', 'cpu': '관측된 사용 중 코어',
     'sampleNote': '관측된 활동을 표시하며, 스케줄러 예약량은 아닙니다.',
     'unknown': '현재 상태를 확인할 수 없습니다',
@@ -40,7 +42,8 @@ KO = {
     'usagePercentNote': '사용률은 df 기준으로 100 × 사용량 ÷ (사용량 + 사용자 가용량)을 올림한 백분율입니다. 예약 공간 때문에 전체 용량에서 사용량을 뺀 값과 사용자 가용량이 다를 수 있습니다.',
     'storageAliasesNote': '동일한 파일시스템의 마운트 경로는 한 행에 묶어 표시하며, 중복 합산하지 않습니다.',
 }
-EN = {'step': 'step', 'networkVolume': 'Network volume', 'unknownValue': 'Unknown',
+EN = {'sharedHostScope': 'CPU, RAM and GPU observations cover the shared host. The lab may use all {count} GPUs.',
+      'step': 'step', 'networkVolume': 'Network volume', 'unknownValue': 'Unknown',
       'bytesNote': 'GB = 10⁹ bytes · TB = 10¹² bytes',
       'masterStorage': 'SG-Master storage',
       'masterStorageScope': 'Filesystems mounted on SG-Master. Compute-node local disks were not queried.',
@@ -82,14 +85,15 @@ def bilingual_template(html, localize):
             raise ValueError('Bilingual template drift: ' + before[:70])
         html = html.replace(before, after, 1)
 
-    labels = {'en': {**localize.EN, **EN}, 'ko': {**localize.KO, **KO}}
-    if labels['en'].keys() != labels['ko'].keys():
-        raise ValueError('Bilingual dictionary keys differ')
+    labels = {'en': {**localize.EN, **EN}, 'ko': {**localize.KO, **KO}, 'zh': ZH, 'fa': FA}
+    for code, dictionary in labels.items():
+        if dictionary.keys() != labels['en'].keys():
+            raise ValueError('Dashboard dictionary keys differ: ' + code)
     encoded = json.dumps(labels, ensure_ascii=False).replace('<', '\\u003c')
     start = html.index('const labels=')
     end = html.index(';\nconst data=', start)
     html = html[:start] + 'const dictionaries=' + encoded + ";\nlet language='en',labels=dictionaries.en" + html[end:]
-    replace("new Intl.DateTimeFormat('en-GB',", "new Intl.DateTimeFormat(language==='ko'?'ko-KR':'en-GB',")
+    replace("new Intl.DateTimeFormat('en-GB',", "new Intl.DateTimeFormat({en:'en-GB',ko:'ko-KR',zh:'zh-CN',fa:'fa-IR-u-ca-gregory-nu-latn'}[language],")
     replace(".format(new Date(s)):'Unknown';", ".format(new Date(s)):labels.unknownValue;")
     replace('<th>User</th>', "<th>'+esc(labels.slurmUser)+'</th>")
     replace("+' · step '+", "+' · '+esc(labels.step)+' '+")
@@ -114,11 +118,20 @@ def bilingual_template(html, localize):
     replace("byId('storage').hidden=true;byId('sockets').className='node-grid'", "renderMasterStorage(s.latest);byId('sockets').className='node-grid'")
     replace("renderStorage(null);byId('core-heading')", "if(s.host==='sg')renderMasterStorage(s.latest);else renderStorage(null);byId('core-heading')")
     replace('<span>GB = 10⁹ bytes · TB = 10¹² bytes</span>', '<span id="units-note"></span>')
-    replace('<noscript>JavaScript required.</noscript>', '<noscript>JavaScript required. / JavaScript를 활성화해 주세요.</noscript>')
+    replace('<noscript>JavaScript required.</noscript>', '<noscript>JavaScript required. / JavaScript를 활성화해 주세요. / 请启用 JavaScript。 / لطفاً JavaScript را فعال کنید.</noscript>')
+    replace("i+(e.key==='ArrowRight'?1:servers.length-1)", "i+((e.key==='ArrowRight')!==(language==='fa')?1:servers.length-1)")
+    replace('</style>', RTL_CSS + '</style>')
     # Long Korean help and scheduler explanations must wrap on narrow screens.
     replace('</style>', '.core-head{flex-wrap:wrap}.legend{white-space:normal}.node-top{flex-wrap:wrap}.node-detail,.gpu-name,.cluster-note{overflow-wrap:anywhere}.node:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:36%}.storage .master-storage-table th:last-child{width:13%}.master-storage-group{margin:16px 0 6px;font-size:12px}.master-storage-meta{margin:6px 0;font-size:11px;color:var(--muted)}.master-storage-table caption{text-align:left;font-weight:600;font-size:12px;margin:14px 0 5px}.master-storage-table .mount-alias{display:block;overflow-wrap:anywhere}@media(max-width:500px){.storage .master-storage-table{font-size:10px}.storage .master-storage-table th{font-size:9px}.storage .master-storage-table th:first-child,.storage .master-storage-table td:first-child{width:32%}.master-storage-table td{overflow-wrap:anywhere}.master-storage-meta{font-size:10px}}</style>')
     helpers = r'''
 const stateNames=STATE_NAMES;
+const retentionUnits=RETENTION_UNITS;
+function renderResourceScope(){
+ const el=byId('resource-scope');if(!el)return;
+ const scope=current().s.latest.resource_scope;
+ el.hidden=!scope?.shared_host;
+ el.textContent=scope?.shared_host?labels.sharedHostScope.replace('{count}',scope.lab_usable_gpu_count):'';
+}
 function namedText(item,fallback=labels.unknownValue){return item.name_missing?fallback:item.name;}
 function threadPrograms(thread){return (thread.programs||[]).map((name,i)=>thread.program_names_missing?.[i]?labels.noName:name);}
 function renderMasterStorage(row){
@@ -149,9 +162,9 @@ function renderMasterStorage(row){
  html+='<p class="master-storage-meta">'+esc(labels.storageAliasesNote)+'</p><p class="master-storage-meta">'+esc(labels.usagePercentNote)+'</p>';
  el.innerHTML=html;
 }
-function stateText(value){if(language!=='ko'||!value)return value;return String(value).split('+').map(part=>{const match=part.match(/^([A-Z_]+)(.*)$/);return match&&stateNames[match[1]]?stateNames[match[1]]+' ('+part+')':labels.unknownValue+' ('+part+')';}).join(' + ');}
+function stateText(value){if(language==='en'||!value)return value;const names=stateNames[language];return String(value).split('+').map(part=>{const match=part.match(/^([A-Z_]+)(.*)$/);return match&&names[match[1]]?names[match[1]]+' ('+part+')':labels.unknownValue+' ('+part+')';}).join(' + ');}
 function volumeText(value){return value==='Network volume'?labels.networkVolume:value==='Unknown'?labels.unknownValue:value;}
-function retentionText(value){if(!value)return '?';if(language!=='ko')return value;return String(value).replace(/\b(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b/gi,unit=>({second:'초',minute:'분',hour:'시간',day:'일',week:'주',month:'개월',year:'년'})[unit.toLowerCase().replace(/s$/,'')]);}
+function retentionText(value){if(!value)return '?';if(language==='en')return value;return String(value).replace(/\b(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b/gi,unit=>retentionUnits[language][unit.toLowerCase().replace(/s$/,'')]);}
 function repaint(){
  const opened=[...document.querySelectorAll('details')].map((el,i)=>el.open?i:-1).filter(i=>i>=0);
  byId('title').textContent=labels.title;
@@ -163,8 +176,8 @@ function repaint(){
  document.querySelectorAll('details').forEach((el,i)=>{el.open=opened.includes(i);});
 }
 function setLanguage(value){
- if(!['en','ko'].includes(value))return;
- language=value;labels=dictionaries[value];document.documentElement.lang=value;repaint();
+ if(!['en','ko','zh','fa'].includes(value))return;
+ language=value;labels=dictionaries[value];document.documentElement.lang=value==='zh'?'zh-Hans':value;document.documentElement.dir=value==='fa'?'rtl':'ltr';repaint();
 }
 if(typeof window!=='undefined'){
  window.addEventListener('message',event=>{
@@ -173,6 +186,6 @@ if(typeof window!=='undefined'){
  });
  window.parent.postMessage({type:'mtap-server-status:ready'},'*');
 }
-'''.replace('STATE_NAMES', json.dumps(STATES_KO, ensure_ascii=False))
+'''.replace('STATE_NAMES', json.dumps({'ko': STATES_KO, 'zh': STATES_ZH, 'fa': STATES_FA}, ensure_ascii=False)).replace('RETENTION_UNITS', json.dumps(RETENTION_UNITS, ensure_ascii=False))
     replace('render();setInterval(render,60000);', helpers + 'repaint();setInterval(repaint,60000);')
     return html
