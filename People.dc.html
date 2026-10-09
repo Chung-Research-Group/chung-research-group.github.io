@@ -41,7 +41,9 @@ body{zoom:0.88}
   [style*="40px 1fr"]{grid-template-columns:36px 1fr !important}
   [style*="92px 1fr"]{grid-template-columns:76px 1fr !important}
   [style*="64px 1fr"]{grid-template-columns:44px 1fr !important}
-  [style*="170px 1fr"]{grid-template-columns:110px 1fr !important;gap:0 14px !important}
+  [style*="170px 1fr"]{grid-template-columns:110px minmax(0,1fr) !important;gap:0 14px !important}
+  #p-chung > div,#p-chung [style*="grid-template-columns"] > *{min-width:0}
+  #p-chung [style*="white-space"]{white-space:normal !important}
   [style*="width:170px"],[style*="width: 170px"]{width:110px !important;height:130px !important}
   h1{font-size:34px !important;line-height:40px !important;flex-wrap:wrap;gap:8px !important}
   h1 span{font-size:19px !important;line-height:26px !important}
@@ -55,6 +57,10 @@ body{zoom:0.88}
   [style*="text-align:right"],[style*="text-align: right"]{text-align:left !important}
   img,image-slot,figure{max-width:100%}
   figure{height:auto !important;min-height:180px}
+}
+.member-card > div,.member-education{min-width:0}
+@media (max-width:480px){
+  .member-card{grid-template-columns:1fr !important;gap:18px !important}
 }
 [id]{scroll-margin-top:80px}
 </style>
@@ -130,7 +136,7 @@ body{zoom:0.88}
           <h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;line-height:27px;margin:0">{{ g.title }} <span style="font-size:15.5px;font-weight:800;font-feature-settings:'tnum' 1;color:color-mix(in srgb, var(--color-text) 72%, transparent)">· {{ g.count }}</span></h3>
           <div style="display:flex;flex-direction:column">
             <sc-for list="{{ g.people }}" as="m" hint-placeholder-count="2">
-              <div id="{{ m.slot }}" style="display:grid;grid-template-columns:170px 1fr;gap:0 36px;align-items:start;padding:30px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 14%, transparent)">
+              <div id="{{ m.slot }}" class="member-card" style="display:grid;grid-template-columns:170px 1fr;gap:0 36px;align-items:start;padding:30px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 14%, transparent)">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
                   <div style="width:170px;height:200px"><img id="{{ m.photo }}" src="{{ m.photoSrc }}" alt="{{ m.name }}" width="170" height="200" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
                   <sc-if value="{{ m.hasLinks }}" hint-placeholder-val="{{ false }}">
@@ -147,7 +153,7 @@ body{zoom:0.88}
                   <div style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0">
                     <sc-for list="{{ m.tags }}" as="tg" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:5px;font-size:16px;line-height:21px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:2px 7px;border:1px solid {{ tg.c }};color:{{ tg.c }}"><span style="width:7px;height:7px;background:{{ tg.b }}"></span>{{ tg.t }}</span></sc-for>
                   </div>
-                  <div style="display:flex;flex-direction:column;gap:6px;margin:12px 0 0"><sc-for list="{{ m.eduLines }}" as="line" hint-placeholder-count="2"><p style="display:flex;align-items:baseline;gap:7px;font-size:18px;line-height:27px;margin:0;color:var(--color-text)"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none;align-self:center"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span>{{ line }}</span></p></sc-for></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin:12px 0 0"><sc-for list="{{ m.eduLines }}" as="line" hint-placeholder-count="2"><p style="display:flex;align-items:baseline;gap:7px;font-size:18px;line-height:27px;margin:0;color:var(--color-text)"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#1c4fa1" stroke-width="2" stroke-linecap="round" style="flex:none;align-self:center"><path d="M12 4L2 9l10 5 10-5-10-5z"></path><path d="M6 11.5V16c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4.5"></path></svg><span class="member-education">{{ line }}</span></p></sc-for></div>
                 </div>
               </div>
             </sc-for>

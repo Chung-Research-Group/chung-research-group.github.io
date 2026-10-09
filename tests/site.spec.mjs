@@ -37,6 +37,28 @@ test('member and publication filters support keyboard input and report their sta
   await expect(adsorption).toHaveAttribute('aria-pressed', 'true');
 });
 
+for (const javaScriptEnabled of [true, false]) {
+  test.describe(`member cards with JavaScript ${javaScriptEnabled ? 'enabled' : 'disabled'}`, () => {
+    test.use({ javaScriptEnabled });
+    test('long education details stay within the cards on narrow screens', async ({ page }) => {
+      for (const width of [320, 390, 768]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto('/People.dc.html');
+        await expect(page.locator('.member-card').first()).toBeVisible();
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+        const overflowing = await page.locator('.member-card').evaluateAll(cards => cards.flatMap(card => {
+          const bounds = card.getBoundingClientRect();
+          return [...card.querySelectorAll('.member-education')].filter(line => {
+            const rect = line.getBoundingClientRect();
+            return rect.left < bounds.left - 1 || rect.right > bounds.right + 1;
+          }).map(line => line.textContent);
+        }));
+        expect(overflowing, `education overflow at ${width}px`).toEqual([]);
+      }
+    });
+  });
+}
+
 test.describe('static content without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
   test('publication, member, software and recruiting information remain readable', async ({ page }) => {
