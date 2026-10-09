@@ -12,11 +12,11 @@
 <x-dc>
 <helmet>
 <title>Chung Research Group @ PNU</title>
-<meta name="description" content="Agentic computing for materials and chemical discovery. Connecting molecular simulation, data, and artificial intelligence toward scientific superintelligence.">
+<meta name="description" content="Atomistic simulation, data, agentic computing, and artificial intelligence for materials and chemical discovery.">
 <link rel="canonical" href="https://chung-research-group.github.io/index.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Chung Research Group @ PNU">
-<meta property="og:description" content="Agentic computing for materials and chemical discovery. Connecting molecular simulation, data, and artificial intelligence toward scientific superintelligence.">
+<meta property="og:description" content="Atomistic simulation, data, agentic computing, and artificial intelligence for materials and chemical discovery.">
 <meta property="og:url" content="https://chung-research-group.github.io/index.html">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
@@ -81,29 +81,19 @@ body{zoom:0.88}
 .home-hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px 48px;align-items:center}
 .home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4vw,64px);line-height:1.06;letter-spacing:-.025em;margin:0}
 .home-hero-intro{font-size:21px;line-height:1.65;margin:24px 0 0;color:#536373}
-.hero-eyebrow,.vision-eyebrow{font-size:13px;line-height:1.6;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 18px}
-.hero-accent{color:var(--color-accent-700)}
-.hero-direction{display:inline-flex;align-items:center;gap:12px;margin-top:22px;font-size:16px;font-weight:600;text-decoration:none;border-bottom:1px solid #9fb9d4;padding-bottom:5px}
-.agentic-vision{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px 64px;padding:48px 0}
-.vision-copy{min-width:0}
-.vision-copy h2{font-size:clamp(30px,3vw,44px);line-height:1.15;letter-spacing:-.025em;margin:0 0 20px;font-weight:700}
-.vision-copy>p:last-child{font-size:18px;line-height:1.65;color:#536373;margin:0;max-width:48ch}
-.agentic-workflow{min-width:0;border:1px solid #cbd7e2;background:#edf2f6;padding:26px 28px 24px;border-radius:4px}
-.workflow-label{font-size:13px;line-height:1.5;color:#536373;margin:0 0 20px}
-.workflow-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:26px}
-.workflow-tabs button{position:relative;min-width:0;min-height:68px;border:0;border-bottom:2px solid #bdcddd;background:transparent;text-align:left;padding:6px 4px 12px;color:#536373;font:inherit;font-weight:600;font-size:17px;cursor:pointer}
-.workflow-tabs button span{display:block;font-size:12px;font-weight:400;margin-bottom:8px}
-.workflow-tabs button[aria-selected="true"]{color:var(--color-accent-700);border-color:var(--color-accent-700)}
-.workflow-tabs button:hover{color:var(--color-accent-700)}
-.workflow-tabs button:focus-visible{outline:2px solid var(--color-accent);outline-offset:4px}
-.workflow-panel{min-height:152px}
-.workflow-panel h3{font-size:25px;line-height:1.3;font-weight:600;margin:0 0 12px;letter-spacing:-.015em}
-.workflow-panel p{font-size:17px;line-height:1.65;margin:0;color:#536373}
-.workflow-panel[hidden]{display:none}
-.workflow-principles{font-size:13px;line-height:1.6;margin:20px 0 0;padding-top:16px;border-top:1px solid #cbd7e2;color:#536373}
-@media(max-width:1000px){.agentic-vision{gap:32px}.agentic-workflow{padding:24px}}
-@media(max-width:840px){.hero-eyebrow{font-size:11px;margin-bottom:14px}.agentic-vision{grid-template-columns:minmax(0,1fr);gap:26px;padding:32px 0}.vision-copy h2{font-size:clamp(28px,7.5vw,34px)}.vision-copy>p:last-child{max-width:none;font-size:17px}.workflow-panel{min-height:0}.agentic-workflow{padding:22px 20px}.workflow-tabs{gap:6px;margin-bottom:22px}.workflow-tabs button{font-size:15px}.workflow-panel h3{font-size:23px}}
-@media(max-width:440px){.workflow-tabs button{font-size:clamp(12px,3.5vw,14px);padding-left:0;padding-right:0}}
+.hero-copy{position:relative;min-width:0}
+.hero-eyebrow{font-size:13px;line-height:1.6;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 18px;padding-right:36px}
+.hero-words{display:grid;min-width:0;color:var(--color-accent-700)}
+.hero-term{grid-area:1/1;display:block;opacity:0;transition:opacity .45s ease}
+.hero-term.is-active{opacity:1}
+.hero-purpose{display:block;margin-top:.12em}
+.hero-words-toggle{position:absolute;top:-4px;right:0;display:grid;place-items:center;width:32px;height:32px;border:0;padding:6px;background:transparent;color:#536373;cursor:pointer;visibility:hidden}
+.hero-words-toggle[hidden]{display:none}
+.hero-words-ready .hero-words-toggle{visibility:visible}
+.hero-words-toggle:hover{color:var(--color-accent-700)}
+.hero-words-toggle svg{width:16px;height:16px;display:block}
+@media(max-width:840px){.hero-eyebrow{font-size:11px;margin-bottom:14px}.home-hero h1 .hero-words{font-size:inherit!important}}
+@media(prefers-reduced-motion:reduce){.hero-term{transition:none}}
 .mof-figure{margin:0;min-width:0}
 .mof-stage{position:relative;width:100%;aspect-ratio:1.5;overflow:hidden;background:transparent}
 .mof-stage img,.mof-stage canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
@@ -121,7 +111,7 @@ body{zoom:0.88}
 .resource-card strong{display:block;font-family:var(--font-heading);font-size:21px;line-height:1.3;color:var(--color-accent-700)}
 .resource-card span span{display:block;font-size:16px;line-height:1.45;margin-top:5px}
 @media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
-@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(34px,7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1.7}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
+@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1.7}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
 @media(prefers-reduced-motion:reduce){.resource-card{transition:none}}
 
 </style>
@@ -144,7 +134,8 @@ body{zoom:0.88}
       <div class="home-hero-top">
         <div class="hero-copy">
           <p class="hero-eyebrow">Computation · Intelligence · Materials</p>
-          <h1><span class="hero-accent">Agentic computing</span> for materials &amp; chemical discovery.</h1>
+          <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term">Superintelligence</span></span><span class="hero-purpose">for materials &amp; chemical discovery.</span></h1>
+          <button class="hero-words-toggle" type="button" aria-label="Pause headline" title="Pause headline" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button>
         </div>
         <figure class="mof-figure" data-mof-viewer="data/irmof-1.json">
           <div class="mof-stage">
@@ -154,42 +145,7 @@ body{zoom:0.88}
           <figcaption><span><a href="data/irmof-1.cif">MOF-5 / IRMOF-1</a> · H atoms omitted</span><button class="mof-motion" type="button" aria-pressed="true">Resume rotation</button></figcaption>
         </figure>
       </div>
-      <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and artificial intelligence to explore materials for energy and separations. Our next direction: scientific agents that plan calculations, use tools, and evaluate evidence.</p>
-      <a class="hero-direction" href="#agentic-vision">Explore our research vision <span aria-hidden="true">↓</span></a>
-    </section>
-
-    <section id="agentic-vision" class="home-section agentic-vision" data-screen-label="Research vision" aria-labelledby="vision-title">
-      <div class="vision-copy">
-        <p class="vision-eyebrow">Research vision</p>
-        <h2 id="vision-title">Toward scientific superintelligence.</h2>
-        <p>We aim to build scientific agents that turn questions into testable plans, connect reasoning with physical models, and learn from evidence—with researchers guiding the process.</p>
-      </div>
-      <div class="agentic-workflow">
-        <p class="workflow-label">Conceptual research workflow · Select a step</p>
-        <div class="workflow-tabs" role="tablist" aria-label="Scientific agent workflow">
-          <button id="step-ask" type="button" role="tab" aria-selected="true" aria-controls="panel-ask" tabindex="0"><span aria-hidden="true">01</span>Ask</button>
-          <button id="step-plan" type="button" role="tab" aria-selected="false" aria-controls="panel-plan" tabindex="-1"><span aria-hidden="true">02</span>Plan</button>
-          <button id="step-compute" type="button" role="tab" aria-selected="false" aria-controls="panel-compute" tabindex="-1"><span aria-hidden="true">03</span>Compute</button>
-          <button id="step-evaluate" type="button" role="tab" aria-selected="false" aria-controls="panel-evaluate" tabindex="-1"><span aria-hidden="true">04</span>Evaluate</button>
-        </div>
-        <div id="panel-ask" class="workflow-panel" role="tabpanel" aria-labelledby="step-ask" tabindex="0">
-          <h3>Define a useful question.</h3>
-          <p>Start with a materials problem, such as a gas separation. Specify the target, operating conditions, and constraints before choosing a calculation.</p>
-        </div>
-        <div id="panel-plan" class="workflow-panel" role="tabpanel" aria-labelledby="step-plan" tabindex="0" hidden>
-          <h3>Choose what to compute.</h3>
-          <p>Select candidate materials, physical models, and calculations. Decide where more reasoning or new data would justify the computational cost.</p>
-        </div>
-        <div id="panel-compute" class="workflow-panel" role="tabpanel" aria-labelledby="step-compute" tabindex="0" hidden>
-          <h3>Connect tools and data.</h3>
-          <p>Use curated structures, molecular simulation, and predictive models to test the plan. Keep inputs, assumptions, and results traceable.</p>
-        </div>
-        <div id="panel-evaluate" class="workflow-panel" role="tabpanel" aria-labelledby="step-evaluate" tabindex="0" hidden>
-          <h3>Decide what comes next.</h3>
-          <p>Compare predictions with evidence and assess uncertainty. Refine the question, run another calculation, or stop when the evidence is sufficient.</p>
-        </div>
-        <p class="workflow-principles">Human guidance · Physical grounding · Reproducible evidence</p>
-      </div>
+      <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and artificial intelligence to explore materials for energy and separations.</p>
     </section>
 
     <section class="home-section" data-screen-label="Software and data">
@@ -260,7 +216,7 @@ class Component extends DCLogic {
 
 <script src="assets/mof-renderer.js"></script>
 <script src="assets/mof-viewer.js"></script>
-<script src="assets/agentic-workflow.js"></script>
+<script src="assets/hero-words.js"></script>
 
 </body>
 </html>
