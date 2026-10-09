@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
 import { parseHTML } from 'linkedom';
 import { requiredPages } from '../scripts/site-files.mjs';
@@ -8,22 +10,60 @@ import { sharedChrome } from '../scripts/site-chrome.mjs';
 import { renderPublishedPage } from '../scripts/render-static-site.mjs';
 import '../assets/mof-renderer.js';
 
-test('MOF display bonds use short periodic images and remain inside the viewport', async () => {
-  const model = JSON.parse(await readFile(new URL('../data/irmof-1.json', import.meta.url), 'utf8'));
-  assert.equal(model.units, 'angstrom');
-  assert.deepEqual(model.atom_counts, { Zn: 32, O: 104, C: 192, H: 96 });
-  const limits = { 'C-C': [1.3, 1.6], 'C-O': [1.2, 1.4], 'O-Zn': [1.8, 2.1] };
-  for (const [i, j] of model.bonds) {
-    const a = model.atoms[i], b = model.atoms[j];
-    const distance = Math.hypot(...a.slice(1).map((v, axis) => v - b[axis + 1]));
-    const [min, max] = limits[[a[0], b[0]].sort().join('-')];
-    assert.ok(distance > min && distance < max, `invalid display bond ${i}-${j}: ${distance}`);
-  }
-  for (const angle of [0, .38, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) {
-    for (const atom of MofRenderer.project(model, 350, 206, angle).filter(p => p.kind === 'atom')) {
-      assert.ok(atom.x - atom.r >= 0 && atom.x + atom.r <= 350);
-      assert.ok(atom.y - atom.r >= 0 && atom.y + atom.r <= 206);
+test('the four MOFs retain their source cells, periodic bonds and a shared physical scale throughout rotation', async () => {
+  const models = JSON.parse(await readFile(new URL('../data/mof-catalog.json', import.meta.url), 'utf8'));
+  assert.deepEqual(models.map(model => model.name), ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000']);
+  const previousCatalog = globalThis.MOF_MODELS;
+  globalThis.MOF_MODELS = models;
+  const dot = (a, b) => a.reduce((sum, x, i) => sum + x * b[i], 0);
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  try {
+    for (const model of models) {
+      assert.equal(model.units, 'angstrom');
+      assert.ok(model.atoms.length > 0 && model.bond_segments.length > 0, model.name);
+      assert.ok(model.atoms.every(([element, ...position]) => element !== 'H' && position.every(Number.isFinite)), model.name);
+      const source = await readFile(new URL(`../data/mof-source/${model.slug}.cif`, import.meta.url));
+      assert.equal(createHash('sha256').update(source).digest('hex'), model.source_sha256, model.name);
+      const vectors = model.cell_vectors, volume = dot(vectors[0], cross(vectors[1], vectors[2]));
+      assert.ok(volume > 0, model.name);
+      const reciprocal = [cross(vectors[1], vectors[2]), cross(vectors[2], vectors[0]), cross(vectors[0], vectors[1])]
+        .map(vector => vector.map(x => x / volume));
+      for (const [element, ...coordinates] of model.bond_segments) {
+        assert.ok(model.atoms.some(atom => atom[0] === element), model.name);
+        const start = coordinates.slice(0, 3), end = coordinates.slice(3);
+        assert.ok(Math.hypot(...start.map((x, axis) => x - end[axis])) <= 1.5,
+          `${model.name}: display segment spans more than a local half-bond`);
+        for (const point of [start, end]) for (const axis of reciprocal) {
+          assert.ok(Math.abs(dot(point, axis)) <= .500001, `${model.name}: periodic bond left its unit cell`);
+        }
+      }
     }
+    for (const [width, height] of [[180, 120], [335, 335], [506, 506]]) {
+      const scales = models.map(model => MofRenderer.viewScale(model, width, height));
+      assert.ok(scales[0] > 0 && scales.every(scale => scale === scales[0]), 'MOFs use different pixels per angstrom');
+      const radiiByColor = new Map();
+      for (const model of models) for (let degrees = 0; degrees <= 360; degrees += 5) {
+        const shapes = MofRenderer.project(model, width, height, degrees * Math.PI / 180);
+        assert.equal(shapes.filter(shape => shape.kind === 'atom').length, model.atoms.length, model.name);
+        assert.deepEqual(shapes.filter(shape => shape.kind === 'label').map(shape => shape.text), ['a', 'b', 'c']);
+        for (const shape of shapes) {
+          const radius = shape.kind === 'atom' ? shape.r : shape.kind === 'label' ? 13 : shape.width / 2;
+          const endpoints = shape.x2 === undefined ? [[shape.x, shape.y]] : [[shape.x, shape.y], [shape.x2, shape.y2]];
+          for (const [x, y] of endpoints) {
+            assert.ok(x - radius >= 0 && x + radius <= width, `${model.name}: clipped ${shape.kind} at ${degrees} degrees`);
+            assert.ok(y - radius >= 0 && y + radius <= height, `${model.name}: clipped ${shape.kind} at ${degrees} degrees`);
+          }
+          if (shape.kind === 'atom') {
+            const previousRadius = radiiByColor.get(shape.color);
+            if (previousRadius !== undefined) assert.equal(shape.r, previousRadius, 'atom size changed between models or angles');
+            radiiByColor.set(shape.color, shape.r);
+          }
+        }
+      }
+    }
+  } finally {
+    if (previousCatalog === undefined) delete globalThis.MOF_MODELS;
+    else globalThis.MOF_MODELS = previousCatalog;
   }
 });
 
@@ -69,7 +109,7 @@ test('shared chrome is deterministic and preserves the statistics navigation pol
 test('the no-JavaScript renderer uses the same records without active scripts or template placeholders', async () => {
   for (const filename of ['People.dc.html', 'News.dc.html', 'Software & Data.dc.html', 'AIM.dc.html', 'CoRE MOF Database.dc.html', 'GWP-estimator.dc.html', 'MOFClassifier.dc.html', 'PACMAN.dc.html', 'SESAMI-APP.dc.html']) {
     const source = await readFile(new URL('../' + filename, import.meta.url), 'utf8');
-    const result = await renderPublishedPage(source, { filename, dataRoot: new URL('..', import.meta.url).pathname });
+    const result = await renderPublishedPage(source, { filename, dataRoot: fileURLToPath(new URL('..', import.meta.url)) });
     const fallback = result.match(/<noscript data-static-fallback>([\s\S]*?)<\/noscript>/)[1];
     assert.doesNotMatch(fallback, /{{|<sc-(?:for|if)|<script\b|\sonclick=/i);
     const { document } = parseHTML(fallback);

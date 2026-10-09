@@ -1909,9 +1909,21 @@ const mofViewer = await exists(mofViewerPath) ? await readFile(mofViewerPath, 'u
 if (!indexHtml.includes('data-mof-viewer') || !mofViewer.includes('requestAnimationFrame')) {
   errors.push('Homepage coordinate-based MOF renderer is missing.');
 }
-if (!mofViewer.includes('prefers-reduced-motion') || !indexHtml.includes('images/irmof-1.svg')) {
-  errors.push('Homepage motion preference or static MOF fallback is missing.');
+if (!indexHtml.includes('images/cu-btc.svg') || !indexHtml.includes('assets/hero-words.js') ||
+    indexHtml.includes('mof-motion') || indexHtml.includes('hero-words-toggle')) {
+  errors.push('Homepage continuous motion or static unit-cell fallback is missing.');
 }
+try {
+  const models = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-catalog.json'), 'utf8'));
+  const expected = ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000'];
+  if (models.length !== 4 || models.some((model, i) => model.name !== expected[i] ||
+      model.units !== 'angstrom' || model.cell_vectors.length !== 3 || !model.bond_segments.length)) {
+    errors.push('Homepage crystallographic MOF catalog is incomplete.');
+  }
+  for (const model of models) {
+    if (!await exists(path.join(siteRoot, model.download_url))) errors.push('Missing MOF source: ' + model.download_url);
+  }
+} catch (error) { errors.push('Homepage MOF catalog is invalid: ' + error.message); }
 const supportJs = await readFile(path.join(siteRoot, "support.js"), "utf8");
 for (const runtime of ["vendor/react.production.min.js", "vendor/react-dom.production.min.js"]) {
   if (!supportJs.includes(`./${runtime}`) || !await exists(path.join(siteRoot, runtime))) errors.push(`Local browser runtime is missing: ${runtime}`);

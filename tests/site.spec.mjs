@@ -108,20 +108,48 @@ for (const width of [1440, 390]) {
   });
 }
 
-test('MOF canvas renders real coordinates and supports pause and reduced motion', async ({ page }) => {
+for (const [index, name, slug] of [
+  [0, 'Cu-BTC', 'cu-btc'], [1, 'CALF-20', 'calf-20'],
+  [2, 'MOF-74 (Mg)', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000']
+]) {
+  test(`MOF random loading selects ${name} and keeps rotating without pause controls`, async ({ page, request }) => {
+    await page.addInitScript(selected => { Math.random = () => (selected + .5) / 4; }, index);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/index.html');
+    const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
+    await expect(figure).toHaveAttribute('data-mof-viewer', 'data/mof-catalog.json');
+    await expect(figure).toHaveAttribute('data-mof-ready', 'true');
+    await expect(figure).toHaveAttribute('data-mof-name', name);
+    await expect(figure.locator('.mof-name')).toHaveText(name);
+    await expect(figure.locator('.mof-name')).toHaveAttribute('href', `data/mof-source/${slug}.cif`);
+    expect((await request.get(`/data/mof-source/${slug}.cif`)).ok()).toBe(true);
+    await expect(figure.getByRole('button')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
+    expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
+    const first = await canvas.evaluate(c => c.toDataURL());
+    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
+    const ruler = await figure.evaluate(element => {
+      const bounds = element.querySelector('canvas').getBoundingClientRect();
+      const scales = globalThis.MOF_MODELS.map(model => MofRenderer.viewScale(model, bounds.width, bounds.height));
+      return { scales, width: element.querySelector('.mof-scale-line').getBoundingClientRect().width };
+    });
+    expect(ruler.scales.every(scale => scale === ruler.scales[0])).toBe(true);
+    expect(Math.abs(ruler.width - 10 * ruler.scales[0])).toBeLessThanOrEqual(1);
+  });
+}
+
+test('Agentic computing and Superintelligence keep alternating without pause controls', async ({ page }) => {
+  await page.clock.install();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await expect(figure.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
-  expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
-  const first = await canvas.evaluate(c => c.toDataURL());
-  await figure.getByRole('button', { name: 'Resume rotation' }).click();
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
-  await figure.getByRole('button', { name: 'Pause rotation' }).click();
-  const paused = await canvas.evaluate(c => c.toDataURL());
-  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-  expect(await canvas.evaluate(c => c.toDataURL())).toBe(paused);
+  const terms = page.locator('.hero-term');
+  await expect(terms).toHaveText(['Agentic computing', 'Superintelligence']);
+  await expect(page.locator('.hero-term.is-active')).toHaveText('Agentic computing');
+  await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
+  await page.clock.fastForward(6_100);
+  await expect(page.locator('.hero-term.is-active')).toHaveText('Superintelligence');
+  await page.clock.fastForward(6_100);
+  await expect(page.locator('.hero-term.is-active')).toHaveText('Agentic computing');
 });
 
 function comparePublicText(left, right) {
@@ -633,7 +661,7 @@ test('homepage shows three latest publications and three news items', async ({ p
   await expect(page.locator('[data-home-publication]')).toHaveCount(3);
   await expect(page.locator('[data-home-news]')).toHaveCount(3);
   await expect(page.locator('[data-home-publication] publication-metrics')).toHaveCount(3);
-  await expect(page.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
 });
 
 test('research interests appear only in the professor profile', async ({ page }) => {
@@ -678,7 +706,7 @@ test('all recruiting categories are closed and contact details are in English', 
 test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
-  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
+  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'superintelligence']) {
     await expect(page.locator('.home-hero-intro')).toContainText(keyword);
   }
   await page.goto('/People.dc.html', { waitUntil: 'load' });

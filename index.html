@@ -12,11 +12,11 @@
 <x-dc>
 <helmet>
 <title>Chung Research Group @ PNU</title>
-<meta name="description" content="AI-driven materials and chemical discovery through atomistic simulation, statistical mechanics, and artificial intelligence.">
+<meta name="description" content="Agentic computing and superintelligence for materials and chemical discovery through atomistic simulation and curated data.">
 <link rel="canonical" href="https://chung-research-group.github.io/index.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Chung Research Group @ PNU">
-<meta property="og:description" content="AI-driven materials and chemical discovery through atomistic simulation, statistical mechanics, and artificial intelligence.">
+<meta property="og:description" content="Agentic computing and superintelligence for materials and chemical discovery through atomistic simulation and curated data.">
 <meta property="og:url" content="https://chung-research-group.github.io/index.html">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
@@ -78,29 +78,37 @@ body{zoom:0.88}
 
 /* The structure supports the headline; copy retains the full reading width. */
 .home-hero{padding:36px 0 44px}
-.home-hero-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px 48px;align-items:center}
+.home-hero-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,1fr);gap:24px 32px;align-items:center}
 .home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4vw,64px);line-height:1.06;letter-spacing:-.025em;margin:0}
 .home-hero-intro{font-size:21px;line-height:1.65;margin:24px 0 0;color:#536373}
+.hero-copy{position:relative;min-width:0}
+.hero-eyebrow{font-size:13px;line-height:1.6;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 18px;padding-right:36px}
+.hero-words{display:grid;min-width:0;color:var(--color-accent-700)}
+.hero-term{grid-area:1/1;display:block;opacity:0;transition:opacity .45s ease}
+.hero-term.is-active{opacity:1}
+.hero-purpose{display:block;margin-top:.12em}
+@media(max-width:840px){.hero-eyebrow{font-size:11px;margin-bottom:14px}.home-hero h1 .hero-words{font-size:inherit!important}}
+@media(prefers-reduced-motion:reduce){.hero-term{transition:none}}
 .mof-figure{margin:0;min-width:0}
-.mof-stage{position:relative;width:100%;aspect-ratio:1.5;overflow:hidden;background:transparent}
+.mof-stage{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:transparent}
 .mof-stage img,.mof-stage canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .mof-stage canvas{visibility:hidden}
 .mof-figure[data-mof-ready="true"] canvas{visibility:visible}
 .mof-figure[data-mof-ready="true"] .mof-poster{visibility:hidden}
-.mof-figure figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:#536373}
+.mof-figure figcaption{display:flex;align-items:center;justify-content:flex-start;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:#536373}
 .mof-figure figcaption a{font-weight:700;text-underline-offset:3px}
-.mof-motion{display:none;min-height:36px;padding:5px 10px;background:transparent;border:1px solid #bdcddd;color:var(--color-accent-700);font:inherit;cursor:pointer}
-.mof-figure[data-mof-ready="true"] .mof-motion{display:inline-flex}
 .resource-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0}
 .resource-card{display:flex;align-items:center;gap:18px;min-width:0;padding:20px;border:1px solid #d6dfe6;border-radius:4px;background:transparent;color:var(--color-text);text-decoration:none;transition:background .18s,border-color .18s}
 .resource-card:hover,.resource-card:focus-visible{background:#f4f7fa;border-color:var(--color-accent);color:var(--color-text)}
 .resource-card svg{flex:none;width:26px;height:26px;color:var(--color-accent)}
 .resource-card strong{display:block;font-family:var(--font-heading);font-size:21px;line-height:1.3;color:var(--color-accent-700)}
 .resource-card span span{display:block;font-size:16px;line-height:1.45;margin-top:5px}
-@media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
-@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(34px,7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1.7}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
+@media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1fr) minmax(280px,1fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
+@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
 @media(prefers-reduced-motion:reduce){.resource-card{transition:none}}
 
+.mof-scale{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}.mof-scale-line{display:inline-block;width:60px;height:6px;border-bottom:1.5px solid #536373;border-left:1.5px solid #536373;border-right:1.5px solid #536373}
+.mof-scale{visibility:hidden}.mof-figure[data-mof-ready="true"] .mof-scale,.mof-figure[data-mof-fallback="true"] .mof-scale{visibility:visible}
 </style>
 </helmet>
 
@@ -119,16 +127,19 @@ body{zoom:0.88}
   <main id="main-content" tabindex="-1" style="padding:0 64px">
     <section class="home-hero" data-screen-label="Hero">
       <div class="home-hero-top">
-        <h1>AI-driven materials &amp; chemical discovery.</h1>
-        <figure class="mof-figure" data-mof-viewer="data/irmof-1.json">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Computation · Intelligence · Materials</p>
+          <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term">Superintelligence</span></span><span class="hero-purpose">for materials &amp; chemical discovery.</span></h1>
+        </div>
+        <figure class="mof-figure" data-mof-viewer="data/mof-catalog.json">
           <div class="mof-stage">
-            <img class="mof-poster" src="images/irmof-1.svg" width="750" height="500" alt="MOF-5 crystal structure showing zinc–oxygen nodes connected by organic linkers and open pores.">
-            <canvas aria-hidden="true"></canvas>
+            <img class="mof-poster" src="images/cu-btc.svg" width="750" height="750" alt="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted.">
+            <canvas role="img" aria-label="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted."></canvas>
           </div>
-          <figcaption><span><a href="data/irmof-1.cif">MOF-5 / IRMOF-1</a> · H atoms omitted</span><button class="mof-motion" type="button" aria-pressed="true">Resume rotation</button></figcaption>
+          <figcaption><span><a class="mof-name" href="data/mof-source/cu-btc.cif">Cu-BTC</a> · Unit cell · PBC · H atoms omitted</span><span class="mof-scale" aria-label="Scale: 10 angstroms"><span class="mof-scale-line" aria-hidden="true"></span><span>10 Å</span></span></figcaption>
         </figure>
       </div>
-      <p class="home-hero-intro">We use quantum and atomistic simulations, statistical mechanics, curated data, and artificial intelligence to discover materials for energy and separations, especially metal–organic frameworks.</p>
+      <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and superintelligence to explore materials for energy and separations.</p>
     </section>
 
     <section class="home-section" data-screen-label="Software and data">
@@ -197,8 +208,9 @@ class Component extends DCLogic {
 </script>
 <script src="assets/publication-badges.js"></script>
 
-<script src="assets/mof-renderer.js"></script>
-<script src="assets/mof-viewer.js"></script>
+<script src="assets/mof-renderer.js?v=20261009-catalog"></script>
+<script src="assets/mof-viewer.js?v=20261009-catalog"></script>
+<script src="assets/hero-words.js?v=20261009-continuous"></script>
 
 </body>
 </html>

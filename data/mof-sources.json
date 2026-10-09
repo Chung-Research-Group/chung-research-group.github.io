@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "units": "angstrom",
+  "structures": [
+    {
+      "name": "Cu-BTC",
+      "slug": "cu-btc",
+      "path": "data/mof-source/cu-btc.cif",
+      "url": "https://github.com/iraspa/raspa2/blob/master/structures/mofs/cif/Cu-BTC.cif",
+      "sha256": "9d10fe490d6e1cebe384edaf10e9b493096d03cc38427776e57f8db11bb735ac",
+      "notes": [
+        "Solvent-free HKUST-1 (Cu-BTC) RASPA framework file, cites Chui et al., Science 1999.",
+        "Expand all supplied Fm-3m symmetry operations before rendering."
+      ],
+      "cell": [
+        26.343,
+        26.343,
+        26.343,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "asymmetric_site_count": 6,
+      "download_url": "data/mof-source/cu-btc.cif",
+      "license": {
+        "id": "MIT",
+        "text_path": "data/mof-licenses/RASPA2-MIT.txt",
+        "url": "https://opensource.org/license/mit"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 528,
+        "composition_without_H": {
+          "C": 288,
+          "Cu": 48,
+          "O": 192
+        },
+        "inferred_bonds": 672,
+        "colored_clipped_segments": 1344
+      },
+      "upstream_commit": "6498ab1eec9c8e0f063dcd0d71dd7add372c529b",
+      "pinned_source_url": "https://github.com/iraspa/raspa2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/Cu-BTC.cif"
+    },
+    {
+      "name": "CALF-20",
+      "slug": "calf-20",
+      "path": "data/mof-source/calf-20.cif",
+      "url": "https://github.com/shm-phy/GK_CALF-20/blob/main/MLP-MD/data_alpha_CALF-20.lmp",
+      "sha256": "a05edb0794d552afb93d34826cd2bbfdc2d16dad9eb1285f8da937be0c025480",
+      "notes": [
+        "Solvent-free alpha-CALF-20 atomistic model from publication repository for doi:10.1038/s43246-025-00745-y.",
+        "Source is a 3x3x3 LAMMPS model (1188 atoms); derived CIF folds exact periodic copies to 44 atoms.",
+        "This is the publication simulation model; not asserted to be the as-deposited experimental CCDC 2084733 structure.",
+        "Maximum folding discrepancy 7.22e-15 Angstrom; each unique atom has exactly 27 source copies."
+      ],
+      "cell": [
+        9.0460453033,
+        10.0249137878,
+        9.2320995331,
+        90.0,
+        118.6754989624,
+        90.0
+      ],
+      "asymmetric_site_count": 44,
+      "raw_source_path": "data/mof-source/calf-20-original.lmp",
+      "raw_source_sha256": "99f380bb06724e07bf8a08630386604fb0844f144242adf437cfb58ac8c2a263",
+      "cell_atom_counts": {
+        "Zn": 4,
+        "N": 12,
+        "O": 8,
+        "C": 12,
+        "H": 8
+      },
+      "maximum_fold_discrepancy_angstrom": 7.218662471836897e-15,
+      "download_url": "data/mof-source/calf-20.cif",
+      "license": {
+        "id": "GPL-3.0-only",
+        "text_path": "data/mof-licenses/GPL-3.0.txt",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 36,
+        "composition_without_H": {
+          "C": 12,
+          "N": 12,
+          "O": 8,
+          "Zn": 4
+        },
+        "inferred_bonds": 50,
+        "colored_clipped_segments": 118
+      },
+      "upstream_commit": "e2199601366d1fd7dd96958f8445cc35c118adbd",
+      "pinned_source_url": "https://github.com/shm-phy/GK_CALF-20/blob/e2199601366d1fd7dd96958f8445cc35c118adbd/MLP-MD/data_alpha_CALF-20.lmp",
+      "authors": [
+        "Soham Mandal",
+        "Prabal K. Maiti"
+      ],
+      "publication_doi": "10.1038/s43246-025-00745-y"
+    },
+    {
+      "name": "MOF-74 (Mg)",
+      "slug": "mg-mof-74",
+      "path": "data/mof-source/mg-mof-74.cif",
+      "url": "https://github.com/iraspa/raspa2/blob/master/structures/mofs/cif/MgMOF-74.cif",
+      "sha256": "84923453752f66781295f70de4d8eaba8ecc8510d676ebcfd547ee8d68e23e43",
+      "notes": [
+        "Solvent-free Mg-DOBDC/Mg-MOF-74 RASPA framework file by Ozgur Yazaydin.",
+        "Expand all supplied R-3 symmetry operations before rendering; hexagonal cell gamma=120 degrees."
+      ],
+      "cell": [
+        26.136,
+        26.136,
+        6.942,
+        90.0,
+        90.0,
+        120.0
+      ],
+      "asymmetric_site_count": 9,
+      "download_url": "data/mof-source/mg-mof-74.cif",
+      "license": {
+        "id": "MIT",
+        "text_path": "data/mof-licenses/RASPA2-MIT.txt",
+        "url": "https://opensource.org/license/mit"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 144,
+        "composition_without_H": {
+          "C": 72,
+          "Mg": 18,
+          "O": 54
+        },
+        "inferred_bonds": 216,
+        "colored_clipped_segments": 496
+      },
+      "upstream_commit": "6498ab1eec9c8e0f063dcd0d71dd7add372c529b",
+      "pinned_source_url": "https://github.com/iraspa/raspa2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/MgMOF-74.cif"
+    },
+    {
+      "name": "NU-1000",
+      "slug": "nu-1000",
+      "path": "data/mof-source/nu-1000.cif",
+      "url": "https://acs.figshare.com/articles/dataset/2354203",
+      "sha256": "b4b92db5360da9c3e014cb36d80297e806571d1dfabc9d1ea61106e36c495002",
+      "notes": [
+        "NU-1000_XRD original ACS SI for Deria et al., doi:10.1021/ja408959g, ja408959g_si_002.cif.",
+        "Only syntax repair: remove invalid trailing empty loop_ token. Original CIF bytes retained.",
+        "Expand all supplied P6/mmm operations and deduplicate special positions before rendering."
+      ],
+      "cell": [
+        41.0465,
+        41.0465,
+        16.792,
+        90.0,
+        90.0,
+        120.0
+      ],
+      "asymmetric_site_count": 28,
+      "raw_source_path": "data/mof-source/nu-1000-original.cif",
+      "raw_source_sha256": "896a144cd3bb4c0fcab16a67329f81975ae728b0b463713ad4e4c6fcfca87137",
+      "download_url": "data/mof-source/nu-1000.cif",
+      "license": {
+        "id": "CC-BY-NC-4.0",
+        "text_path": "data/mof-licenses/CC-BY-NC-4.0.txt",
+        "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 378,
+        "composition_without_H": {
+          "C": 264,
+          "O": 96,
+          "Zr": 18
+        },
+        "inferred_bonds": 498,
+        "colored_clipped_segments": 1052
+      },
+      "authors": [
+        "Pravas Deria",
+        "Joseph E. Mondloch",
+        "Emmanuel Tylianakis",
+        "Pritha Ghosh",
+        "Wojciech Bury",
+        "Randall Q. Snurr",
+        "Joseph T. Hupp",
+        "Omar K. Farha"
+      ],
+      "publication_doi": "10.1021/ja408959g",
+      "dataset_doi": "10.1021/ja408959g.s002",
+      "license_metadata_url": "https://api.figshare.com/v2/articles/2354203"
+    }
+  ]
+}
