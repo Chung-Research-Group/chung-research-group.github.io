@@ -633,7 +633,10 @@ test('homepage shows three latest publications and three news items', async ({ p
   await expect(page.locator('[data-home-publication]')).toHaveCount(3);
   await expect(page.locator('[data-home-news]')).toHaveCount(3);
   await expect(page.locator('[data-home-publication] publication-metrics')).toHaveCount(3);
-  await expect(page.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Pause rotation' })).toHaveAttribute('aria-pressed', 'false');
+  const canvas = page.locator('[data-mof-viewer] canvas');
+  const firstFrame = await canvas.evaluate(c => c.toDataURL());
+  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(firstFrame);
 });
 
 test('research interests appear only in the professor profile', async ({ page }) => {
@@ -678,7 +681,7 @@ test('all recruiting categories are closed and contact details are in English', 
 test('quantum language, Baek focus, and audited review taxonomy are rendered', async ({ page }) => {
   await page.goto('/index.html', { waitUntil: 'load' });
   await expect(page.getByText(/quantum and atomistic simulations/)).toBeVisible();
-  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'artificial intelligence']) {
+  for (const keyword of ['quantum and atomistic simulations', 'statistical mechanics', 'curated data', 'superintelligence']) {
     await expect(page.locator('.home-hero-intro')).toContainText(keyword);
   }
   await page.goto('/People.dc.html', { waitUntil: 'load' });
