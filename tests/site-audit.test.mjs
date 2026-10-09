@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 import { parseHTML } from 'linkedom';
 import { requiredPages } from '../scripts/site-files.mjs';
@@ -81,8 +82,14 @@ test('the no-JavaScript renderer uses the same records without active scripts or
       assert.equal(document.querySelectorAll('main > .tool-start').length, 1, filename);
     }
     if (filename === 'People.dc.html') {
-      assert.equal(document.querySelectorAll('main img[loading="lazy"]').length, 8);
-      assert.match(document.textContent || fallback, /Baek, Mingyu/);
+      const sandbox = { window: {} };
+      vm.runInNewContext(await readFile(new URL('../people-data.js', import.meta.url), 'utf8'), sandbox);
+      const expectedNames = Array.from(sandbox.window.MTAP_PEOPLE().groups)
+        .flatMap(group => Array.from(group.people, person => person.name));
+      assert.deepEqual(
+        Array.from(document.querySelectorAll('main img[loading="lazy"]'), image => image.getAttribute('alt')),
+        expectedNames
+      );
     }
     if (filename === 'News.dc.html') {
       assert.ok(document.querySelectorAll('main a[href]').length > 20);
