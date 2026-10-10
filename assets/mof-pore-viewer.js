@@ -29,7 +29,9 @@
     if (!figure.isConnected) return;
     // Selection is shared across runtime remounts, and changes only on page load.
     const name = figure.querySelector('[data-mof-name]'), poster = figure.querySelector('.mof-poster');
-    name.textContent = model.name;
+    name.textContent = `${model.name} (${model.publication.journal}, ${model.publication.year})`;
+    name.href = model.publication.url;
+    name.title = model.publication.title;
     poster.src = model.poster_path;
     const cellLabel = model.supercell?.repeats.some(n => n > 1) ? 'periodic supercell' : 'unit cell';
     poster.alt = `${model.name} crystal structure shown as a pore-facing ${cellLabel}.`;

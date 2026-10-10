@@ -5,13 +5,23 @@ import copy, itertools, json, math
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 source = json.loads((ROOT / 'data/mof-unit-cells.json').read_text())
+publications = json.loads((ROOT / 'data/mof-publications.json').read_text())
 provenance = {'purpose': 'Periodic supercell visualization only; no relaxation or pore-size calculation.', 'models': {}}
 for model in source['models']:
+    model['publication'] = publications[model['id']]
     base = copy.deepcopy(model)
     cell = model['cell_vectors']
     repeats = [1, 2, 2] if model['id'] == 'calf-20' else [1, 1, 1]
     dot = lambda x, y: sum(a*b for a,b in zip(x,y))
     cross = lambda a,b: [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]
+    if model['id'] in ['mg-mof-74', 'nu-1000', 'mof-177']:
+        view = model['display_view']
+        view['unrotated_up'] = copy.deepcopy(view['up'])
+        front_length = math.hypot(*view['front'])
+        view['up'] = cross([v/front_length for v in view['front']], view['up'])
+        view['screen_rotation_degrees_clockwise'] = 90
+        view['note'] = view['note'].replace('no roll or pitch', 'no out-of-plane tilt').replace('without pitch or roll', 'without out-of-plane tilt')
+        view['note'] += ' Fixed 90-degree clockwise screen orientation preserves the pore-facing direction and exact lattice geometry.'
     volume = dot(cell[0],cross(cell[1],cell[2]))
     reciprocal = [cross(cell[1],cell[2]), cross(cell[2],cell[0]), cross(cell[0],cell[1])]
     frac = lambda p: [dot(p,r)/volume for r in reciprocal]

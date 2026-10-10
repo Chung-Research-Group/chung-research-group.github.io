@@ -1,0 +1,38 @@
+{
+  "cu-btc": {
+    "journal": "Science", "year": 1999,
+    "title": "A Chemically Functionalizable Nanoporous Material",
+    "doi": "10.1126/science.283.5405.1148",
+    "url": "https://doi.org/10.1126/science.283.5405.1148"
+  },
+  "calf-20": {
+    "journal": "Science", "year": 2021,
+    "title": "A scalable metal-organic framework as a durable physisorbent for carbon dioxide capture",
+    "doi": "10.1126/science.abi7281",
+    "url": "https://doi.org/10.1126/science.abi7281"
+  },
+  "mg-mof-74": {
+    "journal": "JACS", "year": 2008,
+    "title": "Dramatic Tuning of Carbon Dioxide Uptake via Metal Substitution in a Coordination Polymer with Cylindrical Pores",
+    "doi": "10.1021/ja8036096",
+    "url": "https://doi.org/10.1021/ja8036096"
+  },
+  "nu-1000": {
+    "journal": "JACS", "year": 2013,
+    "title": "Vapor-Phase Metalation by Atomic Layer Deposition in a Metal–Organic Framework",
+    "doi": "10.1021/ja4050828",
+    "url": "https://doi.org/10.1021/ja4050828"
+  },
+  "mof-177": {
+    "journal": "Nature", "year": 2004,
+    "title": "A route to high surface area, porosity and inclusion of large molecules in crystals",
+    "doi": "10.1038/nature02311",
+    "url": "https://doi.org/10.1038/nature02311"
+  },
+  "nu-100": {
+    "journal": "Nat. Chem.", "year": 2010,
+    "title": "De novo synthesis of a metal–organic framework material featuring ultrahigh surface area and gas storage capacities",
+    "doi": "10.1038/nchem.834",
+    "url": "https://doi.org/10.1038/nchem.834"
+  }
+}

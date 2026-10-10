@@ -43,13 +43,19 @@ The build publishes title, description, canonical URL, and Open Graph/Twitter ta
 
 The approved homepage uses `data/mof-gallery.json`, `assets/mof-pore-renderer.js`,
 and `assets/mof-pore-viewer.js`. Each visit chooses one of Cu-BTC, CALF-20,
-Mg-MOF-74, NU-1000, MOF-177 and NU-100. Orthographic pore-facing views have no pitch or roll;
+Mg-MOF-74, NU-1000, MOF-177 and NU-100. Orthographic pore-facing views have no out-of-plane tilt;
 a gentle ±0.12-radian yaw preserves pore visibility. Motion controls and reduced
 motion preferences are supported. `images/mofs/` contains the matching no-JS
 fallbacks. Camera and periodic centering provenance is recorded in
 `data/mof-supercell-provenance.json`; the gallery retains structural source metadata.
 The earlier eight-model catalogue and renderer remain as audited reference
 assets, but are no longer connected to the homepage.
+
+Mg-MOF-74, NU-1000 and MOF-177 use a fixed 90-degree clockwise screen orientation.
+Only the camera up direction changes; the pore axis, source coordinates and unit-cell
+geometry are preserved. The original up vectors are retained in the camera provenance.
+Captions link to reporting papers with journal and year from `data/mof-publications.json`.
+These publication references are separate from the structural data sources and licenses.
 
 CALF-20 uses a 1×2×2 supercell across the pore plane. Cu-BTC, Mg-MOF-74
 and NU-1000 use their pore-centered single unit cells to show larger apertures. The source unit-cell
