@@ -1,0 +1,84 @@
+{
+  "purpose": "Camera and periodic display representation only; no structural relaxation or pore-size calculation.",
+  "views": {
+    "cu-btc": {
+      "direction": "[100]",
+      "front": [
+        26.343,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        0.0,
+        26.343
+      ],
+      "initial_yaw": 0,
+      "yaw_amplitude": 0.12,
+      "period_seconds": 32,
+      "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged."
+    },
+    "calf-20": {
+      "direction": "[100]",
+      "front": [
+        8.93673,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        9.84353,
+        0.0
+      ],
+      "initial_yaw": 0,
+      "yaw_amplitude": 0.12,
+      "period_seconds": 32,
+      "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged."
+    },
+    "mg-mof-74": {
+      "direction": "[001]",
+      "front": [
+        0.0,
+        0.0,
+        6.942
+      ],
+      "up": [
+        -13.068,
+        22.634439953,
+        0.0
+      ],
+      "initial_yaw": 0,
+      "yaw_amplitude": 0.12,
+      "period_seconds": 32,
+      "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged."
+    },
+    "nu-1000": {
+      "direction": "[001]",
+      "front": [
+        0.0,
+        0.0,
+        16.58
+      ],
+      "up": [
+        -20.0,
+        34.641016151,
+        0.0
+      ],
+      "initial_yaw": 0,
+      "yaw_amplitude": 0.12,
+      "period_seconds": 32,
+      "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints.",
+      "fractional_origin_shift": [
+        0.5,
+        0.5,
+        0
+      ]
+    }
+  },
+  "nu1000_bond_length_check": "All displayed bond lengths match original bond lengths to 0.00002 angstrom.",
+  "references": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11483831/",
+    "https://www.mdpi.com/2079-4991/10/7/1263",
+    "https://conservancy.umn.edu/bitstreams/ae744671-5e1e-4d20-8bd9-f9639acb9a76/download"
+  ]
+}

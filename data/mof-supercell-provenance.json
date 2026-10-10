@@ -1,0 +1,210 @@
+{
+  "purpose": "Periodic supercell visualization only; no relaxation or pore-size calculation.",
+  "models": {
+    "cu-btc": {
+      "repeats": [
+        1,
+        2,
+        2
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        0.0,
+        -0.5,
+        -0.5
+      ],
+      "atom_count": 2304,
+      "bond_count": 2912,
+      "max_bond_length_error_angstrom": 2.6645352591003757e-15,
+      "view": {
+        "direction": "[100]",
+        "front": [
+          26.343,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          0.0,
+          26.343
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          26.343,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          26.343,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          26.343
+        ]
+      ]
+    },
+    "calf-20": {
+      "repeats": [
+        1,
+        2,
+        2
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        0.0,
+        -0.5,
+        -0.5
+      ],
+      "atom_count": 240,
+      "bond_count": 252,
+      "max_bond_length_error_angstrom": 4.138804965414522e-08,
+      "view": {
+        "direction": "[100]",
+        "front": [
+          8.93673,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          9.84353,
+          0.0
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          8.93673,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          9.84353,
+          0.0
+        ],
+        [
+          -4.242160956,
+          0.0,
+          8.458117962
+        ]
+      ]
+    },
+    "mg-mof-74": {
+      "repeats": [
+        2,
+        2,
+        1
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "atom_count": 880,
+      "bond_count": 1056,
+      "max_bond_length_error_angstrom": 2.8630595894085786e-08,
+      "view": {
+        "direction": "[001]",
+        "front": [
+          0.0,
+          0.0,
+          6.942
+        ],
+        "up": [
+          -13.068,
+          22.634439953,
+          0.0
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          26.136,
+          0.0,
+          0.0
+        ],
+        [
+          -13.068,
+          22.634439953,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          6.942
+        ]
+      ]
+    },
+    "nu-1000": {
+      "repeats": [
+        2,
+        2,
+        1
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        -0.5,
+        -0.5,
+        0.0
+      ],
+      "atom_count": 1972,
+      "bond_count": 2276,
+      "max_bond_length_error_angstrom": 6.047914791196263e-08,
+      "view": {
+        "direction": "[001]",
+        "front": [
+          0.0,
+          0.0,
+          16.58
+        ],
+        "up": [
+          -20.0,
+          34.641016151,
+          0.0
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints. The projected supercell repeats exact lattice geometry across the pore plane.",
+        "fractional_origin_shift": [
+          0.5,
+          0.5,
+          0
+        ]
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          39.97,
+          0.0,
+          0.0
+        ],
+        [
+          -20.0,
+          34.641016151,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          16.58
+        ]
+      ]
+    }
+  }
+}

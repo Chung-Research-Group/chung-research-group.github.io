@@ -85,70 +85,44 @@ body{zoom:0.88}
 
 /* The structure supports the headline; copy retains the full reading width. */
 .home-hero{padding:36px 0 44px}
-.home-hero-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,1fr);gap:24px 32px;align-items:center}
-.home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,4vw,64px);line-height:1.06;letter-spacing:-.025em;margin:0}
-.home-hero-intro{font-size:21px;line-height:1.65;margin:24px 0 0;color:#536373}
+.home-hero-top{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,.75fr);gap:24px 36px;align-items:center}
+.home-hero h1{font-family:var(--font-heading);font-weight:800;font-size:clamp(48px,4.6vw,72px);line-height:1.06;letter-spacing:-.025em;margin:0}
+.home-hero-intro{font-size:22px;line-height:1.65;font-weight:600;margin:24px 0 0;color:#263c4c}
 .hero-copy{position:relative;min-width:0}
 .hero-eyebrow{font-size:13px;line-height:1.6;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 18px;padding-right:36px}
 .hero-words{display:grid;min-width:0;color:var(--color-accent-700)}
 .hero-term{grid-area:1/1;display:block;opacity:0;transition:opacity .45s ease}
 .hero-term.is-active{opacity:1}
-.hero-purpose{display:block;margin-top:.12em}
+.hero-purpose{display:block;font-family:var(--font-heading);font-weight:700;font-size:clamp(28px,2.6vw,38px);line-height:1.2;letter-spacing:-.025em;white-space:nowrap;margin:14px 0 0;color:#152c3d}
+.hero-words-toggle{position:absolute;top:-4px;right:0;display:grid;place-items:center;width:32px;height:32px;border:0;padding:6px;background:transparent;color:#536373;cursor:pointer;visibility:hidden}
+.hero-words-toggle[hidden]{display:none}
+.hero-words-ready .hero-words-toggle{visibility:visible}
+.hero-words-toggle:hover{color:var(--color-accent-700)}
+.hero-words-toggle svg{width:16px;height:16px;display:block}
 @media(max-width:840px){.hero-eyebrow{font-size:11px;margin-bottom:14px}.home-hero h1 .hero-words{font-size:inherit!important}}
 @media(prefers-reduced-motion:reduce){.hero-term{transition:none}}
 .mof-figure{margin:0;min-width:0}
-.mof-stage{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:transparent}
+.mof-stage{position:relative;width:100%;aspect-ratio:1.55;overflow:hidden;background:transparent}
 .mof-stage img,.mof-stage canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .mof-stage canvas{visibility:hidden}
 .mof-figure[data-mof-ready="true"] canvas{visibility:visible}
 .mof-figure[data-mof-ready="true"] .mof-poster{visibility:hidden}
-.mof-figure figcaption{display:flex;align-items:center;justify-content:flex-start;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:#536373}
-.mof-figure figcaption a{font-weight:700;text-underline-offset:3px}
+.mof-figure figcaption{display:flex;align-items:center;justify-content:center;gap:12px;font-size:15px;line-height:1.5;color:#263c4c}
+.mof-name{font-weight:700}
+.mof-motion{display:none;align-items:center;justify-content:center;width:32px;min-height:32px;padding:7px;background:transparent;border:0;border-radius:50%;color:#526a7b;cursor:pointer}
+.mof-motion svg{display:block;width:18px;height:18px}
+.mof-motion:hover{background:#e1e7ec;color:#153d58}
+.mof-figure[data-mof-ready="true"] .mof-motion{display:inline-flex}
 .resource-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0}
 .resource-card{display:flex;align-items:center;gap:18px;min-width:0;padding:20px;border:1px solid #d6dfe6;border-radius:4px;background:transparent;color:var(--color-text);text-decoration:none;transition:background .18s,border-color .18s}
 .resource-card:hover,.resource-card:focus-visible{background:#f4f7fa;border-color:var(--color-accent);color:var(--color-text)}
 .resource-card svg{flex:none;width:26px;height:26px;color:var(--color-accent)}
 .resource-card strong{display:block;font-family:var(--font-heading);font-size:21px;line-height:1.3;color:var(--color-accent-700)}
 .resource-card span span{display:block;font-size:16px;line-height:1.45;margin-top:5px}
-@media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1fr) minmax(280px,1fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
-@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important;line-height:1.12!important}.mof-figure{width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
+@media(max-width:1000px){.home-hero-top{grid-template-columns:minmax(0,1.7fr) minmax(230px,.7fr);gap:24px}.resource-card{padding:18px 16px;gap:12px}.resource-card svg{width:26px;height:26px}}
+@media(max-width:840px){.home-hero{padding-top:32px}.home-hero-top{grid-template-columns:1fr;row-gap:16px}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important;line-height:1.12!important}.hero-copy{grid-row:1}.hero-purpose{font-size:clamp(28px,7.4vw,36px);white-space:normal;margin-top:12px}.mof-figure{grid-row:2;width:min(100%,460px);justify-self:center;min-height:0}.mof-stage{aspect-ratio:1.4}.home-hero-intro{font-size:18px;margin-top:20px}.resource-links{grid-template-columns:1fr;gap:10px}.resource-card{padding:18px 20px}.resource-card strong{font-size:20px}footer{padding-left:20px!important;padding-right:20px!important}.back-to-top{display:none!important}}
 @media(prefers-reduced-motion:reduce){.resource-card{transition:none}}
 
-.mof-scale{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}.mof-scale-line{display:inline-block;width:60px;height:6px;border-bottom:1.5px solid #536373;border-left:1.5px solid #536373;border-right:1.5px solid #536373}
-.mof-scale{visibility:hidden}.mof-figure[data-mof-ready="true"] .mof-scale,.mof-figure[data-mof-fallback="true"] .mof-scale{visibility:visible}
-
-/* Keep the headline on the left and a large crystal on the right. */
-.home-hero-top{grid-template-columns:minmax(250px,.75fr) minmax(0,1.8fr);gap:24px 32px;align-items:center}
-.hero-copy{text-align:left;container-type:inline-size}.hero-eyebrow{padding-right:0;margin-bottom:10px}
-.home-hero h1{font-size:clamp(28px,11.7cqw,56px);line-height:1.12}
-.home-hero h1 .hero-purpose{font-size:clamp(24px,2.1vw,30px);line-height:1.35;margin-top:18px;letter-spacing:-.01em;font-weight:600;color:var(--color-text)}
-.hero-purpose-line{display:block;white-space:nowrap}
-.home-hero h1 .hero-term-super{font-size:.87em}
-.mof-figure{width:100%;justify-self:stretch}
-.mof-stage{height:clamp(440px,60vw,750px);aspect-ratio:auto}
-.mof-stage canvas{touch-action:pan-y pinch-zoom;cursor:grab;outline-offset:-3px}
-.mof-figure[data-mof-touch="true"] canvas{touch-action:none}
-.mof-stage canvas:focus-visible{outline:2px solid var(--color-accent)}
-.mof-figure[data-dragging="true"] canvas{cursor:grabbing}
-.mof-figure figcaption{justify-content:center;font-size:13px}
-.mof-tools,.mof-hint{display:none}
-.mof-figure[data-mof-ready="true"] .mof-tools,.mof-figure[data-mof-fallback="true"] .mof-tools{display:inline-flex;gap:6px}
-.mof-tool{display:inline-grid;place-items:center;min-width:50px;min-height:50px;border:1px solid #bdcddd;border-radius:4px;background:transparent;color:var(--color-accent-700);font:700 18px/1 system-ui;cursor:pointer}
-.mof-tool[data-mof-interact]{display:none;font-size:13px;padding:0 10px}
-.mof-tool[aria-pressed="true"]{background:#edf4fb;border-color:var(--color-accent)}
-.mof-select-label{display:inline-flex;align-items:center;gap:8px;font-weight:700}
-.mof-select{min-height:50px;max-width:180px;padding:6px 30px 6px 10px;border:1px solid #bdcddd;border-radius:4px;background:var(--color-bg);color:var(--color-accent-700);font:600 14px/1.4 system-ui}
-.mof-select:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
-.hero-actions{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:10px;margin:18px 0 0}
-.hero-action{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 18px;border:1px solid #bdcddd;border-radius:4px;font-size:15px;font-weight:700;text-decoration:none}
-.hero-action:first-child{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
-.hero-action:hover,.hero-action:focus-visible{background:#edf4fb;border-color:var(--color-accent)}
-.hero-action:first-child:hover,.hero-action:first-child:focus-visible{background:var(--color-accent-800);color:#fff}
-@media(max-width:840px),(pointer:coarse){.mof-figure[data-mof-ready="true"] .mof-tool[data-mof-interact]{display:inline-grid}}
-@media(max-width:840px){.mof-tool,.mof-select,.hero-action{min-height:44px}.mof-tool{min-width:44px}.hero-actions{margin-top:16px}}
-.mof-tool:hover,.mof-tool:focus-visible{background:#edf4fb;border-color:var(--color-accent)}
-.mof-figure[data-mof-ready="true"] .mof-hint{display:block;text-align:center;margin:8px 0 0;font-size:13px;line-height:1.5;color:#536373}
-@media(max-width:840px){.home-hero h1 .hero-purpose{font-size:clamp(18px,4.8vw,24px)!important;line-height:1.35!important;margin-top:14px}.home-hero-top{grid-template-columns:1fr;gap:20px}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important}.mof-figure{width:100%}.mof-stage{height:clamp(260px,82vw,580px)}.mof-figure figcaption{gap:8px 12px}.mof-cell-details{display:inline}.mof-hint{font-size:12px}}
 </style>
 </helmet>
 
@@ -169,20 +143,15 @@ body{zoom:0.88}
       <div class="home-hero-top">
         <div class="hero-copy">
           <p class="hero-eyebrow">Computation · Intelligence · Materials</p>
-          <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term hero-term-super">Superintelligence</span></span><span class="hero-purpose"><span class="hero-purpose-line">for materials &amp;</span> <span class="hero-purpose-line">chemical discovery.</span></span></h1>
-          <nav class="hero-actions" aria-label="Start using our tools"><a class="hero-action" data-hero-action href="CoRE%20MOF%20Database.dc.html">Download CoRE MOF</a><a class="hero-action" data-hero-action href="https://pacman-charge-mtap.streamlit.app/">Try PACMAN</a></nav>
+          <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term">Superintelligence</span></span><span class="hero-purpose" aria-hidden="true">for materials &amp; chemical discovery.</span></h1>
+          <button class="hero-words-toggle" type="button" aria-label="Pause headline" title="Pause headline" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button>
         </div>
-        <figure class="mof-figure" data-mof-viewer="data/mof-catalog.json?v=20261010-eight">
+        <figure class="mof-figure" data-mof-viewer="data/mof-gallery.json">
           <div class="mof-stage">
-            <img class="mof-poster" src="images/cu-btc.svg?v=20261010-eight" width="1000" height="650" alt="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted.">
-            <canvas class="mof-canvas" tabindex="0" role="img" aria-label="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted."></canvas>
+            <img class="mof-poster" src="images/mofs/cu-btc.svg" width="750" height="500" alt="Cu-BTC crystal structure shown as a pore-facing periodic supercell.">
+            <canvas aria-hidden="true"></canvas>
           </div>
-          <figcaption>
-            <label class="mof-select-label">MOF <select class="mof-select" data-mof-select aria-label="Choose MOF"><option value="cu-btc">Cu-BTC</option></select></label>
-            <span><a class="mof-name" data-mof-cif href="data/mof-source/cu-btc.cif" aria-label="Download Cu-BTC CIF">CIF</a> · <a data-mof-source href="https://github.com/iraspa/raspa2/blob/master/structures/mofs/cif/Cu-BTC.cif" aria-label="Structure source for Cu-BTC">Source</a><span class="mof-cell-details"> · 2 × 2 × 1 cells · PBC · H atoms omitted</span></span>
-            <span class="mof-scale" aria-label="Scale: 10 angstroms"><span class="mof-scale-line" aria-hidden="true"></span><span>10 Å</span></span>
-            <span class="mof-tools"><button class="mof-tool" type="button" data-mof-interact aria-pressed="false" aria-label="Enable touch rotation" title="Enable touch rotation">Rotate</button><button class="mof-tool" type="button" data-mof-zoom-in aria-label="Zoom in" title="Zoom in">+</button><button class="mof-tool" type="button" data-mof-zoom-out aria-label="Zoom out" title="Zoom out">−</button><button class="mof-tool" type="button" data-mof-reset aria-label="Reset pore view" title="Reset pore view">↺</button></span>
-          </figcaption><p class="mof-hint">Drag to rotate · Shift + scroll to zoom</p>
+          <figcaption><span class="mof-name" data-mof-name>Cu-BTC</span><button class="mof-motion" type="button" aria-label="Pause rotation" title="Pause rotation" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button></figcaption>
         </figure>
       </div>
       <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and superintelligence to explore materials for energy and separations.</p>
@@ -254,9 +223,9 @@ class Component extends DCLogic {
 </script>
 <script src="assets/publication-badges.js"></script>
 
-<script src="assets/mof-renderer.js?v=20261010-eight"></script>
-<script src="assets/mof-viewer.js?v=20261010-usability"></script>
-<script src="assets/hero-words.js?v=20261009-continuous"></script>
+<script src="assets/mof-pore-renderer.js?v=20261010-polished"></script>
+<script src="assets/mof-pore-viewer.js?v=20261010-polished"></script>
+<script src="assets/hero-words.js?v=20261010-polished"></script>
 
 </body>
 </html>

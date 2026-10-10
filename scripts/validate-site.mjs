@@ -1926,15 +1926,26 @@ const designCss = await readFile(
 if (!designCss.includes("family=Archivo") || !designCss.includes('--font-heading: "Archivo"')) {
   errors.push("Typography contract changed: Archivo font wiring is missing.");
 }
-const mofViewerPath = path.join(siteRoot, 'assets/mof-viewer.js');
+const mofViewerPath = path.join(siteRoot, 'assets/mof-pore-viewer.js');
 const mofViewer = await exists(mofViewerPath) ? await readFile(mofViewerPath, 'utf8') : '';
-if (!indexHtml.includes('data-mof-viewer') || !mofViewer.includes('requestAnimationFrame')) {
-  errors.push('Homepage coordinate-based MOF renderer is missing.');
+if (!indexHtml.includes('data/mof-gallery.json') || !mofViewer.includes('requestAnimationFrame') ||
+    !indexHtml.includes('images/mofs/cu-btc.svg') || !indexHtml.includes('assets/mof-pore-renderer.js') ||
+    !indexHtml.includes('assets/hero-words.js') || !indexHtml.includes('Pause rotation')) {
+  errors.push('Homepage pore-facing MOF renderer, motion controls or static fallback is missing.');
 }
-if (!mofViewer.includes('pointerdown') || !mofViewer.includes('wheel') || !indexHtml.includes('Reset pore view') || !indexHtml.includes('images/cu-btc.svg') || !indexHtml.includes('assets/hero-words.js') ||
-    indexHtml.includes('mof-motion') || indexHtml.includes('hero-words-toggle')) {
-  errors.push('Homepage manual viewer or static unit-cell fallback is missing.');
-}
+try {
+  const gallery = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-gallery.json'), 'utf8'));
+  const expected = ['cu-btc', 'calf-20', 'mg-mof-74', 'nu-1000'];
+  if (gallery.models.length !== expected.length || gallery.models.some((model, i) =>
+      model.id !== expected[i] || !model.atoms.length || !model.bonds.length ||
+      model.display_view.initial_yaw !== 0 || model.display_view.yaw_amplitude !== .12)) {
+    errors.push('Homepage pore-facing MOF gallery is incomplete.');
+  }
+  for (const model of gallery.models) {
+    if (!await exists(path.join(siteRoot, model.poster_path))) errors.push('Missing MOF poster: ' + model.poster_path);
+  }
+} catch (error) { errors.push('Homepage MOF gallery is invalid: ' + error.message); }
+// Retain and audit the earlier crystallographic catalogue as reference data.
 try {
   const models = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-catalog.json'), 'utf8'));
   const expected = ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000', 'ZIF-8', 'MOF-5', 'NU-100', 'MOF-177'];

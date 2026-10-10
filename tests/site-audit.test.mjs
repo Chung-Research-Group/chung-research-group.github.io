@@ -186,3 +186,37 @@ test('the no-JavaScript renderer uses the same records without active scripts or
     if (filename === 'People.dc.html') assert.ok(result.indexOf('src="people-data.js"') < result.indexOf('./support.js'));
   }
 });
+
+test('pore-facing supercells preserve exact source translations, bond lengths and source checksums', async () => {
+  const gallery = JSON.parse(await readFile(new URL('../data/mof-gallery.json', import.meta.url), 'utf8'));
+  const units = JSON.parse(await readFile(new URL('../data/mof-unit-cells.json', import.meta.url), 'utf8'));
+  const dot = (a,b) => a.reduce((sum,x,i) => sum+x*b[i],0);
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  for (const model of gallery.models) {
+    const base = units.models.find(unit => unit.id === model.id);
+    const [a,b,c] = base.cell_vectors, volume = dot(a,cross(b,c));
+    const reciprocal = [cross(b,c),cross(c,a),cross(a,b)];
+    const offset = model.supercell.display_origin_translation_fractional;
+    const fractions = p => reciprocal.map(r => dot(p,r)/volume);
+    const baseAtoms = base.atoms.map(atom => [atom[0], ...fractions(atom.slice(1,4))]);
+    assert.deepEqual(model.cell_vectors,base.cell_vectors);
+    assert.deepEqual(model.supercell.repeats, ['cu-btc','calf-20'].includes(model.id) ? [1,2,2] : [2,2,1]);
+    assert.ok(model.atoms.length > base.atoms.length*3);
+    for (const atom of model.atoms) {
+      const f = fractions(atom.slice(1,4));
+      assert.ok(baseAtoms.some(original => original[0] === atom[0] && f.every((v,i) => {
+        const delta = v-original[i+1]-offset[i];
+        return Math.abs(delta-Math.round(delta)) < 1e-5;
+      })), `${model.id}: atom is not an exact periodic copy`);
+    }
+    const distance = (atoms,i,j) => Math.hypot(...atoms[i].slice(1,4).map((v,k) => v-atoms[j][k+1]));
+    const sourceLengths = base.bonds.map(([i,j]) => distance(base.atoms,i,j));
+    for (const [i,j] of model.bonds) {
+      assert.ok(sourceLengths.some(length => Math.abs(length-distance(model.atoms,i,j)) < 2e-5),`${model.id}: modified bond length`);
+    }
+    const cif = await readFile(new URL('../'+model.cif_path,import.meta.url));
+    assert.equal(createHash('sha256').update(cif).digest('hex'),model.source_sha256);
+    assert.equal(model.display_view.initial_yaw,0);
+    assert.equal(model.cell_edges.length,12);
+  }
+});
