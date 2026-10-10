@@ -110,500 +110,104 @@ for (const width of [1440, 390]) {
 
 const mofOptions = [
   [0, 'Cu-BTC', 'cu-btc'], [1, 'CALF-20', 'calf-20'],
-  [2, 'MOF-74 (Mg)', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000'],
-  [4, 'ZIF-8', 'zif-8'], [5, 'MOF-5', 'mof-5'],
-  [6, 'NU-100', 'nu-100'], [7, 'MOF-177', 'mof-177']
+  [2, 'Mg-MOF-74', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000']
 ];
 
-async function waitForMofDraw(page) {
-  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-}
-
 for (const [index, name, slug] of mofOptions) {
-  test(`MOF random loading selects ${name} with a gentle pore tilt and manual rotation and zoom`, async ({ page, request }) => {
-    await page.addInitScript(selected => { Math.random = () => (selected + .5) / 8; }, index);
+  test(`pore-facing hero randomly loads ${name} with a matching static fallback`, async ({ page, request }) => {
+    await page.addInitScript(selected => {
+      crypto.getRandomValues = values => { values[0] = Math.floor((selected + .5) / 4 * 4294967296); return values; };
+    }, index);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/index.html');
-    const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-    await expect(figure).toHaveAttribute('data-mof-viewer', /^data\/mof-catalog\.json(?:\?.*)?$/);
+    const figure = page.locator('[data-mof-viewer]');
+    await expect(figure).toHaveAttribute('data-selected-mof', slug);
     await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-    await expect(figure).toHaveAttribute('data-mof-name', name);
-    await expect(figure).toHaveAttribute('data-mof-view', index === 1 ? '[100]' : '[001]');
-    expect((await figure.getAttribute('data-mof-repetitions')).split(/\D+/).filter(Boolean).map(Number))
-      .toEqual([[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1], [3, 3, 1], [2, 2, 1], [1, 1, 1], [1, 1, 1]][index]);
-    await expect(figure.locator('.mof-name')).toHaveText('CIF');
-    await expect(figure.locator('.mof-name')).toHaveAttribute('href', `data/mof-source/${slug}.cif`);
-    await expect(figure.locator('.mof-name')).toHaveAttribute('aria-label', `Download ${name} CIF`);
-    await expect(figure.locator('[data-mof-select]')).toHaveValue(slug);
-    const model = (await (await request.get('/data/mof-catalog.json')).json()).find(item => item.slug === slug);
-    await expect(figure.locator('[data-mof-source]')).toHaveAttribute('href', model.source_url);
-    await expect(figure.locator('[data-mof-source]')).toHaveAttribute('aria-label', `Structure source for ${name}`);
-    expect((await request.get(`/data/mof-source/${slug}.cif`)).ok()).toBe(true);
-    await expect(figure.getByRole('button', { name: 'Zoom in', exact: true })).toBeVisible();
-    await expect(figure.getByRole('button', { name: 'Zoom out', exact: true })).toBeVisible();
-    await expect(figure.getByRole('button', { name: 'Reset pore view', exact: true })).toBeVisible();
-    await expect(figure.getByText('Drag to rotate · Shift + scroll to zoom', { exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
-    await expect(canvas).toHaveAttribute('tabindex', '0');
-    await expect(canvas).toHaveAttribute('role', 'img');
-    await canvas.scrollIntoViewIfNeeded();
-    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-    expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
-    const first = await canvas.evaluate(c => c.toDataURL());
-    await page.waitForTimeout(200);
-    expect(await canvas.evaluate(c => c.toDataURL()), 'initial view should stay still without user input').toBe(first);
-    const ruler = await figure.evaluate(element => {
-      const bounds = element.querySelector('canvas').getBoundingClientRect();
-      const scales = globalThis.MOF_MODELS.map(model => MofRenderer.viewScale(model, bounds.width, bounds.height));
-      return { scales, width: element.querySelector('.mof-scale-line').getBoundingClientRect().width };
-    });
-    expect(ruler.scales.every(scale => scale === ruler.scales[0])).toBe(true);
-    expect(Math.abs(ruler.width - 10 * ruler.scales[0])).toBeLessThanOrEqual(1);
-    const bounds = await canvas.boundingBox();
-    expect(bounds).not.toBeNull();
-    await page.mouse.move(bounds.x + bounds.width * .5, bounds.y + bounds.height * .5);
-    await page.mouse.down();
-    await page.mouse.move(bounds.x + bounds.width * .64, bounds.y + bounds.height * .56, { steps: 8 });
-    await page.mouse.up();
-    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-    const dragged = await canvas.evaluate(c => c.toDataURL());
-    expect(dragged, 'mouse drag did not rotate the structure').not.toBe(first);
-    await page.waitForTimeout(200);
-    expect(await canvas.evaluate(c => c.toDataURL()), 'rotation continued after release').toBe(dragged);
-    await page.keyboard.down('Shift');
-    await page.mouse.wheel(0, -300);
-    await page.keyboard.up('Shift');
-    await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(ruler.width);
-    const zoomed = await figure.evaluate(element => {
-      const bounds = element.querySelector('canvas').getBoundingClientRect();
-      const rulerWidth = element.querySelector('.mof-scale-line').getBoundingClientRect().width;
-      const baseScale = MofRenderer.viewScale(globalThis.MOF_MODELS[0], bounds.width, bounds.height);
-      const zoom = rulerWidth / (10 * baseScale);
-      return { scales: globalThis.MOF_MODELS.map(model => MofRenderer.viewScale(model, bounds.width, bounds.height, zoom)), rulerWidth };
-    });
-    expect(zoomed.scales.every(scale => scale === zoomed.scales[0])).toBe(true);
-    expect(Math.abs(zoomed.rulerWidth - 10 * zoomed.scales[0])).toBeLessThanOrEqual(1);
-    await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
-    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
-    await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(ruler.width, 1);
+    await expect(figure.locator('[data-mof-name]')).toHaveText(name);
+    await expect(figure.locator('.mof-poster')).toHaveAttribute('src', `images/mofs/${slug}.svg`);
+    await expect(figure.locator('canvas')).toBeVisible();
+    await expect(figure.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
+    expect((await request.get(`/images/mofs/${slug}.svg`)).ok()).toBe(true);
+    expect(await figure.locator('canvas').evaluate(canvas => {
+      const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      return pixels.some((value, i) => i % 4 === 3 && value > 0);
+    })).toBe(true);
+    await expect(figure.locator('a,select')).toHaveCount(0);
+    await expect(figure).not.toContainText(/CIF|Source|omitted/);
   });
 }
 
-test('MOF keyboard rotation and zoom reset to the initial gentle pore tilt', async ({ page }) => {
-  await page.addInitScript(() => { Math.random = () => .875; });
-  await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await canvas.scrollIntoViewIfNeeded();
-  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-  const first = await canvas.evaluate(c => c.toDataURL());
-  await canvas.focus();
-  await canvas.press('ArrowRight');
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
-  await canvas.press('Home');
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
-  const initialRuler = await figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width);
-  await canvas.press('Shift+Equal');
-  await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(initialRuler);
-  await canvas.press('Home');
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
-});
-
-test('MOF selection updates every model, its source and accessibility text at one physical scale', async ({ page, request }) => {
-  await page.addInitScript(() => { Math.random = () => .01; });
-  await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-  const select = figure.getByRole('combobox', { name: 'Choose MOF', exact: true });
-  const models = await (await request.get('/data/mof-catalog.json')).json();
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await expect(select.locator('option')).toHaveText(mofOptions.map(([, name]) => name));
-  expect(await select.locator('option').evaluateAll(options => options.map(option => option.value)))
-    .toEqual(mofOptions.map(([, , slug]) => slug));
-  await canvas.scrollIntoViewIfNeeded();
-  await waitForMofDraw(page);
-  const ruler = figure.locator('.mof-scale-line');
-  const initialRuler = await ruler.evaluate(line => line.getBoundingClientRect().width);
-  let lastInitialImage;
-  for (const [index, name, slug] of mofOptions) {
-    // Leave a changed view before each selection: changing models must restore
-    // the shared initial zoom instead of carrying an arbitrary magnification.
-    await figure.getByRole('button', { name: 'Zoom in', exact: true }).click();
-    await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(initialRuler);
-    await canvas.focus();
-    await canvas.press('ArrowRight');
-    await select.selectOption(slug);
-    await expect(figure).toHaveAttribute('data-mof-name', name);
-    await expect(figure).toHaveAttribute('data-mof-slug', slug);
-    await expect(figure).toHaveAttribute('data-mof-view', index === 1 ? '[100]' : '[001]');
-    await expect(figure.locator('.mof-name')).toHaveText('CIF');
-    await expect(figure.locator('.mof-name')).toHaveAttribute('href', `data/mof-source/${slug}.cif`);
-    await expect(figure.locator('.mof-name')).toHaveAttribute('aria-label', `Download ${name} CIF`);
-    await expect(figure.locator('[data-mof-source]')).toHaveAttribute('href', models.find(model => model.slug === slug).source_url);
-    await expect(figure.locator('[data-mof-source]')).toHaveAttribute('aria-label', `Structure source for ${name}`);
-    await expect(canvas).toHaveAttribute('aria-label', new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    await expect(figure.locator('.mof-poster')).toHaveAttribute('alt', new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    expect((await request.get(`/data/mof-source/${slug}.cif`)).ok()).toBe(true);
-    await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(initialRuler, 1);
-    await waitForMofDraw(page);
-    lastInitialImage = await canvas.evaluate(c => c.toDataURL());
-    expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
-  }
-  await canvas.focus();
-  await canvas.press('ArrowLeft');
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(lastInitialImage);
-  await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
-  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(lastInitialImage);
-  for (const control of [select, figure.getByRole('button', { name: 'Zoom in', exact: true }),
-    figure.getByRole('button', { name: 'Zoom out', exact: true }), figure.getByRole('button', { name: 'Reset pore view', exact: true })]) {
-    // Desktop's shared 0.88 transform can round a 44px screen target by a
-    // fraction of a CSS pixel; compare the visible size to one decimal place.
-    expect(Math.round((await control.boundingBox()).height * 10) / 10).toBeGreaterThanOrEqual(44);
-  }
-});
-
-test('ordinary wheel input scrolls the page over the MOF and Shift plus wheel zooms the model', async ({ page }) => {
-  await page.addInitScript(() => { Math.random = () => .01; });
-  await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await canvas.scrollIntoViewIfNeeded();
-  await waitForMofDraw(page);
-  const placeMouseOnVisibleCanvas = async () => {
-    const bounds = await canvas.boundingBox();
-    await page.mouse.move(bounds.x + bounds.width / 2, Math.max(20, Math.min(page.viewportSize().height - 20, bounds.y + bounds.height / 2)));
-  };
-  await placeMouseOnVisibleCanvas();
-  const ruler = figure.locator('.mof-scale-line');
-  const initialRuler = await ruler.evaluate(line => line.getBoundingClientRect().width);
-  const initialImage = await canvas.evaluate(c => c.toDataURL());
-  const initialScroll = await page.evaluate(() => scrollY);
-  await page.mouse.wheel(0, 180);
-  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(initialScroll + 10);
-  expect(await ruler.evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(initialRuler, 1);
-  expect(await canvas.evaluate(c => c.toDataURL())).toBe(initialImage);
-  await canvas.scrollIntoViewIfNeeded();
-  await placeMouseOnVisibleCanvas();
-  const scrollBeforeZoom = await page.evaluate(() => scrollY);
-  await page.keyboard.down('Shift');
-  await page.mouse.wheel(0, -180);
-  await page.keyboard.up('Shift');
-  await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(initialRuler);
-  expect(await page.evaluate(() => scrollY)).toBeCloseTo(scrollBeforeZoom, 0);
-});
-
-test('the Canvas MOF path avoids SVG generation during selection and repeated initialization', async ({ page }) => {
-  await page.addInitScript(() => {
-    let renderer;
-    globalThis.__mofSvgCalls = 0;
-    Object.defineProperty(globalThis, 'MofRenderer', {
-      configurable: true,
-      get: () => renderer,
-      set(value) {
-        const original = value.toSvg;
-        value.toSvg = function (...args) {
-          globalThis.__mofSvgCalls += 1;
-          return original.apply(this, args);
-        };
-        renderer = value;
-      }
-    });
-  });
-  await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]').first();
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await figure.getByRole('combobox', { name: 'Choose MOF', exact: true }).selectOption('nu-100');
-  await figure.getByRole('button', { name: 'Zoom in', exact: true }).click();
-  await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
-  await waitForMofDraw(page);
-  await page.evaluate(() => {
-    const clone = document.querySelector('[data-mof-viewer]').cloneNode(true);
-    clone.dataset.testMofClone = 'true';
-    // A newly attached figure is initialized by the viewer's mutation observer.
-    delete clone.dataset.mofReady;
-    document.querySelector('[data-mof-viewer]').after(clone);
-  });
-  await expect(page.locator('[data-test-mof-clone]')).toHaveAttribute('data-mof-ready', 'true');
-  await waitForMofDraw(page);
-  expect(await page.evaluate(() => globalThis.__mofSvgCalls)).toBe(0);
-  await page.locator('[data-test-mof-clone]').evaluate(element => element.remove());
-});
-
-test('a browser without a Canvas context still renders and selects MOF SVG fallbacks', async ({ page, request }) => {
-  await page.addInitScript(() => {
-    Math.random = () => .01;
-    const original = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-      return type === '2d' ? null : original.call(this, type, ...args);
-    };
-  });
-  await page.goto('/index.html');
-  const figure = page.locator('[data-mof-viewer]'), poster = figure.locator('.mof-poster');
-  await expect(figure).toHaveAttribute('data-mof-fallback', 'true');
-  await expect(poster).toBeVisible();
-  await expect(poster).toHaveAttribute('src', /^data:image\/svg\+xml/);
-  const initialSvg = await poster.getAttribute('src');
-  const select = figure.getByRole('combobox', { name: 'Choose MOF', exact: true });
-  await expect(select).toBeVisible();
-  await select.selectOption('zif-8');
-  await expect(figure).toHaveAttribute('data-mof-name', 'ZIF-8');
-  await expect(poster).toHaveAttribute('alt', /ZIF-8/);
-  await expect.poll(() => poster.getAttribute('src')).not.toBe(initialSvg);
-  expect(decodeURIComponent(await poster.getAttribute('src'))).toContain('<title>ZIF-8</title>');
-  await expect(figure.locator('.mof-name')).toHaveAttribute('href', 'data/mof-source/zif-8.cif');
-  const model = (await (await request.get('/data/mof-catalog.json')).json()).find(item => item.slug === 'zif-8');
-  await expect(figure.locator('[data-mof-source]')).toHaveAttribute('href', model.source_url);
-  const ruler = figure.locator('.mof-scale-line');
-  await expect(ruler).toBeVisible();
-  const initialRuler = await ruler.evaluate(line => line.getBoundingClientRect().width);
-  const selectedSvg = await poster.getAttribute('src');
-  await figure.getByRole('button', { name: 'Zoom in', exact: true }).click();
-  await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(initialRuler);
-  await expect.poll(() => poster.getAttribute('src')).not.toBe(selectedSvg);
-  await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
-  await expect.poll(() => poster.getAttribute('src')).toBe(selectedSvg);
-  await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(initialRuler, 1);
-  await expect(figure.getByRole('button', { name: 'Enable touch rotation', exact: true })).toHaveCount(0);
-});
-
-test('hero quick actions link directly to CoRE information and the PACMAN web application', async ({ page }) => {
-  await page.goto('/index.html');
-  const actions = page.locator('[data-hero-action]');
-  await expect(actions).toHaveCount(2);
-  await expect(actions.filter({ hasText: /CoRE/i })).toHaveAttribute('href', 'CoRE%20MOF%20Database.dc.html');
-  await expect(actions.filter({ hasText: /PACMAN/i })).toHaveAttribute('href', 'https://pacman-charge-mtap.streamlit.app/');
-  for (const action of await actions.all()) await expect(action).toBeVisible();
-});
-
-test('the hero keeps copy left and MOF right on desktop, stacks on mobile and starts with visible cell depth', async ({ page }) => {
-  await page.addInitScript(() => {
-    Math.random = () => .01;
-    let renderer;
-    Object.defineProperty(globalThis, 'MofRenderer', {
-      configurable: true,
-      get: () => renderer,
-      set(value) {
-        const original = value.draw;
-        value.draw = function (context, model, width, height, camera) {
-          globalThis.__mofLastDraw = {
-            slug: model.slug, width, height,
-            camera: { quaternion: [...camera.quaternion], zoom: camera.zoom }
-          };
-          return original.call(this, context, model, width, height, camera);
-        };
-        renderer = value;
-      }
-    });
-  });
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/index.html');
-  const copy = page.locator('.hero-copy'), figure = page.locator('[data-mof-viewer]');
-  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-  await waitForMofDraw(page);
-  const copyBox = await copy.boundingBox(), figureBox = await figure.boundingBox();
-  expect(copyBox.x + copyBox.width).toBeLessThan(figureBox.x);
-  expect(copyBox.y).toBeLessThan(figureBox.y + figureBox.height);
-  expect(copyBox.y + copyBox.height).toBeGreaterThan(figureBox.y);
-  const actionsBox = await copy.locator('.hero-actions').boundingBox();
-  expect(actionsBox.x).toBeGreaterThanOrEqual(copyBox.x - 1);
-  expect(actionsBox.x + actionsBox.width).toBeLessThanOrEqual(copyBox.x + copyBox.width + 1);
-  const initialView = await page.evaluate(() => {
-    const draw = globalThis.__mofLastDraw;
-    const model = globalThis.MOF_MODELS.find(item => item.slug === draw.slug);
-    const lengths = camera => MofRenderer.project(model, draw.width, draw.height, camera)
-      .filter(shape => shape.kind === 'cell')
-      .map(shape => Math.hypot(shape.x2 - shape.x, shape.y2 - shape.y));
-    return {
-      matrix: MofRenderer.quaternionMatrix(draw.camera.quaternion),
-      zoom: draw.camera.zoom,
-      tiltedLengths: lengths(draw.camera),
-      frontLengths: lengths({ quaternion: [1, 0, 0, 0], zoom: 1 })
-    };
-  });
-  // Independent Cartesian rotation check: R_y(12 degrees) R_x(-7 degrees).
-  const x = -7 * Math.PI / 180, y = 12 * Math.PI / 180;
-  const expectedMatrix = [
-    [Math.cos(y), Math.sin(y) * Math.sin(x), Math.sin(y) * Math.cos(x)],
-    [0, Math.cos(x), -Math.sin(x)],
-    [-Math.sin(y), Math.cos(y) * Math.sin(x), Math.cos(y) * Math.cos(x)]
-  ];
-  initialView.matrix.flat().forEach((value, index) => expect(value).toBeCloseTo(expectedMatrix.flat()[index], 10));
-  expect(initialView.zoom).toBe(1);
-  expect(initialView.frontLengths.some(length => length < 1e-6)).toBe(true);
-  expect(Math.min(...initialView.tiltedLengths)).toBeGreaterThan(2);
-  await expect(figure.locator('canvas')).toHaveAttribute('aria-label', /initial view gently tilted for depth/);
-  for (const width of [390, 320]) {
-    await page.setViewportSize({ width, height: 844 });
-    await waitForMofDraw(page);
-    const mobileCopy = await copy.boundingBox(), mobileFigure = await figure.boundingBox();
-    expect(mobileCopy.y + mobileCopy.height).toBeLessThan(mobileFigure.y);
-    expect(mobileFigure.x).toBeGreaterThanOrEqual(-1);
-    expect(mobileFigure.x + mobileFigure.width).toBeLessThanOrEqual(width + 1);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-  }
-});
-
-test('hero typography fits both alternating headlines and keeps the two subtitle lines aligned at desktop and mobile widths', async ({ page }) => {
-  test.setTimeout(90_000);
-  await page.clock.install();
-  await page.addInitScript(() => { Math.random = () => .01; });
-  await page.goto('/index.html');
-  await expect(page.locator('[data-mof-viewer]')).toHaveAttribute('data-mof-ready', 'true');
-  await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator('.hero-purpose-line')).toHaveText(['for materials &', 'chemical discovery.']);
-  const measureTypography = () => page.locator('.hero-copy').evaluate(copy => {
-    const box = element => {
-      const { x, y, width, height } = element.getBoundingClientRect();
-      return { x, y, width, height };
-    };
-    const textBox = element => {
-      const range = document.createRange();
-      range.selectNodeContents(element);
-      const { left, right, top, bottom } = range.getBoundingClientRect();
-      return { left, right, top, bottom, text: element.textContent };
-    };
-    return {
-      copy: box(copy), heading: box(copy.querySelector('h1')),
-      figure: box(document.querySelector('[data-mof-viewer]')),
-      titleFont: parseFloat(getComputedStyle(copy.querySelector('h1')).fontSize),
-      purposeFont: parseFloat(getComputedStyle(copy.querySelector('.hero-purpose')).fontSize),
-      text: [...copy.querySelectorAll('.hero-term,.hero-purpose-line')].map(textBox),
-      subtitle: [...copy.querySelectorAll('.hero-purpose-line')].map(textBox)
-    };
-  });
-  for (const width of [1024, 1265, 1440, 1920, 320, 390]) {
-    await page.setViewportSize({ width, height: 900 });
-    const before = await measureTypography();
-    for (const bounds of before.text) {
-      expect(bounds.left, `${width}px: ${bounds.text} left edge`).toBeGreaterThanOrEqual(before.copy.x - 1);
-      expect(bounds.right, `${width}px: ${bounds.text} right edge`).toBeLessThanOrEqual(before.copy.x + before.copy.width + 1);
-    }
-    expect(Math.abs(before.subtitle[0].left - before.subtitle[1].left), `${width}px subtitle left alignment`).toBeLessThanOrEqual(.5);
-    expect(before.subtitle[0].bottom, `${width}px subtitle must form separate lines`).toBeLessThanOrEqual(before.subtitle[1].top + 1);
-    if (width > 840) {
-      expect(before.titleFont).toBeGreaterThanOrEqual(width >= 1265 ? 40 : 28);
-      expect(before.titleFont).toBeLessThanOrEqual(56);
-      expect(before.purposeFont).toBeGreaterThanOrEqual(24);
-      expect(before.purposeFont).toBeLessThanOrEqual(30);
-    } else {
-      expect(before.purposeFont).toBeGreaterThanOrEqual(18);
-      expect(before.purposeFont).toBeLessThanOrEqual(24);
-      expect(before.purposeFont).toBeLessThan(before.titleFont);
-    }
-    const activeText = await page.locator('.hero-term.is-active').textContent();
-    await page.clock.fastForward(6_100);
-    await expect(page.locator('.hero-term.is-active')).not.toHaveText(activeText);
-    const after = await measureTypography();
-    for (const element of ['copy', 'heading', 'figure']) {
-      for (const dimension of ['x', 'y', 'width', 'height']) {
-        expect(Math.abs(after[element][dimension] - before[element][dimension]), `${width}px ${element} ${dimension} changed during headline alternation`).toBeLessThanOrEqual(.2);
-      }
-    }
-    if (width === 1265 && process.env.HOMEPAGE_PROOF_DIR) {
-      await page.screenshot({
-        path: process.env.HOMEPAGE_PROOF_DIR + '/improvement-desktop-preview.png',
-        fullPage: false, animations: 'disabled'
-      });
-    }
-  }
-});
-
-test.describe('MOF touch controls', () => {
-  test.use({ hasTouch: true, viewport: { width: 390, height: 844 } });
-  test('the MOF lets touch users scroll the page before they enable rotation', async ({ page }) => {
-    await page.addInitScript(() => { Math.random = () => .01; });
-    await page.goto('/index.html');
-    const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-    await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-    const interact = figure.getByRole('button', { name: 'Enable touch rotation', exact: true });
-    await expect(interact).toBeVisible();
-    await expect(interact).toHaveAttribute('aria-pressed', 'false');
-    await expect(figure.getByText('Scroll to browse · Enable touch rotation to interact', { exact: true })).toBeVisible();
-    expect(await canvas.evaluate(element => getComputedStyle(element).touchAction)).toBe('pan-y pinch-zoom');
-    await canvas.scrollIntoViewIfNeeded();
-    await waitForMofDraw(page);
-    const initialImage = await canvas.evaluate(c => c.toDataURL());
-    const initialRuler = await figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width);
-    const initialScroll = await page.evaluate(() => scrollY);
-    const bounds = await canvas.boundingBox();
-    const startY = Math.min(page.viewportSize().height - 60, bounds.y + bounds.height * .72);
-    const point = y => ({ id: 1, x: bounds.x + bounds.width / 2, y });
-    const client = await page.context().newCDPSession(page);
-    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(startY)] });
-    for (let step = 1; step <= 6; step += 1) {
-      await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(startY - step * 20)] });
-      await waitForMofDraw(page);
-    }
-    await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(initialScroll + 10);
-    expect(await canvas.evaluate(c => c.toDataURL())).toBe(initialImage);
-    expect(await figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(initialRuler, 1);
-    await expect(interact).toHaveAttribute('aria-pressed', 'false');
-    await client.detach();
-  });
-
-  test('enabled touch drag and pinch work, and reset or selection returns to page scrolling', async ({ page }) => {
-    await page.addInitScript(() => { Math.random = () => .875; });
-    await page.goto('/index.html');
-    const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-    await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-    const interact = figure.locator('[data-mof-interact]');
-    await expect(interact).toHaveAttribute('aria-pressed', 'false');
-    await interact.click();
-    await expect(interact).toHaveAttribute('aria-label', 'Return to page scrolling');
-    await expect(interact).toHaveAttribute('aria-pressed', 'true');
-    expect(await canvas.evaluate(element => getComputedStyle(element).touchAction)).toBe('none');
-    await expect(figure.getByText('Drag to rotate · Pinch to zoom', { exact: true })).toBeVisible();
-    await canvas.scrollIntoViewIfNeeded();
-    await waitForMofDraw(page);
-    const bounds = await canvas.boundingBox();
-    expect(bounds).not.toBeNull();
-    const client = await page.context().newCDPSession(page);
-    const point = (id, x, y) => ({ id, x: bounds.x + bounds.width * x, y: bounds.y + bounds.height * y });
-    const initial = await canvas.evaluate(c => c.toDataURL());
-    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(1, .4, .5)] });
-    await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(1, .6, .55)] });
-    await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(initial);
-    const ruler = figure.locator('.mof-scale-line');
-    const before = await ruler.evaluate(line => line.getBoundingClientRect().width);
-    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(1, .4, .5), point(2, .6, .5)] });
-    await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(1, .3, .5), point(2, .7, .5)] });
-    await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(before);
-    await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
-    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(initial);
-    await expect(interact).toHaveAttribute('aria-pressed', 'false');
-    await expect(interact).toHaveAttribute('aria-label', 'Enable touch rotation');
-    expect(await canvas.evaluate(element => getComputedStyle(element).touchAction)).toBe('pan-y pinch-zoom');
-    await interact.click();
-    await expect(interact).toHaveAttribute('aria-pressed', 'true');
-    await figure.getByRole('combobox', { name: 'Choose MOF', exact: true }).selectOption('zif-8');
-    await expect(figure).toHaveAttribute('data-mof-name', 'ZIF-8');
-    await expect(interact).toHaveAttribute('aria-pressed', 'false');
-    await expect(interact).toHaveAttribute('aria-label', 'Enable touch rotation');
-    expect(await canvas.evaluate(element => getComputedStyle(element).touchAction)).toBe('pan-y pinch-zoom');
-    for (const control of [interact, figure.getByRole('combobox', { name: 'Choose MOF', exact: true }),
-      figure.getByRole('button', { name: 'Zoom in', exact: true }), figure.getByRole('button', { name: 'Zoom out', exact: true }),
-      figure.getByRole('button', { name: 'Reset pore view', exact: true })]) {
-      expect(Math.round((await control.boundingBox()).height * 10) / 10).toBeGreaterThanOrEqual(44);
-    }
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-    await client.detach();
-  });
-});
-
-test('Agentic computing and Superintelligence keep alternating without pause controls', async ({ page }) => {
-  await page.clock.install();
+test('MOF motion pauses and resumes while the initial pore view remains until motion starts', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/index.html');
-  const terms = page.locator('.hero-term');
-  await expect(terms).toHaveText(['Agentic computing', 'Superintelligence']);
+  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
+  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
+  const image = () => canvas.evaluate(node => node.toDataURL());
+  const initial = await image();
+  await page.waitForTimeout(250);
+  expect(await image()).toBe(initial);
+  await figure.getByRole('button', { name: 'Resume rotation' }).click();
+  await expect(figure.getByRole('button', { name: 'Pause rotation' })).toHaveAttribute('aria-pressed', 'false');
+  await expect.poll(image).not.toBe(initial);
+  await figure.getByRole('button', { name: 'Pause rotation' }).click();
+  const paused = await image();
+  await page.waitForTimeout(250);
+  expect(await image()).toBe(paused);
+});
+
+test('a browser without Canvas retains the pore-facing SVG and hides motion controls', async ({ page }) => {
+  await page.addInitScript(() => { HTMLCanvasElement.prototype.getContext = () => null; });
+  await page.goto('/index.html');
+  const figure = page.locator('[data-mof-viewer]');
+  await expect(figure.locator('.mof-poster')).toBeVisible();
+  await expect(figure.getByRole('button', { name: /rotation/ })).toBeHidden();
+});
+
+for (const width of [1440, 1280, 1024, 840, 390, 320]) {
+  test(`polished hero preserves readable copy and pore graphics at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/index.html');
+    await expect(page.locator('[data-mof-viewer]')).toHaveAttribute('data-mof-ready', 'true');
+    const geometry = await page.evaluate(() => {
+      const copy = document.querySelector('.hero-copy'), purpose = copy.querySelector('.hero-purpose');
+      const textRange = document.createRange(); textRange.selectNodeContents(purpose);
+      return {
+        overflow: document.documentElement.scrollWidth - innerWidth,
+        lines: textRange.getClientRects().length,
+        font: parseFloat(getComputedStyle(purpose).fontSize),
+        copy: copy.getBoundingClientRect().toJSON(),
+        figure: document.querySelector('.mof-figure').getBoundingClientRect().toJSON(),
+        weight: getComputedStyle(document.querySelector('.home-hero-intro')).fontWeight
+      };
+    });
+    expect(geometry.overflow).toBeLessThanOrEqual(1);
+    expect(geometry.font).toBeGreaterThanOrEqual(28);
+    expect(Number(geometry.weight)).toBeGreaterThanOrEqual(600);
+    if (width > 840) {
+      expect(geometry.lines).toBe(1);
+      expect(geometry.figure.left).toBeGreaterThan(geometry.copy.right);
+    } else expect(geometry.figure.top).toBeGreaterThanOrEqual(geometry.copy.bottom);
+  });
+}
+
+test('the headline alternates every six seconds and supports pause and reduced motion', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/index.html');
   await expect(page.locator('.hero-term.is-active')).toHaveText('Agentic computing');
-  await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
-  await page.clock.fastForward(6_100);
+  await page.clock.fastForward(6100);
   await expect(page.locator('.hero-term.is-active')).toHaveText('Superintelligence');
-  await page.clock.fastForward(6_100);
+  await page.getByRole('button', { name: 'Pause headline' }).click();
+  await page.clock.fastForward(6100);
+  await expect(page.locator('.hero-term.is-active')).toHaveText('Superintelligence');
+  await page.getByRole('button', { name: 'Resume headline' }).click();
+  await page.clock.fastForward(6100);
   await expect(page.locator('.hero-term.is-active')).toHaveText('Agentic computing');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.hero-words-toggle')).toBeHidden();
+  await page.clock.fastForward(6100);
+  await expect(page.locator('.hero-term.is-active')).toHaveText('Agentic computing');
+  await expect(page.locator('.hero-words-toggle')).toBeHidden();
 });
 
 function comparePublicText(left, right) {
@@ -1115,7 +719,7 @@ test('homepage shows three latest publications and three news items', async ({ p
   await expect(page.locator('[data-home-publication]')).toHaveCount(3);
   await expect(page.locator('[data-home-news]')).toHaveCount(3);
   await expect(page.locator('[data-home-publication] publication-metrics')).toHaveCount(3);
-  await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /rotation/i })).toHaveCount(1);
 });
 
 test('research interests appear only in the professor profile', async ({ page }) => {

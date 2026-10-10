@@ -49,7 +49,7 @@ test('published homepage exposes its title, search and sharing metadata before J
   assert.doesNotMatch(fallback, /{{|<sc-(?:for|if)\b|<script\b|\sonclick=/i);
   const fallbackDocument = parseHTML(fallback).document;
   assert.equal(fallbackDocument.querySelectorAll('main').length, 1);
-  assert.ok(fallbackDocument.querySelector('img[src^="images/cu-btc.svg"]'), 'no-JavaScript structure poster was lost');
+  assert.ok(fallbackDocument.querySelector('img[src^="images/mofs/cu-btc.svg"]'), 'no-JavaScript structure poster was lost');
   assert.ok(fallbackDocument.querySelector('a[href="CoRE%20MOF%20Database.dc.html"]'), 'no-JavaScript tool navigation was lost');
   assert.equal(await renderPublishedPage(source, { filename: 'index.html', dataRoot }), result, 'published HTML is not deterministic');
 });

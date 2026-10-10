@@ -40,3 +40,23 @@ Periodically translated unit cells enlarge the visible framework region without 
 Source files, individual licenses, normalization steps, and reproducible catalog commands are documented in [`data/mof-provenance.md`](data/mof-provenance.md).
 
 The build publishes title, description, canonical URL, and Open Graph/Twitter tags in the initial HTML head without runtime duplicates. The 1200×630 sharing image is reproducible with `python scripts/generate-homepage-social.py --check`. Canvas initialization does not create hidden SVG strings; SVG is generated only for browsers without a Canvas context.
+
+### Polished pore-facing homepage (October 2026)
+
+The approved homepage uses `data/mof-gallery.json`, `assets/mof-pore-renderer.js`,
+and `assets/mof-pore-viewer.js`. Each visit chooses one of Cu-BTC, CALF-20,
+Mg-MOF-74 and NU-1000. Orthographic pore-facing views have no pitch or roll;
+a gentle ±0.12-radian yaw preserves pore visibility. Motion controls and reduced
+motion preferences are supported. `images/mofs/` contains the matching no-JS
+fallbacks. Camera and periodic centering provenance is recorded in
+`data/mof-view-provenance.json`; the gallery retains structural source metadata.
+The earlier eight-model catalogue and renderer remain as audited reference
+assets, but are no longer connected to the homepage.
+
+Supercells repeat Cu-BTC and CALF-20 as 1×2×2, and Mg-MOF-74 and NU-1000
+as 2×2×1 along the plane perpendicular to the channel. The source unit-cell
+representations are retained in `data/mof-unit-cells.json`. Regenerate with
+`python3 scripts/generate-mof-supercells.py` followed by
+`node scripts/generate-mof-posters.mjs`. Exact lattice translations preserve
+every displayed source bond length (maximum error below 0.00002 Å). The outer
+outline encloses the displayed supercell; source lattice vectors remain intact.

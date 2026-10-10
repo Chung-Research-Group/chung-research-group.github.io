@@ -7,7 +7,8 @@ export default defineConfig({
   // Element assertions retain their tighter timeout below.
   timeout: 45_000,
   expect: { timeout: 10_000 },
-  use: { baseURL: 'http://127.0.0.1:4173', trace: 'retain-on-failure' },
+  use: { baseURL: 'http://127.0.0.1:4173', trace: 'retain-on-failure',
+    launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : {} },
   webServer: {
     command: 'node tests/static-server.mjs 4173 dist',
     url: 'http://127.0.0.1:4173/index.html',
