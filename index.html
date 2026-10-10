@@ -108,8 +108,9 @@ body{zoom:0.88}
 .mof-figure[data-mof-ready="true"] canvas{visibility:visible}
 .mof-figure[data-mof-ready="true"] .mof-poster{visibility:hidden}
 .mof-figure figcaption{display:flex;align-items:center;justify-content:center;gap:12px;font-size:15px;line-height:1.5;color:#263c4c}
-.mof-name{font-weight:700}
-.mof-motion{display:none;align-items:center;justify-content:center;width:32px;min-height:32px;padding:7px;background:transparent;border:0;border-radius:50%;color:#526a7b;cursor:pointer}
+.mof-name{font-weight:700;color:inherit;text-decoration:underline;text-decoration-color:#9aaebc;text-underline-offset:4px;text-align:center}
+.mof-name:hover{color:#005da8;text-decoration-color:currentColor}
+.mof-motion{display:none;align-items:center;justify-content:center;flex-shrink:0;width:32px;min-height:32px;padding:7px;background:transparent;border:0;border-radius:50%;color:#526a7b;cursor:pointer}
 .mof-motion svg{display:block;width:18px;height:18px}
 .mof-motion:hover{background:#e1e7ec;color:#153d58}
 .mof-figure[data-mof-ready="true"] .mof-motion{display:inline-flex}
@@ -146,15 +147,15 @@ body{zoom:0.88}
           <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term">Superintelligence</span></span><span class="hero-purpose" aria-hidden="true">for materials &amp; chemical discovery.</span></h1>
           <button class="hero-words-toggle" type="button" aria-label="Pause headline" title="Pause headline" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button>
         </div>
-        <figure class="mof-figure" data-mof-viewer="data/mof-gallery.json?v=20261010-six-large">
+        <figure class="mof-figure" data-mof-viewer="data/mof-gallery.json?v=20261010-upright">
           <div class="mof-stage">
             <img class="mof-poster" src="images/mofs/cu-btc.svg" width="750" height="750" alt="Cu-BTC crystal structure shown as a pore-facing unit cell.">
             <canvas aria-hidden="true"></canvas>
           </div>
-          <figcaption><span class="mof-name" data-mof-name>Cu-BTC</span><button class="mof-motion" type="button" aria-label="Pause rotation" title="Pause rotation" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button></figcaption>
+          <figcaption><a class="mof-name" data-mof-name href="https://doi.org/10.1126/science.283.5405.1148" target="_blank" rel="noopener noreferrer" title="A Chemically Functionalizable Nanoporous Material">Cu-BTC (Science, 1999)</a><button class="mof-motion" type="button" aria-label="Pause rotation" title="Pause rotation" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></button></figcaption>
         </figure>
       </div>
-      <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and superintelligence to explore materials for energy and separations.</p>
+      <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and superintelligence to explore materials and chemicals for energy-related and chemical separation applications.</p>
     </section>
 
     <section class="home-section" data-screen-label="Software and data">
@@ -223,8 +224,8 @@ class Component extends DCLogic {
 </script>
 <script src="assets/publication-badges.js"></script>
 
-<script src="assets/mof-pore-renderer.js?v=20261010-six-large"></script>
-<script src="assets/mof-pore-viewer.js?v=20261010-six-large"></script>
+<script src="assets/mof-pore-renderer.js?v=20261010-upright"></script>
+<script src="assets/mof-pore-viewer.js?v=20261010-upright"></script>
 <script src="assets/hero-words.js?v=20261010-polished"></script>
 
 </body>

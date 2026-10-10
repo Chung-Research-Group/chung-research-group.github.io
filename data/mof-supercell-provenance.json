@@ -127,14 +127,20 @@
           6.942
         ],
         "up": [
+          -22.634439953,
           -13.068,
-          22.634439953,
           0.0
         ],
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. A single unit cell keeps the pore aperture prominent."
+        "note": "Pore-facing orthographic camera; no out-of-plane tilt. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Fixed 90-degree clockwise screen orientation preserves the pore-facing direction and exact lattice geometry. A single unit cell keeps the pore aperture prominent.",
+        "unrotated_up": [
+          -13.068,
+          22.634439953,
+          0.0
+        ],
+        "screen_rotation_degrees_clockwise": 90
       },
       "unit_cell_vectors_angstrom": [
         [
@@ -178,19 +184,25 @@
           16.58
         ],
         "up": [
+          -34.641016151,
           -20.0,
-          34.641016151,
           0.0
         ],
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints. A single unit cell keeps the pore aperture prominent.",
+        "note": "Pore-facing orthographic camera; no out-of-plane tilt. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints. Fixed 90-degree clockwise screen orientation preserves the pore-facing direction and exact lattice geometry. A single unit cell keeps the pore aperture prominent.",
         "fractional_origin_shift": [
           0.5,
           0.5,
           0
-        ]
+        ],
+        "unrotated_up": [
+          -20.0,
+          34.641016151,
+          0.0
+        ],
+        "screen_rotation_degrees_clockwise": 90
       },
       "unit_cell_vectors_angstrom": [
         [
@@ -234,14 +246,20 @@
           30.0333
         ],
         "up": [
+          -32.105293769,
           -18.536,
-          32.105293769,
           0.0
         ],
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Restore the audited [001] pore-facing unit-cell view without pitch or roll. Source coordinates and periodic clipped bond segments are unchanged. A single unit cell keeps the pore aperture prominent."
+        "note": "Restore the audited [001] pore-facing unit-cell view without out-of-plane tilt. Source coordinates and periodic clipped bond segments are unchanged. Fixed 90-degree clockwise screen orientation preserves the pore-facing direction and exact lattice geometry. A single unit cell keeps the pore aperture prominent.",
+        "unrotated_up": [
+          -18.536,
+          32.105293769,
+          0.0
+        ],
+        "screen_rotation_degrees_clockwise": 90
       },
       "unit_cell_vectors_angstrom": [
         [

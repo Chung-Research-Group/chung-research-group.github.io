@@ -124,7 +124,10 @@ for (const [index, name, slug] of mofOptions) {
     const figure = page.locator('[data-mof-viewer]');
     await expect(figure).toHaveAttribute('data-selected-mof', slug);
     await expect(figure).toHaveAttribute('data-mof-ready', 'true');
-    await expect(figure.locator('[data-mof-name]')).toHaveText(name);
+    const publication = (await (await request.get('/data/mof-publications.json')).json())[slug];
+    await expect(figure.locator('[data-mof-name]')).toHaveText(`${name} (${publication.journal}, ${publication.year})`);
+    await expect(figure.locator('[data-mof-name]')).toHaveAttribute('href', publication.url);
+    await expect(figure.locator('[data-mof-name]')).toHaveAttribute('title', publication.title);
     await expect(figure.locator('.mof-poster')).toHaveAttribute('src', `images/mofs/${slug}.svg`);
     await expect(figure.locator('.mof-poster')).toHaveAttribute('alt', `${name} crystal structure shown as a pore-facing ${slug === 'calf-20' ? 'periodic supercell' : 'unit cell'}.`);
     await expect(figure.locator('canvas')).toBeVisible();
@@ -134,7 +137,8 @@ for (const [index, name, slug] of mofOptions) {
       const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
       return pixels.some((value, i) => i % 4 === 3 && value > 0);
     })).toBe(true);
-    await expect(figure.locator('a,select')).toHaveCount(0);
+    await expect(figure.locator('a')).toHaveCount(1);
+    await expect(figure.locator('select')).toHaveCount(0);
     await expect(figure).not.toContainText(/CIF|Source|omitted/);
   });
 }
