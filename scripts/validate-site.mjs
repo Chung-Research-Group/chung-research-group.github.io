@@ -1909,9 +1909,9 @@ const mofViewer = await exists(mofViewerPath) ? await readFile(mofViewerPath, 'u
 if (!indexHtml.includes('data-mof-viewer') || !mofViewer.includes('requestAnimationFrame')) {
   errors.push('Homepage coordinate-based MOF renderer is missing.');
 }
-if (!indexHtml.includes('images/cu-btc.svg') || !indexHtml.includes('assets/hero-words.js') ||
+if (!mofViewer.includes('pointerdown') || !mofViewer.includes('wheel') || !indexHtml.includes('Reset pore view') || !indexHtml.includes('images/cu-btc.svg') || !indexHtml.includes('assets/hero-words.js') ||
     indexHtml.includes('mof-motion') || indexHtml.includes('hero-words-toggle')) {
-  errors.push('Homepage continuous motion or static unit-cell fallback is missing.');
+  errors.push('Homepage manual viewer or static unit-cell fallback is missing.');
 }
 try {
   const models = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-catalog.json'), 'utf8'));

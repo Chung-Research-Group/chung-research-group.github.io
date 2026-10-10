@@ -10,17 +10,22 @@ import { sharedChrome } from '../scripts/site-chrome.mjs';
 import { renderPublishedPage } from '../scripts/render-static-site.mjs';
 import '../assets/mof-renderer.js';
 
-test('the four MOFs retain their source cells, periodic bonds and a shared physical scale throughout rotation', async () => {
+test('the four manual MOF views preserve their source cells, periodic repeats and shared physical scale', async () => {
   const models = JSON.parse(await readFile(new URL('../data/mof-catalog.json', import.meta.url), 'utf8'));
   assert.deepEqual(models.map(model => model.name), ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000']);
   const previousCatalog = globalThis.MOF_MODELS;
   globalThis.MOF_MODELS = models;
   const dot = (a, b) => a.reduce((sum, x, i) => sum + x * b[i], 0);
   const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const sourceCounts = [552, 36, 144, 420];
+  const repeats = [[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1]];
+  const identity = [1, 0, 0, 0];
+  const orientations = [identity, [Math.cos(.4), Math.sin(.4), 0, 0], [Math.cos(.7), 0, Math.sin(.7), 0], [.5, .5, .5, .5]];
   try {
-    for (const model of models) {
+    for (const [index, model] of models.entries()) {
       assert.equal(model.units, 'angstrom');
-      assert.ok(model.atoms.length > 0 && model.bond_segments.length > 0, model.name);
+      assert.equal(model.atoms.length, sourceCounts[index], `${model.name}: the original cell was changed`);
+      assert.ok(model.bond_segments.length > 0, model.name);
       assert.ok(model.atoms.every(([element, ...position]) => element !== 'H' && position.every(Number.isFinite)), model.name);
       const source = await readFile(new URL(`../data/mof-source/${model.slug}.cif`, import.meta.url));
       assert.equal(createHash('sha256').update(source).digest('hex'), model.source_sha256, model.name);
@@ -28,6 +33,9 @@ test('the four MOFs retain their source cells, periodic bonds and a shared physi
       assert.ok(volume > 0, model.name);
       const reciprocal = [cross(vectors[1], vectors[2]), cross(vectors[2], vectors[0]), cross(vectors[0], vectors[1])]
         .map(vector => vector.map(x => x / volume));
+      for (const atom of model.atoms) for (const axis of reciprocal) {
+        assert.ok(Math.abs(dot(atom.slice(1), axis)) <= .500001, `${model.name}: source atom left its unit cell`);
+      }
       for (const [element, ...coordinates] of model.bond_segments) {
         assert.ok(model.atoms.some(atom => atom[0] === element), model.name);
         const start = coordinates.slice(0, 3), end = coordinates.slice(3);
@@ -37,26 +45,61 @@ test('the four MOFs retain their source cells, periodic bonds and a shared physi
           assert.ok(Math.abs(dot(point, axis)) <= .500001, `${model.name}: periodic bond left its unit cell`);
         }
       }
+      const geometry = MofRenderer.geometry(model);
+      assert.deepEqual(geometry.repetitions, repeats[index]);
+      const copies = repeats[index].reduce((count, n) => count * n, 1);
+      assert.ok(geometry.displayAtoms.length <= model.atoms.length * copies, `${model.name}: unexpected extra atoms`);
+      assert.ok(geometry.displayAtoms.length >= model.atoms.length, `${model.name}: original cell atoms were lost`);
+      if (copies > 1) assert.ok(geometry.displayAtoms.length > model.atoms.length, `${model.name}: periodic neighbors were not displayed`);
+      // Shared boundary atoms can be deduplicated, but every displayed atom must
+      // still be a lattice translation of a source atom of the same element.
+      const periodicKey = (element, fractional) => element + ':' + fractional
+        .map(x => ((Math.round(x * 1e5) % 100000) + 100000) % 100000).join(',');
+      const sourceSites = new Set(model.atoms.map(([element, ...position]) => periodicKey(element, reciprocal.map(axis => dot(position, axis)))));
+      for (const [element, ...position] of geometry.displayAtoms) {
+        const fractional = reciprocal.map(axis => dot(position, axis));
+        fractional.forEach((x, axis) => assert.ok(Math.abs(x) <= repeats[index][axis] / 2 + 1e-6, `${model.name}: atom left the repeated cell region`));
+        assert.ok(sourceSites.has(periodicKey(element, fractional.map((x, axis) => x + (repeats[index][axis] - 1) / 2))), `${model.name}: displayed atom is not a source lattice translation`);
+      }
+      assert.equal(geometry.viewDirection, index === 1 ? '[100]' : '[001]');
+      const normal = vectors[index === 1 ? 0 : 2], length = Math.hypot(...normal);
+      assert.ok(Math.abs(Math.abs(dot(geometry.basis[2], normal)) / length - 1) < 1e-12, `${model.name}: initial view is diagonal to the pore axis`);
+      for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+        assert.ok(Math.abs(dot(geometry.basis[i], geometry.basis[j]) - (i === j ? 1 : 0)) < 1e-12, 'camera basis distorts physical lengths');
+      }
     }
-    for (const [width, height] of [[180, 120], [335, 335], [506, 506]]) {
-      const scales = models.map(model => MofRenderer.viewScale(model, width, height));
-      assert.ok(scales[0] > 0 && scales.every(scale => scale === scales[0]), 'MOFs use different pixels per angstrom');
-      const radiiByColor = new Map();
-      for (const model of models) for (let degrees = 0; degrees <= 360; degrees += 5) {
-        const shapes = MofRenderer.project(model, width, height, degrees * Math.PI / 180);
-        assert.equal(shapes.filter(shape => shape.kind === 'atom').length, model.atoms.length, model.name);
-        assert.deepEqual(shapes.filter(shape => shape.kind === 'label').map(shape => shape.text), ['a', 'b', 'c']);
+    for (const quaternion of orientations) {
+      const matrix = MofRenderer.quaternionMatrix(quaternion);
+      for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+        assert.ok(Math.abs(dot(matrix[i], matrix[j]) - (i === j ? 1 : 0)) < 1e-12, 'manual rotation changes physical lengths');
+      }
+    }
+    for (const [width, height] of [[180, 120], [335, 335], [900, 520]]) {
+      for (const model of models) {
+        const shapes = MofRenderer.project(model, width, height, { quaternion: identity, zoom: 1 });
+        assert.deepEqual(shapes.filter(shape => shape.kind === 'label').map(shape => shape.text[0]), ['a', 'b', 'c']);
         for (const shape of shapes) {
           const radius = shape.kind === 'atom' ? shape.r : shape.kind === 'label' ? 13 : shape.width / 2;
           const endpoints = shape.x2 === undefined ? [[shape.x, shape.y]] : [[shape.x, shape.y], [shape.x2, shape.y2]];
           for (const [x, y] of endpoints) {
-            assert.ok(x - radius >= 0 && x + radius <= width, `${model.name}: clipped ${shape.kind} at ${degrees} degrees`);
-            assert.ok(y - radius >= 0 && y + radius <= height, `${model.name}: clipped ${shape.kind} at ${degrees} degrees`);
+            assert.ok(x - radius >= 0 && x + radius <= width, `${model.name}: clipped ${shape.kind} in its initial front view`);
+            assert.ok(y - radius >= 0 && y + radius <= height, `${model.name}: clipped ${shape.kind} in its initial front view`);
           }
-          if (shape.kind === 'atom') {
-            const previousRadius = radiiByColor.get(shape.color);
-            if (previousRadius !== undefined) assert.equal(shape.r, previousRadius, 'atom size changed between models or angles');
-            radiiByColor.set(shape.color, shape.r);
+        }
+      }
+      for (const zoom of [.75, 1, 2]) {
+        const scales = models.map(model => MofRenderer.viewScale(model, width, height, zoom));
+        assert.ok(scales[0] > 0 && scales.every(scale => scale === scales[0]), 'MOFs use different pixels per angstrom');
+        assert.ok(Math.abs(scales[0] - zoom * MofRenderer.viewScale(models[0], width, height, 1)) < 1e-12, 'zoom is not uniform in physical units');
+        const radiiByColor = new Map();
+        for (const model of models) for (const quaternion of orientations) {
+          const atoms = MofRenderer.project(model, width, height, { quaternion, zoom }).filter(shape => shape.kind === 'atom');
+          assert.equal(atoms.length, MofRenderer.geometry(model).displayAtoms.length, model.name);
+          for (const atom of atoms) {
+            assert.ok([atom.x, atom.y, atom.z, atom.r].every(Number.isFinite), model.name);
+            const previousRadius = radiiByColor.get(atom.color);
+            if (previousRadius !== undefined) assert.equal(atom.r, previousRadius, 'atom size changed between models or manual orientations');
+            radiiByColor.set(atom.color, atom.r);
           }
         }
       }

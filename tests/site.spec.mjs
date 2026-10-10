@@ -112,7 +112,7 @@ for (const [index, name, slug] of [
   [0, 'Cu-BTC', 'cu-btc'], [1, 'CALF-20', 'calf-20'],
   [2, 'MOF-74 (Mg)', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000']
 ]) {
-  test(`MOF random loading selects ${name} and keeps rotating without pause controls`, async ({ page, request }) => {
+  test(`MOF random loading selects ${name} with a front view and manual rotation and zoom`, async ({ page, request }) => {
     await page.addInitScript(selected => { Math.random = () => (selected + .5) / 4; }, index);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/index.html');
@@ -120,14 +120,25 @@ for (const [index, name, slug] of [
     await expect(figure).toHaveAttribute('data-mof-viewer', 'data/mof-catalog.json');
     await expect(figure).toHaveAttribute('data-mof-ready', 'true');
     await expect(figure).toHaveAttribute('data-mof-name', name);
+    await expect(figure).toHaveAttribute('data-mof-view', index === 1 ? '[100]' : '[001]');
+    expect((await figure.getAttribute('data-mof-repetitions')).split(/\D+/).filter(Boolean).map(Number))
+      .toEqual([[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1]][index]);
     await expect(figure.locator('.mof-name')).toHaveText(name);
     await expect(figure.locator('.mof-name')).toHaveAttribute('href', `data/mof-source/${slug}.cif`);
     expect((await request.get(`/data/mof-source/${slug}.cif`)).ok()).toBe(true);
-    await expect(figure.getByRole('button')).toHaveCount(0);
+    await expect(figure.getByRole('button', { name: 'Zoom in', exact: true })).toBeVisible();
+    await expect(figure.getByRole('button', { name: 'Zoom out', exact: true })).toBeVisible();
+    await expect(figure.getByRole('button', { name: 'Reset pore view', exact: true })).toBeVisible();
+    await expect(figure.getByText('Drag to rotate · Scroll or pinch to zoom', { exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: /pause|resume/i })).toHaveCount(0);
+    await expect(canvas).toHaveAttribute('tabindex', '0');
+    await expect(canvas).toHaveAttribute('role', 'img');
+    await canvas.scrollIntoViewIfNeeded();
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     expect(await canvas.evaluate(c => c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0))).toBe(true);
     const first = await canvas.evaluate(c => c.toDataURL());
-    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
+    await page.waitForTimeout(200);
+    expect(await canvas.evaluate(c => c.toDataURL()), 'initial view should stay still without user input').toBe(first);
     const ruler = await figure.evaluate(element => {
       const bounds = element.querySelector('canvas').getBoundingClientRect();
       const scales = globalThis.MOF_MODELS.map(model => MofRenderer.viewScale(model, bounds.width, bounds.height));
@@ -135,8 +146,83 @@ for (const [index, name, slug] of [
     });
     expect(ruler.scales.every(scale => scale === ruler.scales[0])).toBe(true);
     expect(Math.abs(ruler.width - 10 * ruler.scales[0])).toBeLessThanOrEqual(1);
+    const bounds = await canvas.boundingBox();
+    expect(bounds).not.toBeNull();
+    await page.mouse.move(bounds.x + bounds.width * .5, bounds.y + bounds.height * .5);
+    await page.mouse.down();
+    await page.mouse.move(bounds.x + bounds.width * .64, bounds.y + bounds.height * .56, { steps: 8 });
+    await page.mouse.up();
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const dragged = await canvas.evaluate(c => c.toDataURL());
+    expect(dragged, 'mouse drag did not rotate the structure').not.toBe(first);
+    await page.waitForTimeout(200);
+    expect(await canvas.evaluate(c => c.toDataURL()), 'rotation continued after release').toBe(dragged);
+    await page.mouse.wheel(0, -300);
+    await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(ruler.width);
+    const zoomed = await figure.evaluate(element => {
+      const bounds = element.querySelector('canvas').getBoundingClientRect();
+      const rulerWidth = element.querySelector('.mof-scale-line').getBoundingClientRect().width;
+      const baseScale = MofRenderer.viewScale(globalThis.MOF_MODELS[0], bounds.width, bounds.height);
+      const zoom = rulerWidth / (10 * baseScale);
+      return { scales: globalThis.MOF_MODELS.map(model => MofRenderer.viewScale(model, bounds.width, bounds.height, zoom)), rulerWidth };
+    });
+    expect(zoomed.scales.every(scale => scale === zoomed.scales[0])).toBe(true);
+    expect(Math.abs(zoomed.rulerWidth - 10 * zoomed.scales[0])).toBeLessThanOrEqual(1);
+    await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
+    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
+    await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeCloseTo(ruler.width, 1);
   });
 }
+
+test('MOF keyboard rotation and zoom reset to the initial pore view', async ({ page }) => {
+  await page.addInitScript(() => { Math.random = () => .875; });
+  await page.goto('/index.html');
+  const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
+  await expect(figure).toHaveAttribute('data-mof-ready', 'true');
+  await canvas.scrollIntoViewIfNeeded();
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const first = await canvas.evaluate(c => c.toDataURL());
+  await canvas.focus();
+  await canvas.press('ArrowRight');
+  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(first);
+  await canvas.press('Home');
+  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
+  const initialRuler = await figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width);
+  await canvas.press('Shift+Equal');
+  await expect.poll(() => figure.locator('.mof-scale-line').evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(initialRuler);
+  await canvas.press('Home');
+  await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(first);
+});
+
+test.describe('MOF touch controls', () => {
+  test.use({ hasTouch: true, viewport: { width: 390, height: 844 } });
+  test('touch drag rotates and pinch zoom preserves its scale ruler', async ({ page }) => {
+    await page.addInitScript(() => { Math.random = () => .875; });
+    await page.goto('/index.html');
+    const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
+    await expect(figure).toHaveAttribute('data-mof-ready', 'true');
+    await canvas.scrollIntoViewIfNeeded();
+    const bounds = await canvas.boundingBox();
+    expect(bounds).not.toBeNull();
+    const client = await page.context().newCDPSession(page);
+    const point = (id, x, y) => ({ id, x: bounds.x + bounds.width * x, y: bounds.y + bounds.height * y });
+    const initial = await canvas.evaluate(c => c.toDataURL());
+    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(1, .4, .5)] });
+    await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(1, .6, .55)] });
+    await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).not.toBe(initial);
+    const ruler = figure.locator('.mof-scale-line');
+    const before = await ruler.evaluate(line => line.getBoundingClientRect().width);
+    await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(1, .4, .5), point(2, .6, .5)] });
+    await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(1, .3, .5), point(2, .7, .5)] });
+    await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await expect.poll(() => ruler.evaluate(line => line.getBoundingClientRect().width)).toBeGreaterThan(before);
+    await figure.getByRole('button', { name: 'Reset pore view', exact: true }).click();
+    await expect.poll(() => canvas.evaluate(c => c.toDataURL())).toBe(initial);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+    await client.detach();
+  });
+});
 
 test('Agentic computing and Superintelligence keep alternating without pause controls', async ({ page }) => {
   await page.clock.install();

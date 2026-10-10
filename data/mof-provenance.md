@@ -50,3 +50,9 @@ python scripts/generate-mof-catalog.py --check
 Omit `--check` to recreate the canonical CIFs or catalog. These commands operate entirely on retained local data, without network calls or simulations. Generated canonical CIFs use explicit CRLF line endings to reproduce the retained approved bytes on every platform; the catalog uses UTF-8 with an LF final newline.
 
 Source hashes, heavy-atom composition, bond/segment counts, positive cell volume, cell lengths/angles, and periodic clipping are checked during generation. The exported six-decimal Cartesian coordinates introduce at most approximately 5.7 × 10^-8 fractional-coordinate boundary error for this catalog. Expected heavy-atom cell counts are 528, 36, 144, and 378; inferred bond counts are 672, 50, 216, and 498, respectively.
+
+## Interactive front pore view
+
+The initial camera looks along [100] for CALF-20 and [001] for Cu-BTC, Mg-MOF-74, and NU-1000, without an oblique tilt. The camera basis is orthonormal; manual quaternion rotations preserve all Cartesian distances and cell angles. The [CALF-20 primary study](https://www.nature.com/articles/s41467-024-48136-0) also presents pore views along x. These directions are viewing choices, not measurements of pore diameters.
+
+The viewer periodically translates the retained primitive-cell atoms and clipped bonds to show Cu-BTC 2×2×1, CALF-20 1×3×3, Mg-MOF-74 2×2×1, and NU-1000 1×1×1 cells. Coincident boundary atoms/segments are deduplicated. Captions state the repetitions, every primitive-cell edge is retained, and a primary cell is highlighted. No source CIF or catalog coordinates are changed. Repetition enlarges the visible framework region while all four structures retain the same angstrom-to-pixel scale and element radii at a given viewport and zoom level. CALF is repeated perpendicular to its a-axis view so the larger visible region represents neighboring pores rather than extra overlapping depth.
