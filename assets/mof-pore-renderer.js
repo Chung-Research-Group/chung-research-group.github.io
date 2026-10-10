@@ -60,10 +60,27 @@
       }));
       const corners = (model.cell_vertices || []).map(p => point(p));
       const shapes = [];
-      for (const [i,j,periodic = 0] of model.bonds) {
+      for (const [i,j,periodic = 0] of model.bonds || []) {
         for (let part = 0; part < 4; part++) shapes.push({
           kind: 'bond', _a: points[i], _b: points[j], _t: part/4, _u: (part+1)/4,
           color: part < 2 ? points[i].color : points[j].color, opacity: periodic ? .28 : .95
+        });
+      }
+      // Restore the already clipped source segments without artificial endpoint atoms.
+      const helpers = [], endpoints = new Map();
+      const key = p => p.map(value => value.toFixed(6)).join(',');
+      model.atoms.forEach((atom,i) => endpoints.set(key(atom.slice(1,4)),points[i]));
+      const endpoint = p => {
+        const id = key(p);
+        if (!endpoints.has(id)) { const projected = point(p); endpoints.set(id,projected); helpers.push(projected); }
+        return endpoints.get(id);
+      };
+      for (const [element,...coordinates] of model.bond_segments || []) {
+        const a = endpoint(coordinates.slice(0,3)), b = endpoint(coordinates.slice(3));
+        // Each retained colored half is split in two for the same depth resolution.
+        for (let part = 0; part < 2; part++) shapes.push({
+          kind:'bond', _a:a, _b:b, _t:part/2, _u:(part+1)/2,
+          color:colors[element] || '#405c70', opacity:.95
         });
       }
       for (const [i,j] of model.cell_edges || []) shapes.push({
@@ -72,8 +89,20 @@
       });
       shapes.push(...points);
       shapes.forEach((shape, i) => { shape._order = i; });
-      scenes.set(model, { points, corners, shapes,
-        horizontal: Math.max(...[...points,...corners].map(p => Math.hypot(p._horizontal,p._forward))),
+      // Reserve only the declared gentle yaw range, rather than a full rotation.
+      const center = model.display_view?.initial_yaw ?? 0, amplitude = model.display_view?.yaw_amplitude ?? .12;
+      const lower = center-amplitude, upper = center+amplitude;
+      const envelope = p => {
+        const h = p._horizontal, f = p._forward;
+        let bound = Math.max(Math.abs(h*Math.cos(lower)+f*Math.sin(lower)),Math.abs(h*Math.cos(upper)+f*Math.sin(upper)));
+        const critical = Math.atan2(f,h);
+        for (const angle of [critical-Math.PI,critical,critical+Math.PI]) {
+          if (angle >= lower && angle <= upper) bound = Math.hypot(h,f);
+        }
+        return bound;
+      };
+      scenes.set(model, { points, helpers, corners, shapes,
+        horizontal: Math.max(...[...points,...corners].map(envelope)),
         vertical: Math.max(...[...points,...corners].map(p => Math.abs(p._vertical)))
       });
     }
@@ -89,6 +118,7 @@
       update(p); p.r = Math.max(1.05,Math.min(6,p._radius*scale));
     }
     for (const p of scene.corners) update(p);
+    for (const p of scene.helpers) update(p);
     for (const shape of scene.shapes) {
       if (shape.kind === 'atom') continue;
       const a = shape._a, b = shape._b, t = shape._t, u = shape._u;

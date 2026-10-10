@@ -110,13 +110,14 @@ for (const width of [1440, 390]) {
 
 const mofOptions = [
   [0, 'Cu-BTC', 'cu-btc'], [1, 'CALF-20', 'calf-20'],
-  [2, 'Mg-MOF-74', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000']
+  [2, 'Mg-MOF-74', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000'],
+  [4, 'MOF-177', 'mof-177'], [5, 'NU-100', 'nu-100']
 ];
 
 for (const [index, name, slug] of mofOptions) {
   test(`pore-facing hero randomly loads ${name} with a matching static fallback`, async ({ page, request }) => {
     await page.addInitScript(selected => {
-      crypto.getRandomValues = values => { values[0] = Math.floor((selected + .5) / 4 * 4294967296); return values; };
+      crypto.getRandomValues = values => { values[0] = Math.floor((selected + .5) / 6 * 4294967296); return values; };
     }, index);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/index.html');
@@ -179,10 +180,12 @@ for (const width of [1440, 1280, 1024, 840, 390, 320]) {
         font: parseFloat(getComputedStyle(purpose).fontSize),
         copy: copy.getBoundingClientRect().toJSON(),
         figure: document.querySelector('.mof-figure').getBoundingClientRect().toJSON(),
+        stage: document.querySelector('.mof-stage').getBoundingClientRect().toJSON(),
         weight: getComputedStyle(document.querySelector('.home-hero-intro')).fontWeight
       };
     });
     expect(geometry.overflow).toBeLessThanOrEqual(1);
+    expect(Math.abs(geometry.stage.height-geometry.stage.width)).toBeLessThanOrEqual(1);
     expect(geometry.font).toBeGreaterThanOrEqual(28);
     expect(Number(geometry.weight)).toBeGreaterThanOrEqual(600);
     if (width > 840) {

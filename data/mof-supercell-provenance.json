@@ -15,6 +15,7 @@
       ],
       "atom_count": 600,
       "bond_count": 744,
+      "clipped_bond_segment_count": 0,
       "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[100]",
@@ -65,6 +66,7 @@
       ],
       "atom_count": 240,
       "bond_count": 252,
+      "clipped_bond_segment_count": 0,
       "max_bond_length_error_angstrom": 4.138804965414522e-08,
       "view": {
         "direction": "[100]",
@@ -115,6 +117,7 @@
       ],
       "atom_count": 242,
       "bond_count": 276,
+      "clipped_bond_segment_count": 0,
       "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[001]",
@@ -165,6 +168,7 @@
       ],
       "atom_count": 569,
       "bond_count": 607,
+      "clipped_bond_segment_count": 0,
       "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[001]",
@@ -203,6 +207,108 @@
           0.0,
           0.0,
           16.58
+        ]
+      ]
+    },
+    "mof-177": {
+      "repeats": [
+        1,
+        1,
+        1
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "atom_count": 568,
+      "bond_count": 0,
+      "clipped_bond_segment_count": 1438,
+      "max_bond_length_error_angstrom": 0,
+      "view": {
+        "direction": "[001]",
+        "front": [
+          0.0,
+          0.0,
+          30.0333
+        ],
+        "up": [
+          -18.536,
+          32.105293769,
+          0.0
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Restore the audited [001] pore-facing unit-cell view without pitch or roll. Source coordinates and periodic clipped bond segments are unchanged. A single unit cell keeps the pore aperture prominent."
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          37.072,
+          0.0,
+          0.0
+        ],
+        [
+          -18.536,
+          32.105293769,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          30.0333
+        ]
+      ]
+    },
+    "nu-100": {
+      "repeats": [
+        1,
+        1,
+        1
+      ],
+      "source": "data/mof-unit-cells.json",
+      "display_origin_translation_fractional": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "atom_count": 2448,
+      "bond_count": 0,
+      "clipped_bond_segment_count": 5760,
+      "max_bond_length_error_angstrom": 0,
+      "view": {
+        "direction": "[001]",
+        "front": [
+          0.0,
+          0.0,
+          59.872003955
+        ],
+        "up": [
+          0.0,
+          59.872003955,
+          0.0
+        ],
+        "initial_yaw": 0,
+        "yaw_amplitude": 0.12,
+        "period_seconds": 32,
+        "note": "Restore the audited [001] pore-facing unit-cell view without pitch or roll. Source coordinates and periodic clipped bond segments are unchanged. A single unit cell keeps the pore aperture prominent."
+      },
+      "unit_cell_vectors_angstrom": [
+        [
+          59.872003955,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          59.872003955,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          59.872003955
         ]
       ]
     }

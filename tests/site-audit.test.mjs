@@ -205,6 +205,7 @@ test('pore-facing supercells preserve exact source translations, bond lengths an
     else {
       assert.deepEqual(model.atoms,base.atoms);
       assert.deepEqual(model.bonds,base.bonds);
+      assert.deepEqual(model.bond_segments,base.bond_segments);
       assert.deepEqual(model.cell_vertices,base.cell_vertices);
     }
     for (const atom of model.atoms) {
@@ -244,5 +245,27 @@ test('supercell projection reuses its scene across motion and restores geometry 
     context.MofRenderer.project(model,750,500,0);
     assert.deepEqual(scene.map(shape => ({kind:shape.kind,x:shape.x,y:shape.y,z:shape.z,r:shape.r})),snapshot);
     assert.equal(JSON.stringify(model),source);
+  }
+});
+
+
+test('restored NU-100 and MOF-177 preserve every audited atom and clipped segment', async () => {
+  const gallery = JSON.parse(await readFile(new URL('../data/mof-gallery.json',import.meta.url),'utf8'));
+  const catalog = JSON.parse(await readFile(new URL('../data/mof-catalog.json',import.meta.url),'utf8'));
+  assert.deepEqual(gallery.models.map(model => model.id),['cu-btc','calf-20','mg-mof-74','nu-1000','mof-177','nu-100']);
+  const context = vm.createContext({});
+  vm.runInContext(await readFile(new URL('../assets/mof-pore-renderer.js',import.meta.url),'utf8'),context);
+  for (const slug of ['mof-177','nu-100']) {
+    const model = gallery.models.find(m => m.id === slug), source = catalog.find(m => m.slug === slug);
+    assert.deepEqual(model.atoms,source.atoms);
+    assert.deepEqual(model.bond_segments,source.bond_segments);
+    assert.deepEqual(model.cell_vectors,source.cell_vectors);
+    for (const angle of [-.12,0,.12]) {
+      const shapes = context.MofRenderer.project(model,350,350,angle);
+      const atoms = shapes.filter(shape => shape.kind === 'atom');
+      assert.equal(atoms.length,model.atoms.length,'clipped bond endpoints must not create visible atoms');
+      assert.equal(shapes.filter(shape => shape.kind === 'bond').length,model.bond_segments.length*2);
+      assert.ok(atoms.every(p => p.x-p.r>=0 && p.x+p.r<=350 && p.y-p.r>=0 && p.y+p.r<=350));
+    }
   }
 });
