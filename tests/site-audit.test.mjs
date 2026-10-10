@@ -220,3 +220,24 @@ test('pore-facing supercells preserve exact source translations, bond lengths an
     assert.equal(model.cell_edges.length,12);
   }
 });
+
+test('supercell projection reuses its scene across motion and restores geometry after resizing', async () => {
+  const context = vm.createContext({});
+  vm.runInContext(await readFile(new URL('../assets/mof-pore-renderer.js',import.meta.url),'utf8'),context);
+  const models = JSON.parse(await readFile(new URL('../data/mof-gallery.json',import.meta.url),'utf8')).models;
+  for (const model of models) {
+    const source = JSON.stringify(model);
+    const scene = context.MofRenderer.project(model,750,500,0);
+    const identities = new Set(scene);
+    const snapshot = scene.map(shape => ({kind:shape.kind,x:shape.x,y:shape.y,z:shape.z,r:shape.r}));
+    for (const angle of [-.12,.12]) {
+      const moving = context.MofRenderer.project(model,350,225,angle);
+      assert.equal(moving,scene);
+      assert.ok(moving.every(shape => identities.has(shape)));
+      assert.ok(moving.every(shape => Number.isFinite(shape.x+shape.y+shape.z)));
+    }
+    context.MofRenderer.project(model,750,500,0);
+    assert.deepEqual(scene.map(shape => ({kind:shape.kind,x:shape.x,y:shape.y,z:shape.z,r:shape.r})),snapshot);
+    assert.equal(JSON.stringify(model),source);
+  }
+});
