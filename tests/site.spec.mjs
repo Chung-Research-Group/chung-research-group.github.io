@@ -110,19 +110,21 @@ for (const width of [1440, 390]) {
 
 for (const [index, name, slug] of [
   [0, 'Cu-BTC', 'cu-btc'], [1, 'CALF-20', 'calf-20'],
-  [2, 'MOF-74 (Mg)', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000']
+  [2, 'MOF-74 (Mg)', 'mg-mof-74'], [3, 'NU-1000', 'nu-1000'],
+  [4, 'ZIF-8', 'zif-8'], [5, 'MOF-5', 'mof-5'],
+  [6, 'NU-100', 'nu-100'], [7, 'MOF-177', 'mof-177']
 ]) {
   test(`MOF random loading selects ${name} with a front view and manual rotation and zoom`, async ({ page, request }) => {
-    await page.addInitScript(selected => { Math.random = () => (selected + .5) / 4; }, index);
+    await page.addInitScript(selected => { Math.random = () => (selected + .5) / 8; }, index);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/index.html');
     const figure = page.locator('[data-mof-viewer]'), canvas = figure.locator('canvas');
-    await expect(figure).toHaveAttribute('data-mof-viewer', 'data/mof-catalog.json');
+    await expect(figure).toHaveAttribute('data-mof-viewer', 'data/mof-catalog.json?v=20261010-eight');
     await expect(figure).toHaveAttribute('data-mof-ready', 'true');
     await expect(figure).toHaveAttribute('data-mof-name', name);
     await expect(figure).toHaveAttribute('data-mof-view', index === 1 ? '[100]' : '[001]');
     expect((await figure.getAttribute('data-mof-repetitions')).split(/\D+/).filter(Boolean).map(Number))
-      .toEqual([[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1]][index]);
+      .toEqual([[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1], [3, 3, 1], [2, 2, 1], [1, 1, 1], [1, 1, 1]][index]);
     await expect(figure.locator('.mof-name')).toHaveText(name);
     await expect(figure.locator('.mof-name')).toHaveAttribute('href', `data/mof-source/${slug}.cif`);
     expect((await request.get(`/data/mof-source/${slug}.cif`)).ok()).toBe(true);

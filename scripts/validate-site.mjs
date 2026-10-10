@@ -1915,8 +1915,8 @@ if (!mofViewer.includes('pointerdown') || !mofViewer.includes('wheel') || !index
 }
 try {
   const models = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-catalog.json'), 'utf8'));
-  const expected = ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000'];
-  if (models.length !== 4 || models.some((model, i) => model.name !== expected[i] ||
+  const expected = ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000', 'ZIF-8', 'MOF-5', 'NU-100', 'MOF-177'];
+  if (models.length !== expected.length || models.some((model, i) => model.name !== expected[i] ||
       model.units !== 'angstrom' || model.cell_vectors.length !== 3 || !model.bond_segments.length)) {
     errors.push('Homepage crystallographic MOF catalog is incomplete.');
   }

@@ -10,15 +10,15 @@ import { sharedChrome } from '../scripts/site-chrome.mjs';
 import { renderPublishedPage } from '../scripts/render-static-site.mjs';
 import '../assets/mof-renderer.js';
 
-test('the four manual MOF views preserve their source cells, periodic repeats and shared physical scale', async () => {
+test('the eight manual MOF views preserve their source cells, periodic repeats and shared physical scale without axis labels', async () => {
   const models = JSON.parse(await readFile(new URL('../data/mof-catalog.json', import.meta.url), 'utf8'));
-  assert.deepEqual(models.map(model => model.name), ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000']);
+  assert.deepEqual(models.map(model => model.name), ['Cu-BTC', 'CALF-20', 'MOF-74 (Mg)', 'NU-1000', 'ZIF-8', 'MOF-5', 'NU-100', 'MOF-177']);
   const previousCatalog = globalThis.MOF_MODELS;
   globalThis.MOF_MODELS = models;
   const dot = (a, b) => a.reduce((sum, x, i) => sum + x * b[i], 0);
   const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-  const sourceCounts = [552, 36, 144, 420];
-  const repeats = [[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1]];
+  const sourceCounts = [552, 36, 144, 420, 168, 328, 2448, 568];
+  const repeats = [[2, 2, 1], [1, 3, 3], [2, 2, 1], [1, 1, 1], [3, 3, 1], [2, 2, 1], [1, 1, 1], [1, 1, 1]];
   const identity = [1, 0, 0, 0];
   const orientations = [identity, [Math.cos(.4), Math.sin(.4), 0, 0], [Math.cos(.7), 0, Math.sin(.7), 0], [.5, .5, .5, .5]];
   try {
@@ -77,7 +77,8 @@ test('the four manual MOF views preserve their source cells, periodic repeats an
     for (const [width, height] of [[180, 120], [335, 335], [900, 520]]) {
       for (const model of models) {
         const shapes = MofRenderer.project(model, width, height, { quaternion: identity, zoom: 1 });
-        assert.deepEqual(shapes.filter(shape => shape.kind === 'label').map(shape => shape.text[0]), ['a', 'b', 'c']);
+        assert.equal(shapes.filter(shape => shape.kind === 'label').length, 0, 'crystallographic axis labels remain');
+        assert.doesNotMatch(MofRenderer.toSvg(model, width, height), /<text\b/);
         for (const shape of shapes) {
           const radius = shape.kind === 'atom' ? shape.r : shape.kind === 'label' ? 13 : shape.width / 2;
           const endpoints = shape.x2 === undefined ? [[shape.x, shape.y]] : [[shape.x, shape.y], [shape.x2, shape.y2]];

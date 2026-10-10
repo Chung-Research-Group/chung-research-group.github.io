@@ -4,7 +4,8 @@
   const colors = { Cu:'#b77a49', Zn:'#2879b8', Mg:'#58a17c', Zr:'#8064ad', O:'#c75a57', N:'#436fb7', C:'#657786' };
   const radii = { Cu:.65, Zn:.64, Mg:.60, Zr:.70, O:.40, N:.35, C:.30 };
   const prepared = new WeakMap(), catalogs = new WeakMap();
-  const repetitions = { 'cu-btc':[2,2,1], 'calf-20':[1,3,3], 'mg-mof-74':[2,2,1], 'nu-1000':[1,1,1] };
+  const repetitions = { 'cu-btc':[2,2,1], 'calf-20':[1,3,3], 'mg-mof-74':[2,2,1], 'nu-1000':[1,1,1],
+    'zif-8':[3,3,1], 'mof-5':[2,2,1], 'nu-100':[1,1,1], 'mof-177':[1,1,1] };
   const dot = (a,b) => a.reduce((sum,x,i) => sum+x*b[i],0);
   const normalize = v => { const n=Math.hypot(...v); return v.map(x=>x/n); };
   const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
@@ -92,13 +93,6 @@
       shapes.push({kind:'atom',...point(p),element,r:Math.max(.95,(radii[element]||.35)*scale),color:colors[element]||'#657786'});
     }
     shapes.sort((a,b)=>a.z-b.z);
-    const labels=scene.labelCorners.map(point);
-    for(let axis=0;axis<3;axis++) {
-      const a=labels[0],b=labels[1<<axis],x=(a.x+b.x)/2,y=(a.y+b.y)/2;
-      const dx=x-width/2,dy=y-height/2,length=Math.hypot(dx,dy)||1;
-      const endOn=Math.hypot(a.x-b.x,a.y-b.y)<1;
-      shapes.push({kind:'label',x:x+dx/length*12,y:y+dy/length*12,text:'abc'[axis]+(endOn?' ⊙':''),color:'#52718d'});
-    }
     return shapes;
   }
   function draw(ctx, model, width, height, camera) {
@@ -110,10 +104,6 @@
         ctx.setLineDash(p.dashed ? [3, 4] : []);
         ctx.strokeStyle = p.color; ctx.lineWidth = p.width;
         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x2, p.y2); ctx.stroke();
-      } else if (p.kind === 'label') {
-        ctx.fillStyle = p.color; ctx.font = 'italic 13px Archivo, system-ui, sans-serif';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(p.text, p.x, p.y);
       } else {
         ctx.fillStyle = p.color;
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
@@ -131,8 +121,6 @@
     for (const p of project(model, width, height, camera)) {
       if (p.kind === 'cell' || p.kind === 'bond') {
         parts.push(`<path d="M${number(p.x)} ${number(p.y)}L${number(p.x2)} ${number(p.y2)}" stroke="${p.color}" stroke-width="${number(p.width)}" stroke-linecap="round" opacity="${p.alpha ?? 1}"${p.dashed ? ' stroke-dasharray="3 4"' : ''}/>`);
-      } else if (p.kind === 'label') {
-        parts.push(`<text x="${number(p.x)}" y="${number(p.y)}" fill="${p.color}" font-family="sans-serif" font-size="13" font-style="italic" text-anchor="middle" dominant-baseline="middle">${p.text}</text>`);
       } else {
         parts.push(`<circle cx="${number(p.x)}" cy="${number(p.y)}" r="${number(p.r)}" fill="${p.color}"/><circle cx="${number(p.x - p.r * .25)}" cy="${number(p.y - p.r * .3)}" r="${number(p.r * .33)}" fill="white" opacity=".45"/>`);
       }

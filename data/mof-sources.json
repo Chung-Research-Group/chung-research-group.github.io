@@ -16,9 +16,9 @@
         26.343,
         26.343,
         26.343,
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "asymmetric_site_count": 6,
       "download_url": "data/mof-source/cu-btc.cif",
@@ -56,9 +56,9 @@
         9.0460453033,
         10.0249137878,
         9.2320995331,
-        90.0,
+        90,
         118.6754989624,
-        90.0
+        90
       ],
       "asymmetric_site_count": 44,
       "raw_source_path": "data/mof-source/calf-20-original.lmp",
@@ -110,9 +110,9 @@
         26.136,
         26.136,
         6.942,
-        90.0,
-        90.0,
-        120.0
+        90,
+        90,
+        120
       ],
       "asymmetric_site_count": 9,
       "download_url": "data/mof-source/mg-mof-74.cif",
@@ -149,9 +149,9 @@
         41.0465,
         41.0465,
         16.792,
-        90.0,
-        90.0,
-        120.0
+        90,
+        90,
+        120
       ],
       "asymmetric_site_count": 28,
       "raw_source_path": "data/mof-source/nu-1000-original.cif",
@@ -185,6 +185,206 @@
       "publication_doi": "10.1021/ja408959g",
       "dataset_doi": "10.1021/ja408959g.s002",
       "license_metadata_url": "https://api.figshare.com/v2/articles/2354203"
+    },
+    {
+      "name": "ZIF-8",
+      "slug": "zif-8",
+      "path": "data/mof-source/zif-8.cif",
+      "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/ZIF-8.cif",
+      "sha256": "3cbb585b5fcff57f0be9d3c00224b8fe48deb29fd824aac429926bd10a6967ab",
+      "notes": [
+        "Exact official RASPA2 bytes; no coordinate relaxation, hydrogen creation, or guest deletion was performed.",
+        "Hydrogen atoms are present in the retained source; display may omit hydrogen.",
+        "The atom-site occupancy column is absent. CIF default occupancy 1.0 is used; no partial occupancy is indicated.",
+        "Guest-free framework is inferred from exact framework stoichiometry and all atoms belonging to the bonded periodic framework.",
+        "Topological pores are three-dimensional. A unique one-dimensional pore axis is not asserted.",
+        "The CIF is already expanded to P1. It must not receive extra I-43m symmetry expansion."
+      ],
+      "cell": [
+        16.991,
+        16.991,
+        16.991,
+        90,
+        90,
+        90
+      ],
+      "asymmetric_site_count": 276,
+      "download_url": "data/mof-source/zif-8.cif",
+      "license": {
+        "id": "MIT",
+        "text_path": "data/mof-licenses/RASPA2-MIT.txt",
+        "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/COPYING"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 156,
+        "composition_without_H": {
+          "C": 96,
+          "N": 48,
+          "Zn": 12
+        },
+        "inferred_bonds": 192,
+        "colored_clipped_segments": 408
+      },
+      "upstream_commit": "6498ab1eec9c8e0f063dcd0d71dd7add372c529b",
+      "pinned_source_url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/ZIF-8.cif",
+      "publication": {
+        "doi": "10.1073/pnas.0602439103",
+        "url": "https://doi.org/10.1073/pnas.0602439103",
+        "title": "Exceptional chemical and thermal stability of zeolitic imidazolate frameworks"
+      },
+      "initial_view_direction": "[001]",
+      "view_note": "illustrative crystallographic c-axis orientation; not a claimed unique pore axis"
+    },
+    {
+      "name": "MOF-5",
+      "slug": "mof-5",
+      "path": "data/mof-source/mof-5.cif",
+      "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/IRMOF-1.cif",
+      "sha256": "e5d0b3d72445c15cd2ed02a36fa2fdf3d5d13f6c21441984475449d48d3f0ad2",
+      "notes": [
+        "Exact official RASPA2 bytes; no coordinate relaxation, hydrogen creation, or guest deletion was performed.",
+        "Hydrogen atoms are present in the retained source; display may omit hydrogen.",
+        "The atom-site occupancy column is absent. CIF default occupancy 1.0 is used; no partial occupancy is indicated.",
+        "Guest-free framework is inferred from exact framework stoichiometry and all atoms belonging to the bonded periodic framework.",
+        "Topological pores are three-dimensional. A unique one-dimensional pore axis is not asserted.",
+        "MOF-5 is supplied under the official IRMOF-1 filename; this is the same framework, not IRMOF-5."
+      ],
+      "cell": [
+        25.832,
+        25.832,
+        25.832,
+        90,
+        90,
+        90
+      ],
+      "asymmetric_site_count": 7,
+      "download_url": "data/mof-source/mof-5.cif",
+      "license": {
+        "id": "MIT",
+        "text_path": "data/mof-licenses/RASPA2-MIT.txt",
+        "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/COPYING"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 328,
+        "composition_without_H": {
+          "Zn": 32,
+          "O": 104,
+          "C": 192
+        },
+        "inferred_bonds": 416,
+        "colored_clipped_segments": 832
+      },
+      "upstream_commit": "6498ab1eec9c8e0f063dcd0d71dd7add372c529b",
+      "pinned_source_url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/IRMOF-1.cif",
+      "publication": {
+        "doi": "10.1126/science.1067208",
+        "url": "https://doi.org/10.1126/science.1067208",
+        "title": "Systematic design of pore size and functionality in isoreticular MOFs and their application in methane storage"
+      },
+      "initial_view_direction": "[001]",
+      "view_note": "illustrative crystallographic c-axis orientation; not a claimed unique pore axis"
+    },
+    {
+      "name": "NU-100",
+      "slug": "nu-100",
+      "path": "data/mof-source/nu-100.cif",
+      "url": "https://zenodo.org/records/7691378",
+      "sha256": "f64015b428c58f86a17412014f180a9f1629e0d19f034e0b48454d75b56b5027",
+      "notes": [
+        "Experimental-derived activated framework snapshot CoRE 2019 ASR GAGZEV_clean.cif; the retained local 2018 snapshot is byte-identical to the public CoRE 2019 ASR member.",
+        "GAGZEV identifies NU-100; original publication DOI 10.1038/nchem.834, experimental deposition CCDC 777421. The retained source is the processed CoRE snapshot, not asserted to be unchanged deposition bytes.",
+        "Integer primitive-to-conventional basis transform [[-1,1,1],[1,-1,1],[1,1,-1]], determinant 4. Four periodic copies recover the cubic cell without relaxation or fitting.",
+        "This is not the differently named NU-100SP predicted RASPA model."
+      ],
+      "cell": [
+        59.87200395527112,
+        59.87200395527112,
+        59.87200395527112,
+        90,
+        90,
+        90
+      ],
+      "asymmetric_site_count": 3168,
+      "raw_source_path": "data/mof-source/nu-100-core-original.cif",
+      "raw_source_sha256": "06aaec693b366a711d9de87ba00045771f1f04e9502bfcb7e4cc5f92f43330d1",
+      "download_url": "data/mof-source/nu-100.cif",
+      "license": {
+        "id": "CC-BY-4.0",
+        "text_path": "data/mof-licenses/CC-BY-4.0.txt",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "license_metadata_url": "https://zenodo.org/api/records/7691378",
+      "expected": {
+        "unit_cell_atoms_without_H": 2400,
+        "composition_without_H": {
+          "C": 1920,
+          "Cu": 96,
+          "O": 384
+        },
+        "inferred_bonds": 2880,
+        "colored_clipped_segments": 5760
+      },
+      "publication": {
+        "doi": "10.1038/nchem.834",
+        "url": "https://doi.org/10.1038/nchem.834",
+        "title": "De novo synthesis of a metal-organic framework material featuring ultrahigh surface area and gas storage capacities"
+      },
+      "source_variant": "CoRE 2019 ASR activated experimental-derived structure",
+      "initial_view_direction": "[001]",
+      "public_archive_download_url": "https://raw.githubusercontent.com/coudertlab/CoRE-MOF/a931fb5809696bbd43fbdec54341ee95b1d323db/src/CoRE_MOF/data/2019-ASR.tar.xz",
+      "public_archive_revision": "a931fb5809696bbd43fbdec54341ee95b1d323db",
+      "public_archive_member": "GAGZEV_clean.cif",
+      "refcode_mapping_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6450936/"
+    },
+    {
+      "name": "MOF-177",
+      "slug": "mof-177",
+      "path": "data/mof-source/mof-177.cif",
+      "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/MOF-177.cif",
+      "sha256": "c4a696f2bde8d29dd5fc3d286a86c5fda44e2e601f8d3700b9528e1dfb5e3cc5",
+      "notes": [
+        "Exact official RASPA2 bytes; no coordinate relaxation, hydrogen creation, or guest deletion was performed.",
+        "Hydrogen atoms are present in the retained source; display may omit hydrogen.",
+        "The atom-site occupancy column is absent. CIF default occupancy 1.0 is used; no partial occupancy is indicated.",
+        "Guest-free framework is inferred from exact framework stoichiometry and all atoms belonging to the bonded periodic framework.",
+        "Topological pores are three-dimensional. A unique one-dimensional pore axis is not asserted.",
+        "Gemmi produces 814 expanded sites before periodic deduplication. Six carbon sites are exact periodic duplicates; modulo fractional coordinates and deduplication yield the correct 808 atoms.",
+        "The RASPA simulation representation is P3, not asserted to be the exact symmetry designation of the original experimental refinement. Two primary PCCP supporting datasets independently list MOF-177 at a=b=37.072, c=30.033 Angstrom, volume=35745.5 Angstrom^3, matching this source."
+      ],
+      "cell": [
+        37.072,
+        37.072,
+        30.0333,
+        90,
+        90,
+        120
+      ],
+      "asymmetric_site_count": 274,
+      "download_url": "data/mof-source/mof-177.cif",
+      "license": {
+        "id": "MIT",
+        "text_path": "data/mof-licenses/RASPA2-MIT.txt",
+        "url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/COPYING"
+      },
+      "expected": {
+        "unit_cell_atoms_without_H": 568,
+        "composition_without_H": {
+          "Zn": 32,
+          "O": 104,
+          "C": 432
+        },
+        "inferred_bonds": 704,
+        "colored_clipped_segments": 1438
+      },
+      "upstream_commit": "6498ab1eec9c8e0f063dcd0d71dd7add372c529b",
+      "pinned_source_url": "https://github.com/iRASPA/RASPA2/blob/6498ab1eec9c8e0f063dcd0d71dd7add372c529b/structures/mofs/cif/MOF-177.cif",
+      "publication": {
+        "doi": "10.1038/nature02311",
+        "url": "https://doi.org/10.1038/nature02311",
+        "title": "A route to high surface area, porosity and inclusion of large molecules in crystals"
+      },
+      "initial_view_direction": "[001]",
+      "view_note": "illustrative crystallographic c-axis orientation; not a claimed unique pore axis"
     }
   ]
 }

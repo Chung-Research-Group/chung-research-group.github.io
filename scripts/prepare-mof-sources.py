@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Recreate canonical CIFs from the checked-in source files.
 
-Requires numpy==2.4.4. Use --check to verify without modifying files.
+Requires numpy==2.4.4 and gemmi==0.7.5. Use --check to verify without modifying files.
 The CALF-20 component follows its upstream GPLv3 license; sources and the
 complete license are distributed in data/mof-source and data/mof-licenses.
 """
@@ -11,9 +11,11 @@ import json
 import math
 import re
 import argparse
+import itertools
 from collections import Counter
 
 import numpy as np
+import gemmi
 
 ROOT = Path(__file__).resolve().parent.parent
 INPUT = ROOT / 'data' / 'mof-source'
@@ -114,10 +116,57 @@ for j, (atom_type, frac) in enumerate(unique, 1):
 canonical(INPUT / 'calf-20.cif', '\n'.join(cif) + '\n')
 
 
+# NU-100: retain the CoRE activated GAGZEV snapshot, then express its fcc
+# primitive cell as a conventional cubic cell. This is an integer basis
+# change plus four periodic copies, without relaxation or coordinate fitting.
+nu100_source = INPUT / 'nu-100-core-original.cif'
+nu100 = gemmi.make_small_structure_from_block(gemmi.cif.read_file(str(nu100_source)).sole_block())
+primitive = np.array([list(nu100.cell.orthogonalize(gemmi.Fractional(*p))) for p in np.eye(3)])
+transform = np.array([[-1, 1, 1], [1, -1, 1], [1, 1, -1]], dtype=float)
+assert round(np.linalg.det(transform)) == 4
+conventional = transform @ primitive
+inverse_transform = np.linalg.inv(transform)
+nu100_sites, nu100_seen = [], set()
+for atom in nu100.get_all_unit_cell_sites():
+    if atom.occ < .999:
+        raise ValueError('NU-100 CoRE snapshot has unsupported partial occupancy')
+    original = np.array(list(atom.fract)) % 1
+    for shift in itertools.product((0, 1), repeat=3):
+        fractional = ((original + shift) @ inverse_transform) % 1
+        fractional[np.isclose(fractional, 0, atol=1e-10, rtol=0) | np.isclose(fractional, 1, atol=1e-10, rtol=0)] = 0
+        key = (atom.element.name, *np.round(fractional, 9))
+        if key not in nu100_seen:
+            nu100_seen.add(key)
+            nu100_sites.append((atom.element.name, fractional))
+nu100_composition = Counter(element for element, _ in nu100_sites)
+assert nu100_composition == {'Cu': 96, 'C': 1920, 'O': 384, 'H': 768}, nu100_composition
+nu100_lengths = np.linalg.norm(conventional, axis=1)
+nu100_angles = [math.degrees(math.acos(np.clip(np.dot(conventional[u], conventional[v]) /
+                    (nu100_lengths[u] * nu100_lengths[v]), -1, 1)))
+                for u, v in [(1, 2), (0, 2), (0, 1)]]
+assert max(abs(angle - 90) for angle in nu100_angles) < 1e-10
+assert np.linalg.det(conventional) > 0
+nu100_cif = ['data_NU100_CoRE_GAGZEV_ASR_conventional',
+    "_audit_creation_method 'Exact integer conversion of CoRE GAGZEV activated primitive cell'",
+    "_audit_source 'CoRE 2018 ASR GAGZEV_clean.cif; source retained as nu-100-core-original.cif'",
+    "_symmetry_space_group_name_H-M 'P 1'", '_symmetry_Int_Tables_number 1']
+for suffix, value in zip(['length_a', 'length_b', 'length_c', 'angle_alpha', 'angle_beta', 'angle_gamma'],
+                         [*nu100_lengths, *nu100_angles]):
+    nu100_cif.append(f'_cell_{suffix} {value:.10f}')
+nu100_cif += ['loop_', '_symmetry_equiv_pos_as_xyz', "'x,y,z'", 'loop_',
+    '_atom_site_label', '_atom_site_type_symbol', '_atom_site_fract_x',
+    '_atom_site_fract_y', '_atom_site_fract_z', '_atom_site_occupancy']
+for j, (element, fractional) in enumerate(nu100_sites, 1):
+    nu100_cif.append(f'{element}{j} {element} ' + ' '.join(f'{x:.10f}' for x in fractional) + ' 1.0')
+canonical(INPUT / 'nu-100.cif', '\n'.join(nu100_cif) + '\n')
+
+
 registry = json.loads((ROOT / 'data/mof-sources.json').read_text(encoding='utf-8'))
 for entry in registry['structures']:
     for path_key, hash_key in [('path', 'sha256'), ('raw_source_path', 'raw_source_sha256')]:
         if path_key in entry and sha(ROOT / entry[path_key]) != entry[hash_key]:
             raise ValueError(f"Source hash mismatch for {entry['slug']}: {entry[path_key]}")
 print(json.dumps({'canonical_source_hashes': 'passed', 'calf_unique_atoms': len(unique),
-    'calf_copies_per_atom': sorted(set(counts)), 'calf_max_fold_error_angstrom': max_fold_error}))
+    'calf_copies_per_atom': sorted(set(counts)), 'calf_max_fold_error_angstrom': max_fold_error,
+    'nu100_conventional_atoms': len(nu100_sites), 'nu100_basis_determinant': 4,
+    'nu100_conventional_lengths_angstrom': nu100_lengths.tolist()}))
