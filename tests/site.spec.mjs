@@ -442,6 +442,71 @@ test('the hero keeps copy left and MOF right on desktop, stacks on mobile and st
   }
 });
 
+test('hero typography fits both alternating headlines and keeps the two subtitle lines aligned at desktop and mobile widths', async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.clock.install();
+  await page.addInitScript(() => { Math.random = () => .01; });
+  await page.goto('/index.html');
+  await expect(page.locator('[data-mof-viewer]')).toHaveAttribute('data-mof-ready', 'true');
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.locator('.hero-purpose-line')).toHaveText(['for materials &', 'chemical discovery.']);
+  const measureTypography = () => page.locator('.hero-copy').evaluate(copy => {
+    const box = element => {
+      const { x, y, width, height } = element.getBoundingClientRect();
+      return { x, y, width, height };
+    };
+    const textBox = element => {
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      const { left, right, top, bottom } = range.getBoundingClientRect();
+      return { left, right, top, bottom, text: element.textContent };
+    };
+    return {
+      copy: box(copy), heading: box(copy.querySelector('h1')),
+      figure: box(document.querySelector('[data-mof-viewer]')),
+      titleFont: parseFloat(getComputedStyle(copy.querySelector('h1')).fontSize),
+      purposeFont: parseFloat(getComputedStyle(copy.querySelector('.hero-purpose')).fontSize),
+      text: [...copy.querySelectorAll('.hero-term,.hero-purpose-line')].map(textBox),
+      subtitle: [...copy.querySelectorAll('.hero-purpose-line')].map(textBox)
+    };
+  });
+  for (const width of [1024, 1265, 1440, 1920, 320, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    const before = await measureTypography();
+    for (const bounds of before.text) {
+      expect(bounds.left, `${width}px: ${bounds.text} left edge`).toBeGreaterThanOrEqual(before.copy.x - 1);
+      expect(bounds.right, `${width}px: ${bounds.text} right edge`).toBeLessThanOrEqual(before.copy.x + before.copy.width + 1);
+    }
+    expect(Math.abs(before.subtitle[0].left - before.subtitle[1].left), `${width}px subtitle left alignment`).toBeLessThanOrEqual(.5);
+    expect(before.subtitle[0].bottom, `${width}px subtitle must form separate lines`).toBeLessThanOrEqual(before.subtitle[1].top + 1);
+    if (width > 840) {
+      expect(before.titleFont).toBeGreaterThanOrEqual(width >= 1265 ? 40 : 28);
+      expect(before.titleFont).toBeLessThanOrEqual(56);
+      expect(before.purposeFont).toBeGreaterThanOrEqual(24);
+      expect(before.purposeFont).toBeLessThanOrEqual(30);
+    } else {
+      expect(before.purposeFont).toBeGreaterThanOrEqual(18);
+      expect(before.purposeFont).toBeLessThanOrEqual(24);
+      expect(before.purposeFont).toBeLessThan(before.titleFont);
+    }
+    const activeText = await page.locator('.hero-term.is-active').textContent();
+    await page.clock.fastForward(6_100);
+    await expect(page.locator('.hero-term.is-active')).not.toHaveText(activeText);
+    const after = await measureTypography();
+    for (const element of ['copy', 'heading', 'figure']) {
+      for (const dimension of ['x', 'y', 'width', 'height']) {
+        expect(Math.abs(after[element][dimension] - before[element][dimension]), `${width}px ${element} ${dimension} changed during headline alternation`).toBeLessThanOrEqual(.2);
+      }
+    }
+    if (width === 1265 && process.env.HOMEPAGE_PROOF_DIR) {
+      await page.screenshot({
+        path: process.env.HOMEPAGE_PROOF_DIR + '/improvement-desktop-preview.png',
+        fullPage: false, animations: 'disabled'
+      });
+    }
+  }
+});
+
 test.describe('MOF touch controls', () => {
   test.use({ hasTouch: true, viewport: { width: 390, height: 844 } });
   test('the MOF lets touch users scroll the page before they enable rotation', async ({ page }) => {
