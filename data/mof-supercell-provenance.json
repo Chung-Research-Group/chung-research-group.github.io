@@ -4,18 +4,18 @@
     "cu-btc": {
       "repeats": [
         1,
-        2,
-        2
+        1,
+        1
       ],
       "source": "data/mof-unit-cells.json",
       "display_origin_translation_fractional": [
         0.0,
-        -0.5,
-        -0.5
+        0.0,
+        0.0
       ],
-      "atom_count": 2304,
-      "bond_count": 2912,
-      "max_bond_length_error_angstrom": 2.6645352591003757e-15,
+      "atom_count": 600,
+      "bond_count": 744,
+      "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[100]",
         "front": [
@@ -31,7 +31,7 @@
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. A single unit cell keeps the pore aperture prominent."
       },
       "unit_cell_vectors_angstrom": [
         [
@@ -81,7 +81,7 @@
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. CALF-20 repeats exact lattice geometry across the pore plane."
       },
       "unit_cell_vectors_angstrom": [
         [
@@ -103,19 +103,19 @@
     },
     "mg-mof-74": {
       "repeats": [
-        2,
-        2,
+        1,
+        1,
         1
       ],
       "source": "data/mof-unit-cells.json",
       "display_origin_translation_fractional": [
-        -0.5,
-        -0.5,
+        0.0,
+        0.0,
         0.0
       ],
-      "atom_count": 880,
-      "bond_count": 1056,
-      "max_bond_length_error_angstrom": 2.8630595894085786e-08,
+      "atom_count": 242,
+      "bond_count": 276,
+      "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[001]",
         "front": [
@@ -131,7 +131,7 @@
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. The projected supercell repeats exact lattice geometry across the pore plane."
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. A single unit cell keeps the pore aperture prominent."
       },
       "unit_cell_vectors_angstrom": [
         [
@@ -153,19 +153,19 @@
     },
     "nu-1000": {
       "repeats": [
-        2,
-        2,
+        1,
+        1,
         1
       ],
       "source": "data/mof-unit-cells.json",
       "display_origin_translation_fractional": [
-        -0.5,
-        -0.5,
+        0.0,
+        0.0,
         0.0
       ],
-      "atom_count": 1972,
-      "bond_count": 2276,
-      "max_bond_length_error_angstrom": 6.047914791196263e-08,
+      "atom_count": 569,
+      "bond_count": 607,
+      "max_bond_length_error_angstrom": 0.0,
       "view": {
         "direction": "[001]",
         "front": [
@@ -181,7 +181,7 @@
         "initial_yaw": 0,
         "yaw_amplitude": 0.12,
         "period_seconds": 32,
-        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints. The projected supercell repeats exact lattice geometry across the pore plane.",
+        "note": "Pore-facing orthographic camera; no roll or pitch. Gentle yaw maintains pore visibility. Coordinates and lattice are unchanged. Periodic origin shifted by half a plus half b to center the large aperture; exact bond segments retained with neighbor endpoints. A single unit cell keeps the pore aperture prominent.",
         "fractional_origin_shift": [
           0.5,
           0.5,

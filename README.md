@@ -51,10 +51,10 @@ fallbacks. Camera and periodic centering provenance is recorded in
 The earlier eight-model catalogue and renderer remain as audited reference
 assets, but are no longer connected to the homepage.
 
-Supercells repeat Cu-BTC and CALF-20 as 1×2×2, and Mg-MOF-74 and NU-1000
-as 2×2×1 along the plane perpendicular to the channel. The source unit-cell
+CALF-20 uses a 1×2×2 supercell across the pore plane. Cu-BTC, Mg-MOF-74
+and NU-1000 use their pore-centered single unit cells to show larger apertures. The source unit-cell
 representations are retained in `data/mof-unit-cells.json`. Regenerate with
 `python3 scripts/generate-mof-supercells.py` followed by
 `node scripts/generate-mof-posters.mjs`. Exact lattice translations preserve
 every displayed source bond length (maximum error below 0.00002 Å). The outer
-outline encloses the displayed supercell; source lattice vectors remain intact.
+outline encloses the displayed cell region; source lattice vectors remain intact.

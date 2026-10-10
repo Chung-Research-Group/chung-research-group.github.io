@@ -200,8 +200,13 @@ test('pore-facing supercells preserve exact source translations, bond lengths an
     const fractions = p => reciprocal.map(r => dot(p,r)/volume);
     const baseAtoms = base.atoms.map(atom => [atom[0], ...fractions(atom.slice(1,4))]);
     assert.deepEqual(model.cell_vectors,base.cell_vectors);
-    assert.deepEqual(model.supercell.repeats, ['cu-btc','calf-20'].includes(model.id) ? [1,2,2] : [2,2,1]);
-    assert.ok(model.atoms.length > base.atoms.length*3);
+    assert.deepEqual(model.supercell.repeats, model.id === 'calf-20' ? [1,2,2] : [1,1,1]);
+    if (model.id === 'calf-20') assert.ok(model.atoms.length > base.atoms.length*3);
+    else {
+      assert.deepEqual(model.atoms,base.atoms);
+      assert.deepEqual(model.bonds,base.bonds);
+      assert.deepEqual(model.cell_vertices,base.cell_vertices);
+    }
     for (const atom of model.atoms) {
       const f = fractions(atom.slice(1,4));
       assert.ok(baseAtoms.some(original => original[0] === atom[0] && f.every((v,i) => {
