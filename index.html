@@ -18,6 +18,13 @@
 <meta property="og:title" content="Chung Research Group @ PNU">
 <meta property="og:description" content="Agentic computing and superintelligence for materials and chemical discovery through atomistic simulation and curated data.">
 <meta property="og:url" content="https://chung-research-group.github.io/index.html">
+<meta property="og:image" content="https://chung-research-group.github.io/images/homepage-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chung Research Group at PNU with a CIF-derived Cu-BTC crystal viewed through its pores.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chung-research-group.github.io/images/homepage-social.png">
+<meta name="twitter:image:alt" content="Chung Research Group at PNU with a CIF-derived Cu-BTC crystal viewed through its pores.">
 <link rel="stylesheet" href="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/styles.css">
 <script src="ds/modernist-57044450-0faf-4c69-9e3d-613b0ce48058/_ds_bundle.js"></script>
 <script src="feed.js?v=20261009-news"></script>
@@ -110,23 +117,36 @@ body{zoom:0.88}
 .mof-scale{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}.mof-scale-line{display:inline-block;width:60px;height:6px;border-bottom:1.5px solid #536373;border-left:1.5px solid #536373;border-right:1.5px solid #536373}
 .mof-scale{visibility:hidden}.mof-figure[data-mof-ready="true"] .mof-scale,.mof-figure[data-mof-fallback="true"] .mof-scale{visibility:visible}
 
-/* Give the crystal the full reading width; default view looks straight down the pores. */
-.home-hero-top{grid-template-columns:1fr;gap:20px}
-.hero-copy{text-align:center}.hero-eyebrow{padding-right:0;margin-bottom:10px}
-.home-hero h1{font-size:clamp(36px,3.5vw,52px);line-height:1.08}
+/* Keep the headline on the left and a large crystal on the right. */
+.home-hero-top{grid-template-columns:minmax(250px,.75fr) minmax(0,1.8fr);gap:24px 32px;align-items:center}
+.hero-copy{text-align:left;container-type:inline-size}.hero-eyebrow{padding-right:0;margin-bottom:10px}
+.home-hero h1{font-size:clamp(28px,8.7cqw,46px);line-height:1.12}
 .hero-purpose{font-size:.72em;margin-top:.15em}
 .mof-figure{width:100%;justify-self:stretch}
 .mof-stage{height:clamp(440px,60vw,750px);aspect-ratio:auto}
-.mof-stage canvas{touch-action:none;cursor:grab;outline-offset:-3px}
+.mof-stage canvas{touch-action:pan-y pinch-zoom;cursor:grab;outline-offset:-3px}
+.mof-figure[data-mof-touch="true"] canvas{touch-action:none}
 .mof-stage canvas:focus-visible{outline:2px solid var(--color-accent)}
 .mof-figure[data-dragging="true"] canvas{cursor:grabbing}
 .mof-figure figcaption{justify-content:center;font-size:13px}
 .mof-tools,.mof-hint{display:none}
-.mof-figure[data-mof-ready="true"] .mof-tools{display:inline-flex;gap:6px}
-.mof-tool{display:inline-grid;place-items:center;min-width:34px;min-height:34px;border:1px solid #bdcddd;border-radius:4px;background:transparent;color:var(--color-accent-700);font:700 18px/1 system-ui;cursor:pointer}
+.mof-figure[data-mof-ready="true"] .mof-tools,.mof-figure[data-mof-fallback="true"] .mof-tools{display:inline-flex;gap:6px}
+.mof-tool{display:inline-grid;place-items:center;min-width:50px;min-height:50px;border:1px solid #bdcddd;border-radius:4px;background:transparent;color:var(--color-accent-700);font:700 18px/1 system-ui;cursor:pointer}
+.mof-tool[data-mof-interact]{display:none;font-size:13px;padding:0 10px}
+.mof-tool[aria-pressed="true"]{background:#edf4fb;border-color:var(--color-accent)}
+.mof-select-label{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.mof-select{min-height:50px;max-width:180px;padding:6px 30px 6px 10px;border:1px solid #bdcddd;border-radius:4px;background:var(--color-bg);color:var(--color-accent-700);font:600 14px/1.4 system-ui}
+.mof-select:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.hero-actions{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+.hero-action{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 18px;border:1px solid #bdcddd;border-radius:4px;font-size:15px;font-weight:700;text-decoration:none}
+.hero-action:first-child{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+.hero-action:hover,.hero-action:focus-visible{background:#edf4fb;border-color:var(--color-accent)}
+.hero-action:first-child:hover,.hero-action:first-child:focus-visible{background:var(--color-accent-800);color:#fff}
+@media(max-width:840px),(pointer:coarse){.mof-figure[data-mof-ready="true"] .mof-tool[data-mof-interact]{display:inline-grid}}
+@media(max-width:840px){.mof-tool,.mof-select,.hero-action{min-height:44px}.mof-tool{min-width:44px}.hero-actions{margin-top:16px}}
 .mof-tool:hover,.mof-tool:focus-visible{background:#edf4fb;border-color:var(--color-accent)}
 .mof-figure[data-mof-ready="true"] .mof-hint{display:block;text-align:center;margin:8px 0 0;font-size:13px;line-height:1.5;color:#536373}
-@media(max-width:840px){.home-hero-top{gap:14px}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important}.mof-figure{width:100%}.mof-stage{height:clamp(260px,82vw,580px)}.mof-figure figcaption{gap:8px 12px}.mof-cell-details{display:inline}.mof-hint{font-size:12px}}
+@media(max-width:840px){.home-hero-top{grid-template-columns:1fr;gap:20px}.home-hero h1{font-size:clamp(28px,8.7vw,52px)!important}.mof-figure{width:100%}.mof-stage{height:clamp(260px,82vw,580px)}.mof-figure figcaption{gap:8px 12px}.mof-cell-details{display:inline}.mof-hint{font-size:12px}}
 </style>
 </helmet>
 
@@ -148,13 +168,19 @@ body{zoom:0.88}
         <div class="hero-copy">
           <p class="hero-eyebrow">Computation · Intelligence · Materials</p>
           <h1 aria-label="Agentic computing and superintelligence for materials and chemical discovery."><span class="hero-words" aria-hidden="true"><span class="hero-term is-active">Agentic computing</span><span class="hero-term">Superintelligence</span></span><span class="hero-purpose">for materials &amp; chemical discovery.</span></h1>
+          <nav class="hero-actions" aria-label="Start using our tools"><a class="hero-action" data-hero-action href="CoRE%20MOF%20Database.dc.html">Download CoRE MOF</a><a class="hero-action" data-hero-action href="https://pacman-charge-mtap.streamlit.app/">Try PACMAN</a></nav>
         </div>
         <figure class="mof-figure" data-mof-viewer="data/mof-catalog.json?v=20261010-eight">
           <div class="mof-stage">
             <img class="mof-poster" src="images/cu-btc.svg?v=20261010-eight" width="1000" height="650" alt="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted.">
             <canvas class="mof-canvas" tabindex="0" role="img" aria-label="Cu-BTC: complete unit cell, periodic bonds; hydrogen atoms omitted."></canvas>
           </div>
-          <figcaption><span><a class="mof-name" href="data/mof-source/cu-btc.cif">Cu-BTC</a><span class="mof-cell-details"> · 2 × 2 × 1 cells · PBC · H atoms omitted</span></span><span class="mof-scale" aria-label="Scale: 10 angstroms"><span class="mof-scale-line" aria-hidden="true"></span><span>10 Å</span></span><span class="mof-tools"><button class="mof-tool" type="button" data-mof-zoom-in aria-label="Zoom in" title="Zoom in">+</button><button class="mof-tool" type="button" data-mof-zoom-out aria-label="Zoom out" title="Zoom out">−</button><button class="mof-tool" type="button" data-mof-reset aria-label="Reset pore view" title="Reset pore view">↺</button></span></figcaption><p class="mof-hint">Drag to rotate · Scroll or pinch to zoom</p>
+          <figcaption>
+            <label class="mof-select-label">MOF <select class="mof-select" data-mof-select aria-label="Choose MOF"><option value="cu-btc">Cu-BTC</option></select></label>
+            <span><a class="mof-name" data-mof-cif href="data/mof-source/cu-btc.cif" aria-label="Download Cu-BTC CIF">CIF</a> · <a data-mof-source href="https://github.com/iraspa/raspa2/blob/master/structures/mofs/cif/Cu-BTC.cif" aria-label="Structure source for Cu-BTC">Source</a><span class="mof-cell-details"> · 2 × 2 × 1 cells · PBC · H atoms omitted</span></span>
+            <span class="mof-scale" aria-label="Scale: 10 angstroms"><span class="mof-scale-line" aria-hidden="true"></span><span>10 Å</span></span>
+            <span class="mof-tools"><button class="mof-tool" type="button" data-mof-interact aria-pressed="false" aria-label="Enable touch rotation" title="Enable touch rotation">Rotate</button><button class="mof-tool" type="button" data-mof-zoom-in aria-label="Zoom in" title="Zoom in">+</button><button class="mof-tool" type="button" data-mof-zoom-out aria-label="Zoom out" title="Zoom out">−</button><button class="mof-tool" type="button" data-mof-reset aria-label="Reset pore view" title="Reset pore view">↺</button></span>
+          </figcaption><p class="mof-hint">Drag to rotate · Shift + scroll to zoom</p>
         </figure>
       </div>
       <p class="home-hero-intro">We connect quantum and atomistic simulations, statistical mechanics, curated data, and superintelligence to explore materials for energy and separations.</p>
@@ -227,7 +253,7 @@ class Component extends DCLogic {
 <script src="assets/publication-badges.js"></script>
 
 <script src="assets/mof-renderer.js?v=20261010-eight"></script>
-<script src="assets/mof-viewer.js?v=20261010-eight"></script>
+<script src="assets/mof-viewer.js?v=20261010-usability"></script>
 <script src="assets/hero-words.js?v=20261009-continuous"></script>
 
 </body>

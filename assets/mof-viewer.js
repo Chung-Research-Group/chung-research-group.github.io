@@ -11,26 +11,67 @@
   async function init(figure) {
     if(instances.has(figure)||!globalThis.MofRenderer) return;
     instances.set(figure,()=>{});
-    try {await loadCatalog(figure.dataset.mofViewer);} catch {return;}
+    try {await loadCatalog(figure.dataset.mofViewer);} catch {instances.delete(figure);return;}
     if(!figure.isConnected) {instances.delete(figure);return;}
-    const model=MofRenderer.chooseModel(globalThis.MOF_MODELS),scene=MofRenderer.geometry(model);
+    let model=MofRenderer.chooseModel(globalThis.MOF_MODELS),scene=MofRenderer.geometry(model);
     const canvas=figure.querySelector('canvas'),poster=figure.querySelector('.mof-poster');
-    const link=figure.querySelector('.mof-name'),scaleLine=figure.querySelector('.mof-scale-line');
-    const details=figure.querySelector('.mof-cell-details');
-    const description=`${model.name}: ${scene.repetitions.join(' × ')} periodic unit cells, pore view along ${scene.viewDirection}; hydrogen atoms omitted.`;
-    figure.dataset.mofName=model.name;figure.dataset.mofSlug=model.slug;
-    figure.dataset.mofView=scene.viewDirection;figure.dataset.mofRepetitions=scene.repetitions.join('x');
-    link.textContent=model.name;link.href=model.download_url||model.source_url;
-    if(details) details.textContent=` · ${scene.repetitions.join(' × ')} cells · PBC · H atoms omitted`;
-    poster.alt=description;
-    poster.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(MofRenderer.toSvg(model));
-    canvas.setAttribute('aria-label',description+' Drag or use arrow keys to rotate; scroll, pinch, or use plus/minus to zoom; Home resets the pore view.');
+    const link=figure.querySelector('[data-mof-cif]'),source=figure.querySelector('[data-mof-source]');
+    const select=figure.querySelector('[data-mof-select]'),details=figure.querySelector('.mof-cell-details');
+    const scaleLine=figure.querySelector('.mof-scale-line'),interact=figure.querySelector('[data-mof-interact]');
+    const hint=figure.querySelector('.mof-hint');
     let ctx;
     try {ctx=canvas.getContext('2d');} catch {ctx=null;}
-    let width=1,height=1,frame=0,destroyed=false;
-    const camera={quaternion:[1,0,0,0],zoom:1},pointers=new Map();
-    const listeners=[];
-    function listen(element,type,handler,options) {element.addEventListener(type,handler,options);listeners.push(()=>element.removeEventListener(type,handler,options));}
+    let width=1,height=1,frame=0,destroyed=false,touchMode=false;
+    // A gentle tilt keeps the pore opening legible while showing cell depth.
+    const tiltX=-7*Math.PI/360,tiltY=12*Math.PI/360;
+    const initialQuaternion=[Math.cos(tiltY)*Math.cos(tiltX),Math.cos(tiltY)*Math.sin(tiltX),Math.sin(tiltY)*Math.cos(tiltX),-Math.sin(tiltY)*Math.sin(tiltX)];
+    const camera={quaternion:initialQuaternion.slice(),zoom:1},pointers=new Map(),listeners=[];
+    const touchLayout=matchMedia('(max-width:840px), (pointer:coarse)');
+    function listen(element,type,handler,options) {
+      if(!element) return;
+      element.addEventListener(type,handler,options);
+      listeners.push(()=>element.removeEventListener(type,handler,options));
+    }
+    function updateHint() {
+      if(hint) hint.textContent=touchLayout.matches
+        ? (touchMode?'Drag to rotate · Pinch to zoom':'Scroll to browse · Enable touch rotation to interact')
+        : 'Drag to rotate · Shift + scroll to zoom';
+    }
+    function clearPointers() {
+      for(const id of pointers.keys()) {
+        try {if(canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id);} catch {}
+      }
+      pointers.clear();delete figure.dataset.dragging;
+    }
+    function setTouchMode(enabled) {
+      touchMode=!!enabled;figure.dataset.mofTouch=String(touchMode);
+      clearPointers();
+      if(interact) {
+        const label=touchMode?'Return to page scrolling':'Enable touch rotation';
+        interact.setAttribute('aria-label',label);interact.setAttribute('title',label);
+        interact.setAttribute('aria-pressed',String(touchMode));
+        interact.textContent=touchMode?'Scroll':'Rotate';
+      }
+      updateHint();
+    }
+    function updateModel() {
+      scene=MofRenderer.geometry(model);
+      const description=model.name+': '+scene.repetitions.join(' × ')+' periodic unit cells, pore direction '+scene.viewDirection+', initial view gently tilted for depth; hydrogen atoms omitted.';
+      figure.dataset.mofName=model.name;figure.dataset.mofSlug=model.slug;
+      figure.dataset.mofView=scene.viewDirection;figure.dataset.mofRepetitions=scene.repetitions.join('x');
+      if(select) select.value=model.slug;
+      if(link) {link.textContent='CIF';link.href=model.download_url||model.source_url;link.setAttribute('aria-label','Download '+model.name+' CIF');}
+      if(source) {source.textContent='Source';source.href=model.source_url;source.setAttribute('aria-label','Structure source for '+model.name);}
+      if(details) details.textContent=' · '+scene.repetitions.join(' × ')+' cells · PBC · H atoms omitted';
+      poster.alt=description;
+      canvas.setAttribute('aria-label',description+' Drag or use arrow keys to rotate; Shift + scroll or use plus/minus to zoom. For touch rotation and pinch, enable touch rotation. Home resets the pore view.');
+    }
+    if(select) {
+      select.replaceChildren(...globalThis.MOF_MODELS.map(item=>{
+        const option=document.createElement('option');
+        option.value=item.slug;option.textContent=item.name;return option;
+      }));
+    }
     function updateScale(bounds) {
       if(scaleLine) {
         const cssToScreen=bounds.width/canvas.clientWidth||1;
@@ -63,10 +104,10 @@
       invalidate();
     }
     function zoom(factor) {camera.zoom=Math.max(.35,Math.min(4,camera.zoom*factor));invalidate();}
-    function reset() {camera.quaternion=[1,0,0,0];camera.zoom=1;invalidate();}
+    function reset() {camera.quaternion=initialQuaternion.slice();camera.zoom=1;setTouchMode(false);invalidate();}
     function distance() {const [a,b]=[...pointers.values()];return a&&b?Math.hypot(a.x-b.x,a.y-b.y):0;}
     function down(event) {
-      if(event.pointerType==='mouse'&&event.button!==0) return;
+      if((event.pointerType==='mouse'&&event.button!==0)||(event.pointerType==='touch'&&!touchMode)) return;
       event.preventDefault();canvas.focus({preventScroll:true});
       pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
       try {canvas.setPointerCapture(event.pointerId);} catch {}
@@ -83,6 +124,7 @@
       if(!pointers.size) delete figure.dataset.dragging;
     }
     function wheel(event) {
+      if(!event.shiftKey) return;
       event.preventDefault();
       const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?height:1);
       zoom(Math.exp(-Math.max(-600,Math.min(600,delta))*.0015));
@@ -94,19 +136,26 @@
       else if(['-','_'].includes(event.key)) {event.preventDefault();zoom(1/1.2);}
       else if(event.key==='Home') {event.preventDefault();reset();}
     }
+    listen(select,'change',()=>{
+      const chosen=globalThis.MOF_MODELS.find(item=>item.slug===select.value);
+      if(chosen) {model=chosen;reset();updateModel();}
+    });
+    listen(figure.querySelector('[data-mof-zoom-in]'),'click',()=>zoom(1.2));
+    listen(figure.querySelector('[data-mof-zoom-out]'),'click',()=>zoom(1/1.2));
+    listen(figure.querySelector('[data-mof-reset]'),'click',reset);
+    listen(touchLayout,'change',updateHint);
+    setTouchMode(false);updateModel();
     if(ctx) {
       listen(canvas,'pointerdown',down);listen(canvas,'pointermove',move);
       for(const type of ['pointerup','pointercancel','lostpointercapture']) listen(canvas,type,up);
       listen(canvas,'wheel',wheel,{passive:false});listen(canvas,'keydown',key);
-      listen(figure.querySelector('[data-mof-zoom-in]'),'click',()=>zoom(1.2));
-      listen(figure.querySelector('[data-mof-zoom-out]'),'click',()=>zoom(1/1.2));
-      listen(figure.querySelector('[data-mof-reset]'),'click',reset);
+      listen(interact,'click',()=>setTouchMode(!touchMode));
       figure.dataset.mofReady='true';poster.setAttribute('aria-hidden','true');
-    } else figure.dataset.mofFallback='true';
+    } else {figure.dataset.mofFallback='true';if(interact) interact.hidden=true;}
     const resizeObserver=new ResizeObserver(resize);
     function destroy() {
       if(destroyed) return;
-      destroyed=true;cancelAnimationFrame(frame);resizeObserver.disconnect();listeners.forEach(remove=>remove());pointers.clear();instances.delete(figure);
+      destroyed=true;cancelAnimationFrame(frame);resizeObserver.disconnect();listeners.forEach(remove=>remove());clearPointers();instances.delete(figure);
     }
     instances.set(figure,destroy);
     resizeObserver.observe(figure.querySelector('.mof-stage'));resize();

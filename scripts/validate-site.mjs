@@ -5,6 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { parseHTML } from "linkedom";
 
 import {
   generatedLabStatisticsFile,
@@ -1421,6 +1422,27 @@ for (const file of htmlFiles) {
   if (!/<meta\b[^>]*name=["']description["']/i.test(html)) errors.push(`${label}: missing meta description.`);
   if (!/<link\b[^>]*rel=["']canonical["']/i.test(html)) errors.push(`${label}: missing canonical URL.`);
   if (!/<meta\b[^>]*property=["']og:title["']/i.test(html)) errors.push(`${label}: missing Open Graph metadata.`);
+
+  if (html.includes('<template data-site-template>')) {
+    const headHtml = html.match(/<head\b[^>]*>[\s\S]*?<\/head>/i)?.[0] || '';
+    const { document: initialHead } = parseHTML(headHtml);
+    for (const selector of [
+      'title', 'meta[name="description"]', 'link[rel="canonical"]',
+      'meta[property="og:type"]', 'meta[property="og:title"]',
+      'meta[property="og:description"]', 'meta[property="og:url"]'
+    ]) {
+      if (initialHead.querySelectorAll(selector).length !== 1) {
+        errors.push(`${label}: initial head must contain exactly one ${selector}.`);
+      }
+    }
+    if (file === 'index.html') {
+      for (const selector of ['meta[property="og:image"]', 'meta[name="twitter:card"]']) {
+        if (initialHead.querySelectorAll(selector).length !== 1) {
+          errors.push(`${label}: initial head must contain exactly one ${selector}.`);
+        }
+      }
+    }
+  }
 
   const inlineDataScripts = [...html.matchAll(/<script\b[^>]*data-dc-script[^>]*>([\s\S]*?)<\/script>/gi)];
   if (html.includes("data-dc-script") && inlineDataScripts.length === 0) errors.push(`${label}: unclosed page data script.`);

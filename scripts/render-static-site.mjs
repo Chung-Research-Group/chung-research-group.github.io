@@ -4,9 +4,53 @@ import vm from 'node:vm';
 import { parseHTML } from 'linkedom';
 import { sharedChrome, site } from './site-chrome.mjs';
 
+function metadataKey(node) {
+  if (node.localName === 'title') return 'title';
+  if (node.localName === 'link') {
+    const relations = (node.getAttribute('rel') || '').toLowerCase().split(/\s+/);
+    return relations.includes('canonical') ? 'link|canonical' : null;
+  }
+  if (node.localName !== 'meta') return null;
+  for (const attribute of ['name', 'property', 'http-equiv', 'itemprop', 'charset']) {
+    if (node.hasAttribute(attribute)) {
+      return `meta|${attribute}|${attribute === 'charset' ? '' : node.getAttribute(attribute).toLowerCase()}`;
+    }
+  }
+  return null;
+}
+
+function publishHeadMetadata(html) {
+  const { document } = parseHTML(html);
+  // A real head is authoritative when a page already supplies its metadata.
+  const existing = new Set([...document.head.children].map(metadataKey).filter(Boolean));
+  const promoted = [];
+  const published = html.replace(/(<helmet\b[^>]*>)([\s\S]*?)(<\/helmet\s*>)/gi, (match, open, contents, close) => {
+    const { document: fragment } = parseHTML(`<helmet>${contents}</helmet>`);
+    const helmet = fragment.querySelector('helmet');
+    let changed = false;
+    for (const child of [...helmet.children]) {
+      const key = metadataKey(child);
+      if (!key) continue;
+      if (!existing.has(key)) {
+        promoted.push(child.outerHTML);
+        existing.add(key);
+      }
+      // Runtime helmet appends metadata without consulting the existing head.
+      // Remove only promoted metadata from the published template to avoid a
+      // second title/canonical/meta when JavaScript starts. Source stays intact.
+      child.remove();
+      changed = true;
+    }
+    return changed ? `${open}${helmet.innerHTML}${close}` : match;
+  });
+  return promoted.length
+    ? published.replace(/<\/head\s*>/i, `${promoted.join('\n')}\n</head>`)
+    : published;
+}
+
 // Evaluate only checked-in page logic. No requests, timers or lifecycle hooks run.
 export async function renderPublishedPage(source, { filename, dataRoot }) {
-  const html = sharedChrome(source, filename);
+  const html = publishHeadMetadata(sharedChrome(source, filename));
   const { document } = parseHTML(html);
   const root = document.querySelector('x-dc');
   if (!root) throw new Error(`${filename}: missing template`);
