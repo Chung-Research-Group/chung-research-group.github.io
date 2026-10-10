@@ -41,7 +41,7 @@ for model in source['models']:
                 if key not in bondkeys:
                     bondkeys.add(key); bonds.append([i,j,0 if inside(p) and inside(q) else 1])
     lengths = [math.dist(base['atoms'][i][1:4],base['atoms'][j][1:4]) for i,j,*_ in base['bonds']]
-    error = max(min(abs(math.dist(atoms[i][1:4],atoms[j][1:4])-length) for length in lengths) for i,j,*_ in bonds)
+    error = max((min(abs(math.dist(atoms[i][1:4],atoms[j][1:4])-length) for length in lengths) for i,j,*_ in bonds), default=0)
     if error > 2e-5: raise ValueError(f"{model['id']}: bond-length mismatch {error}")
     model['atoms'],model['bonds']=atoms,bonds
     model['unit_cell_vertices']=base['cell_vertices']
@@ -50,7 +50,7 @@ for model in source['models']:
     if repeats == [1, 1, 1]:
         model['cell_vertices'], model['cell_edges'] = base['cell_vertices'], base['cell_edges']
     model.pop('original_representation',None)
-    model['supercell']={'repeats':repeats,'source':'data/mof-unit-cells.json','display_origin_translation_fractional':[-(n-1)/2 for n in repeats], 'atom_count':len(atoms),'bond_count':len(bonds),'max_bond_length_error_angstrom':error}
+    model['supercell']={'repeats':repeats,'source':'data/mof-unit-cells.json','display_origin_translation_fractional':[-(n-1)/2 for n in repeats], 'atom_count':len(atoms),'bond_count':len(bonds),'clipped_bond_segment_count':len(model.get('bond_segments',[])),'max_bond_length_error_angstrom':error}
     model['display_view']['note'] += (' CALF-20 repeats exact lattice geometry across the pore plane.'
         if repeats != [1, 1, 1] else ' A single unit cell keeps the pore aperture prominent.')
     provenance['models'][model['id']]={**model['supercell'],'view':model['display_view'],'unit_cell_vectors_angstrom':cell}

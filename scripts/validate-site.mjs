@@ -1935,9 +1935,9 @@ if (!indexHtml.includes('data/mof-gallery.json') || !mofViewer.includes('request
 }
 try {
   const gallery = JSON.parse(await readFile(path.join(siteRoot, 'data/mof-gallery.json'), 'utf8'));
-  const expected = ['cu-btc', 'calf-20', 'mg-mof-74', 'nu-1000'];
+  const expected = ['cu-btc', 'calf-20', 'mg-mof-74', 'nu-1000', 'mof-177', 'nu-100'];
   if (gallery.models.length !== expected.length || gallery.models.some((model, i) =>
-      model.id !== expected[i] || !model.atoms.length || !model.bonds.length ||
+      model.id !== expected[i] || !model.atoms.length || !(model.bonds?.length || model.bond_segments?.length) ||
       model.display_view.initial_yaw !== 0 || model.display_view.yaw_amplitude !== .12)) {
     errors.push('Homepage pore-facing MOF gallery is incomplete.');
   }

@@ -6,7 +6,7 @@
   let modelPromise;
   function chooseModel(gallery) {
     const models = gallery.models;
-    if (!Array.isArray(models) || models.length !== 4) throw new Error('MOF gallery unavailable');
+    if (!Array.isArray(models) || models.length !== 6) throw new Error('MOF gallery unavailable');
     const random = new Uint32Array(1);
     crypto.getRandomValues(random);
     return models[Math.floor(random[0] / 4294967296 * models.length)];
@@ -24,7 +24,7 @@
         return response.json();
       })).then(chooseModel);
       model = await modelPromise;
-      if (!Array.isArray(model.atoms) || !model.atoms.length || !Array.isArray(model.bonds)) return;
+      if (!Array.isArray(model.atoms) || !model.atoms.length || (!Array.isArray(model.bonds) && !Array.isArray(model.bond_segments))) return;
     } catch { return; }
     if (!figure.isConnected) return;
     // Selection is shared across runtime remounts, and changes only on page load.
