@@ -19,7 +19,7 @@
     if (!ctx || !globalThis.MofRenderer) return; // The CIF-derived poster remains visible.
     let model;
     try {
-      modelPromise ||= (globalThis.MOF_GALLERY ? Promise.resolve(globalThis.MOF_GALLERY) : fetch('data/mof-gallery.json').then(response => {
+      modelPromise ||= (globalThis.MOF_GALLERY ? Promise.resolve(globalThis.MOF_GALLERY) : fetch(figure.dataset.mofViewer || 'data/mof-gallery.json').then(response => {
         if (!response.ok) throw new Error('MOF data unavailable');
         return response.json();
       })).then(chooseModel);
@@ -31,7 +31,8 @@
     const name = figure.querySelector('[data-mof-name]'), poster = figure.querySelector('.mof-poster');
     name.textContent = model.name;
     poster.src = model.poster_path;
-    poster.alt = `${model.name} crystal structure shown as a pore-facing periodic supercell.`;
+    const cellLabel = model.supercell?.repeats.some(n => n > 1) ? 'periodic supercell' : 'unit cell';
+    poster.alt = `${model.name} crystal structure shown as a pore-facing ${cellLabel}.`;
     figure.dataset.selectedMof = model.id;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let paused = motion.matches, visible = true, frame = 0, last = 0, angle = model.display_view?.initial_yaw ?? 0, phase = 0;

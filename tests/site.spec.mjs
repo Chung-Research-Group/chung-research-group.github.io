@@ -125,6 +125,7 @@ for (const [index, name, slug] of mofOptions) {
     await expect(figure).toHaveAttribute('data-mof-ready', 'true');
     await expect(figure.locator('[data-mof-name]')).toHaveText(name);
     await expect(figure.locator('.mof-poster')).toHaveAttribute('src', `images/mofs/${slug}.svg`);
+    await expect(figure.locator('.mof-poster')).toHaveAttribute('alt', `${name} crystal structure shown as a pore-facing ${slug === 'calf-20' ? 'periodic supercell' : 'unit cell'}.`);
     await expect(figure.locator('canvas')).toBeVisible();
     await expect(figure.getByRole('button', { name: 'Resume rotation' })).toHaveAttribute('aria-pressed', 'true');
     expect((await request.get(`/images/mofs/${slug}.svg`)).ok()).toBe(true);
