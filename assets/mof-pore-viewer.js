@@ -43,7 +43,7 @@
       if (!figure.isConnected) { destroy(); return; }
       if (paused || !visible || document.hidden) return;
       // Slow, continuous yaw near the pore-facing view keeps the aperture visible.
-      if (!last || now - last >= 1000 / 30) {
+      if (!last || now - last >= 1000 / 15) {
         if (last) phase += Math.min(now - last, 100) * Math.PI * 2 / ((model.display_view?.period_seconds ?? 32) * 1000);
         angle = (model.display_view?.initial_yaw ?? 0) + (model.display_view?.yaw_amplitude ?? .12) * Math.sin(phase);
         last = now; draw();
