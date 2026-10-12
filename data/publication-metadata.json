@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-11T10:09:23.560Z",
+  "snapshotUpdatedAt": "2026-10-12T11:06:09.112Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+      "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+      "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4579,
-    "openAlexCitations": 5783,
+    "semanticScholarCitations": 4582,
+    "openAlexCitations": 5784,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1614,8 +1614,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4108,
-        "citationPercentile": 0.88320489,
+        "fwci": 2.4028,
+        "citationPercentile": 0.88298418,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -1703,7 +1703,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-09-24T07:57:37.273135"
+        "updatedAt": "2026-10-12T09:40:04.860316"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1712,7 +1712,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2445,
-        "citationPercentile": 0.77458867,
+        "fwci": 1.2422,
+        "citationPercentile": 0.77415295,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-10T09:11:00.788812"
+        "updatedAt": "2026-10-11T09:32:39.932853"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2341,7 +2341,7 @@
         "paperId": "33b217eb99434ea9453b587c6d38510adf8c0b50",
         "url": "https://www.semanticscholar.org/paper/33b217eb99434ea9453b587c6d38510adf8c0b50",
         "title": "Polyoxometalate Initiated In situ Conformal Coating of Multifunctional Hybrid Artificial Layers for High Performance Zinc Metal Anodes",
-        "citationCount": 24,
+        "citationCount": 25,
         "influentialCitationCount": 0,
         "referenceCount": 75,
         "fields": [
@@ -2446,7 +2446,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-08-22T04:00:33.504Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2663,8 +2663,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.0838,
-        "citationPercentile": 0.71784497,
+        "fwci": 1.0819,
+        "citationPercentile": 0.71710627,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -2752,7 +2752,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-09-16T18:09:00.828671"
+        "updatedAt": "2026-10-12T09:40:04.860316"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2761,7 +2761,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3248,7 +3248,7 @@
         "paperId": "b668de6362f1983330d87c77c18bbb1449426199",
         "url": "https://www.semanticscholar.org/paper/b668de6362f1983330d87c77c18bbb1449426199",
         "title": "High Hydrogen Storage in Trigonal Prismatic Monomer‐Based Highly Porous Aromatic Frameworks",
-        "citationCount": 33,
+        "citationCount": 34,
         "influentialCitationCount": 0,
         "referenceCount": 7,
         "fields": [
@@ -3352,7 +3352,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-02T09:55:17.666Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "openAlex": {
           "status": "observed",
@@ -3710,8 +3710,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 21.623,
-        "citationPercentile": 0.99935918,
+        "fwci": 21.4776,
+        "citationPercentile": 0.9993517,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3792,18 +3792,18 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 70
+            "citationCount": 71
           },
           {
             "year": 2025,
-            "citationCount": 93
+            "citationCount": 92
           },
           {
             "year": 2024,
             "citationCount": 39
           }
         ],
-        "updatedAt": "2026-10-08T09:06:37.294493"
+        "updatedAt": "2026-10-12T09:40:04.860316"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3812,7 +3812,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4017,8 +4017,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2633,
-        "citationPercentile": 0.77015755,
+        "fwci": 1.2614,
+        "citationPercentile": 0.76976106,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4095,7 +4095,7 @@
             "citationCount": 10
           }
         ],
-        "updatedAt": "2026-10-08T09:06:37.294493"
+        "updatedAt": "2026-10-12T09:40:04.860316"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4104,7 +4104,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6343,7 +6343,7 @@
         "paperId": "3252b64311a04a8f02d7f8c294564ad576577724",
         "url": "https://www.semanticscholar.org/paper/3252b64311a04a8f02d7f8c294564ad576577724",
         "title": "High‐Throughput Discovery of Ni(IN)2 for Ethane/Ethylene Separation",
-        "citationCount": 73,
+        "citationCount": 74,
         "influentialCitationCount": 0,
         "referenceCount": 52,
         "fields": [
@@ -6470,7 +6470,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-24T08:35:15.223Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7991,12 +7991,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 360,
+        "citationCount": 361,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.1017,
-        "citationPercentile": 0.99130816,
+        "fwci": 8.1003,
+        "citationPercentile": 0.99130498,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -8072,7 +8072,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 59
+            "citationCount": 60
           },
           {
             "year": 2025,
@@ -8099,7 +8099,7 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-10-08T09:06:37.294493"
+        "updatedAt": "2026-10-11T09:32:39.932853"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8108,7 +8108,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
         },
         "googleScholar": {
           "status": "unavailable",
