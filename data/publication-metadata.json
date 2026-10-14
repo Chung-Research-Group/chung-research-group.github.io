@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-13T10:48:31.454Z",
+  "snapshotUpdatedAt": "2026-10-14T08:51:46.568Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
+      "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+      "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4582,
-    "openAlexCitations": 5747,
+    "semanticScholarCitations": 4583,
+    "openAlexCitations": 5756,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1610,12 +1610,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4411079963",
         "title": "Accelerated discovery of high-performance MOFs for water adsorption chillers through molecular simulation and machine learning",
-        "citationCount": 8,
+        "citationCount": 9,
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4028,
-        "citationPercentile": 0.88298418,
+        "fwci": 2.6921,
+        "citationPercentile": 0.90085145,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -1696,14 +1696,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1712,7 +1712,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1912,12 +1912,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4410091570",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 105,
+        "citationCount": 106,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 11.2193,
-        "citationPercentile": 0.99525702,
+        "fwci": 11.2508,
+        "citationPercentile": 0.99539887,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1993,14 +1993,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 69
+            "citationCount": 70
           },
           {
             "year": 2025,
             "citationCount": 36
           }
         ],
-        "updatedAt": "2026-10-10T09:11:00.788812"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2009,7 +2009,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2398,
-        "citationPercentile": 0.77407828,
+        "fwci": 1.2386,
+        "citationPercentile": 0.77396414,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3110,8 +3110,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.6316,
-        "citationPercentile": 0.83603746,
+        "fwci": 1.6164,
+        "citationPercentile": 0.83469315,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -3203,7 +3203,7 @@
             "citationCount": 4
           }
         ],
-        "updatedAt": "2026-09-24T07:57:37.273135"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3212,7 +3212,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4461,12 +4461,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4380083772",
         "title": "SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms",
-        "citationCount": 8,
+        "citationCount": 9,
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.7038,
-        "citationPercentile": 0.59252985,
+        "fwci": 0.7907,
+        "citationPercentile": 0.62405218,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -4532,7 +4532,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 1
+            "citationCount": 2
           },
           {
             "year": 2025,
@@ -4547,7 +4547,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-10T09:11:00.788812"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4556,7 +4556,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4593,12 +4593,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4362636753",
         "title": "A database of ultrastable MOFs reassembled from stable fragments with machine learning models",
-        "citationCount": 88,
+        "citationCount": 89,
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.5407,
-        "citationPercentile": 0.98213222,
+        "fwci": 6.5974,
+        "citationPercentile": 0.98280016,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4659,7 +4659,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 19
+            "citationCount": 20
           },
           {
             "year": 2025,
@@ -4674,7 +4674,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-10-10T09:11:00.788812"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4683,7 +4683,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-11T10:09:23.560Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5152,12 +5152,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4295450566",
         "title": "Brunauer–Emmett–Teller Areas from Nitrogen and Argon Isotherms Are Similar",
-        "citationCount": 18,
+        "citationCount": 19,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4524,
-        "citationPercentile": 0.80271331,
+        "fwci": 1.4537,
+        "citationPercentile": 0.80377452,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -5223,7 +5223,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 1
+            "citationCount": 2
           },
           {
             "year": 2025,
@@ -5242,7 +5242,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-08-29T07:29:34.045763"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5251,7 +5251,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6882,12 +6882,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W3033391181",
         "title": "Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method",
-        "citationCount": 65,
+        "citationCount": 66,
         "year": 2020,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.542,
-        "citationPercentile": 0.93625245,
+        "fwci": 3.5413,
+        "citationPercentile": 0.93623804,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -6943,7 +6943,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 4
+            "citationCount": 5
           },
           {
             "year": 2025,
@@ -6970,7 +6970,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6979,7 +6979,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7489,12 +7489,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 857,
+        "citationCount": 858,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 23.0523,
-        "citationPercentile": 0.99853273,
+        "fwci": 23.0548,
+        "citationPercentile": 0.99853281,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7555,7 +7555,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 124
+            "citationCount": 125
           },
           {
             "year": 2025,
@@ -7586,7 +7586,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7595,7 +7595,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7977,7 +7977,7 @@
         "paperId": "ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "url": "https://www.semanticscholar.org/paper/ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 296,
+        "citationCount": 297,
         "influentialCitationCount": 6,
         "referenceCount": 52,
         "fields": [
@@ -7991,12 +7991,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 359,
+        "citationCount": 360,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.1043,
-        "citationPercentile": 0.99148124,
+        "fwci": 8.1049,
+        "citationPercentile": 0.99148061,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -8072,7 +8072,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 60
+            "citationCount": 61
           },
           {
             "year": 2025,
@@ -8099,16 +8099,16 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-10T09:59:40.336Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10428,11 +10428,11 @@
       "openAlex": {
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 741,
+        "citationCount": 742,
         "year": 2014,
         "type": "article",
         "isRetracted": false,
-        "fwci": 15.379,
+        "fwci": 15.3786,
         "citationPercentile": 0.99592125,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
@@ -10504,7 +10504,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 54
+            "citationCount": 55
           },
           {
             "year": 2025,
@@ -10555,7 +10555,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-12T09:40:04.860316"
+        "updatedAt": "2026-10-13T10:08:12.033832"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10564,7 +10564,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-13T10:48:31.454Z"
+          "contentUpdatedAt": "2026-10-14T08:51:46.568Z"
         },
         "googleScholar": {
           "status": "unavailable",
