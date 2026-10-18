@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-17T07:55:24.850Z",
+  "snapshotUpdatedAt": "2026-10-18T08:10:14.409Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+      "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4606,
-    "openAlexCitations": 5768,
+    "openAlexCitations": 5771,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -515,12 +515,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W7135218082",
         "title": "Direct air capture with solid sorbents: Adsorbent design, process engineering, and CO2 conversion",
-        "citationCount": 8,
+        "citationCount": 9,
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 15.5501,
-        "citationPercentile": 0.99278233,
+        "fwci": 17.3028,
+        "citationPercentile": 0.99421041,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -601,10 +601,10 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 8
+            "citationCount": 9
           }
         ],
-        "updatedAt": "2026-10-09T09:14:12.587421"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -613,7 +613,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-16T08:20:10.900Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1342,8 +1342,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5932,
-        "citationPercentile": 0.60952988,
+        "fwci": 0.5912,
+        "citationPercentile": 0.60849912,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -1406,7 +1406,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1415,7 +1415,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2339,
-        "citationPercentile": 0.7729354,
+        "fwci": 1.2324,
+        "citationPercentile": 0.77273638,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2963,10 +2963,10 @@
         "title": "Linker-defect assisted catalytic fixation of CO2 in a dual-linker metal–organic framework",
         "citationCount": 3,
         "year": 2024,
-        "type": "book-chapter",
+        "type": "article",
         "isRetracted": false,
-        "fwci": 4.9655,
-        "citationPercentile": 0.9787234,
+        "fwci": 0.3472,
+        "citationPercentile": 0.37663818,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -3044,7 +3044,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3053,7 +3053,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6209,12 +6209,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W3182756812",
         "title": "Shape‐Selective Ultramicroporous Carbon Membranes for Sub‐0.1 nm Organic Liquid Separation",
-        "citationCount": 21,
+        "citationCount": 22,
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.1628,
-        "citationPercentile": 0.7442723,
+        "fwci": 1.1625,
+        "citationPercentile": 0.74423,
         "primaryTopic": {
           "id": "https://openalex.org/T11362",
           "name": "Membrane Separation and Gas Transport",
@@ -6275,7 +6275,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
@@ -6298,7 +6298,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6307,7 +6307,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7493,8 +7493,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 23.1013,
-        "citationPercentile": 0.99853248,
+        "fwci": 23.1005,
+        "citationPercentile": 0.99853265,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7586,7 +7586,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7595,7 +7595,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10251,12 +10251,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2148931917",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 380,
+        "citationCount": 381,
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 17.9859,
-        "citationPercentile": 0.99639789,
+        "fwci": 17.9848,
+        "citationPercentile": 0.99639769,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10322,7 +10322,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 12
+            "citationCount": 13
           },
           {
             "year": 2025,
@@ -10369,7 +10369,7 @@
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-17T09:40:24.721904"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10378,7 +10378,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-18T08:10:14.409Z"
         },
         "googleScholar": {
           "status": "unavailable",
