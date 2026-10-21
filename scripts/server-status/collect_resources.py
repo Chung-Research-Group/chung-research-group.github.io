@@ -204,6 +204,9 @@ def main():
         from slurm_node_gpu import attach as attach_node_gpus
         attach_node_gpus(record, cluster, collect, sources["gpu"])
         record['collector_sha256']['node_gpu'] = hashlib.sha256(sources['gpu'].encode()).hexdigest()
+        from slurm_node_memory import attach as attach_node_memory
+        attach_node_memory(record, cluster, collect)
+        record['collector_sha256']['node_memory'] = hashlib.sha256((ROOT/'slurm_node_memory.py').read_bytes()).hexdigest()
         cluster_records.append(record)
     latest = {'checked_at_utc': utcnow(), 'servers': [], 'clusters': []}
     # A targeted enrollment must preserve observations of the existing hosts.

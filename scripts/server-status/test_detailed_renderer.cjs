@@ -321,4 +321,40 @@ test('missing RAM allocation remains unknown and tracked memory does not show th
  assert.match(h.get('metrics').innerHTML,/<p class="value">— \/ /);
 });
 
+
+function memoryFixture(count=16){const f=fixture(),r=f.servers.find(s=>s.host==='sg').latest;
+ r.nodes.forEach((n,i)=>{n.memory_observation=i<count?{status:'ok',checked_at_utc:new Date(baseNow-5*60000).toISOString(),total_bytes:202e9,available_bytes:198e9}:{status:'failed',reason:'access_policy'};});return f;}
+test('complete direct memory sum uses physical total and preserves separate Slurm allocation',()=>{
+ const h=harness(memoryFixture(),'sg');assert.match(h.get('metrics').innerHTML,/3\.17 TB \/ 3\.23 TB/);assert.match(h.get('metrics').innerHTML,/16 \/ 16/);
+ assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.ramDirect',h.context)));
+ assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.allocatedRam',h.context)));
+});
+test('partial OS memory sum is explicitly partial in all five languages',()=>{
+ const h=harness(memoryFixture(4),'sg');for(const lang of ['en','ko','zh','ur','fa']){
+ vm.runInContext('setLanguage('+JSON.stringify(lang)+')',h.context);
+ assert.match(h.get('metrics').innerHTML,/792\.0 GB \/ 808\.0 GB/);assert.match(h.get('metrics').innerHTML,/4 \/ 16/);
+ assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.ramObserved',h.context)));
+ assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.memoryPartialNote',h.context)));
+ }
+});
+test('expired or invalid child samples are removed from sums on repaint',()=>{
+ const f=memoryFixture(),r=f.servers.find(s=>s.host==='sg').latest;
+ r.nodes[0].memory_observation.checked_at_utc=new Date(baseNow-91*60000).toISOString();
+ r.nodes[1].memory_observation.available_bytes=203e9;
+ const h=harness(f,'sg');assert.match(h.get('metrics').innerHTML,/14 \/ 16/);h.tick(86);
+ assert.doesNotMatch(h.get('metrics').innerHTML,/3\.17 TB/);
+});
+test('failed memory sample is unknown and does not replace Slurm allocation',()=>{
+ const f=memoryFixture(0),r=f.servers.find(s=>s.host==='sg').latest;r.memory_allocated_bytes=0;
+ const h=harness(f,'sg');assert.match(h.get('metrics').innerHTML,/0 \/ 16/);assert.match(h.get('metrics').innerHTML,/— \/ —/);
+ vm.runInContext("nodeDetails('SG11')",h.context);assert.ok(h.get('selection').innerHTML.includes(vm.runInContext('labels.memory_access_policy',h.context)));
+});
+test('lab totals include all eight GPUs with ordinary FP64 and shared Max-Q scope',()=>{
+ const h=harness(fixture(),'sg');assert.match(h.get('lab-performance').innerHTML,/572\.9/);assert.match(h.get('lab-performance').innerHTML,/27\.74/);assert.match(h.get('lab-performance').innerHTML,/8 GPU/);
+ assert.match(h.get('lab-performance').innerHTML,/330\.0/);assert.match(h.get('lab-performance').innerHTML,/81\.7/);assert.match(h.get('lab-performance').innerHTML,/40\.8/);
+});
+test('an incomplete performance inventory cannot masquerade as full lab total',()=>{
+ const f=fixture();delete f.nominal_fp32.blackwell;const h=harness(f,'sg');assert.ok(h.get('lab-performance').hidden);
+});
+
 console.log('Detailed renderer DOM-state checks passed: ' + passed);

@@ -16,7 +16,7 @@ UTC = dt.timezone.utc
 ORDER = ("sg", "carbon", "oxygen", "blackwell")
 NUMERIC = set("rank jobs count_lower_bound count_upper_bound logical_started_jobs requeue_records_collapsed no_actual_start low_space_filesystems size_bytes total_bytes used_bytes available_bytes slurm_cpus_allocated slurm_cpus_total node_count nodes_with_allocations memory_total_bytes allocated_gpus configured_gpus visible_job_count sockets cores_per_socket threads_per_core memory_allocated_bytes slurm_free_memory_bytes slurm_cpus latest_job_id MaxJobId physical_cores logical_cpus memory_available_gib memory_total_gib socket physical_core logical_cpu utilization_percent index memory_free_gib cpu_TFLOPS gpu_TFLOPS base_GHz fp32_TFLOPS fp64_TFLOPS".split())
 BOOLEANS = {"lineage_inferred", "all_users_visible", "jobs_truncated", "queue", "gpu_query_ok", "memory_allocation_tracked"}
-NUMERIC.update({"RUNNING", "PENDING", "use_percent"})
+NUMERIC.update({"RUNNING", "PENDING", "use_percent", "expected_count", "observed_count", "observed_available_bytes", "observed_total_bytes", "gpu_count"})
 STRING_LISTS = {"nodes", "partitions", "mounts"}
 
 
@@ -135,6 +135,7 @@ def project_row(row, *, include_identities=False, occupancy=None):
         result["storage"] = _storage(row.get("storage"), include_identities)
         result.update(_pick(row, "slurm_cpus_allocated", "slurm_cpus_total", "node_count", "nodes_with_allocations",
                             "memory_total_bytes", "memory_allocated_bytes", "memory_allocation_tracked", "allocated_gpus", "configured_gpus", "visible_job_count", "jobs_truncated"))
+        result["memory_observation"] = _pick(row.get("memory_observation", {}), "status", "checked_at_utc", "expected_count", "observed_count", "total_bytes", "available_bytes", "observed_available_bytes", "observed_total_bytes")
         result["query_ok"] = _pick(row.get("query_ok", {}), "queue")
         result["job_states"] = _pick(row.get("job_states", {}), "RUNNING", "PENDING")
         queue_ok = result["query_ok"].get("queue") is True
@@ -147,6 +148,7 @@ def project_row(row, *, include_identities=False, occupancy=None):
                                    "name_missing": include_identities and _missing_name(j.get("name")),
                                    "id_missing": _missing_name(j.get("id"))}
                                   for j in n.get("job_labels", [])] if queue_ok else []
+            item["memory_observation"] = _pick(n.get("memory_observation", {}), "status", "checked_at_utc", "total_bytes", "available_bytes", "reason")
             raw_gpu = n.get("gpu_observation", {})
             if isinstance(raw_gpu, dict):
                 item["gpu_observation"] = _pick(raw_gpu, "status", "checked_at_utc")
@@ -193,7 +195,7 @@ def _performance(config, key):
         src = config.get(key, {}).get(host)
         if not isinstance(src, dict):
             continue
-        result[host] = _pick(src, "cpu_TFLOPS", "gpu_TFLOPS")
+        result[host] = _pick(src, "cpu_TFLOPS", "gpu_TFLOPS", "gpu_count")
         if key == "nominal_fp32" and host == "sg":
             result[host]["node_groups"] = [_pick(g, "nodes", "cpu_model", "base_GHz", "fp32_TFLOPS", "fp64_TFLOPS")
                                             for g in src.get("node_groups", [])]
