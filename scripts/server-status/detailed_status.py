@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 
 UTC = dt.timezone.utc
-ORDER = ("sg", "carbon", "oxygen")
+ORDER = ("sg", "carbon", "oxygen", "blackwell")
 NUMERIC = set("rank jobs count_lower_bound count_upper_bound logical_started_jobs requeue_records_collapsed no_actual_start low_space_filesystems size_bytes total_bytes used_bytes available_bytes slurm_cpus_allocated slurm_cpus_total node_count nodes_with_allocations memory_total_bytes allocated_gpus configured_gpus visible_job_count sockets cores_per_socket threads_per_core memory_allocated_bytes slurm_free_memory_bytes slurm_cpus latest_job_id MaxJobId physical_cores logical_cpus memory_available_gib memory_total_gib socket physical_core logical_cpu utilization_percent index memory_free_gib cpu_TFLOPS gpu_TFLOPS base_GHz fp32_TFLOPS fp64_TFLOPS".split())
 BOOLEANS = {"lineage_inferred", "all_users_visible", "jobs_truncated", "queue", "gpu_query_ok"}
 NUMERIC.update({"RUNNING", "PENDING", "use_percent"})
@@ -147,6 +147,15 @@ def project_row(row, *, include_identities=False, occupancy=None):
                                    "name_missing": include_identities and _missing_name(j.get("name")),
                                    "id_missing": _missing_name(j.get("id"))}
                                   for j in n.get("job_labels", [])] if queue_ok else []
+            raw_gpu = n.get("gpu_observation", {})
+            if isinstance(raw_gpu, dict):
+                item["gpu_observation"] = _pick(raw_gpu, "status", "checked_at_utc")
+                item["gpu_observation"]["gpus"] = []
+                if raw_gpu.get("status") == "ok":
+                    for g in raw_gpu.get("gpus", []):
+                        safe_gpu = _pick(g, "index", "name", "memory_total_gib", "memory_free_gib", "utilization_percent")
+                        safe_gpu["processes"] = [{"name": _program(p.get("name"))} for p in g.get("processes", [])] if include_identities else []
+                        item["gpu_observation"]["gpus"].append(safe_gpu)
             result["nodes"].append(item)
         result["jobs"] = [{"id": _name(j.get("id")), "name": _name(j.get("name")) if include_identities else "Job",
                            "name_missing": include_identities and _missing_name(j.get("name")),
@@ -213,7 +222,10 @@ def render(root, payload):
 const freshRow=r=>{const stamp=instant(r?.local_completed_at_utc),age=(Date.now()-stamp)/60000;return r?.status==='ok'&&Number.isFinite(stamp)&&age>=-5&&age<=data.stale_after_minutes;};
 const time=s=>Number.isFinite(instant(s))?new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(s)):'Unknown';"""
     html = _replace(html, old_time, freshness)
-    html = _replace(html, "const displayHost=host=>host==='sg'?'SG-Master':host;", "const displayHost=host=>({sg:'SG Cluster',carbon:'Carbon',oxygen:'Oxygen'})[host]||host;")
+    html = _replace(html, "const displayHost=host=>host==='sg'?'SG-Master':host;", "const displayHost=host=>({sg:'SG Cluster',carbon:'Carbon',oxygen:'Oxygen',blackwell:'Blackwell'})[host]||host;")
+    html = _replace(html, 'grid-template-columns:repeat(3,1fr)', 'grid-template-columns:repeat(2,1fr)')
+    html = _replace(html, '<p id="status" class="status"></p>', '<p id="status" class="status"></p><p id="resource-scope" class="cluster-note" hidden></p>')
+    html = _replace(html, 'function render(){', 'function render(){renderResourceScope();')
     html = _replace(html, "return {s,c:s.latest.status==='ok'?s.latest:s.last_good};", "return {s,c:freshRow(s.latest)?s.latest:null};")
     start = html.index("function stateLine(")
     end = html.index("\nfunction details(", start)
@@ -255,6 +267,11 @@ def build(root, include_identities=False, now=None, collection_failed=False):
         row = source.get(host, {"host": host, "status": "failed", "local_completed_at_utc": generated_at})
         counts = occupancy.with_occupancy(row).get("occupancy") if host != "sg" else None
         safe = project_row(row, include_identities=include_identities, occupancy=counts)
+        scope = config.get('resource_scopes', {}).get(host)
+        if host == 'blackwell' and isinstance(scope, dict):
+            if scope.get('shared_host') is not True or type(scope.get('lab_usable_gpu_count')) is not int or scope['lab_usable_gpu_count'] < 0:
+                raise ValueError('Invalid shared resource scope')
+            safe['resource_scope'] = {'shared_host': True, 'lab_usable_gpu_count': scope['lab_usable_gpu_count']}
         if collection_failed:
             safe["status"] = "failed"
         servers.append({"host": host, "latest": safe, "last_good": None})

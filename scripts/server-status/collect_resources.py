@@ -1,5 +1,5 @@
 """Collect approved lab resources with cached SSH authentication, never prompt."""
-import base64
+import argparse
 import concurrent.futures
 import datetime as dt
 import hashlib
@@ -35,7 +35,7 @@ def collect(host, remote_script, ssh_target=None, port=None, input_source=None, 
     record = {'host': host, 'local_started_at_utc': started, 'status': 'unreachable'}
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=timeout,
-                                encoding='utf-8', errors='replace',input=input_source)
+                                encoding='utf-8', errors='replace',input=input_source,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         record['ssh_exit_code'] = result.returncode
         if result.returncode:
             # BatchMode prevents credential prompts; stderr contains connection errors only.
@@ -99,7 +99,7 @@ def summarize(record):
             row['storage'] = record['storage']
         return row
     if record.get('kind')=='slurm_cluster':
-        result={k:v for k,v in record.items() if k not in ('collector_sha256','ssh_exit_code')}
+        result={k:v for k,v in record.items() if k not in ('collector_sha256','ssh_exit_code','node_gpu_raw')}
         if 'usage' in result:result['usage']=summarize_observation(result['usage'])
         return result
     cpu = record['cpu']
@@ -172,21 +172,26 @@ def summarize(record):
 
 def main():
     config = json.loads((ROOT / 'config.json').read_text(encoding='utf-8-sig'))
+    hosts = list(dict.fromkeys(config['hosts'] + config.get('website_hosts', [])))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', action='append', choices=hosts + [c['host'] for c in config.get('clusters', [])])
+    selected = set(parser.parse_args().host or [])
+    configured_hosts = [host for host in hosts if not selected or host in selected]
     sources = {name: (TOOLS / ('inspect_' + name + '_resources.py')).read_text(encoding='utf-8')
                for name in ('cpu', 'gpu', 'storage')}
     # Use existing reviewed collectors. Keep unattended scheduler-query waits bounded.
     sources['cpu'] = sources['cpu'].replace('timeout=20)', 'timeout=5)')
     wrapper = 'import contextlib,io,json\nsources=' + repr(sources) + '\nresult={}\n'
     wrapper += 'for kind,source in sources.items():\n stream=io.StringIO()\n with contextlib.redirect_stdout(stream):\n  exec(compile(source,kind,"exec"),{"__name__":"__main__"})\n result[kind]=json.loads(stream.getvalue())\nprint(json.dumps(result,ensure_ascii=True))\n'
-    payload = base64.b64encode(wrapper.encode()).decode()
-    remote_script = 'echo ' + payload + ' | base64 -d | python3'
     stamp = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     archive = ROOT / 'snapshots' / stamp
     archive.mkdir(parents=True, exist_ok=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        records = list(pool.map(lambda host: collect(host, remote_script), config['hosts']))
+        records = list(pool.map(lambda host: collect(host, 'python3 -', input_source=wrapper), configured_hosts))
     cluster_records=[]
     for cluster in config.get('clusters',[]):
+        if selected and cluster['host'] not in selected:
+            continue
         sources_sg={name:(TOOLS/('inspect_slurm_'+name+'.py')).read_text(encoding='utf-8') for name in ('resources','accounting','job_counter')}
         source='import contextlib,io,json\nsources='+repr(sources_sg)+'\nresults={}\n'
         source+='for name,source in sources.items():\n stream=io.StringIO()\n with contextlib.redirect_stdout(stream):\n  exec(compile(source,name,"exec"),{"__name__":"__main__"})\n results[name]=json.loads(stream.getvalue())\nresult=results["resources"]\nresult["usage"]=results["accounting"]\nresult["job_counter"]=results["job_counter"]\nprint(json.dumps(result))\n'
@@ -196,8 +201,16 @@ def main():
             record.update(status='invalid',error='Unexpected Slurm node inventory')
         record['collector_sha256']={name:hashlib.sha256(s.encode()).hexdigest() for name,s in sources_sg.items()}
         attach_master_storage(record, cluster)
+        from slurm_node_gpu import attach as attach_node_gpus
+        attach_node_gpus(record, cluster, collect, sources["gpu"])
+        record['collector_sha256']['node_gpu'] = hashlib.sha256(sources['gpu'].encode()).hexdigest()
         cluster_records.append(record)
     latest = {'checked_at_utc': utcnow(), 'servers': [], 'clusters': []}
+    # A targeted enrollment must preserve observations of the existing hosts.
+    if selected and (ROOT / 'latest.json').exists():
+        previous = json.loads((ROOT / 'latest.json').read_text(encoding='utf-8-sig'))
+        for kind in ('servers', 'clusters'):
+            latest[kind] = [row for row in previous.get(kind, []) if row['host'] not in selected]
     history_path = ROOT / 'history.json'
     history = json.loads(history_path.read_text(encoding='utf-8-sig')) if history_path.exists() else []
     for record in records:
@@ -224,3 +237,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

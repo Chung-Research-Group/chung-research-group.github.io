@@ -275,4 +275,30 @@ test('Urdu dates and arrows retain Gregorian KST and RTL ordering', () => {
  assert.equal(vm.runInContext('activeHost',h.context),'sg');
 });
 
+
+function gpuFixture(){const f=fixture(),r=f.servers.find(s=>s.host==='sg').latest,n=r.nodes.find(n=>n.name==='SG11');
+ n.gpu_observation={status:'ok',checked_at_utc:new Date(baseNow-5*60000).toISOString(),gpus:[0,1].map(i=>({index:i,name:'NVIDIA A100-PCIE-40GB',memory_total_gib:40,memory_free_gib:39.5,utilization_percent:17,processes:[]}))};return f;}
+test('SG11 direct GPU cards preserve the distinct Slurm allocation counter',()=>{
+ const h=harness(gpuFixture(),'sg');assert.equal((h.get('gpus').innerHTML.match(/A100-PCIE-40GB/g)||[]).length,2);
+ assert.match(h.get('gpus').innerHTML,/17/);assert.match(h.get('gpus').innerHTML,/42.9/);
+ assert.equal(h.get('gpu-count').textContent,'? / 2');
+ vm.runInContext("nodeDetails('SG11')",h.context);assert.match(h.get('selection').innerHTML,/A100-PCIE-40GB/);
+ for(const lang of ['ko','en','zh','ur','fa']){vm.runInContext('setLanguage('+JSON.stringify(lang)+')',h.context);assert.match(h.get('gpus').innerHTML,/A100-PCIE-40GB/);}
+});
+test('stale, failed and future node GPU samples cannot show current measurements',()=>{
+ for(const mode of ['stale','failed','future','missing','naive']){
+  const f=gpuFixture(),n=f.servers.find(s=>s.host==='sg').latest.nodes.find(n=>n.name==='SG11');
+  if(mode==='stale')n.gpu_observation.checked_at_utc=new Date(baseNow-91*60000).toISOString();
+  if(mode==='future')n.gpu_observation.checked_at_utc=new Date(baseNow+6*60000).toISOString();
+  if(mode==='failed')n.gpu_observation.status='failed';
+  if(mode==='missing')delete n.gpu_observation;
+  if(mode==='naive')n.gpu_observation.checked_at_utc='2026-10-03T13:00:00';
+  const h=harness(f,'sg');assert.doesNotMatch(h.get('gpus').innerHTML,/A100-PCIE-40GB/);assert.match(h.get('gpus').innerHTML,/\? GB/);
+  assert.equal(h.get('gpu-count').textContent,'? / 2');
+ }
+});
+test('node GPU freshness is reevaluated on the dashboard repaint timer',()=>{
+ const h=harness(gpuFixture(),'sg');h.tick(86);assert.doesNotMatch(h.get('gpus').innerHTML,/A100-PCIE-40GB/);
+});
+
 console.log('Detailed renderer DOM-state checks passed: ' + passed);
