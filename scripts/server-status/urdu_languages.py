@@ -110,3 +110,5 @@ STATES_UR = {
 }
 
 RETENTION_UR = dict(second='سیکنڈ', minute='منٹ', hour='گھنٹے', day='دن', week='ہفتے', month='مہینے', year='سال')
+
+UR["memoryTrackingOff"] = 'موجودہ Slurm ترتیب میں میموری کی ریزرویشن کا حساب نہیں رکھا جاتا۔ رپورٹ شدہ صفر حقیقی استعمال یا آپریٹنگ سسٹم کی دستیاب RAM نہیں ہے۔'

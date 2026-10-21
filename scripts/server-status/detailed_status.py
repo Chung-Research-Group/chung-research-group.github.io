@@ -15,7 +15,7 @@ import re
 UTC = dt.timezone.utc
 ORDER = ("sg", "carbon", "oxygen", "blackwell")
 NUMERIC = set("rank jobs count_lower_bound count_upper_bound logical_started_jobs requeue_records_collapsed no_actual_start low_space_filesystems size_bytes total_bytes used_bytes available_bytes slurm_cpus_allocated slurm_cpus_total node_count nodes_with_allocations memory_total_bytes allocated_gpus configured_gpus visible_job_count sockets cores_per_socket threads_per_core memory_allocated_bytes slurm_free_memory_bytes slurm_cpus latest_job_id MaxJobId physical_cores logical_cpus memory_available_gib memory_total_gib socket physical_core logical_cpu utilization_percent index memory_free_gib cpu_TFLOPS gpu_TFLOPS base_GHz fp32_TFLOPS fp64_TFLOPS".split())
-BOOLEANS = {"lineage_inferred", "all_users_visible", "jobs_truncated", "queue", "gpu_query_ok"}
+BOOLEANS = {"lineage_inferred", "all_users_visible", "jobs_truncated", "queue", "gpu_query_ok", "memory_allocation_tracked"}
 NUMERIC.update({"RUNNING", "PENDING", "use_percent"})
 STRING_LISTS = {"nodes", "partitions", "mounts"}
 
@@ -134,7 +134,7 @@ def project_row(row, *, include_identities=False, occupancy=None):
     if row.get("kind") == "slurm_cluster":
         result["storage"] = _storage(row.get("storage"), include_identities)
         result.update(_pick(row, "slurm_cpus_allocated", "slurm_cpus_total", "node_count", "nodes_with_allocations",
-                            "memory_total_bytes", "allocated_gpus", "configured_gpus", "visible_job_count", "jobs_truncated"))
+                            "memory_total_bytes", "memory_allocated_bytes", "memory_allocation_tracked", "allocated_gpus", "configured_gpus", "visible_job_count", "jobs_truncated"))
         result["query_ok"] = _pick(row.get("query_ok", {}), "queue")
         result["job_states"] = _pick(row.get("job_states", {}), "RUNNING", "PENDING")
         queue_ok = result["query_ok"].get("queue") is True

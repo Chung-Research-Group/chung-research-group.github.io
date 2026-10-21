@@ -220,3 +220,6 @@ RTL_CSS = """
 [dir=rtl] .mount-alias{text-align:right}
 [dir=rtl] body{line-height:1.7}
 """
+
+ZH["memoryTrackingOff"] = '当前 Slurm 配置不跟踪内存预留。报告值 0 不代表实际内存用量或操作系统可用 RAM。'
+FA["memoryTrackingOff"] = 'در پیکربندی فعلی Slurm، رزرو حافظه ردیابی نمی\u200cشود. مقدار گزارش\u200cشدهٔ صفر به معنی مصرف واقعی حافظه یا RAM در دسترس سیستم\u200cعامل نیست.'

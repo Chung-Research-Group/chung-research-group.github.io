@@ -276,7 +276,7 @@ test('Urdu dates and arrows retain Gregorian KST and RTL ordering', () => {
 });
 
 
-function gpuFixture(){const f=fixture(),r=f.servers.find(s=>s.host==='sg').latest,n=r.nodes.find(n=>n.name==='SG11');
+function gpuFixture(){const f=fixture(),r=f.servers.find(s=>s.host==='sg').latest,n=r.nodes.find(n=>n.name==='SG11');r.allocated_gpus=null;
  n.gpu_observation={status:'ok',checked_at_utc:new Date(baseNow-5*60000).toISOString(),gpus:[0,1].map(i=>({index:i,name:'NVIDIA A100-PCIE-40GB',memory_total_gib:40,memory_free_gib:39.5,utilization_percent:17,processes:[]}))};return f;}
 test('SG11 direct GPU cards preserve the distinct Slurm allocation counter',()=>{
  const h=harness(gpuFixture(),'sg');assert.equal((h.get('gpus').innerHTML.match(/A100-PCIE-40GB/g)||[]).length,2);
@@ -299,6 +299,26 @@ test('stale, failed and future node GPU samples cannot show current measurements
 });
 test('node GPU freshness is reevaluated on the dashboard repaint timer',()=>{
  const h=harness(gpuFixture(),'sg');h.tick(86);assert.doesNotMatch(h.get('gpus').innerHTML,/A100-PCIE-40GB/);
+});
+
+
+test('Slurm GPU allocation and RAM allocation appear separately from actual usage',()=>{
+ const f=gpuFixture(),r=f.servers.find(s=>s.host==='sg').latest;
+ r.allocated_gpus=2;r.memory_allocated_bytes=0;r.memory_allocation_tracked=false;
+ const h=harness(f,'sg');
+ assert.equal(h.get('gpu-count').textContent,'2 / 2');
+ for(const lang of ['en','ko','zh','ur','fa']){
+  vm.runInContext('setLanguage('+JSON.stringify(lang)+')',h.context);
+  assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.allocatedRam',h.context)));
+  assert.ok(h.get('metrics').innerHTML.includes(vm.runInContext('labels.memoryTrackingOff',h.context)));
+  assert.match(h.get('metrics').innerHTML,/0\.0 GB/);
+ }
+});
+test('missing RAM allocation remains unknown and tracked memory does not show the untracked warning',()=>{
+ const f=gpuFixture(),r=f.servers.find(s=>s.host==='sg').latest;
+ r.memory_allocated_bytes=null;r.memory_allocation_tracked=true;
+ const h=harness(f,'sg');assert.ok(!h.get('metrics').innerHTML.includes(vm.runInContext('labels.memoryTrackingOff',h.context)));
+ assert.match(h.get('metrics').innerHTML,/<p class="value">— \/ /);
 });
 
 console.log('Detailed renderer DOM-state checks passed: ' + passed);
