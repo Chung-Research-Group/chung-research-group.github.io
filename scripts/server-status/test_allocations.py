@@ -28,4 +28,7 @@ class AllocationTests(unittest.TestCase):
  def test_missing_ram_does_not_become_zero(self):
   r=normalize('NodeName=SG11 CPUAlloc=1 CPUTot=2 RealMemory=100 State=MIXED Gres=gpu:A100:2 GresUsed=gpu:A100:2(IDX:0-1)','', 'SG11|gpu|mix|2|100|gpu:A100:2',{'nodes':True,'queue':True,'sinfo':True})
   self.assertEqual(r['allocated_gpus'],2);self.assertIsNone(r['memory_allocated_bytes'])
+ def test_zero_gpu_configuration_cannot_override_conflicting_usage(self):
+  r=normalize('NodeName=SG11 CPUAlloc=1 CPUTot=2 RealMemory=100 State=MIXED Gres=(null) GresUsed=gpu:A100:2(IDX:0-1)','', 'SG11|gpu|mix|2|100|(null)',{'nodes':True,'queue':True,'sinfo':True})
+  self.assertIsNone(r['allocated_gpus'])
 if __name__=='__main__':unittest.main()

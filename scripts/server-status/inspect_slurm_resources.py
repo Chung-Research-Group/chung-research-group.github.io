@@ -93,7 +93,6 @@ def normalize(node_text,queue_text,sinfo_text,query_ok):
         if offline:free=None
         configured_gpu=gpu_count(raw.get('Gres',''))
         gpu_alloc=allocated_gpu(raw, configured_gpu)
-        if configured_gpu==0 and query_ok.get('nodes'):gpu_alloc=0
         nodes[name]={'name':name,'state':state,'slurm_cpus_total':total,'slurm_cpus_allocated':allocated,
           'sockets':number(raw.get('Sockets')),'cores_per_socket':number(raw.get('CoresPerSocket')),
           'threads_per_core':number(raw.get('ThreadsPerCore')),'partitions':[],
