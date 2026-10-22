@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-21T08:43:34.953Z",
+  "snapshotUpdatedAt": "2026-10-22T08:45:46.130Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-21T08:43:34.953Z"
+      "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-21T08:43:34.953Z"
+      "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4616,
-    "openAlexCitations": 5772,
+    "semanticScholarCitations": 4617,
+    "openAlexCitations": 5773,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2298,
-        "citationPercentile": 0.7719861,
+        "fwci": 1.2272,
+        "citationPercentile": 0.7712949,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-20T09:52:01.089006"
+        "updatedAt": "2026-10-21T09:56:26.102985"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-21T08:43:34.953Z"
+          "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2341,7 +2341,7 @@
         "paperId": "33b217eb99434ea9453b587c6d38510adf8c0b50",
         "url": "https://www.semanticscholar.org/paper/33b217eb99434ea9453b587c6d38510adf8c0b50",
         "title": "Polyoxometalate Initiated In situ Conformal Coating of Multifunctional Hybrid Artificial Layers for High Performance Zinc Metal Anodes",
-        "citationCount": 25,
+        "citationCount": 26,
         "influentialCitationCount": 0,
         "referenceCount": 75,
         "fields": [
@@ -2446,7 +2446,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-12T11:06:09.112Z"
+          "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7991,12 +7991,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 362,
+        "citationCount": 363,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.2013,
-        "citationPercentile": 0.99170033,
+        "fwci": 8.2043,
+        "citationPercentile": 0.99170216,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -8072,7 +8072,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 62
+            "citationCount": 63
           },
           {
             "year": 2025,
@@ -8099,7 +8099,7 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-10-18T09:31:52.927876"
+        "updatedAt": "2026-10-21T09:56:26.102985"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8108,7 +8108,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-19T09:06:21.443Z"
+          "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
         },
         "googleScholar": {
           "status": "unavailable",
