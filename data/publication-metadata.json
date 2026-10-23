@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-22T08:45:46.130Z",
+  "snapshotUpdatedAt": "2026-10-23T08:41:28.595Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
+      "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
+      "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4617,
-    "openAlexCitations": 5773,
+    "semanticScholarCitations": 4620,
+    "openAlexCitations": 5775,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1342,8 +1342,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.5896,
-        "citationPercentile": 0.60792335,
+        "fwci": 0.5832,
+        "citationPercentile": 0.60502845,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -1406,7 +1406,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-18T09:31:52.927876"
+        "updatedAt": "2026-10-22T09:42:04.148104"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1415,7 +1415,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-19T09:06:21.443Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2272,
-        "citationPercentile": 0.7712949,
+        "fwci": 1.2245,
+        "citationPercentile": 0.77072682,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-21T09:56:26.102985"
+        "updatedAt": "2026-10-22T18:32:59.640997"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3706,11 +3706,11 @@
       "openAlex": {
         "workId": "https://openalex.org/W4390750649",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 203,
+        "citationCount": 204,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 21.461,
+        "fwci": 21.4113,
         "citationPercentile": 0.99935132,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
@@ -3792,7 +3792,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 72
+            "citationCount": 73
           },
           {
             "year": 2025,
@@ -3803,7 +3803,7 @@
             "citationCount": 39
           }
         ],
-        "updatedAt": "2026-10-16T09:59:22.235173"
+        "updatedAt": "2026-10-22T18:32:59.640997"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3812,7 +3812,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-17T07:55:24.850Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5411,7 +5411,7 @@
         "paperId": "888835c83fa231448bba018d0652b1626724e0a0",
         "url": "https://www.semanticscholar.org/paper/888835c83fa231448bba018d0652b1626724e0a0",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO2 with epoxides",
-        "citationCount": 55,
+        "citationCount": 56,
         "influentialCitationCount": 0,
         "referenceCount": 2,
         "fields": [
@@ -5525,7 +5525,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7474,7 +7474,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 739,
+        "citationCount": 740,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7591,7 +7591,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-21T08:43:34.953Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "openAlex": {
           "status": "observed",
@@ -7977,7 +7977,7 @@
         "paperId": "ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "url": "https://www.semanticscholar.org/paper/ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 299,
+        "citationCount": 300,
         "influentialCitationCount": 6,
         "referenceCount": 52,
         "fields": [
@@ -7991,11 +7991,11 @@
       "openAlex": {
         "workId": "https://openalex.org/W2959743433",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 363,
+        "citationCount": 364,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.2043,
+        "fwci": 8.2023,
         "citationPercentile": 0.99170216,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
@@ -8072,7 +8072,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 63
+            "citationCount": 64
           },
           {
             "year": 2025,
@@ -8099,16 +8099,16 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-10-21T09:56:26.102985"
+        "updatedAt": "2026-10-22T18:32:59.640997"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-21T08:43:34.953Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-22T08:45:46.130Z"
+          "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
         },
         "googleScholar": {
           "status": "unavailable",
