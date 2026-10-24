@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-23T08:41:28.595Z",
+  "snapshotUpdatedAt": "2026-10-24T08:16:13.206Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-23T08:41:28.595Z"
+      "contentUpdatedAt": "2026-10-24T08:16:13.206Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4620,
-    "openAlexCitations": 5775,
+    "openAlexCitations": 5776,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -3550,12 +3550,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4392468206",
         "title": "Anion storing, oxygen vacancy incorporated perovskite oxide composites for high-performance aqueous dual ion hybrid supercapacitors",
-        "citationCount": 26,
+        "citationCount": 27,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0089,
-        "citationPercentile": 0.87058391,
+        "fwci": 2.0662,
+        "citationPercentile": 0.87583949,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -3631,7 +3631,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 8
+            "citationCount": 9
           },
           {
             "year": 2025,
@@ -3642,7 +3642,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-10-09T09:14:12.587421"
+        "updatedAt": "2026-10-23T09:35:12.469056"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3651,7 +3651,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-16T08:20:10.900Z"
+          "contentUpdatedAt": "2026-10-24T08:16:13.206Z"
         },
         "googleScholar": {
           "status": "unavailable",
