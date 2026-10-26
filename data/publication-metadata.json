@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-25T08:34:31.036Z",
+  "snapshotUpdatedAt": "2026-10-26T09:09:27.288Z",
   "sources": {
     "semanticScholar": {
       "status": "stale",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-25T08:34:31.036Z"
+      "contentUpdatedAt": "2026-10-26T09:09:27.288Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -88,7 +88,7 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.60973801,
+        "citationPercentile": 0.57310361,
         "primaryTopic": {
           "id": "https://openalex.org/T11831",
           "name": "Chemical Synthesis and Reactions",
@@ -157,7 +157,7 @@
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-09-25T08:18:29.962427"
+        "updatedAt": "2026-10-25T09:29:13.331239"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -166,7 +166,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-16T08:20:10.900Z"
+          "contentUpdatedAt": "2026-10-26T09:09:27.288Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1916,8 +1916,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 11.2023,
-        "citationPercentile": 0.99539559,
+        "fwci": 11.1943,
+        "citationPercentile": 0.99533134,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2000,7 +2000,7 @@
             "citationCount": 36
           }
         ],
-        "updatedAt": "2026-10-24T09:50:30.924529"
+        "updatedAt": "2026-10-25T09:29:13.331239"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2009,7 +2009,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-25T08:34:31.036Z"
+          "contentUpdatedAt": "2026-10-26T09:09:27.288Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2203,8 +2203,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2223,
-        "citationPercentile": 0.77021789,
+        "fwci": 1.2212,
+        "citationPercentile": 0.76995556,
         "primaryTopic": {
           "id": "https://openalex.org/T10179",
           "name": "Supercapacitor Materials and Fabrication",
@@ -2296,7 +2296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-24T09:50:30.924529"
+        "updatedAt": "2026-10-25T09:29:13.331239"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2305,7 +2305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-25T08:34:31.036Z"
+          "contentUpdatedAt": "2026-10-26T09:09:27.288Z"
         },
         "googleScholar": {
           "status": "unavailable",
