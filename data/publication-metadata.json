@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-10-31T09:49:13.806Z",
+  "snapshotUpdatedAt": "2026-11-01T10:39:07.721Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+      "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+      "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4647,
-    "openAlexCitations": 5798,
+    "semanticScholarCitations": 4649,
+    "openAlexCitations": 5800,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1898,7 +1898,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 111,
+        "citationCount": 112,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -2009,7 +2009,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+          "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
         },
         "openAlex": {
           "status": "observed",
@@ -3691,7 +3691,7 @@
         "paperId": "cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "url": "https://www.semanticscholar.org/paper/cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 181,
+        "citationCount": 182,
         "influentialCitationCount": 1,
         "referenceCount": 110,
         "fields": [
@@ -3812,7 +3812,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-27T09:10:42.108Z"
+          "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
         },
         "openAlex": {
           "status": "observed",
@@ -5592,8 +5592,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.2394,
-        "citationPercentile": 0.93078375,
+        "fwci": 3.243,
+        "citationPercentile": 0.93085367,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5693,7 +5693,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-10-30T12:39:25.321706"
+        "updatedAt": "2026-10-31T12:09:11.096373"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5702,7 +5702,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+          "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7493,12 +7493,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 862,
+        "citationCount": 863,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 23.9625,
-        "citationPercentile": 0.99885721,
+        "fwci": 23.9425,
+        "citationPercentile": 0.99885511,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7559,7 +7559,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 129
+            "citationCount": 130
           },
           {
             "year": 2025,
@@ -7590,7 +7590,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-10-28T10:33:24.094632"
+        "updatedAt": "2026-10-31T12:09:11.096373"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7599,7 +7599,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-29T10:12:20.900Z"
+          "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10432,12 +10432,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 747,
+        "citationCount": 748,
         "year": 2014,
         "type": "article",
         "isRetracted": false,
-        "fwci": 15.4827,
-        "citationPercentile": 0.99604113,
+        "fwci": 15.4686,
+        "citationPercentile": 0.99603655,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10508,7 +10508,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 60
+            "citationCount": 61
           },
           {
             "year": 2025,
@@ -10559,7 +10559,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-10-30T12:39:25.321706"
+        "updatedAt": "2026-10-31T12:09:11.096373"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10568,7 +10568,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+          "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
         },
         "googleScholar": {
           "status": "unavailable",
