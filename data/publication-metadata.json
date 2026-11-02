@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-11-01T10:39:07.721Z",
+  "snapshotUpdatedAt": "2026-11-02T11:27:35.116Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-01T10:39:07.721Z"
+      "contentUpdatedAt": "2026-11-02T11:27:35.116Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -31,7 +31,7 @@
   "totals": {
     "publications": 73,
     "semanticScholarCitations": 4649,
-    "openAlexCitations": 5800,
+    "openAlexCitations": 5802,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -1916,12 +1916,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4410091570",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 108,
+        "citationCount": 109,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 12.0843,
-        "citationPercentile": 0.99654852,
+        "fwci": 12.1284,
+        "citationPercentile": 0.99654554,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1997,14 +1997,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 72
+            "citationCount": 73
           },
           {
             "year": 2025,
             "citationCount": 36
           }
         ],
-        "updatedAt": "2026-10-28T10:33:24.094632"
+        "updatedAt": "2026-11-01T11:40:01.658920"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2013,7 +2013,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-29T10:12:20.900Z"
+          "contentUpdatedAt": "2026-11-02T11:27:35.116Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3710,12 +3710,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4390750649",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 205,
+        "citationCount": 207,
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 22.7273,
-        "citationPercentile": 0.9997345,
+        "fwci": 22.8235,
+        "citationPercentile": 0.99973427,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -3796,7 +3796,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 74
+            "citationCount": 76
           },
           {
             "year": 2025,
@@ -3807,7 +3807,7 @@
             "citationCount": 39
           }
         ],
-        "updatedAt": "2026-10-28T10:33:24.094632"
+        "updatedAt": "2026-11-01T11:40:01.658920"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3816,7 +3816,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-29T10:12:20.900Z"
+          "contentUpdatedAt": "2026-11-02T11:27:35.116Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5429,12 +5429,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4226113201",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO 2 with epoxides",
-        "citationCount": 121,
+        "citationCount": 120,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.9102,
-        "citationPercentile": 0.98814505,
+        "fwci": 6.8968,
+        "citationPercentile": 0.9881202,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5505,7 +5505,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 23
+            "citationCount": 22
           },
           {
             "year": 2025,
@@ -5524,7 +5524,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-10-28T10:33:24.094632"
+        "updatedAt": "2026-11-02T09:45:03.842371"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5533,7 +5533,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-29T10:12:20.900Z"
+          "contentUpdatedAt": "2026-11-02T11:27:35.116Z"
         },
         "googleScholar": {
           "status": "unavailable",
