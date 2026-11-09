@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-11-08T10:35:40.113Z",
+  "snapshotUpdatedAt": "2026-11-09T11:50:57.252Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+      "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+      "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,7 +30,7 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4659,
+    "semanticScholarCitations": 4660,
     "openAlexCitations": 5901,
     "googleScholarCitations": 6355
   },
@@ -90,11 +90,11 @@
         "type": "article",
         "isRetracted": false,
         "fwci": 0,
-        "citationPercentile": 0.53558942,
+        "citationPercentile": 0.52974003,
         "primaryTopic": {
           "id": "https://openalex.org/T11831",
           "name": "Chemical Synthesis and Reactions",
-          "score": 0.35179999470710754,
+          "score": 0.3312999904155731,
           "subfield": "Organic Chemistry",
           "field": "Chemistry",
           "domain": "Physical Sciences"
@@ -103,63 +103,53 @@
           {
             "id": "https://openalex.org/T11831",
             "name": "Chemical Synthesis and Reactions",
-            "score": 0.35179999470710754
+            "score": 0.3312999904155731
           },
           {
             "id": "https://openalex.org/T10735",
             "name": "Mesoporous Materials and Catalysis",
-            "score": 0.2061000019311905
+            "score": 0.2433999925851822
           },
           {
             "id": "https://openalex.org/T10192",
             "name": "Catalytic Processes in Materials Science",
-            "score": 0.19189999997615814
+            "score": 0.17309999465942383
           }
         ],
         "keywords": [
           {
             "id": "https://openalex.org/keywords/cyclohexene-epoxidation",
             "name": "cyclohexene epoxidation",
-            "score": 0.9350000023841858
+            "score": 0.921999990940094
           },
           {
             "id": "https://openalex.org/keywords/hydrogen-peroxide-oxidation",
             "name": "hydrogen peroxide oxidation",
-            "score": 0.8309999704360962
+            "score": 0.8230000138282776
           },
           {
             "id": "https://openalex.org/keywords/surface-modification",
             "name": "surface modification",
-            "score": 0.4729999899864197
+            "score": 0.492000013589859
           },
           {
             "id": "https://openalex.org/keywords/lewis-acid-sites",
             "name": "Lewis acid sites",
-            "score": 0.8420000076293945
-          },
-          {
-            "id": "https://openalex.org/keywords/hydrophobicity",
-            "name": "hydrophobicity",
-            "score": 0.597000002861023
-          },
-          {
-            "id": "https://openalex.org/keywords/silanol-groups",
-            "name": "silanol groups",
-            "score": 0.6159999966621399
+            "score": 0.8270000219345093
           },
           {
             "id": "https://openalex.org/keywords/selective-oxidation",
             "name": "selective oxidation",
-            "score": 0.6179999709129333
+            "score": 0.6460000276565552
           },
           {
-            "id": "https://openalex.org/keywords/dft-calculations",
-            "name": "DFT calculations",
-            "score": 0.46399998664855957
+            "id": "https://openalex.org/keywords/hydrocarbon-oxidation",
+            "name": "hydrocarbon oxidation",
+            "score": 0.4169999957084656
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-10-27T15:51:10.671819"
+        "updatedAt": "2026-11-08T12:12:28.789561"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -168,7 +158,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -191,9 +181,8 @@
         "hydrogen peroxide oxidation",
         "surface modification",
         "Lewis acid sites",
-        "hydrophobicity",
-        "silanol groups",
-        "selective oxidation"
+        "selective oxidation",
+        "hydrocarbon oxidation"
       ]
     },
     "10.1002/ijch.70028": {
@@ -825,12 +814,12 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.0014,
-        "citationPercentile": 0.96192347,
+        "fwci": 3.9956,
+        "citationPercentile": 0.96170053,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
-          "score": 0.32280001044273376,
+          "score": 0.4765999913215637,
           "subfield": "Physical and Theoretical Chemistry",
           "field": "Chemistry",
           "domain": "Physical Sciences"
@@ -839,59 +828,59 @@
           {
             "id": "https://openalex.org/T13604",
             "name": "Adsorption, diffusion, and thermodynamic properties of materials",
-            "score": 0.32280001044273376
-          },
-          {
-            "id": "https://openalex.org/T10967",
-            "name": "Carbon Dioxide Capture Technologies",
-            "score": 0.2345000058412552
+            "score": 0.4765999913215637
           },
           {
             "id": "https://openalex.org/T11774",
             "name": "Adsorption and Cooling Systems",
-            "score": 0.13989999890327454
+            "score": 0.1340000033378601
+          },
+          {
+            "id": "https://openalex.org/T12063",
+            "name": "Heat and Mass Transfer in Porous Media",
+            "score": 0.10130000114440918
           }
         ],
         "keywords": [
           {
             "id": "https://openalex.org/keywords/fixed-bed-adsorption",
             "name": "fixed-bed adsorption",
-            "score": 0.8989999890327454
+            "score": 0.8980000019073486
           },
           {
             "id": "https://openalex.org/keywords/isotherm-fitting",
             "name": "isotherm fitting",
-            "score": 0.9269999861717224
+            "score": 0.8679999709129333
           },
           {
             "id": "https://openalex.org/keywords/isosteric-heat-of-adsorption",
             "name": "isosteric heat of adsorption",
-            "score": 0.8939999938011169
+            "score": 0.9769999980926514
           },
           {
             "id": "https://openalex.org/keywords/ideal-adsorbed-solution-theory",
             "name": "ideal adsorbed solution theory",
-            "score": 0.9679999947547913
+            "score": 0.9200000166893005
           },
           {
-            "id": "https://openalex.org/keywords/extended-langmuir-isotherm",
-            "name": "extended Langmuir isotherm",
-            "score": 0.7570000290870667
+            "id": "https://openalex.org/keywords/extended-langmuir-model",
+            "name": "extended Langmuir model",
+            "score": 0.8399999737739563
           },
           {
-            "id": "https://openalex.org/keywords/multicomponent-adsorption",
-            "name": "multicomponent adsorption",
-            "score": 0.7829999923706055
+            "id": "https://openalex.org/keywords/axial-dispersion",
+            "name": "axial dispersion",
+            "score": 0.9890000224113464
           },
           {
-            "id": "https://openalex.org/keywords/graphical-user-interface",
-            "name": "graphical user interface",
-            "score": 0.609000027179718
+            "id": "https://openalex.org/keywords/graphical-user-interface-software",
+            "name": "graphical user interface software",
+            "score": 0.6850000023841858
           },
           {
-            "id": "https://openalex.org/keywords/non-isothermal-adsorption",
-            "name": "non-isothermal adsorption",
-            "score": 0.7749999761581421
+            "id": "https://openalex.org/keywords/matlab",
+            "name": "MATLAB",
+            "score": 0.41499999165534973
           }
         ],
         "countsByYear": [
@@ -904,7 +893,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-07T11:25:07.637180"
+        "updatedAt": "2026-11-08T12:12:28.789561"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -913,7 +902,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -930,15 +919,15 @@
       ],
       "keywords": [
         "Adsorption, diffusion, and thermodynamic properties of materials",
-        "Carbon Dioxide Capture Technologies",
         "Adsorption and Cooling Systems",
+        "Heat and Mass Transfer in Porous Media",
         "fixed-bed adsorption",
         "isotherm fitting",
         "isosteric heat of adsorption",
         "ideal adsorbed solution theory",
-        "extended Langmuir isotherm",
-        "multicomponent adsorption",
-        "graphical user interface"
+        "extended Langmuir model",
+        "axial dispersion",
+        "graphical user interface software"
       ]
     },
     "10.1039/d5me00131e": {
@@ -1934,12 +1923,12 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 12.9276,
-        "citationPercentile": 0.99738706,
+        "fwci": 12.924,
+        "citationPercentile": 0.99738544,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
-          "score": 0.9413999915122986,
+          "score": 0.9243000149726868,
           "subfield": "Inorganic Chemistry",
           "field": "Chemistry",
           "domain": "Physical Sciences"
@@ -1948,64 +1937,59 @@
           {
             "id": "https://openalex.org/T10096",
             "name": "Metal-Organic Frameworks: Synthesis and Applications",
-            "score": 0.9413999915122986
+            "score": 0.9243000149726868
           },
           {
             "id": "https://openalex.org/T11948",
             "name": "Machine Learning in Materials Science",
-            "score": 0.057500001043081284
+            "score": 0.07400000095367432
           },
           {
             "id": "https://openalex.org/T10967",
             "name": "Carbon Dioxide Capture Technologies",
-            "score": 0.0003000000142492354
+            "score": 0.00039999998989515007
           }
         ],
         "keywords": [
           {
             "id": "https://openalex.org/keywords/metal-organic-frameworks",
             "name": "metal-organic frameworks",
-            "score": 0.9990000128746033
+            "score": 0.9980000257492065
           },
           {
             "id": "https://openalex.org/keywords/materials-database",
             "name": "materials database",
-            "score": 0.4650000035762787
+            "score": 0.43799999356269836
           },
           {
             "id": "https://openalex.org/keywords/mof-stability",
             "name": "MOF stability",
-            "score": 0.7229999899864197
+            "score": 0.7609999775886536
           },
           {
             "id": "https://openalex.org/keywords/heat-capacity-prediction",
             "name": "heat capacity prediction",
-            "score": 0.8029999732971191
+            "score": 0.8220000267028809
           },
           {
             "id": "https://openalex.org/keywords/gibbs-ensemble-monte-carlo",
             "name": "Gibbs ensemble Monte Carlo",
-            "score": 0.8949999809265137
+            "score": 0.8059999942779541
           },
           {
             "id": "https://openalex.org/keywords/co2-capture",
             "name": "CO2 capture",
-            "score": 0.9190000295639038
+            "score": 0.9480000138282776
           },
           {
             "id": "https://openalex.org/keywords/temperature-swing-adsorption",
             "name": "temperature swing adsorption",
-            "score": 0.9810000061988831
+            "score": 0.9789999723434448
           },
           {
             "id": "https://openalex.org/keywords/calf-20",
             "name": "CALF-20",
-            "score": 0.8119999766349792
-          },
-          {
-            "id": "https://openalex.org/keywords/high-throughput-materials-discovery",
-            "name": "high-throughput materials discovery",
-            "score": 0.6819999814033508
+            "score": 0.9110000133514404
           }
         ],
         "countsByYear": [
@@ -2018,7 +2002,7 @@
             "citationCount": 39
           }
         ],
-        "updatedAt": "2026-11-07T11:25:07.637180"
+        "updatedAt": "2026-11-08T12:12:28.789561"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2027,7 +2011,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2085,12 +2069,12 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.4043,
-        "citationPercentile": 0.44389362,
+        "fwci": 0.4038,
+        "citationPercentile": 0.44343164,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
-          "score": 0.9208999872207642,
+          "score": 0.9312000274658203,
           "subfield": "Inorganic Chemistry",
           "field": "Chemistry",
           "domain": "Physical Sciences"
@@ -2099,54 +2083,64 @@
           {
             "id": "https://openalex.org/T10096",
             "name": "Metal-Organic Frameworks: Synthesis and Applications",
-            "score": 0.9208999872207642
+            "score": 0.9312000274658203
           },
           {
             "id": "https://openalex.org/T13200",
             "name": "Spacecraft and Cryogenic Technologies",
-            "score": 0.06560000032186508
+            "score": 0.05640000104904175
           },
           {
             "id": "https://openalex.org/T10967",
             "name": "Carbon Dioxide Capture Technologies",
-            "score": 0.00570000009611249
+            "score": 0.004900000058114529
           }
         ],
         "keywords": [
           {
             "id": "https://openalex.org/keywords/metal-organic-frameworks",
             "name": "metal-organic frameworks",
-            "score": 0.8489999771118164
+            "score": 0.9039999842643738
           },
           {
             "id": "https://openalex.org/keywords/boil-off-gas",
             "name": "boil-off gas",
-            "score": 0.9110000133514404
+            "score": 0.8939999938011169
           },
           {
             "id": "https://openalex.org/keywords/liquefied-natural-gas",
             "name": "liquefied natural gas",
-            "score": 0.8989999890327454
+            "score": 0.8859999775886536
           },
           {
             "id": "https://openalex.org/keywords/nanoporous-adsorbents",
             "name": "nanoporous adsorbents",
-            "score": 0.8889999985694885
-          },
-          {
-            "id": "https://openalex.org/keywords/adsorbent-screening",
-            "name": "adsorbent screening",
-            "score": 0.6589999794960022
+            "score": 0.875
           },
           {
             "id": "https://openalex.org/keywords/techno-economic-analysis",
             "name": "techno-economic analysis",
-            "score": 0.8510000109672546
+            "score": 0.7049999833106995
+          },
+          {
+            "id": "https://openalex.org/keywords/high-throughput-screening",
+            "name": "high-throughput screening",
+            "score": 0.6349999904632568
+          },
+          {
+            "id": "https://openalex.org/keywords/multiscale-modeling",
+            "name": "multiscale modeling",
+            "score": 0.8019999861717224
           },
           {
             "id": "https://openalex.org/keywords/re-liquefaction",
             "name": "re-liquefaction",
-            "score": 0.7749999761581421
+            "score": 0.6729999780654907
+          },
+          {
+            "id": "https://openalex.org/keywords/energy-efficiency",
+            "name": "energy efficiency",
+            "score": 0.4830000102519989
           }
         ],
         "countsByYear": [
@@ -2155,7 +2149,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-10-29T09:56:32.521200"
+        "updatedAt": "2026-11-08T12:12:28.789561"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2164,7 +2158,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2186,9 +2180,9 @@
         "boil-off gas",
         "liquefied natural gas",
         "nanoporous adsorbents",
-        "adsorbent screening",
         "techno-economic analysis",
-        "re-liquefaction"
+        "high-throughput screening",
+        "multiscale modeling"
       ]
     },
     "10.1002/adfm.202417288": {
@@ -4178,8 +4172,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.373,
-        "citationPercentile": 0.45853106,
+        "fwci": 0.3692,
+        "citationPercentile": 0.45493137,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4269,7 +4263,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5932,8 +5926,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.505,
-        "citationPercentile": 0.81242953,
+        "fwci": 1.5013,
+        "citationPercentile": 0.81205884,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6028,7 +6022,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-04T10:54:05.112534"
+        "updatedAt": "2026-11-08T12:12:28.789561"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6037,7 +6031,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8005,7 +7999,7 @@
         "paperId": "ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "url": "https://www.semanticscholar.org/paper/ce3aff7f940b85faa02119ad8e900209e8e8d8ff",
         "title": "Surface Area Determination of Porous Materials Using the Brunauer–Emmett–Teller (BET) Method: Limitations and Improvements",
-        "citationCount": 305,
+        "citationCount": 306,
         "influentialCitationCount": 6,
         "referenceCount": 52,
         "fields": [
@@ -8132,7 +8126,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+          "contentUpdatedAt": "2026-11-09T11:50:57.252Z"
         },
         "openAlex": {
           "status": "observed",
