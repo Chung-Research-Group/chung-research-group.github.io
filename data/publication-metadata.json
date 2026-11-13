@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-11-12T11:31:14.242Z",
+  "snapshotUpdatedAt": "2026-11-13T11:15:36.688Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+      "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+      "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4667,
-    "openAlexCitations": 5959,
+    "semanticScholarCitations": 4671,
+    "openAlexCitations": 5964,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -814,8 +814,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.8478,
-        "citationPercentile": 0.95368026,
+        "fwci": 3.8258,
+        "citationPercentile": 0.95337711,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -845,42 +845,42 @@
           {
             "id": "https://openalex.org/keywords/fixed-bed-adsorption",
             "name": "fixed-bed adsorption",
-            "score": 0.8980000019073486
+            "score": 0.8989999890327454
           },
           {
             "id": "https://openalex.org/keywords/isotherm-fitting",
             "name": "isotherm fitting",
-            "score": 0.8679999709129333
+            "score": 0.9269999861717224
           },
           {
             "id": "https://openalex.org/keywords/isosteric-heat-of-adsorption",
             "name": "isosteric heat of adsorption",
-            "score": 0.9769999980926514
+            "score": 0.8939999938011169
           },
           {
             "id": "https://openalex.org/keywords/ideal-adsorbed-solution-theory",
             "name": "ideal adsorbed solution theory",
-            "score": 0.9200000166893005
+            "score": 0.9679999947547913
           },
           {
-            "id": "https://openalex.org/keywords/extended-langmuir-model",
-            "name": "extended Langmuir model",
-            "score": 0.8399999737739563
+            "id": "https://openalex.org/keywords/extended-langmuir-isotherm",
+            "name": "extended Langmuir isotherm",
+            "score": 0.7570000290870667
           },
           {
-            "id": "https://openalex.org/keywords/axial-dispersion",
-            "name": "axial dispersion",
-            "score": 0.9890000224113464
+            "id": "https://openalex.org/keywords/multicomponent-adsorption",
+            "name": "multicomponent adsorption",
+            "score": 0.7829999923706055
           },
           {
-            "id": "https://openalex.org/keywords/graphical-user-interface-software",
-            "name": "graphical user interface software",
-            "score": 0.6850000023841858
+            "id": "https://openalex.org/keywords/graphical-user-interface",
+            "name": "graphical user interface",
+            "score": 0.609000027179718
           },
           {
-            "id": "https://openalex.org/keywords/matlab",
-            "name": "MATLAB",
-            "score": 0.41499999165534973
+            "id": "https://openalex.org/keywords/non-isothermal-adsorption",
+            "name": "non-isothermal adsorption",
+            "score": 0.7749999761581421
           }
         ],
         "countsByYear": [
@@ -893,7 +893,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -902,7 +902,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -925,9 +925,9 @@
         "isotherm fitting",
         "isosteric heat of adsorption",
         "ideal adsorbed solution theory",
-        "extended Langmuir model",
-        "axial dispersion",
-        "graphical user interface software"
+        "extended Langmuir isotherm",
+        "multicomponent adsorption",
+        "graphical user interface"
       ]
     },
     "10.1039/d5me00131e": {
@@ -1905,7 +1905,7 @@
         "paperId": "491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "url": "https://www.semanticscholar.org/paper/491577887ecefcdc80bdd50ef644451fab8c3b3f",
         "title": "CoRE MOF DB: A curated experimental metal-organic framework database with machine-learned properties for integrated material-process screening",
-        "citationCount": 115,
+        "citationCount": 116,
         "influentialCitationCount": 0,
         "referenceCount": 146,
         "fields": [
@@ -1927,8 +1927,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 13.5841,
-        "citationPercentile": 0.99766162,
+        "fwci": 13.5317,
+        "citationPercentile": 0.99766034,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -1958,42 +1958,47 @@
           {
             "id": "https://openalex.org/keywords/metal-organic-frameworks",
             "name": "metal-organic frameworks",
-            "score": 0.9980000257492065
+            "score": 0.9990000128746033
           },
           {
             "id": "https://openalex.org/keywords/materials-database",
             "name": "materials database",
-            "score": 0.43799999356269836
+            "score": 0.4650000035762787
           },
           {
             "id": "https://openalex.org/keywords/mof-stability",
             "name": "MOF stability",
-            "score": 0.7609999775886536
+            "score": 0.7229999899864197
           },
           {
             "id": "https://openalex.org/keywords/heat-capacity-prediction",
             "name": "heat capacity prediction",
-            "score": 0.8220000267028809
+            "score": 0.8029999732971191
           },
           {
             "id": "https://openalex.org/keywords/gibbs-ensemble-monte-carlo",
             "name": "Gibbs ensemble Monte Carlo",
-            "score": 0.8059999942779541
+            "score": 0.8949999809265137
           },
           {
             "id": "https://openalex.org/keywords/co2-capture",
             "name": "CO2 capture",
-            "score": 0.9480000138282776
+            "score": 0.9190000295639038
           },
           {
             "id": "https://openalex.org/keywords/temperature-swing-adsorption",
             "name": "temperature swing adsorption",
-            "score": 0.9789999723434448
+            "score": 0.9810000061988831
           },
           {
             "id": "https://openalex.org/keywords/calf-20",
             "name": "CALF-20",
-            "score": 0.9110000133514404
+            "score": 0.8119999766349792
+          },
+          {
+            "id": "https://openalex.org/keywords/high-throughput-materials-discovery",
+            "name": "high-throughput materials discovery",
+            "score": 0.6819999814033508
           }
         ],
         "countsByYear": [
@@ -2006,16 +2011,16 @@
             "citationCount": 39
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2073,8 +2078,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3894,
-        "citationPercentile": 0.42657812,
+        "fwci": 0.3874,
+        "citationPercentile": 0.42436439,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2104,47 +2109,37 @@
           {
             "id": "https://openalex.org/keywords/metal-organic-frameworks",
             "name": "metal-organic frameworks",
-            "score": 0.9039999842643738
+            "score": 0.8489999771118164
           },
           {
             "id": "https://openalex.org/keywords/boil-off-gas",
             "name": "boil-off gas",
-            "score": 0.8939999938011169
+            "score": 0.9110000133514404
           },
           {
             "id": "https://openalex.org/keywords/liquefied-natural-gas",
             "name": "liquefied natural gas",
-            "score": 0.8859999775886536
+            "score": 0.8989999890327454
           },
           {
             "id": "https://openalex.org/keywords/nanoporous-adsorbents",
             "name": "nanoporous adsorbents",
-            "score": 0.875
+            "score": 0.8889999985694885
+          },
+          {
+            "id": "https://openalex.org/keywords/adsorbent-screening",
+            "name": "adsorbent screening",
+            "score": 0.6589999794960022
           },
           {
             "id": "https://openalex.org/keywords/techno-economic-analysis",
             "name": "techno-economic analysis",
-            "score": 0.7049999833106995
-          },
-          {
-            "id": "https://openalex.org/keywords/high-throughput-screening",
-            "name": "high-throughput screening",
-            "score": 0.6349999904632568
-          },
-          {
-            "id": "https://openalex.org/keywords/multiscale-modeling",
-            "name": "multiscale modeling",
-            "score": 0.8019999861717224
+            "score": 0.8510000109672546
           },
           {
             "id": "https://openalex.org/keywords/re-liquefaction",
             "name": "re-liquefaction",
-            "score": 0.6729999780654907
-          },
-          {
-            "id": "https://openalex.org/keywords/energy-efficiency",
-            "name": "energy efficiency",
-            "score": 0.4830000102519989
+            "score": 0.7749999761581421
           }
         ],
         "countsByYear": [
@@ -2153,7 +2148,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2162,7 +2157,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2184,9 +2179,9 @@
         "boil-off gas",
         "liquefied natural gas",
         "nanoporous adsorbents",
+        "adsorbent screening",
         "techno-economic analysis",
-        "high-throughput screening",
-        "multiscale modeling"
+        "re-liquefaction"
       ]
     },
     "10.1002/adfm.202417288": {
@@ -2198,7 +2193,7 @@
         "paperId": "c010c3e513f225d705c39b08382318429a81bedb",
         "url": "https://www.semanticscholar.org/paper/c010c3e513f225d705c39b08382318429a81bedb",
         "title": "Hierarchically Structured Conductive Lanthanide Metal Organic Framework Nanorods for Ultrastable Flexible Magnesium Ion Capacitors",
-        "citationCount": 16,
+        "citationCount": 17,
         "influentialCitationCount": 0,
         "referenceCount": 64,
         "fields": [
@@ -2317,7 +2312,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-10T11:25:21.425Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "openAlex": {
           "status": "observed",
@@ -2679,8 +2674,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6898,
-        "citationPercentile": 0.53449347,
+        "fwci": 0.688,
+        "citationPercentile": 0.53277771,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -2710,52 +2705,47 @@
           {
             "id": "https://openalex.org/keywords/all-silica-zeolites",
             "name": "all-silica zeolites",
-            "score": 0.9819999933242798
-          },
-          {
-            "id": "https://openalex.org/keywords/adsorptive-separation",
-            "name": "adsorption separation",
-            "score": 0.7459999918937683
+            "score": 0.9789999723434448
           },
           {
             "id": "https://openalex.org/keywords/natural-gas-purification",
             "name": "natural gas purification",
-            "score": 0.7739999890327454
+            "score": 0.5450000166893005
           },
           {
-            "id": "https://openalex.org/keywords/acid-gas-removal",
-            "name": "acid gas removal",
-            "score": 0.8220000267028809
+            "id": "https://openalex.org/keywords/hydrogen-sulfide-removal",
+            "name": "hydrogen sulfide removal",
+            "score": 0.8270000219345093
+          },
+          {
+            "id": "https://openalex.org/keywords/carbon-dioxide-removal",
+            "name": "carbon dioxide removal",
+            "score": 0.9850000143051147
+          },
+          {
+            "id": "https://openalex.org/keywords/ch4-adsorption",
+            "name": "CH4 adsorption",
+            "score": 0.859000027179718
+          },
+          {
+            "id": "https://openalex.org/keywords/ternary-gas-mixtures",
+            "name": "ternary gas mixtures",
+            "score": 0.7960000038146973
+          },
+          {
+            "id": "https://openalex.org/keywords/adsorptive-separation",
+            "name": "adsorption separation",
+            "score": 0.8119999766349792
           },
           {
             "id": "https://openalex.org/keywords/ideal-adsorbed-solution-theory",
             "name": "ideal adsorbed solution theory",
-            "score": 0.8799999952316284
+            "score": 0.9079999923706055
           },
           {
             "id": "https://openalex.org/keywords/genetic-algorithm",
             "name": "genetic algorithm",
-            "score": 0.6579999923706055
-          },
-          {
-            "id": "https://openalex.org/keywords/grand-canonical-monte-carlo-simulation",
-            "name": "grand canonical Monte Carlo simulation",
-            "score": 0.7799999713897705
-          },
-          {
-            "id": "https://openalex.org/keywords/adsorption-isotherms",
-            "name": "adsorption isotherms",
-            "score": 0.8980000019073486
-          },
-          {
-            "id": "https://openalex.org/keywords/energy-consumption",
-            "name": "energy consumption",
-            "score": 0.6159999966621399
-          },
-          {
-            "id": "https://openalex.org/keywords/multiscale-modeling",
-            "name": "multiscale modeling",
-            "score": 0.4169999957084656
+            "score": 0.718999981880188
           }
         ],
         "countsByYear": [
@@ -2768,7 +2758,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2777,7 +2767,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2796,12 +2786,12 @@
         "Zeolite Catalysis and Synthesis",
         "Membrane Separation and Gas Transport",
         "all-silica zeolites",
-        "adsorption separation",
         "natural gas purification",
-        "acid gas removal",
-        "ideal adsorbed solution theory",
-        "genetic algorithm",
-        "grand canonical Monte Carlo simulation"
+        "hydrogen sulfide removal",
+        "carbon dioxide removal",
+        "CH4 adsorption",
+        "ternary gas mixtures",
+        "adsorption separation"
       ]
     },
     "10.1021/acs.jctc.4c00434": {
@@ -3704,7 +3694,7 @@
         "paperId": "cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "url": "https://www.semanticscholar.org/paper/cb8b59b9cfd1a2d6638fb2227063e4696d56f5ff",
         "title": "Progress toward the computational discovery of new metal–organic framework adsorbents for energy applications",
-        "citationCount": 183,
+        "citationCount": 184,
         "influentialCitationCount": 1,
         "referenceCount": 110,
         "fields": [
@@ -3825,7 +3815,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-05T11:12:32.112Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "openAlex": {
           "status": "observed",
@@ -5054,8 +5044,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.7843,
-        "citationPercentile": 0.85345006,
+        "fwci": 1.7736,
+        "citationPercentile": 0.84506956,
         "primaryTopic": {
           "id": "https://openalex.org/T12038",
           "name": "Covalent Organic Framework Applications",
@@ -5116,7 +5106,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-10-10T09:11:00.788812"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5125,7 +5115,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5450,8 +5440,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.2097,
-        "citationPercentile": 0.98414239,
+        "fwci": 6.1676,
+        "citationPercentile": 0.98374512,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5541,7 +5531,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-11-04T10:54:05.112534"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5550,7 +5540,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6234,8 +6224,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.646,
-        "citationPercentile": 0.53202874,
+        "fwci": 0.6455,
+        "citationPercentile": 0.53174239,
         "primaryTopic": {
           "id": "https://openalex.org/T11362",
           "name": "Membrane Separation and Gas Transport",
@@ -6319,7 +6309,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6328,7 +6318,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6383,12 +6373,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W3149449867",
         "title": "High‐Throughput Discovery of Ni(IN) 2 for Ethane/Ethylene Separation",
-        "citationCount": 97,
+        "citationCount": 98,
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.2045,
-        "citationPercentile": 0.96921654,
+        "fwci": 5.1994,
+        "citationPercentile": 0.96919416,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6464,7 +6454,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 12
+            "citationCount": 13
           },
           {
             "year": 2025,
@@ -6487,7 +6477,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6496,7 +6486,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7500,7 +7490,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 748,
+        "citationCount": 749,
         "influentialCitationCount": 22,
         "referenceCount": 75,
         "fields": [
@@ -7515,12 +7505,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 885,
+        "citationCount": 886,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 23.1268,
-        "citationPercentile": 0.99884186,
+        "fwci": 23.118,
+        "citationPercentile": 0.99884132,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7581,7 +7571,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 152
+            "citationCount": 153
           },
           {
             "year": 2025,
@@ -7612,16 +7602,16 @@
             "citationCount": 4
           }
         ],
-        "updatedAt": "2026-11-11T12:16:26.678958"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-07T10:28:26.089Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-12T11:31:14.242Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7679,8 +7669,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.7004,
-        "citationPercentile": 0.97955993,
+        "fwci": 6.6969,
+        "citationPercentile": 0.97949134,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7792,7 +7782,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-11-10T11:39:43.021295"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7801,7 +7791,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8695,8 +8685,8 @@
         "year": 2018,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.8011,
-        "citationPercentile": 0.90397554,
+        "fwci": 2.7878,
+        "citationPercentile": 0.89941736,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -8812,7 +8802,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-04T10:54:05.112534"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8821,7 +8811,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9402,12 +9392,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2549466574",
         "title": "Large-Scale Refinement of Metal−Organic Framework Structures Using Density Functional Theory",
-        "citationCount": 140,
+        "citationCount": 141,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.5645,
-        "citationPercentile": 0.96924569,
+        "fwci": 5.5099,
+        "citationPercentile": 0.96848171,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9519,7 +9509,7 @@
           },
           {
             "year": 2017,
-            "citationCount": 11
+            "citationCount": 12
           },
           {
             "year": 2016,
@@ -9530,7 +9520,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-07T11:25:07.637180"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9539,7 +9529,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-08T10:35:40.113Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9591,8 +9581,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.2795,
-        "citationPercentile": 0.85925145,
+        "fwci": 2.178,
+        "citationPercentile": 0.85249518,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -9721,7 +9711,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9779,8 +9769,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 8.0446,
-        "citationPercentile": 0.98388015,
+        "fwci": 7.7857,
+        "citationPercentile": 0.98335881,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9883,7 +9873,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10122,8 +10112,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.3105,
-        "citationPercentile": 0.96486847,
+        "fwci": 5.0606,
+        "citationPercentile": 0.96310278,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10230,7 +10220,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10281,8 +10271,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 17.0973,
-        "citationPercentile": 0.99639974,
+        "fwci": 16.2926,
+        "citationPercentile": 0.99622504,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10404,7 +10394,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10454,12 +10444,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 759,
+        "citationCount": 761,
         "year": 2014,
         "type": "article",
         "isRetracted": false,
-        "fwci": 14.6379,
-        "citationPercentile": 0.99578804,
+        "fwci": 14.2325,
+        "citationPercentile": 0.99586728,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10530,7 +10520,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 73
+            "citationCount": 74
           },
           {
             "year": 2025,
@@ -10566,7 +10556,7 @@
           },
           {
             "year": 2017,
-            "citationCount": 47
+            "citationCount": 48
           },
           {
             "year": 2016,
@@ -10581,7 +10571,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-10T11:39:43.021295"
+        "updatedAt": "2026-11-12T12:28:57.059296"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10590,7 +10580,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-11T11:13:47.551Z"
+          "contentUpdatedAt": "2026-11-13T11:15:36.688Z"
         },
         "googleScholar": {
           "status": "unavailable",
