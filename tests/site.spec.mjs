@@ -77,7 +77,8 @@ test.describe('static content without JavaScript', () => {
     await page.goto('/SESAMI-APP.dc.html');
     await expect(page.getByRole('link', { name: 'Source code & local setup' })).toBeVisible();
     await page.goto('/Join%20Us.dc.html');
-    await expect(page.getByText('No openings at this time.', { exact: true })).toHaveCount(3);
+    await expect(page.getByRole('heading', { name: 'Postdoctoral researchers Open', exact: true })).toBeVisible();
+    await expect(page.getByText('No openings at this time.', { exact: true })).toHaveCount(2);
   });
 });
 
@@ -746,15 +747,20 @@ test('graduate program data is rendered without duplicate education text', async
 });
 
 
-test('all recruiting categories are closed and contact details are in English', async ({ page }) => {
+test('postdoctoral recruiting is open and contact details are in English', async ({ page }) => {
   await page.goto('/Join%20Us.dc.html', { waitUntil: 'load' });
-  for (const role of ['Graduate students', 'Postdoctoral researchers', 'Undergraduate interns']) {
+  for (const role of ['Graduate students', 'Undergraduate interns']) {
     const heading = page.getByRole('heading', { level: 4, name: new RegExp(`^${role} Closed$`) });
     const opening = heading.locator('..');
     await expect(heading.getByText('Closed', { exact: true })).toBeVisible();
     await expect(opening.getByText('No openings at this time.', { exact: true })).toBeVisible();
   }
-  await expect(page.getByText(/Applications are not being accepted/)).toBeVisible();
+  const postdocHeading = page.getByRole('heading', { level: 4, name: 'Postdoctoral researchers Open', exact: true });
+  await expect(postdocHeading).toBeVisible();
+  const postdocOpening = postdocHeading.locator('..');
+  await expect(postdocOpening).toContainText('experimental or computational research');
+  await expect(postdocOpening).toContainText('PhD less than two years before applying');
+  await expect(page.getByText(/To apply, email Prof\. Chung/)).toBeVisible();
   await expect(page.getByText('2 Busandaehak-ro 63beon-gil, Geumjeong-gu, Busan', { exact: true })).toBeVisible();
   await expect(page.getByText('Student office · Engineering Building 7, Room 302', { exact: true })).toBeVisible();
   const professorOfficeAddress = page.getByText("Professor's office · Engineering Building 7 Annex, Room 201", { exact: true });
