@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "snapshotUpdatedAt": "2026-11-24T13:58:31.468Z",
+  "snapshotUpdatedAt": "2026-11-25T13:12:41.587Z",
   "sources": {
     "semanticScholar": {
       "status": "ok",
@@ -8,7 +8,7 @@
       "matched": 71,
       "observedMatched": 71,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+      "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
     },
     "openAlex": {
       "status": "ok",
@@ -16,7 +16,7 @@
       "matched": 72,
       "observedMatched": 72,
       "retainedMatched": 0,
-      "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+      "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
     },
     "googleScholar": {
       "status": "stale",
@@ -30,8 +30,8 @@
   },
   "totals": {
     "publications": 73,
-    "semanticScholarCitations": 4700,
-    "openAlexCitations": 6371,
+    "semanticScholarCitations": 4707,
+    "openAlexCitations": 6340,
     "googleScholarCitations": 6355
   },
   "googleScholar": {
@@ -216,8 +216,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9243,
-        "citationPercentile": 0.65744634,
+        "fwci": 0.9188,
+        "citationPercentile": 0.65538348,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -296,7 +296,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -305,7 +305,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -364,8 +364,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4797,
-        "citationPercentile": 0.86314892,
+        "fwci": 2.4644,
+        "citationPercentile": 0.86220392,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -382,12 +382,12 @@
           },
           {
             "id": "https://openalex.org/T10281",
-            "name": "Advanced Battery Materials and Technologies",
+            "name": "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
             "score": 0.001500000013038516
           },
           {
             "id": "https://openalex.org/T10018",
-            "name": "Advancements in Battery Materials",
+            "name": "Lithium- and Sodium-Ion Battery Electrodes",
             "score": 0.00009999999747378752
           }
         ],
@@ -449,7 +449,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -458,7 +458,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -476,8 +476,8 @@
       ],
       "keywords": [
         "Machine Learning in Materials Science",
-        "Advanced Battery Materials and Technologies",
-        "Advancements in Battery Materials",
+        "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
+        "Lithium- and Sodium-Ion Battery Electrodes",
         "solid electrolytes",
         "ionic conductivity prediction",
         "lithium-ion batteries",
@@ -668,8 +668,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.4566,
-        "citationPercentile": 0.48940752,
+        "fwci": 0.4498,
+        "citationPercentile": 0.48459375,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -757,7 +757,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-22T11:41:28.115Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -792,7 +792,7 @@
         "paperId": "f0cd666b2645413aa477a86c809d501c61f48359",
         "url": "https://www.semanticscholar.org/paper/f0cd666b2645413aa477a86c809d501c61f48359",
         "title": "AIM: A user-friendly GUI workflow program for isotherm fitting, mixture prediction, isosteric heat of adsorption estimation, and breakthrough simulation",
-        "citationCount": 12,
+        "citationCount": 13,
         "influentialCitationCount": 0,
         "referenceCount": 53,
         "fields": [
@@ -814,8 +814,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.3131,
-        "citationPercentile": 0.96381579,
+        "fwci": 4.3004,
+        "citationPercentile": 0.96359018,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -893,16 +893,16 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-10-31T09:49:13.806Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -960,8 +960,8 @@
         "year": 2026,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.1606,
-        "citationPercentile": 0.89663669,
+        "fwci": 3.1366,
+        "citationPercentile": 0.89606707,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -1034,7 +1034,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1043,7 +1043,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1147,7 +1147,7 @@
           }
         ],
         "countsByYear": [],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1156,7 +1156,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1347,8 +1347,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.2849,
-        "citationPercentile": 0.30745946,
+        "fwci": 0.2832,
+        "citationPercentile": 0.30505533,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -1407,7 +1407,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1416,7 +1416,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1474,8 +1474,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.1261,
-        "citationPercentile": 0.95775605,
+        "fwci": 4.1109,
+        "citationPercentile": 0.95756045,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -1541,14 +1541,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 23
+            "citationCount": 24
           },
           {
             "year": 2025,
-            "citationCount": 4
+            "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1557,7 +1557,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1616,8 +1616,8 @@
         "year": 2025,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4994,
-        "citationPercentile": 0.88385554,
+        "fwci": 2.4689,
+        "citationPercentile": 0.88245359,
         "primaryTopic": {
           "id": "https://openalex.org/T11774",
           "name": "Adsorption and Cooling Systems",
@@ -1705,7 +1705,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -1714,7 +1714,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -1750,7 +1750,7 @@
         "paperId": "0cf6deffbf4103e643f3040d3cdf52944498902a",
         "url": "https://www.semanticscholar.org/paper/0cf6deffbf4103e643f3040d3cdf52944498902a",
         "title": "Enhancing Interchain Interactions in Spirobifluorene-Based Microporous Polyimides for High-Performance Organic Solvent Nanofiltration",
-        "citationCount": 6,
+        "citationCount": 7,
         "influentialCitationCount": 0,
         "referenceCount": 62,
         "fields": [
@@ -1860,7 +1860,7 @@
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-09-08T08:12:18.586Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
@@ -1923,8 +1923,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 14.5622,
-        "citationPercentile": 0.99820243,
+        "fwci": 14.5379,
+        "citationPercentile": 0.99820107,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -2000,14 +2000,14 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 120
+            "citationCount": 121
           },
           {
             "year": 2025,
-            "citationCount": 36
+            "citationCount": 35
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2016,7 +2016,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2369,8 +2369,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4078,
-        "citationPercentile": 0.89646073,
+        "fwci": 2.3958,
+        "citationPercentile": 0.89583845,
         "primaryTopic": {
           "id": "https://openalex.org/T11690",
           "name": "Aqueous and Flow Batteries",
@@ -2387,7 +2387,7 @@
           },
           {
             "id": "https://openalex.org/T10281",
-            "name": "Advanced Battery Materials and Technologies",
+            "name": "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
             "score": 0
           },
           {
@@ -2448,7 +2448,7 @@
             "citationCount": 16
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2457,7 +2457,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2473,7 +2473,7 @@
       ],
       "keywords": [
         "Aqueous and Flow Batteries",
-        "Advanced Battery Materials and Technologies",
+        "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
         "Electrodeposition and Electroless Coatings",
         "zinc anode",
         "polyoxometalates",
@@ -2515,12 +2515,12 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.8971,
-        "citationPercentile": 0.8589203,
+        "fwci": 1.8716,
+        "citationPercentile": 0.85662052,
         "primaryTopic": {
           "id": "https://openalex.org/T10811",
           "name": "Hydrogen Storage and Materials",
-          "score": 0.5044000148773193,
+          "score": 0.49630001187324524,
           "subfield": "Materials Chemistry",
           "field": "Materials Science",
           "domain": "Physical Sciences"
@@ -2529,17 +2529,17 @@
           {
             "id": "https://openalex.org/T10811",
             "name": "Hydrogen Storage and Materials",
-            "score": 0.5044000148773193
+            "score": 0.49630001187324524
           },
           {
             "id": "https://openalex.org/T12038",
             "name": "Covalent Organic Framework Applications",
-            "score": 0.4507000148296356
+            "score": 0.459199994802475
           },
           {
             "id": "https://openalex.org/T10096",
             "name": "Metal-Organic Frameworks: Synthesis and Applications",
-            "score": 0.01759999990463257
+            "score": 0.017400000244379044
           }
         ],
         "keywords": [
@@ -2604,7 +2604,7 @@
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2613,7 +2613,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -2820,8 +2820,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.2788,
-        "citationPercentile": 0.97658346,
+        "fwci": 5.213,
+        "citationPercentile": 0.97617502,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -2892,18 +2892,18 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 38
+            "citationCount": 39
           },
           {
             "year": 2025,
-            "citationCount": 20
+            "citationCount": 19
           },
           {
             "year": 2024,
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -2912,7 +2912,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3113,8 +3113,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4749,
-        "citationPercentile": 0.80161739,
+        "fwci": 1.4647,
+        "citationPercentile": 0.79979295,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -3206,7 +3206,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3215,7 +3215,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3272,8 +3272,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.9332,
-        "citationPercentile": 0.95757084,
+        "fwci": 3.9059,
+        "citationPercentile": 0.9573573,
         "primaryTopic": {
           "id": "https://openalex.org/T12038",
           "name": "Covalent Organic Framework Applications",
@@ -3350,7 +3350,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3359,7 +3359,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -3417,8 +3417,8 @@
         "year": 2024,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.062,
-        "citationPercentile": 0.8750972,
+        "fwci": 2.0343,
+        "citationPercentile": 0.87295294,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -3490,7 +3490,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -3499,7 +3499,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4015,8 +4015,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4384,
-        "citationPercentile": 0.79242457,
+        "fwci": 1.4211,
+        "citationPercentile": 0.79001151,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4093,7 +4093,7 @@
             "citationCount": 9
           }
         ],
-        "updatedAt": "2026-11-16T12:05:36.265796"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4102,7 +4102,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4304,8 +4304,8 @@
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.2349,
-        "citationPercentile": 0.76509643,
+        "fwci": 1.2321,
+        "citationPercentile": 0.7645383,
         "primaryTopic": {
           "id": "https://openalex.org/T11690",
           "name": "Aqueous and Flow Batteries",
@@ -4322,7 +4322,7 @@
           },
           {
             "id": "https://openalex.org/T10281",
-            "name": "Advanced Battery Materials and Technologies",
+            "name": "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
             "score": 0
           },
           {
@@ -4396,7 +4396,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4405,7 +4405,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4421,7 +4421,7 @@
       ],
       "keywords": [
         "Aqueous and Flow Batteries",
-        "Advanced Battery Materials and Technologies",
+        "Solid Electrolytes, Lithium-Metal and Lithium-Sulfur Batteries",
         "Electrodeposition and Electroless Coatings",
         "zinc anode",
         "polyoxometalates",
@@ -4459,12 +4459,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4380083772",
         "title": "SESAMI APP: An Accessible Interface for Surface Area Calculation of Materials from Adsorption Isotherms",
-        "citationCount": 10,
+        "citationCount": 11,
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9296,
-        "citationPercentile": 0.65096192,
+        "fwci": 1.0184,
+        "citationPercentile": 0.681917,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -4538,14 +4538,14 @@
           },
           {
             "year": 2024,
-            "citationCount": 4
+            "citationCount": 5
           },
           {
             "year": 2023,
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-17T12:49:18.490984"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4554,7 +4554,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4591,12 +4591,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4362636753",
         "title": "A database of ultrastable MOFs reassembled from stable fragments with machine learning models",
-        "citationCount": 103,
+        "citationCount": 102,
         "year": 2023,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.9527,
-        "citationPercentile": 0.98565822,
+        "fwci": 6.8349,
+        "citationPercentile": 0.98546344,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -4665,7 +4665,7 @@
           },
           {
             "year": 2024,
-            "citationCount": 28
+            "citationCount": 27
           },
           {
             "year": 2023,
@@ -4676,7 +4676,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4685,7 +4685,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -4732,12 +4732,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4288459495",
         "title": "Effective delamination of a layered two-dimensional MCM-22 zeolite: Quantitative insights into the role of the delaminated structure on acid catalytic reactions",
-        "citationCount": 20,
+        "citationCount": 21,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.1125,
-        "citationPercentile": 0.72575178,
+        "fwci": 1.0923,
+        "citationPercentile": 0.72050376,
         "primaryTopic": {
           "id": "https://openalex.org/T10353",
           "name": "Zeolite Catalysis and Synthesis",
@@ -4818,7 +4818,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
@@ -4833,7 +4833,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -4842,7 +4842,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5017,7 +5017,7 @@
         "paperId": "96723cdbd8c300a21b705c02e918fe6c338041c1",
         "url": "https://www.semanticscholar.org/paper/96723cdbd8c300a21b705c02e918fe6c338041c1",
         "title": "Highly Efficient Bromine Capture and Storage Using N-containing Porous Organic Cages",
-        "citationCount": 6,
+        "citationCount": 7,
         "influentialCitationCount": 0,
         "referenceCount": 0,
         "fields": [
@@ -5031,12 +5031,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4312639394",
         "title": "Highly efficient bromine capture and storage using N-containing porous organic cages",
-        "citationCount": 33,
+        "citationCount": 34,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.6914,
-        "citationPercentile": 0.83663476,
+        "fwci": 1.6871,
+        "citationPercentile": 0.83607061,
         "primaryTopic": {
           "id": "https://openalex.org/T12038",
           "name": "Covalent Organic Framework Applications",
@@ -5082,7 +5082,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 6
+            "citationCount": 7
           },
           {
             "year": 2025,
@@ -5097,16 +5097,16 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-22T11:41:28.115Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5158,8 +5158,8 @@
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.7312,
-        "citationPercentile": 0.83775307,
+        "fwci": 1.7112,
+        "citationPercentile": 0.8362887,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -5244,7 +5244,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-17T12:49:18.490984"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5253,7 +5253,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-18T11:57:13.532Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5431,12 +5431,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4226113201",
         "title": "Defect-engineered MOF-801 for cycloaddition of CO 2 with epoxides",
-        "citationCount": 123,
+        "citationCount": 122,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.966,
-        "citationPercentile": 0.98323471,
+        "fwci": 5.8636,
+        "citationPercentile": 0.98215466,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -5511,7 +5511,7 @@
           },
           {
             "year": 2025,
-            "citationCount": 36
+            "citationCount": 35
           },
           {
             "year": 2024,
@@ -5526,7 +5526,7 @@
             "citationCount": 7
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5535,7 +5535,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5590,12 +5590,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W4229036542",
         "title": "Discovery of High‐Performing Metal–Organic Frameworks for On‐Board Methane Storage and Delivery via LNG–ANG Coupling: High‐Throughput Screening, Machine Learning, and Experimental Validation",
-        "citationCount": 43,
+        "citationCount": 41,
         "year": 2022,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.9668,
-        "citationPercentile": 0.92211726,
+        "fwci": 2.7671,
+        "citationPercentile": 0.91478863,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -5680,7 +5680,7 @@
           },
           {
             "year": 2025,
-            "citationCount": 17
+            "citationCount": 15
           },
           {
             "year": 2024,
@@ -5695,7 +5695,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -5704,7 +5704,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -5915,8 +5915,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.4743,
-        "citationPercentile": 0.80350497,
+        "fwci": 1.4498,
+        "citationPercentile": 0.80055058,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6011,7 +6011,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6020,7 +6020,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6074,8 +6074,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.1478,
-        "citationPercentile": 0.28416779,
+        "fwci": 0.1459,
+        "citationPercentile": 0.27636612,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6162,7 +6162,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6219,8 +6219,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6775,
-        "citationPercentile": 0.54246448,
+        "fwci": 0.6747,
+        "citationPercentile": 0.5409098,
         "primaryTopic": {
           "id": "https://openalex.org/T11362",
           "name": "Membrane Separation and Gas Transport",
@@ -6304,7 +6304,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6313,7 +6313,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6372,8 +6372,8 @@
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.939,
-        "citationPercentile": 0.96718317,
+        "fwci": 4.8568,
+        "citationPercentile": 0.96662078,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -6472,7 +6472,7 @@
             "citationCount": 7
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6481,7 +6481,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6697,12 +6697,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W3124552578",
         "title": "Development and application of machine learning‐based prediction model for distillation column",
-        "citationCount": 83,
+        "citationCount": 82,
         "year": 2021,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.5779,
-        "citationPercentile": 0.95954359,
+        "fwci": 4.5745,
+        "citationPercentile": 0.95951911,
         "primaryTopic": {
           "id": "https://openalex.org/T11053",
           "name": "Process Optimization and Integration",
@@ -6782,7 +6782,7 @@
           },
           {
             "year": 2025,
-            "citationCount": 20
+            "citationCount": 19
           },
           {
             "year": 2024,
@@ -6801,7 +6801,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6810,7 +6810,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-22T11:41:28.115Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -6889,12 +6889,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W3033391181",
         "title": "Beyond the BET Analysis: The Surface Area Prediction of Nanoporous Materials Using a Machine Learning Method",
-        "citationCount": 67,
+        "citationCount": 68,
         "year": 2020,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.4857,
-        "citationPercentile": 0.90470874,
+        "fwci": 2.4974,
+        "citationPercentile": 0.90524563,
         "primaryTopic": {
           "id": "https://openalex.org/T11948",
           "name": "Machine Learning in Materials Science",
@@ -6950,7 +6950,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 5
+            "citationCount": 6
           },
           {
             "year": 2025,
@@ -6977,7 +6977,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-16T12:05:36.265796"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -6986,7 +6986,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7166,8 +7166,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.0434,
-        "citationPercentile": 0.85785927,
+        "fwci": 2.0523,
+        "citationPercentile": 0.85833202,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -7270,7 +7270,7 @@
             "citationCount": 6
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7279,7 +7279,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7314,7 +7314,7 @@
         "paperId": "d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "url": "https://www.semanticscholar.org/paper/d82b45abe9b1ea9f5954f10905fc82473d316edf",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 148,
+        "citationCount": 149,
         "influentialCitationCount": 1,
         "referenceCount": 68,
         "fields": [
@@ -7328,12 +7328,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2949111628",
         "title": "Synergistic effect of metal-organic framework-derived boron and nitrogen heteroatom-doped three-dimensional porous carbons for precious-metal-free catalytic reduction of nitroarenes",
-        "citationCount": 165,
+        "citationCount": 164,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 7.2765,
-        "citationPercentile": 0.98961938,
+        "fwci": 7.1725,
+        "citationPercentile": 0.98927081,
         "primaryTopic": {
           "id": "https://openalex.org/T12240",
           "name": "Nanomaterials for catalytic reactions",
@@ -7434,23 +7434,23 @@
           },
           {
             "year": 2021,
-            "citationCount": 27
+            "citationCount": 26
           },
           {
             "year": 2020,
             "citationCount": 30
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7485,7 +7485,7 @@
         "paperId": "47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "url": "https://www.semanticscholar.org/paper/47a9ce352538ad98db80ccf3d08de4dccfe33e4c",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 753,
+        "citationCount": 754,
         "influentialCitationCount": 23,
         "referenceCount": 75,
         "fields": [
@@ -7500,12 +7500,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2983028326",
         "title": "Advances, Updates, and Analytics for the Computation-Ready, Experimental Metal–Organic Framework Database: CoRE MOF 2019",
-        "citationCount": 958,
+        "citationCount": 950,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 19.4474,
-        "citationPercentile": 0.99885599,
+        "fwci": 19.3405,
+        "citationPercentile": 0.9988473,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7566,19 +7566,19 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 199
+            "citationCount": 201
           },
           {
             "year": 2025,
-            "citationCount": 199
+            "citationCount": 197
           },
           {
             "year": 2024,
-            "citationCount": 183
+            "citationCount": 179
           },
           {
             "year": 2023,
-            "citationCount": 125
+            "citationCount": 122
           },
           {
             "year": 2022,
@@ -7590,23 +7590,23 @@
           },
           {
             "year": 2020,
-            "citationCount": 63
+            "citationCount": 62
           },
           {
             "year": 2019,
             "citationCount": 4
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-22T11:41:28.115Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7660,12 +7660,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2969079402",
         "title": "The role of molecular modelling and simulation in the discovery and deployment of metal-organic frameworks for gas storage and separation",
-        "citationCount": 130,
+        "citationCount": 128,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 5.6336,
-        "citationPercentile": 0.97543742,
+        "fwci": 5.3938,
+        "citationPercentile": 0.97348793,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7746,7 +7746,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 17
+            "citationCount": 18
           },
           {
             "year": 2025,
@@ -7770,14 +7770,14 @@
           },
           {
             "year": 2020,
-            "citationCount": 26
+            "citationCount": 24
           },
           {
             "year": 2019,
-            "citationCount": 4
+            "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7786,7 +7786,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -7840,12 +7840,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2964788817",
         "title": "The Origin of p -Xylene Selectivity in a DABCO Pillar-Layered Metal–Organic Framework: A Combined Experimental and Computational Investigation",
-        "citationCount": 37,
+        "citationCount": 35,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.3119,
-        "citationPercentile": 0.76985195,
+        "fwci": 1.1558,
+        "citationPercentile": 0.73928668,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -7863,7 +7863,7 @@
           {
             "id": "https://openalex.org/T10353",
             "name": "Zeolite Catalysis and Synthesis",
-            "score": 0.0010999999940395355
+            "score": 0.0008999999845400453
           },
           {
             "id": "https://openalex.org/T12038",
@@ -7936,14 +7936,14 @@
           },
           {
             "year": 2021,
-            "citationCount": 9
+            "citationCount": 7
           },
           {
             "year": 2020,
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -7952,7 +7952,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8006,8 +8006,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 9.4867,
-        "citationPercentile": 0.99436643,
+        "fwci": 9.2591,
+        "citationPercentile": 0.99416764,
         "primaryTopic": {
           "id": "https://openalex.org/T13604",
           "name": "Adsorption, diffusion, and thermodynamic properties of materials",
@@ -8083,7 +8083,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 86
+            "citationCount": 87
           },
           {
             "year": 2025,
@@ -8103,14 +8103,14 @@
           },
           {
             "year": 2021,
-            "citationCount": 35
+            "citationCount": 34
           },
           {
             "year": 2020,
             "citationCount": 11
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8119,7 +8119,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8173,8 +8173,8 @@
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.2327,
-        "citationPercentile": 0.96630622,
+        "fwci": 4.1778,
+        "citationPercentile": 0.96450448,
         "primaryTopic": {
           "id": "https://openalex.org/T10967",
           "name": "Carbon Dioxide Capture Technologies",
@@ -8255,7 +8255,7 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 16
+            "citationCount": 17
           },
           {
             "year": 2025,
@@ -8275,7 +8275,7 @@
           },
           {
             "year": 2021,
-            "citationCount": 19
+            "citationCount": 18
           },
           {
             "year": 2020,
@@ -8286,7 +8286,7 @@
             "citationCount": 8
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8295,7 +8295,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8348,12 +8348,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2933575515",
         "title": "Elucidation of flexible metal-organic frameworks: Research progresses and recent developments",
-        "citationCount": 260,
+        "citationCount": 259,
         "year": 2019,
         "type": "article",
         "isRetracted": false,
-        "fwci": 10.8041,
-        "citationPercentile": 0.9935397,
+        "fwci": 10.7105,
+        "citationPercentile": 0.99342284,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8453,14 +8453,14 @@
           },
           {
             "year": 2020,
-            "citationCount": 45
+            "citationCount": 43
           },
           {
             "year": 2019,
-            "citationCount": 8
+            "citationCount": 9
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8469,7 +8469,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8522,8 +8522,8 @@
         "year": 2018,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.6495,
-        "citationPercentile": 0.5823456,
+        "fwci": 0.6398,
+        "citationPercentile": 0.57767296,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -8623,7 +8623,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-21T11:26:48.760Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8659,7 +8659,7 @@
         "paperId": "c678e238ea75708384e3bdfb049df3c7428f713d",
         "url": "https://www.semanticscholar.org/paper/c678e238ea75708384e3bdfb049df3c7428f713d",
         "title": "Cycloaddition of CO 2 with epoxides by using an amino-acid-based Cu(II)–tryptophan MOF catalyst",
-        "citationCount": 27,
+        "citationCount": 28,
         "influentialCitationCount": 0,
         "referenceCount": 9,
         "fields": [
@@ -8676,8 +8676,8 @@
         "year": 2018,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.737,
-        "citationPercentile": 0.89918851,
+        "fwci": 2.7386,
+        "citationPercentile": 0.89851875,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -8793,16 +8793,16 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-07-30T03:38:34.193Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -8855,12 +8855,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2774131705",
         "title": "High-Throughput Computational Screening of Multivariate Metal–Organic Frameworks (MTV-MOFs) for CO2 Capture",
-        "citationCount": 137,
+        "citationCount": 136,
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 3.5406,
-        "citationPercentile": 0.93925076,
+        "fwci": 3.4606,
+        "citationPercentile": 0.93699714,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -8959,14 +8959,14 @@
           },
           {
             "year": 2019,
-            "citationCount": 15
+            "citationCount": 14
           },
           {
             "year": 2018,
             "citationCount": 7
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -8975,7 +8975,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9030,8 +9030,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 2.921,
-        "citationPercentile": 0.91778603,
+        "fwci": 2.9282,
+        "citationPercentile": 0.91831447,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9151,7 +9151,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9160,7 +9160,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9213,8 +9213,8 @@
         "year": 2017,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.9737,
-        "citationPercentile": 0.70766115,
+        "fwci": 0.9761,
+        "citationPercentile": 0.70762307,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9325,7 +9325,7 @@
             "citationCount": 5
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9334,7 +9334,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9568,8 +9568,8 @@
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.7611,
-        "citationPercentile": 0.81387531,
+        "fwci": 1.7782,
+        "citationPercentile": 0.81512091,
         "primaryTopic": {
           "id": "https://openalex.org/T11593",
           "name": "Carbon dioxide utilization in catalysis",
@@ -9689,7 +9689,7 @@
             "citationCount": 3
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9698,7 +9698,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9752,12 +9752,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2530805533",
         "title": "In silico discovery of metal-organic frameworks for precombustion CO 2 capture using a genetic algorithm",
-        "citationCount": 349,
+        "citationCount": 343,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 6.5878,
-        "citationPercentile": 0.9790491,
+        "fwci": 6.3548,
+        "citationPercentile": 0.97792769,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -9816,15 +9816,15 @@
           },
           {
             "year": 2024,
-            "citationCount": 39
+            "citationCount": 37
           },
           {
             "year": 2023,
-            "citationCount": 39
+            "citationCount": 37
           },
           {
             "year": 2022,
-            "citationCount": 49
+            "citationCount": 50
           },
           {
             "year": 2021,
@@ -9832,15 +9832,15 @@
           },
           {
             "year": 2020,
-            "citationCount": 37
+            "citationCount": 36
           },
           {
             "year": 2019,
-            "citationCount": 33
+            "citationCount": 32
           },
           {
             "year": 2018,
-            "citationCount": 24
+            "citationCount": 23
           },
           {
             "year": 2017,
@@ -9851,7 +9851,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-23T12:01:36.302904"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -9860,7 +9860,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -9913,12 +9913,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2519634887",
         "title": "High-Throughput Screening of Metal–Organic Frameworks for CO2 Capture in the Presence of Water",
-        "citationCount": 181,
+        "citationCount": 180,
         "year": 2016,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.7911,
-        "citationPercentile": 0.96335214,
+        "fwci": 4.7661,
+        "citationPercentile": 0.96305999,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10013,7 +10013,7 @@
           },
           {
             "year": 2020,
-            "citationCount": 22
+            "citationCount": 21
           },
           {
             "year": 2019,
@@ -10032,7 +10032,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10041,7 +10041,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10099,8 +10099,8 @@
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 4.2453,
-        "citationPercentile": 0.95697396,
+        "fwci": 4.2145,
+        "citationPercentile": 0.95688356,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10198,7 +10198,7 @@
             "citationCount": 2
           }
         ],
-        "updatedAt": "2026-11-20T13:11:24.684918"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10207,7 +10207,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10254,12 +10254,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W2148931917",
         "title": "The materials genome in action: identifying the performance limits for methane storage",
-        "citationCount": 414,
+        "citationCount": 412,
         "year": 2015,
         "type": "article",
         "isRetracted": false,
-        "fwci": 14.4543,
-        "citationPercentile": 0.99612378,
+        "fwci": 14.2491,
+        "citationPercentile": 0.99606841,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10365,14 +10365,14 @@
           },
           {
             "year": 2016,
-            "citationCount": 40
+            "citationCount": 39
           },
           {
             "year": 2015,
             "citationCount": 17
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10381,7 +10381,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10417,7 +10417,7 @@
         "paperId": "6efacf8930daa62031b27237227bdccbfb0c20b4",
         "url": "https://www.semanticscholar.org/paper/6efacf8930daa62031b27237227bdccbfb0c20b4",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 662,
+        "citationCount": 663,
         "influentialCitationCount": 10,
         "referenceCount": 35,
         "fields": [
@@ -10431,12 +10431,12 @@
       "openAlex": {
         "workId": "https://openalex.org/W1963883777",
         "title": "Computation-Ready, Experimental Metal–Organic Frameworks: A Tool To Enable High-Throughput Screening of Nanoporous Crystals",
-        "citationCount": 807,
+        "citationCount": 801,
         "year": 2014,
         "type": "article",
         "isRetracted": false,
-        "fwci": 13.4039,
-        "citationPercentile": 0.99540602,
+        "fwci": 13.3633,
+        "citationPercentile": 0.99540661,
         "primaryTopic": {
           "id": "https://openalex.org/T10096",
           "name": "Metal-Organic Frameworks: Synthesis and Applications",
@@ -10507,19 +10507,19 @@
         "countsByYear": [
           {
             "year": 2026,
-            "citationCount": 92
+            "citationCount": 93
           },
           {
             "year": 2025,
-            "citationCount": 95
+            "citationCount": 94
           },
           {
             "year": 2024,
-            "citationCount": 68
+            "citationCount": 65
           },
           {
             "year": 2023,
-            "citationCount": 71
+            "citationCount": 69
           },
           {
             "year": 2022,
@@ -10535,7 +10535,7 @@
           },
           {
             "year": 2019,
-            "citationCount": 86
+            "citationCount": 85
           },
           {
             "year": 2018,
@@ -10558,16 +10558,16 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-22T12:46:00.618207"
+        "updatedAt": "2026-11-24T14:10:38.155754"
       },
       "sourceFreshness": {
         "semanticScholar": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10620,8 +10620,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 0.3411,
-        "citationPercentile": 0.47429654,
+        "fwci": 0.3456,
+        "citationPercentile": 0.47860677,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -10726,7 +10726,7 @@
             "citationCount": 1
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -10735,7 +10735,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
@@ -10954,8 +10954,8 @@
         "year": 2012,
         "type": "article",
         "isRetracted": false,
-        "fwci": 1.9326,
-        "citationPercentile": 0.8590368,
+        "fwci": 1.9582,
+        "citationPercentile": 0.86109012,
         "primaryTopic": {
           "id": "https://openalex.org/T10474",
           "name": "Material Dynamics and Properties",
@@ -11082,7 +11082,7 @@
             "citationCount": 4
           }
         ],
-        "updatedAt": "2026-11-21T10:27:49.728292"
+        "updatedAt": "2026-11-25T09:40:18.809321"
       },
       "sourceFreshness": {
         "semanticScholar": {
@@ -11091,7 +11091,7 @@
         },
         "openAlex": {
           "status": "observed",
-          "contentUpdatedAt": "2026-11-24T13:58:31.468Z"
+          "contentUpdatedAt": "2026-11-25T13:12:41.587Z"
         },
         "googleScholar": {
           "status": "unavailable",
